@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress">
+    <description>Custom WordPress rules</description>
+    
+    <!-- WordPress Standards -->
+    <rule ref="WordPress">
+        <exclude name="WordPress.Files.HiddenFiles"/>
+    </rule>
+    
+    <!-- Ignore hidden files + Git files -->
+    <file>!.*</file>
+    <file>*.git*</file>
+    <file>*.gitignore</file>
+    
+    <!-- Your plugin files -->
+    <file>doctor2go-connect/doctor2go-connect.php</file>
+</ruleset>

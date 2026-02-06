@@ -1,4 +1,4 @@
-=== doctor2go-connect ===
+=== Doctor2Go Connect ===
 Contributors: Webcamconsult
 Tags: online practice, medical websites, doctors, bookings
 Requires at least: 5.6
@@ -8,14 +8,14 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Online practice: doctor2go-connect links your WP site to doctor2go.online. Online reception/patient dashboard for booking, managing appointments, and more.
+Online practice: Doctor2Go Connect links your WP site to doctor2go.online, giving patients a dashboard to book and manage appointments.
 
 == Description ==
-Create an online practice, by connecting your WP site with doctor2go.online. Your website becomes an online reception for your patients, they can book and manage their appointments, like doctors, access their medical files and have a paid e-mail advice or have walk-in to the online consulting room from doctor2go.online.
-The backbone from all this is doctor2go.online with it\'s powerful high secure databases, where all sensitive data gets stored, using API\'s.
-In order to make use of this plugin you will require a doctor2go.online subscription, click on the following link to read more about all the features from doctor2go.online.
+Turn your WordPress site into an online medical practice by connecting it to doctor2go.online. Patients can book and manage appointments, access medical files, and receive paid advice or online consultations. 
+All data is securely handled via doctor2go.online’s API and databases. A doctor2go.online subscription is required—click the link to learn more.
 
-With doctor2go-connect you get:
+
+With Doctor2Go Connect you get:
 
 * Smooth Booking Process for video and physical consultations
 * E-mail advice
@@ -45,26 +45,26 @@ With doctor2go-connect you get:
 == Installation ==
 = Using The WordPress Dashboard =
 Navigate to the \'Add New\' in the plugins dashboard
-Search for \"doctor2go-connect\"
+Search for \"Doctor2Go Connect\"
 Click Install Now
 Activate the plugin on the Plugin dashboard
 
 = Uploading in WordPress Dashboard =
 Navigate to the \'Add New\' in the plugins dashboard
 Navigate to the \'Upload\' area
-Select doctor2go-connect.zip from your computer
+Select Doctor2Go Connect.zip from your computer
 Click \'Install Now\'
 Activate the plugin in the Plugin dashboard
 
 = Using FTP =
-Download doctor2go-connect.zip
-Extract the doctor2go-connect directory to your computer
-Upload the doctor2go-connect directory to the /wp-content/plugins/ directory
+Download Doctor2Go Connect.zip
+Extract the Doctor2Go Connect directory to your computer
+Upload the Doctor2Go Connect directory to the /wp-content/plugins/ directory
 Activate the plugin in the Plugin dashboard
 
 
 == Frequently Asked Questions ==
-= Where can I find doctor2go-connect documentation and user guides? =
+= Where can I find Doctor2Go Connect documentation and user guides? =
 
 In the plugin folder you will find guide
 
@@ -76,17 +76,17 @@ this feature is still to come
 
 this feature is still to come
 
-= Will doctor2go-connect work with my theme? =
+= Will Doctor2Go Connect work with my theme? =
 
-Yes, doctor2go-connect will work with any theme, but may require some styling to make it match nicely. Also, plugin perfectly works with the default WordPress theme. 
+Yes, Doctor2Go Connect will work with any theme, but may require some styling to make it match nicely. Also, plugin perfectly works with the default WordPress theme. 
 
 = Can I run WooCommerce or Easy Digital Downloads and WP Travel at the same time? =
 
-Yes, there are no technological conflicts between the three, you could run them all at the same time on the same domain name. But all plug-ins have their own cart system so WooCommerce or Easy Digital Downloads products will be added in their cart page and doctor2go-connect bookings and consultations will be paid thru it\'s own payment gateways. 
+Yes, there are no technological conflicts between the three, you could run them all at the same time on the same domain name. But all plug-ins have their own cart system so WooCommerce or Easy Digital Downloads products will be added in their cart page and Doctor2Go Connect bookings and consultations will be paid thru it\'s own payment gateways. 
 
 = Does the plugin have the payment gateways? =
 
-doctor2go-connect uses the payment gateways from from the doctor2go.online software
+Doctor2Go Connect uses the payment gateways from from the doctor2go.online software
 
 
 == Screenshots ==

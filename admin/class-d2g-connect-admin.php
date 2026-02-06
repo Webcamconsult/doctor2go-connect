@@ -662,12 +662,11 @@ class D2gConnect_Admin {
                     update_post_meta( $post_id, $key, $value );
                 }
             }
+            
+            $postMetaArr = isset( $_POST['meta'] ) ? map_deep( wp_unslash( $_POST['meta'] ), 'sanitize_text_field' ) : array();
 
-
-            $postMetaArr                    = $_POST['meta'];
-
-            foreach ($postMetaArr as $meta_key => $meta_value) {
-                update_post_meta($post_id, $meta_key, $meta_value);
+            foreach ( $postMetaArr as $meta_key => $meta_value ) {
+                update_post_meta( $post_id, $meta_key, $meta_value );
             }
 
         }

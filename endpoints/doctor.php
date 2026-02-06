@@ -1,8 +1,18 @@
 <?php
 
 $currDir        = dirname(__DIR__);
-$rootDir        = $_SERVER['DOCUMENT_ROOT'];
-require_once $rootDir . '/wp-config.php';
+
+$rootDir = '';
+if ( isset( $_SERVER['DOCUMENT_ROOT'] ) && ! empty( $_SERVER['DOCUMENT_ROOT'] ) ) {
+    $rootDir = rtrim( stripslashes( filter_var( $_SERVER['DOCUMENT_ROOT'], FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ), '/' ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- Safe server path before WP load.
+}
+require_once ( $rootDir ?: $currDir ) . '/wp-config.php';
+
+if ( ! function_exists( 'get_option' ) ) {
+    wp_die( esc_html( 'WordPress not loaded.' ) );
+} else {
+    //echo esc_html( 'WordPress loaded successfully.' );
+}
 
 /**
  * The class responsible for defining all actions that occur in the admin area.
@@ -55,8 +65,8 @@ if(isset($user_data['user_email'])){
             echo esc_html__('The user + public profile have been created. User ID: ', 'doctor2go-connect').esc_html($user_id);
         } else {
             //var_dump($user);
-            error_log('IMPORT ERROR: ' . var_export($error, true));
-            error_log('IMPORT ERROR USER: ' . var_export($user, true));
+            error_log('IMPORT ERROR: ' . print_r($error, true)); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log,WordPress.PHP.DevelopmentFunctions.error_log_print_r -- Import error logging.
+            error_log('IMPORT ERROR USER: ' . print_r($user, true)); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log,WordPress.PHP.DevelopmentFunctions.error_log_print_r -- Import error logging.
         }
     
     

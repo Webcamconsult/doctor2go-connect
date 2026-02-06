@@ -109,14 +109,17 @@ class D2G_booking_wcc_user{
 		if($currUser->ID != 0){
 			
 			//saves the name when account data is incomplete
-			if($_POST['user_action'] == 'update_user'){
-				update_user_meta($_POST['wp_user_id'], 'first_name', $patient_fname);
-				update_user_meta($_POST['wp_user_id'], 'last_name', $patient_lname);
-				update_user_meta($_POST['wp_user_id'], 'p_tel', $patientTel);
+			$user_action = isset( $_POST['user_action'] ) ? sanitize_text_field( wp_unslash( $_POST['user_action'] ) ) : '';
+			$wp_user_id  = isset( $_POST['wp_user_id'] ) ? absint( wp_unslash( $_POST['wp_user_id'] ) ) : 0;
+
+			if ( 'update_user' === $user_action && $wp_user_id > 0 ) {
+				update_user_meta( $wp_user_id, 'first_name', $patient_fname );
+				update_user_meta( $wp_user_id, 'last_name', $patient_lname );
+				update_user_meta( $wp_user_id, 'p_tel', $patientTel );
 			}
 
-			// user is logged in and get current user meta
-			$userMeta               = get_user_meta($_POST['wp_user_id']);
+			$userMeta = get_user_meta( $wp_user_id );
+
 
 			// get client tokens
 			$ids = unserialize($userMeta['ids'][0]);
@@ -224,7 +227,7 @@ class D2G_booking_wcc_user{
 		);
 
 		if (is_wp_error($response)) {
-			error_log('API Error: ' . $response->get_error_message());
+			error_log('API Error: ' . $response->get_error_message());// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log,WordPress.PHP.DevelopmentFunctions.error_log_print_r -- Import error logging.
 			wp_send_json('error');
 			wp_die();
 		}
@@ -265,20 +268,27 @@ class D2G_booking_wcc_user{
 		// Nonce check
 		check_ajax_referer( 'delete_wcc_appointment_nonce', 'security' );
 
-		$docObj = self::get_doctor_by_wcc_id( $_POST['wcc_user_id'] )[0];
+		if ( ! isset( $_POST['wcc_user_id'], $_POST['app_id'] ) ) {
+			return;
+		}
+
+		$wcc_user_id = sanitize_text_field( wp_unslash( $_POST['wcc_user_id'] ) );
+		$app_id      = sanitize_text_field( wp_unslash( $_POST['app_id'] ) );
+
+		$docObj = self::get_doctor_by_wcc_id( $wcc_user_id )[0];
+
 		$orgKey = get_post_meta( $docObj->ID, 'organisation_key', true );
 
 		$response = wp_remote_request(
-			get_option( 'api_url_short' ) . 'appointments/' . $_POST['app_id'] . '.json',
+			get_option( 'api_url_short' ) . 'appointments/' . $app_id . '.json',
 			array(
 				'method'  => 'DELETE',
 				'headers' => array(
-					'Authorization' => 'Token token=' . $orgKey,
+					'Authorization' => 'Token token=' . sanitize_text_field( $orgKey ),
 				),
 				'timeout' => 10,
 			)
 		);
-
 		if ( is_wp_error( $response ) ) {
 			echo esc_html__( 'Your appointment cloud not be canceled. Please contact your doctor.', 'doctor2go-connect');
 			wp_die();
@@ -303,10 +313,22 @@ class D2G_booking_wcc_user{
 	// if success user gets redirected to the doctor waiting room
 	public static function create_wcc_walkin() {
 
+		if ( ! isset( $_POST['walkin_form_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['walkin_form_nonce'] ) ), 'walkin_form_action' ) ) {
+			return false; // stop processing immediately
+		}
+
 		// Validate CAPTCHA
 		$secret_key = get_option( 'd2g_recaptcha_secret_key' ); 
 		if ( $secret_key !== '' ) {
-			$recaptcha_response = sanitize_text_field( $_POST['g-recaptcha-response'] );
+
+			$recaptcha_response = '';
+			if ( ! empty( $_POST['g-recaptcha-response'] ) ) {
+				$recaptcha_response = sanitize_text_field( wp_unslash( $_POST['g-recaptcha-response'] ) );
+			}
+
+			$remote_ip = isset( $_SERVER['REMOTE_ADDR'] )
+				? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) )
+				: '';
 
 			$recaptcha_verify = wp_remote_post(
 				'https://www.google.com/recaptcha/api/siteverify',
@@ -314,7 +336,7 @@ class D2G_booking_wcc_user{
 					'body'    => [
 						'secret'   => $secret_key,
 						'response' => $recaptcha_response,
-						'remoteip' => $_SERVER['REMOTE_ADDR'],
+						'remoteip' => $remote_ip,
 					],
 					'timeout' => 10,
 				]
@@ -331,15 +353,17 @@ class D2G_booking_wcc_user{
 			}
 		}
 
-		$wpDocID        = absint( wp_unslash( $_POST['wp_doc_id'] ) );
-		$client_name    = sanitize_text_field( wp_unslash( $_POST['client_name'] ) );
-		$client_email   = sanitize_email( wp_unslash( $_POST['client_email'] ) );
-		$client_tel     = sanitize_text_field( wp_unslash( $_POST['optie_telefoonnummer'] ) );
-		$client_bday    = sanitize_text_field( wp_unslash( $_POST['optie_geboortedatum'] ) );
-		$client_gender  = sanitize_text_field( wp_unslash( $_POST['optie_aanhef'] ) );
-		$client_country = sanitize_text_field( $_POST['optie_land'] );
-		$client_reason  = sanitize_text_field( $_POST['optie_reason'] );
-		$currLang       = explode( '_', get_locale() )[0];
+		$wpDocID        = isset( $_POST['wp_doc_id'] ) ? absint( wp_unslash( $_POST['wp_doc_id'] ) ) : 0;
+		$client_name    = isset( $_POST['client_name'] ) ? sanitize_text_field( wp_unslash( $_POST['client_name'] ) ) : '';
+		$client_email   = isset( $_POST['client_email'] ) ? sanitize_email( wp_unslash( $_POST['client_email'] ) ) : '';
+		$client_tel     = isset( $_POST['optie_telefoonnummer'] ) ? sanitize_text_field( wp_unslash( $_POST['optie_telefoonnummer'] ) ) : '';
+		$client_bday    = isset( $_POST['optie_geboortedatum'] ) ? sanitize_text_field( wp_unslash( $_POST['optie_geboortedatum'] ) ) : '';
+		$client_gender  = isset( $_POST['optie_aanhef'] ) ? sanitize_text_field( wp_unslash( $_POST['optie_aanhef'] ) ) : '';
+		$client_country = isset( $_POST['optie_land'] ) ? sanitize_text_field( wp_unslash( $_POST['optie_land'] ) ) : '';
+		$client_reason  = isset( $_POST['optie_reason'] ) ? sanitize_text_field( wp_unslash( $_POST['optie_reason'] ) ) : '';
+
+		$currLang = explode( '_', get_locale() )[0];
+
 
 		$docKey     = get_post_meta( $wpDocID, 'user_key', true );
 		$docOrgKey  = get_post_meta( $wpDocID, 'organisation_key', true ); 
@@ -424,18 +448,28 @@ class D2G_booking_wcc_user{
 	// if success user gets redirected to the doctor waiting room
 	public static function create_wcc_written_cosnsult() {
 
+		if ( ! isset( $_POST['email_advice_form_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['email_advice_form_nonce'] ) ), 'email_advice_form_action' ) ) {
+			return false; // stop processing immediately
+		}
+
 		// Validate CAPTCHA
 		$secret_key = get_option('d2g_recaptcha_secret_key'); 
 		if ( $secret_key !== '' ) {
-			$recaptcha_response = sanitize_text_field( $_POST['g-recaptcha-response'] );
+			$recaptcha_response = isset( $_POST['g-recaptcha-response'] )
+				? sanitize_text_field( wp_unslash( $_POST['g-recaptcha-response'] ) )
+				: '';
+
+			$remote_ip = isset( $_SERVER['REMOTE_ADDR'] )
+				? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) )
+				: '';
 
 			$recaptcha_verify = wp_remote_post(
 				'https://www.google.com/recaptcha/api/siteverify',
 				[
-					'body' => [
+					'body'    => [
 						'secret'   => $secret_key,
 						'response' => $recaptcha_response,
-						'remoteip' => $_SERVER['REMOTE_ADDR'],
+						'remoteip' => $remote_ip,
 					],
 					'timeout' => 10,
 				]
@@ -452,11 +486,12 @@ class D2G_booking_wcc_user{
 			}
 		}
 
-		$wpDocID       = absint( wp_unslash( $_POST['wp_doc_id'] ) );
-		$first_name    = sanitize_text_field( wp_unslash( $_POST['first_name'] ) );
-		$last_name     = sanitize_text_field( wp_unslash( $_POST['last_name'] ) );
-		$client_email  = sanitize_email( wp_unslash( $_POST['client_email'] ) );
-		$type          = sanitize_text_field( wp_unslash( $_POST['type'] ) );
+		$wpDocID      = isset( $_POST['wp_doc_id'] ) ? absint( wp_unslash( $_POST['wp_doc_id'] ) ) : 0;
+		$first_name   = isset( $_POST['first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['first_name'] ) ) : '';
+		$last_name    = isset( $_POST['last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['last_name'] ) ) : '';
+		$client_email = isset( $_POST['client_email'] ) ? sanitize_email( wp_unslash( $_POST['client_email'] ) ) : '';
+		$type         = isset( $_POST['type'] ) ? sanitize_text_field( wp_unslash( $_POST['type'] ) ) : '';
+
 
 		$docKey        = get_post_meta( $wpDocID, 'user_key', true ); 
 		$docOrgKey     = get_post_meta( $wpDocID, 'organisation_key', true );

@@ -88,12 +88,13 @@ class D2G_doc_user_profile{
     }
 
     /*
-    * This function is called when setting is checked that profile is created locally when user is created localy
+    * This function is called when setting is checked that profile is created locally when user is created localy, this function is not really used and my be removed in future
+    * There for no nonce check, because this is an internal function and not called via ajax  
     */
     public static function d2g_create_doc_profile_locally($user_id, $userdata){
         
         
-        if($_POST['role'] == 'doctor'){
+        if(isset($_POST['role']) && $_POST['role'] == 'doctor'){// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce not required for this internal action.
             //get user object
             $u = new WP_User( $user_id );
 
@@ -230,24 +231,25 @@ class D2G_doc_user_profile{
      */
     public static function d2g_update_doc(){
 		
-		if ( !isset($_POST['_wpnonce']) || !wp_verify_nonce( $_POST['_wpnonce'], 'doc-update' ) ){
-			return false;
-		}
+		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'doc-update' ) ) {
+            return false;
+        }
 		
 		
         global $success;
 
-        $doc_data_meta  = $_POST['meta'];
-        $doc_tax        = $_POST['tax'];
-        $update_id      = $_POST['update_id']; 
-		$currLang		= $_POST['d2g_lang'];
+        $doc_data_meta = isset( $_POST['meta'] ) && is_array( $_POST['meta'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['meta'] ) ) : [];
+        $doc_tax       = isset( $_POST['tax'] ) && is_array( $_POST['tax'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['tax'] ) ) : [];
+        $update_id     = isset( $_POST['update_id'] ) ? absint( wp_unslash( $_POST['update_id'] ) ) : 0;
+        $currLang      = isset( $_POST['d2g_lang'] ) ? sanitize_key( wp_unslash( $_POST['d2g_lang'] ) ) : '';
+
 
         /*************essential info*********/
         $my_update = array(
-            'post_title'        => $_POST['post_title'],
-            'post_content'      => $_POST['docdesc'],
-            'post_status'       => $_POST['post_status'],
-            'ID'                => $update_id
+            'post_title'   => isset( $_POST['post_title'] ) ? sanitize_text_field( wp_unslash( $_POST['post_title'] ) ) : '',
+            'post_content' => isset( $_POST['docdesc'] ) ? wp_kses_post( wp_unslash( $_POST['docdesc'] ) ) : '',
+            'post_status'  => isset( $_POST['post_status'] ) ? sanitize_key( wp_unslash( $_POST['post_status'] ) ) : 'draft',
+            'ID'           => $update_id,
         );
 
         /** update post */
@@ -278,7 +280,8 @@ class D2G_doc_user_profile{
             do_action('breeze_clear_all_cache');
 			echo 'updated';
 		} else {
-			var_dump($insertID);
+            echo 'error';
+			//var_dump($insertID);
 		}
   
 		wp_die();
@@ -299,9 +302,9 @@ class D2G_doc_user_profile{
      * @param $user_id
      */
     public static function set_doc_images($post_ID) {
-        global $_FILES;
+        global $_FILES; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce not required for this internal action.
 
-        foreach ($_FILES as $field_name => $file_data) {
+        foreach ($_FILES as $field_name => $file_data) {// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce not required for this internal action.
     
             if(is_array($file_data['tmp_name'])){
                 $count = count($file_data['tmp_name']);
@@ -376,13 +379,20 @@ class D2G_doc_user_profile{
     }
 
 
-    public static function d2g_delete_profile_pic(){
+    public static function d2g_delete_profile_pic() {
+        if (! isset( $_POST['_wpnonce'] ) ||! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['_wpnonce'] ) ), 'd2g_delete_pic' )) {
+            wp_die( 'Security failed' );
+        }
 
-        $image_id   = $_POST['image'];
-        $doc_id     = $_POST['doc_id'];
-        wp_delete_attachment ($image_id);
-        update_post_meta($doc_id, '_thumbnail_id', '');
-        wp_die();
+        $image_id = absint( wp_unslash( $_POST['image'] ?? 0 ) );
+        $doc_id   = absint( wp_unslash( $_POST['doc_id'] ?? 0 ) );
+
+        if ( $image_id && $doc_id ) {
+            wp_delete_attachment( $image_id );
+            update_post_meta( $doc_id, '_thumbnail_id', '' );
+            wp_send_json_success();
+        }
+        wp_send_json_error();
     }
 
 

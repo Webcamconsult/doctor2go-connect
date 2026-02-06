@@ -192,222 +192,230 @@ class D2gConnect_Public {
 	/*
 	* this function loads more doctors in the listing
 	*/
-	public function doctor_call(){
+	public function doctor_call() {
 
-	
-		$args = array(
-			'post_type'         => 'd2g_doctor',
-			'posts_per_page'    => $_POST['posts_per_page'],
-			'paged'             => $_POST['page'],
-			'post_status'       => 'publish'
-		);
-
-		if($_POST['orderby'] != ''){
-			$args['orderby'] = $_POST['orderby'];
+		// Verify nonce first
+		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['_wpnonce'] ) ), 'doc_call' ) ) {
+			wp_die( 'Security failed' );
 		}
 
-		if($_POST['order'] != ''){
-			$args['order'] = $_POST['order'];
-		}
-
-		if($_POST['meta_key'] != ''){
-			$args['meta_key'] = $_POST['meta_key'];
-		}
+		// Safely get POST variables with defaults
+		$posts_per_page = isset( $_POST['posts_per_page'] ) ? absint( wp_unslash( $_POST['posts_per_page'] ) ) : 10;
+		$page           = isset( $_POST['page'] ) ? absint( wp_unslash( $_POST['page'] ) ) : 1;
+		$orderby        = isset( $_POST['orderby'] ) ? sanitize_text_field( wp_unslash( $_POST['orderby'] ) ) : '';
+		$order          = isset( $_POST['order'] ) ? sanitize_text_field( wp_unslash( $_POST['order'] ) ) : '';
+		$meta_key       = isset( $_POST['meta_key'] ) ? sanitize_key( wp_unslash( $_POST['meta_key'] ) ) : '';
+		$cssClass       = isset( $_POST['cssClass'] ) ? sanitize_html_class( wp_unslash( $_POST['cssClass'] ) ) : '';
+		$specialty      = isset( $_POST['specialty'] ) ? absint( wp_unslash( $_POST['specialty'] ) ) : '';
+		$doctorLanguage = isset( $_POST['doctor-language'] ) ? absint( wp_unslash( $_POST['doctor-language'] ) ) : '';
+		$country        = isset( $_POST['country-origin'] ) ? absint( wp_unslash( $_POST['country-origin'] ) ) : '';
+		$intake         = isset( $_POST['intake'] ) ? absint( wp_unslash( $_POST['intake'] ) ) : '';
+		$post_id        = isset( $_POST['post_id'] ) ? absint( wp_unslash( $_POST['post_id'] ) ) : 0;
+		$template       = isset( $_POST['template'] ) ? sanitize_file_name( wp_unslash( $_POST['template'] ) ) : '';
 
 		global $cssClass;
-		
-		$cssClass 			= $_POST['cssClass'];
-		$specialty          = $_POST['specialty'];
-		$doctorLanguage     = $_POST['doctor-language'];
-		$country            = $_POST['country-origin'];
-		$intake             = $_POST['intake'];
 
-		
+		$args = array(
+			'post_type'   => 'd2g_doctor',
+			'posts_per_page' => $posts_per_page,
+			'paged'       => $page,
+			'post_status' => 'publish',
+		);
+
+		if ( $orderby !== '' ) {
+			$args['orderby'] = $orderby;
+		}
+
+		if ( $order !== '' ) {
+			$args['order'] = $order;
+		}
+
+		if ( $meta_key !== '' ) {
+			$args['meta_key'] = $meta_key;
+		}
+
 		$checker = 0;
 
-		if($specialty != '' && $specialty != '0'){
+		if ( $specialty !== '' && $specialty !== 0 ) {
 			$args['tax_query'][] = array(
 				'taxonomy' => 'doctor-specialty',
 				'field'    => 'term_id',
-				'terms'    => array( (int)$specialty ),
+				'terms'    => array( $specialty ),
 			);
-			$checker ++;
+			$checker++;
 		}
 
-		if($doctorLanguage != '' && $doctorLanguage != '0'){
+		if ( $doctorLanguage !== '' && $doctorLanguage !== 0 ) {
 			$args['tax_query'][] = array(
 				'taxonomy' => 'doctor-language',
 				'field'    => 'term_id',
-				'terms'    => array( (int)$doctorLanguage ),
+				'terms'    => array( $doctorLanguage ),
 			);
-			$checker ++;
+			$checker++;
 		}
 
-		if($country != '' && $country != '0'){
+		if ( $country !== '' && $country !== 0 ) {
 			$args['tax_query'][] = array(
 				'taxonomy' => 'country-origin',
 				'field'    => 'term_id',
-				'terms'    => array( (int)$country ),
+				'terms'    => array( $country ),
 			);
-			$checker ++;
+			$checker++;
 		}
 
-		if($checker > 1){
+		if ( $checker > 1 ) {
 			$args['tax_query']['relation'] = 'AND';
 		}
 
-		if($intake == 1){
+		if ( $intake === 1 ) {
 			$args['meta_query'] = array(
 				array(
-					'key'       => 'd2g_intake_call',
-					'value'     => $intake
-				)
+					'key'   => 'd2g_intake_call',
+					'value' => $intake,
+				),
 			);
 		}
-	
-		if($_POST['post_id'] != 0){
+
+		if ( $post_id !== 0 ) {
 			$args = array(
 				'post_type' => 'd2g_doctor',
-				'p' => $_POST['post_id'], // 'p' is used to query by post ID
+				'p'         => $post_id,
 			);
 		}
 
 		$doctor_query = new WP_Query( $args );
-		$maxPage = $doctor_query->max_num_pages;
-		
-		?>
-		
-<?php
-	
+		$maxPage      = $doctor_query->max_num_pages;
+
 		if ( $doctor_query->have_posts() ) {
 			while ( $doctor_query->have_posts() ) {
 				$doctor_query->the_post();
-				include(d2g_locate_template("content-doctor-".$_POST['template'].".php"));
+				if ( $template ) {
+					include d2g_locate_template( "content-doctor-{$template}.php" );
+				}
 			}
-		} else {?>
-			<div class="error"><?php echo esc_html__('We are very sorry but we could not find any doctors for your search query. Please try using less filters to find a suitable doctor.', 'doctor2go-connect')?></div>
-		<?php } ?>
+		} else {
+			echo '<div class="error">' . esc_html__( 'We are very sorry but we could not find any doctors for your search query. Please try using less filters to find a suitable doctor.', 'doctor2go-connect' ) . '</div>';
+		}
 
+		?>
 		<script>
-			jQuery(document).ready(function($){
-
-				//this handles the load more button
-				setTimeout(function(){
-					if (!isNaN(parseInt($('#newPageNr').val(), 10))) {
-						var newPageNr = parseInt($('#newPageNr').val());
-					} else {
-						var newPageNr = parseInt($('.more_doctors').attr('data-page'));
-					}
-
-					var maxPage = <?php echo esc_js($maxPage)?>;
-					
-					if(newPageNr > <?php echo esc_js($maxPage)?> ){
-						$('.more_doctors').css('display', 'none');
-					} else {
-						$('.more_doctors').css('display', 'inline-block');
-					}
- 
-				}, 100);
-			});
+		jQuery(document).ready(function($){
+			setTimeout(function(){
+				var newPageNr = !isNaN(parseInt($('#newPageNr').val(),10)) ? parseInt($('#newPageNr').val(),10) : parseInt($('.more_doctors').attr('data-page'));
+				var maxPage = <?php echo esc_js($maxPage); ?>;
+				if(newPageNr > maxPage){
+					$('.more_doctors').hide();
+				} else {
+					$('.more_doctors').show();
+				}
+			}, 100);
+		});
 		</script>
 		<?php
 
-		/* Restore original Post Data */
 		wp_reset_postdata();
-	
 		wp_die();
 	}
+
 
 
 	/*
 	* this function gets the count from doctors
 	*/
-	public function doctor_count_call(){
+	public function doctor_count_call() {
 
-		
-
-		$args = array(
-			'post_type'         => 'd2g_doctor',
-			'posts_per_page'    => $_POST['posts_per_page'],
-			'paged'             => $_POST['page'],
-			'post_status'       => 'publish'
-		);
-
-		if($_POST['orderby'] != ''){
-			$args['orderby'] = $_POST['orderby'];
+		// Verify nonce first
+		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['_wpnonce'] ) ), 'doc_call' ) ) {
+			wp_die( 'Security failed' );
 		}
 
-		if($_POST['order'] != ''){
-			$args['order'] = $_POST['order'];
-		}
+		// Safely get POST variables with defaults
+		$posts_per_page = isset( $_POST['posts_per_page'] ) ? absint( wp_unslash( $_POST['posts_per_page'] ) ) : 10;
+		$page           = isset( $_POST['page'] ) ? absint( wp_unslash( $_POST['page'] ) ) : 1;
+		$orderby        = isset( $_POST['orderby'] ) ? sanitize_text_field( wp_unslash( $_POST['orderby'] ) ) : '';
+		$order          = isset( $_POST['order'] ) ? sanitize_text_field( wp_unslash( $_POST['order'] ) ) : '';
+		$cssClass       = isset( $_POST['cssClass'] ) ? sanitize_html_class( wp_unslash( $_POST['cssClass'] ) ) : '';
+		$specialty      = isset( $_POST['doctor-specialty'] ) ? absint( wp_unslash( $_POST['doctor-specialty'] ) ) : '';
+		$doctorLanguage = isset( $_POST['doctor-language'] ) ? absint( wp_unslash( $_POST['doctor-language'] ) ) : '';
+		$country        = isset( $_POST['country-origin'] ) ? absint( wp_unslash( $_POST['country-origin'] ) ) : '';
+		$intake         = isset( $_POST['intake'] ) ? absint( wp_unslash( $_POST['intake'] ) ) : 0;
+		$post_id        = isset( $_POST['post_id'] ) ? absint( wp_unslash( $_POST['post_id'] ) ) : 0;
 
 		global $cssClass;
-		
-		$cssClass 			= $_POST['cssClass'];
-		$specialty          = $_POST['doctor-specialty'];
-		$doctorLanguage     = $_POST['doctor-language'];
-		$country            = $_POST['country-origin'];
-		$intake             = $_POST['intake'];
 
+		$args = array(
+			'post_type'      => 'd2g_doctor',
+			'posts_per_page' => $posts_per_page,
+			'paged'          => $page,
+			'post_status'    => 'publish',
+		);
+
+		if ( $orderby !== '' ) {
+			$args['orderby'] = $orderby;
+		}
+
+		if ( $order !== '' ) {
+			$args['order'] = $order;
+		}
 
 		$checker = 0;
 
-		if($specialty != '' && $specialty != '0'){
+		if ( $specialty !== '' && $specialty !== 0 ) {
 			$args['tax_query'][] = array(
 				'taxonomy' => 'doctor-specialty',
 				'field'    => 'term_id',
-				'terms'    => array( (int)$specialty ),
+				'terms'    => array( $specialty ),
 			);
-			$checker ++;
+			$checker++;
 		}
 
-		if($doctorLanguage != '' && $doctorLanguage != '0'){
+		if ( $doctorLanguage !== '' && $doctorLanguage !== 0 ) {
 			$args['tax_query'][] = array(
 				'taxonomy' => 'doctor-language',
 				'field'    => 'term_id',
-				'terms'    => array( (int)$doctorLanguage ),
+				'terms'    => array( $doctorLanguage ),
 			);
-			$checker ++;
+			$checker++;
 		}
 
-		if($country != '' && $country != '0'){
+		if ( $country !== '' && $country !== 0 ) {
 			$args['tax_query'][] = array(
 				'taxonomy' => 'country-origin',
 				'field'    => 'term_id',
-				'terms'    => array( (int)$country ),
+				'terms'    => array( $country ),
 			);
-			$checker ++;
+			$checker++;
 		}
 
-		if($checker > 1){
+		if ( $checker > 1 ) {
 			$args['tax_query']['relation'] = 'AND';
 		}
 
-		if($intake == 1){
+		if ( $intake === 1 ) {
 			$args['meta_query'] = array(
 				array(
-					'key'       => 'd2g_intake_call',
-					'value'     => $intake
-				)
+					'key'   => 'd2g_intake_call',
+					'value' => $intake,
+				),
 			);
 		}
 
-		if($_POST['post_id'] != 0){
+		if ( $post_id !== 0 ) {
 			$args = array(
 				'post_type' => 'd2g_doctor',
-				'p' => $_POST['post_id'], // 'p' is used to query by post ID
+				'p'         => $post_id,
 			);
 		}
-	
+
 		$doctor_query = new WP_Query( $args );
-		$count = $doctor_query->found_posts;
-		echo esc_html($count);
-		/* Restore original Post Data */
+		$count        = $doctor_query->found_posts;
+
+		echo esc_html( $count );
+
 		wp_reset_postdata();
-	
 		wp_die();
-		
 	}
+
 
 
 	//deprecated
@@ -448,17 +456,22 @@ class D2gConnect_Public {
 	//function for all custom e-mails
     public function send_ajax_d2g_email(){
 
-        $type               = $_POST['e-mail'];
-        $from_email         = $_POST['from_email'];
-        $from_name          = $_POST['from_name'];
-        $to_email           = $_POST['to_email'];
-        $to_name            = $_POST['to_name'];
-        $link               = $_POST['app_link'];
-        $title              = $_POST['title'];
-        $iban               = $_POST['iban']?$_POST['iban']:__('use IBAN from where the payment was done', 'doctor2go-connect');
-        $bic                = $_POST['bic']?$_POST['bic']:__('use BIC from where the payment was done', 'doctor2go-connect');
-        $app_date           = $_POST['app_date'];
-        $comment            = $_POST['comment'];
+        $nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'send_ajax_d2g_email' ) ) {
+			wp_send_json_error( esc_html__( 'Security check failed.', 'doctor2go-connect' ) );
+		}
+		$type       = isset($_POST['e-mail'])        ? sanitize_email(wp_unslash($_POST['e-mail']))         : '';
+		$from_email = isset($_POST['from_email'])    ? sanitize_email(wp_unslash($_POST['from_email']))     : '';
+		$from_name  = isset($_POST['from_name'])     ? sanitize_text_field(wp_unslash($_POST['from_name'])) : '';
+		$to_email   = isset($_POST['to_email'])      ? sanitize_email(wp_unslash($_POST['to_email']))       : '';
+		$to_name    = isset($_POST['to_name'])       ? sanitize_text_field(wp_unslash($_POST['to_name']))   : '';
+		$link       = isset($_POST['app_link'])      ? esc_url_raw(wp_unslash($_POST['app_link']))          : '';
+		$title      = isset($_POST['title'])         ? sanitize_text_field(wp_unslash($_POST['title']))     : '';
+		$iban       = isset($_POST['iban'])          ? sanitize_text_field(wp_unslash($_POST['iban']))      : __('use IBAN from where the payment was done', 'doctor2go-connect');
+		$bic        = isset($_POST['bic'])           ? sanitize_text_field(wp_unslash($_POST['bic']))       : __('use BIC from where the payment was done', 'doctor2go-connect');
+		$app_date   = isset($_POST['app_date'])      ? sanitize_text_field(wp_unslash($_POST['app_date']))  : '';
+		$comment    = isset($_POST['comment'])       ? sanitize_textarea_field(wp_unslash($_POST['comment'])) : '';
+
 
 
         $args = array(
@@ -502,91 +515,98 @@ class D2gConnect_Public {
 
 	////////////////////////////////////////////////////////////////////////////
 	//single sign on login (this is called when user clicks link in WCC software)
-	public function d2g_sso(){
-		// and set cookie for wp_lang
-		if(!is_admin()){
-			setcookie("wp_lang", get_locale(), time() + 3600, "/");
+	public function d2g_sso() {
+		// Set cookie for WP language
+		if ( ! is_admin() ) {
+			setcookie( "wp_lang", get_locale(), time() + 3600, "/" );
 		}
+
 		global $post;
+
 		
-		/*** programmatic_login ***/
-		if(isset($_GET['user_key'])){
-			
-			$superKey           = get_option('wcc_token');
-			$myTime             = new DateTime();
-			$unixTime           = $myTime->format('U');
-	
-			if($unixTime - $_GET['time'] <= 300000){
-				
-				$hashChecker = hash('sha256', $_GET['time']."_".$_GET['user_key']."_".$superKey);
-	
-				if($hashChecker === $_GET['hash']){
-					$myUser = get_users(array(
-						'meta_key' => 'user_key',
-						'meta_value' => $_GET['user_key']
-					));
-	
-					$userName = $myUser[0]->data->user_login;
-					
-					$response = programmatic_login( $userName );
-					
-					if($response == true){
-						$currLang 		= explode('_', get_locale())[0];
-						$d2gAdmin 		= new D2G_doc_user_profile();
-						$pageData 		= $d2gAdmin::d2g_page_url($currLang, 'my_profile', true);
-						header("Location:".$pageData['url']);
-						exit;
+		$redirect_url  = isset( $_GET['redirect_url'] ) ? sanitize_text_field( wp_unslash( $_GET['redirect_url'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$wcc_redirect  = isset( $_GET['wcc_redirect'] ) ? sanitize_text_field( wp_unslash( $_GET['wcc_redirect'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$lang          = isset( $_GET['lang'] ) ? sanitize_text_field( wp_unslash( $_GET['lang'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$redirect_to   = isset( $_GET['redirect_to'] ) ? sanitize_text_field( wp_unslash( $_GET['redirect_to'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$user_key      = isset( $_GET['user_key'] ) ? wp_unslash( $_GET['user_key'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+		$time          = isset( $_GET['time'] ) ? absint( wp_unslash( $_GET['time'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$hash          = isset( $_GET['hash'] ) ? wp_unslash( $_GET['hash'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+		$app_id        = isset( $_GET['app'] ) ? absint( wp_unslash( $_GET['app'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$client_token  = isset( $_GET['client_token'] ) ? sanitize_text_field( wp_unslash( $_GET['client_token'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		
+
+		/*** programmatic login ***/
+		if ( $user_key ) {
+			$superKey = get_option( 'wcc_token' );
+			$unixTime = ( new DateTime() )->format( 'U' );
+
+			if ( $unixTime - $time <= 300000 ) {
+				$hashChecker = hash( 'sha256', $time . "_" . $user_key . "_" . $superKey );
+
+				if ( $hashChecker === $hash ) {
+					$myUser = get_users( array(
+						'meta_key'   => 'user_key',
+						'meta_value' => $user_key
+					) );
+
+					if ( isset( $myUser[0] ) ) {
+						$userName = $myUser[0]->data->user_login;
+						$response = programmatic_login( $userName );
+
+						if ( $response === true ) {
+							$currLang  = explode( '_', get_locale() )[0];
+							$d2gAdmin  = new D2G_doc_user_profile();
+							$pageData  = $d2gAdmin::d2g_page_url( $currLang, 'my_profile', true );
+							header( "Location:" . $pageData['url'] );
+							exit;
+						}
 					}
-					//echo 'user may be logged in';
 				} else {
-					echo esc_html('a wrong login hash has been send', 'doctor2go-connect');
+					echo esc_html__( 'A wrong login hash has been sent', 'doctor2go-connect' );
 				}
 			} else {
-				echo esc_html('the link is not valid any more', 'doctor2go-connect');
-				
-			}	
-		} 
-		
-		//handle redirects to protected pages (pages that need login) + redirect to specific pages (confirmation page after booking)
-		//this is only used for wcc mail links
-		if(isset($_GET['redirect_url']) && !isset($_GET['wcc_redirect'])){
-			$lang 			= $_GET['lang'];
-			$d2gAdmin 		= new D2G_doc_user_profile();
-			$pageData 		= $d2gAdmin::d2g_page_url($lang, 'login', true);
-			$pageData2 		= $d2gAdmin::d2g_page_url($lang, $_GET['redirect_to'], true);
+				echo esc_html__( 'The link is not valid anymore', 'doctor2go-connect' );
+			}
+		}
 
-			//special case for appointment confirmation as we need to pass the appointment id en client token
-			if($_GET['redirect_url'] == 'appointment_confirmation'){
-				$url = $d2gAdmin::d2g_page_url($lang, $_GET['redirect_url'], false);
-				header("Location:".$url.'?app='.$_GET['app'].'&client_token='.$_GET['client_token']);
+		// Handle redirects to protected pages or specific pages (confirmation after booking)
+		if ( $redirect_url && ! $wcc_redirect ) {
+			$d2gAdmin = new D2G_doc_user_profile();
+			$pageData = $d2gAdmin::d2g_page_url( $lang, 'login', true );
+			$pageData2 = $d2gAdmin::d2g_page_url( $lang, $redirect_to, true );
+
+			// Special case for appointment confirmation
+			if ( $redirect_url === 'appointment_confirmation' ) {
+				$url = $d2gAdmin::d2g_page_url( $lang, $redirect_url, false );
+				header( "Location:" . $url . '?app=' . $app_id . '&client_token=' . $client_token );
 				exit;
 			}
 
-			if(is_user_logged_in()){
-				header("Location:".$pageData2['url']);
+			if ( is_user_logged_in() ) {
+				header( "Location:" . $pageData2['url'] );
 			} else {
-				 
-				header("Location:".$pageData['url'].'?redirect_to='.urlencode($pageData2['url']));
-				
+				header( "Location:" . $pageData['url'] . '?redirect_to=' . urlencode( $pageData2['url'] ) );
 			}
-			
+
 			exit;
 		}
 
-		$post_meta = get_post_meta($post->ID);
-		if(isset($post_meta['d2g_page_accessebility'][0]) && $post_meta['d2g_page_accessebility'][0] == 'protected' && !is_user_logged_in(  )){
-			$currLang 		= explode('_', get_locale())[0];
-			$d2gAdmin 		= new D2G_doc_user_profile();
-			$pageData 		= $d2gAdmin::d2g_page_url($currLang, 'login', true);
-			header("Location:".$pageData['url']);
+		$post_meta = get_post_meta( $post->ID );
+
+		if ( isset( $post_meta['d2g_page_accessebility'][0] ) && $post_meta['d2g_page_accessebility'][0] === 'protected' && ! is_user_logged_in() ) {
+			$currLang  = explode( '_', get_locale() )[0];
+			$d2gAdmin  = new D2G_doc_user_profile();
+			$pageData  = $d2gAdmin::d2g_page_url( $currLang, 'login', true );
+			header( "Location:" . $pageData['url'] );
+			exit;
+		}
+
+		if ( isset( $post_meta['d2g_page_accessebility'][0] ) && $post_meta['d2g_page_accessebility'][0] === 'protected_uc' && ! is_user_logged_in() && get_option( 'under_construction' ) == 1 ) {
+			$new_url = '/under-construction';
+			header( "Location:" . $new_url );
 			exit;
 		}
 		
-		if(isset($post_meta['d2g_page_accessebility'][0]) && $post_meta['d2g_page_accessebility'][0] == 'protected_uc' && !is_user_logged_in(  ) && get_option('under_construction') == 1){
-			$new_url = '/under-construction';
-			header("Location:".$new_url);
-			exit;
-		}
 	}
 	
 	//redirects are defined for when wp-login.php is triggered 
@@ -616,26 +636,29 @@ class D2gConnect_Public {
 		} else {
 			$pageData 		= $d2gAdmin::d2g_page_url($currLang, 'login', true);
 			
-			if($_GET['redirect_to'] != '' &&  urldecode($_GET['redirect_to']) != $pageData['url']){
-				wp_redirect( urldecode($_GET['redirect_to']) ); 
+			
+			$redirect_to = isset($_GET['redirect_to']) ? wp_unslash($_GET['redirect_to']) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.InputNotValidated,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+
+			if ($redirect_to != '' && urldecode($redirect_to) != $pageData['url']) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				wp_redirect(urldecode($redirect_to)); 
 				exit;
 			}
 
-			if(in_array('patient', $user->roles)){
-				$pageData 		= $d2gAdmin::d2g_page_url($currLang, 'patient_dashboard', true);
-				wp_redirect( $pageData['url']); 
+			if (in_array('patient', $user->roles)) {
+				$pageData = $d2gAdmin::d2g_page_url($currLang, 'patient_dashboard', true);
+				wp_redirect($pageData['url']); 
 				exit;
-			} elseif(in_array('administrator', $user->roles)){
-				wp_redirect( get_site_url().'/wp-admin/'); 
+			} elseif (in_array('administrator', $user->roles)) {
+				wp_redirect(get_site_url().'/wp-admin/'); 
 				exit;
 			} else {
-				$pageData 		= $d2gAdmin::d2g_page_url($currLang, 'login', true);
-				wp_redirect( $pageData['url']); 
+				$pageData = $d2gAdmin::d2g_page_url($currLang, 'login', true);
+				wp_redirect($pageData['url']); 
 				exit;
 			}
-			
-			if(strpos($redirect_to, 'doctor') !== false){
-				wp_redirect( $redirect_to.'?book=1' ); 
+
+			if (strpos($redirect_to, 'doctor') !== false) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				wp_redirect($redirect_to.'?book=1'); 
 				exit;
 			}
 			
@@ -648,42 +671,42 @@ class D2gConnect_Public {
 
 	//ajax function for handeling liked posts
 	function d2g_handle_like() {
-		// Verify nonce
-		if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'like_nonce')) {
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$nonce = isset($_POST['nonce']) ? wp_unslash($_POST['nonce']) : '';
+
+		if (!$nonce || !wp_verify_nonce($nonce, 'like_nonce')) {
 			wp_send_json_error(['message' => 'Invalid nonce']);
 			wp_die();
 		}
-	
-		// Get post ID
-		$post_id = intval($_POST['post_id']);
+
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+		$post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
 		if (!$post_id || !get_post($post_id)) {
 			wp_send_json_error(['message' => 'Invalid post ID']);
 			wp_die();
 		}
-	
-		// Handle likes for logged-in users
+
 		if (is_user_logged_in()) {
 			$user_id = get_current_user_id();
 			$liked_posts = get_user_meta($user_id, 'liked_posts', true);
 			$liked_posts = $liked_posts ? $liked_posts : [];
-	
-			if (in_array($post_id, $liked_posts)) {
-				// Unlike the post
+
+			if (in_array($post_id, $liked_posts, true)) {
 				$liked_posts = array_diff($liked_posts, [$post_id]);
 				$action = 'unliked';
 			} else {
-				// Like the post
 				$liked_posts[] = $post_id;
 				$action = 'liked';
 			}
-	
+
 			update_user_meta($user_id, 'liked_posts', $liked_posts);
 			wp_send_json_success(['message' => 'Success', 'action' => $action]);
 		} else {
 			wp_send_json_error(['message' => 'User not logged in']);
 		}
-	
+
 		wp_die();
 	}
+
 	
 }

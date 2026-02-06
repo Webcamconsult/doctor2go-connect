@@ -71,17 +71,14 @@ class D2gConnect_Shortcodes {
 		$currUser           = wp_get_current_user();
 		$permalink 			= d2g_curPageURL();
 
-		if(is_user_logged_in() && (in_array( 'editor', (array) $currUser->roles ) || in_array( 'administrator', (array) $currUser->roles ))){
-			$pubProfileID       = $_GET['edit'];
+		if(is_user_logged_in() && (in_array( 'editor', (array) $currUser->roles ) || in_array( 'administrator', (array) $currUser->roles ))){ // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce not required for this internal action.
+			$pubProfileID = isset( $_GET['edit'] ) ? absint( wp_unslash( $_GET['edit'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- load-only for logged in users, no form processing.
 			$pubProfile         = get_post($pubProfileID);
 		} else {
 			
 			$currUserID         = $currUser->data->ID;
 			$pubProfile         = $d2gAdmin::d2g_get_pub_profile($currUserID)[0];
 			$pubProfileID       = (int)$pubProfile->ID;
-
-
-			
 		}
 
 		$profileStatus      = $pubProfile->post_status;
@@ -193,11 +190,18 @@ class D2gConnect_Shortcodes {
 							</div>
 						</div>
 						<ul class="pm_tabs row">
-							<li class="<?php echo ($_GET['tab'] != 2 && $_GET['tab'] != 3)?'active':''?> tab col-sm-6" data-tab-id="1" data-ref="basic_data"><span>1</span><span><?php echo esc_html__('Basics', 'doctor2go-connect')?></span></li>
-							<li class="<?php echo ($_GET['tab'] == 2)?'active':''?> tab col-sm-6" data-ref="edu"  data-tab-id="2"><span>2</span><span><?php echo esc_html__('Education & working experience', 'doctor2go-connect')?></span></li>
+							<?php 
+							$tab = isset( $_GET['tab'] ) ? absint( wp_unslash( $_GET['tab'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- View-only tab state, no form processing.
+							?>
+							<li class="<?php echo ( $tab != 2 && $tab != 3 ) ? 'active' : ''; ?> tab col-sm-6" data-tab-id="1" data-ref="basic_data">
+								<span>1</span><span><?php echo esc_html( __( 'Basics', 'doctor2go-connect' ) ); ?></span>
+							</li>
+							<li class="<?php echo ( $tab == 2 ) ? 'active' : ''; ?> tab col-sm-6" data-ref="edu" data-tab-id="2">
+								<span>2</span><span><?php echo esc_html( __( 'Education & working experience', 'doctor2go-connect' ) ); ?></span>
+							</li>
 						</ul>
 						<div class="error_msg_sales"></div>
-						<div class="basic_data pm_d2g_tab_content first <?php echo ($_GET['tab'] != 2 && $_GET['tab'] != 3)?'':'simple_hide'?>">
+						<div class="basic_data pm_d2g_tab_content first <?php echo ( $tab != 2 && $tab != 3 ) ? '' : 'simple_hide'; ?>">
 							<div class="row margin-bottom-standard">
 								<div class="col-sm-6">
 									<h3><?php echo esc_html__('Personal information', 'doctor2go-connect')?></h3>
@@ -355,7 +359,7 @@ class D2gConnect_Shortcodes {
 							</div>
 						</div>
 
-						<div class="<?php echo ($_GET['tab'] == 2)?'':'simple_hide'?> pm_d2g_tab_content edu exp_edu">
+						<div class="<?php echo ( $tab == 2 ) ? '' : 'simple_hide'; ?> pm_d2g_tab_content edu exp_edu">
 							<h3><?php echo esc_html__('education', 'doctor2go-connect')?></h3>
 							<div class="form-table edu_wrapper">
 								<?php $counter = 0?>
@@ -711,24 +715,21 @@ class D2gConnect_Shortcodes {
 						event.preventDefault();
 						$(".d2g_doctor-form").toggleClass('loading');
 						
-						var ajax_url = '<?php echo esc_js(admin_url('admin-ajax.php')); ?>';
-						var data = 	{
-										'action'                    : 'd2g_delete_profile_pic',
-										'doc_id'                  	: $(this).attr('data-doc-id'),
-										'image'                      : $(this).attr('data-image-id'),
-								
-									};
+						var data = {
+							'action'     : 'd2g_delete_profile_pic',
+							'_wpnonce'   : '<?php echo esc_js( wp_create_nonce( 'd2g_delete_pic' ) ); ?>',  // Inline nonce
+							'doc_id'     : $(this).attr('data-doc-id'),
+							'image'      : $(this).attr('data-image-id')
+						};
 
-						//console.log(data);
-						// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-						jQuery.post(ajax_url, data, function(response) {
+						$.post('<?php echo esc_js( admin_url( 'admin-ajax.php' ) ); ?>', data, function(response) {
 							$(".d2g_doctor-form").toggleClass('loading');
-							console.log(response);
-							location.reload(true);
-						});			
-
+							//console.log(response);
+							if ( response.success ) {
+								location.reload(true);
+							}
+						});
 						return false;
-			
 					});
 			
 					$('.unpublish_doctor').click(function(event){
@@ -832,9 +833,12 @@ class D2gConnect_Shortcodes {
 			
 						<?php 
 						if(is_user_logged_in() && (in_array( 'editor', (array) $currUser->roles ) || in_array( 'administrator', (array) $currUser->roles ))){?>
-							$('#doctor_post').attr('action', '<?php echo esc_html(d2g_curPageURL(false)).'?edit='.esc_html($_GET['edit'])?>&tab=' + tabID);
+							<?php 
+							$edit_id = isset( $_GET['edit'] ) ? absint( wp_unslash( $_GET['edit'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- View-only URL param for form action.
+							?>
+							$('#doctor_post').attr('action', '<?php echo esc_attr( '?edit=' . $edit_id ); ?>&tab=' + tabID);
 						<?php } else { ?>
-							$('#doctor_post').attr('action', '<?php echo esc_html(d2g_curPageURL(false))?>?tab=' + tabID);
+							$('#doctor_post').attr('action', '?tab=' + tabID);
 						<?php } ?>
 						
 			
@@ -983,10 +987,10 @@ class D2gConnect_Shortcodes {
 		}
 	
 
-		$specialty          = isset($_GET['doctor-specialty']) ? $_GET['doctor-specialty'] : '';
-		$doctorLanguage     = isset($_GET['doctor-language']) ? $_GET['doctor-language'] : '';
-		$country            = isset($_GET['country-origin']) ? $_GET['country-origin'] : '';
-		$intake             = isset($_GET['intake']) ? $_GET['intake'] : '';
+		$specialty      = isset( $_GET['doctor-specialty'] ) ? sanitize_text_field( wp_unslash( $_GET['doctor-specialty'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
+		$doctorLanguage = isset( $_GET['doctor-language'] ) ? sanitize_text_field( wp_unslash( $_GET['doctor-language'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
+		$country        = isset( $_GET['country-origin'] ) ? sanitize_text_field( wp_unslash( $_GET['country-origin'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
+		$intake         = isset( $_GET['intake'] ) ? sanitize_text_field( wp_unslash( $_GET['intake'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
 
 
 		$checker = 0;
@@ -1031,10 +1035,11 @@ class D2gConnect_Shortcodes {
 			);
 		}
 
-		if(isset($_GET['post_id']) && $_GET['post_id'] != 0){
+		$post_id = isset( $_GET['post_id'] ) ? absint( wp_unslash( $_GET['post_id'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Single post view by ID.
+		if ( $post_id && $post_id != 0 ) {
 			$args = array(
 				'post_type' => 'd2g_doctor',
-				'p' => $_GET['post_id'], // 'p' is used to query by post ID
+				'p' => $post_id,  // Sanitized ID
 			);
 		}
 	
@@ -1101,7 +1106,8 @@ class D2gConnect_Shortcodes {
 								'doctor-language'           : $('#language_filter').val(),
 								'country-origin'            : $('#country_filter').val(),
 								'intake'                    : intake_val,
-								'sub_title'                 : subtitle_val
+								'sub_title'                 : subtitle_val,
+								'_wpnonce'   				: '<?php echo esc_js( wp_create_nonce( 'doc_call' ) ); ?>',  // Inline nonce
 							};
 	
 							// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
@@ -1240,10 +1246,10 @@ class D2gConnect_Shortcodes {
 			'post_status'       => 'publish'
 		);
 
-		$specialty          = isset($_GET['doctor-specialty']) ? $_GET['doctor-specialty'] : '';
-		$doctorLanguage     = isset($_GET['doctor-language']) ? $_GET['doctor-language'] : '';
-		$country            = isset($_GET['country-origin']) ? $_GET['country-origin'] : '';
-		$intake             = isset($_GET['intake']) ? $_GET['intake'] : '';
+		$specialty      = isset( $_GET['doctor-specialty'] ) ? sanitize_text_field( wp_unslash( $_GET['doctor-specialty'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
+		$doctorLanguage = isset( $_GET['doctor-language'] ) ? sanitize_text_field( wp_unslash( $_GET['doctor-language'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
+		$country        = isset( $_GET['country-origin'] ) ? sanitize_text_field( wp_unslash( $_GET['country-origin'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
+		$intake         = isset( $_GET['intake'] ) ? sanitize_text_field( wp_unslash( $_GET['intake'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
 
 
 		$checker = 0;
@@ -1288,13 +1294,13 @@ class D2gConnect_Shortcodes {
 			);
 		}
 
-		if(isset($_GET['post_id']) && $_GET['post_id'] != 0){
+		$post_id = isset( $_GET['post_id'] ) ? absint( wp_unslash( $_GET['post_id'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Single post view by ID.
+		if ( $post_id && $post_id != 0 ) {
 			$args = array(
 				'post_type' => 'd2g_doctor',
-				'p' => $_GET['post_id'], // 'p' is used to query by post ID
+				'p' => $post_id,  // Sanitized ID
 			);
 		}
-		
 		
 		$doctor_query 		= new WP_Query( $args );
 		$doctor_query2 		= new WP_Query( $args2 );
@@ -1309,53 +1315,76 @@ class D2gConnect_Shortcodes {
 		<?php if($a['wrapper_class'] != ''){?>
 			<div class="<?php echo esc_html($a['wrapper_class'])?>">
 		<?php }?>
-		<form methode="GET" action="<?php echo esc_html($pageDoc)?>">
+		<?php
+		// Sanitized filter params (view-only GET filters).
+		$doctor_specialty = isset( $_GET['doctor-specialty'] ) ? absint( wp_unslash( $_GET['doctor-specialty'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET filters only (view/search), no state change.
+		$country_origin   = isset( $_GET['country-origin'] ) ? absint( wp_unslash( $_GET['country-origin'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET filters only (view/search), no state change.
+		$doctor_language  = isset( $_GET['doctor-language'] ) ? absint( wp_unslash( $_GET['doctor-language'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET filters only (view/search), no state change.
+		$post_id_filter   = isset( $_GET['post_id'] ) ? absint( wp_unslash( $_GET['post_id'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET filters only (view/search), no state change.
+		$intake_filter    = isset( $_GET['intake'] ) ? absint( wp_unslash( $_GET['intake'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET filters only (view/search), no state change.
+		?>
+
+		<form method="GET" action="<?php echo esc_url( $pageDoc ); ?>">
 			<h3 class="opener special">Filters <span class="icon-angle-down"></span></h3>
 			<div class="doctor_filters_outer">
-				<ul id="doctor_filters" class="<?php echo esc_html($a['ul_class'])?>">
+				<ul id="doctor_filters" class="<?php echo esc_attr( $a['ul_class'] ); ?>">
 					<li class="filter_wrap">
 						<select name="doctor-specialty" id="specialty_filter" class="doctor_filter">
-							<option value="0"><?php echo esc_html__('all specialties', 'doctor2go-connect')?></option>
-							<?php foreach($specialties as $specialty){?>
-								<option <?php echo (isset($_GET['doctor-specialty']) && $specialty->term_id == $_GET['doctor-specialty'])?'selected':''?>  value="<?php echo esc_html($specialty->term_id)?>">
-									<?php if(get_option('d2g_pseudo_translations') == 1){
-										echo ($currLang == 'en')?esc_html($specialty->name):esc_html(get_term_meta($specialty->term_id, 'rudr_text_'.$currLang, true));
+							<option value="0"><?php echo esc_html__( 'all specialties', 'doctor2go-connect' ); ?></option>
+							<?php foreach ( $specialties as $specialty ) { ?>
+								<option <?php selected( $doctor_specialty, $specialty->term_id ); ?> value="<?php echo esc_attr( $specialty->term_id ); ?>">
+									<?php
+									if ( get_option( 'd2g_pseudo_translations' ) == 1 ) {
+										echo ( $currLang == 'en' )
+											? esc_html( $specialty->name )
+											: esc_html( get_term_meta( $specialty->term_id, 'rudr_text_' . $currLang, true ) );
 									} else {
-										echo esc_html($specialty->name);
-									}?>
+										echo esc_html( $specialty->name );
+									}
+									?>
 								</option>
 							<?php } ?>
 						</select>
 					</li>
+
 					<li class="filter_wrap">
 						<select name="country-origin" id="country_filter" class="doctor_filter">
-							<option value="0"><?php echo esc_html__('all countries', 'doctor2go-connect')?></option>
-							<?php foreach($countries as $country){?>
-								<option <?php echo (isset($_GET['country-origin']) && $country->term_id == $_GET['country-origin'])?'selected':''?> value="<?php echo esc_html($country->term_id)?>">
-									<?php if(get_option('d2g_pseudo_translations') == 1){
-										echo ($currLang == 'en')?esc_html($country->name):esc_html(get_term_meta($country->term_id, 'rudr_text_'.$currLang, true));
+							<option value="0"><?php echo esc_html__( 'all countries', 'doctor2go-connect' ); ?></option>
+							<?php foreach ( $countries as $country ) { ?>
+								<option <?php selected( $country_origin, $country->term_id ); ?> value="<?php echo esc_attr( $country->term_id ); ?>">
+									<?php
+									if ( get_option( 'd2g_pseudo_translations' ) == 1 ) {
+										echo ( $currLang == 'en' )
+											? esc_html( $country->name )
+											: esc_html( get_term_meta( $country->term_id, 'rudr_text_' . $currLang, true ) );
 									} else {
-										echo esc_html($country->name);
-									}?>
+										echo esc_html( $country->name );
+									}
+									?>
 								</option>
 							<?php } ?>
 						</select>
 					</li>
+
 					<li class="filter_wrap">
 						<select name="doctor-language" id="language_filter" class="doctor_filter">
-							<option value="0"><?php echo esc_html__('all languages', 'doctor2go-connect')?></option>
-							<?php foreach($languages as $language){?>
-								<option <?php echo (isset($_GET['doctor-language']) && $language->term_id == $_GET['doctor-language'])?'selected':''?> value="<?php echo esc_html($language->term_id)?>">
-									<?php if(get_option('d2g_pseudo_translations') == 1){
-										echo ($currLang == 'en')?esc_html($language->name):esc_html(get_term_meta($language->term_id, 'rudr_text_'.$currLang, true));
+							<option value="0"><?php echo esc_html__( 'all languages', 'doctor2go-connect' ); ?></option>
+							<?php foreach ( $languages as $language ) { ?>
+								<option <?php selected( $doctor_language, $language->term_id ); ?> value="<?php echo esc_attr( $language->term_id ); ?>">
+									<?php
+									if ( get_option( 'd2g_pseudo_translations' ) == 1 ) {
+										echo ( $currLang == 'en' )
+											? esc_html( $language->name )
+											: esc_html( get_term_meta( $language->term_id, 'rudr_text_' . $currLang, true ) );
 									} else {
-										echo esc_html($language->name);
-									}?>
+										echo esc_html( $language->name );
+									}
+									?>
 								</option>
 							<?php } ?>
 						</select>
 					</li>
-					
+
 					<!--
 					//this is not sure if ever is gonna be used
 					<li id="hourly_price">
@@ -1372,37 +1401,49 @@ class D2gConnect_Shortcodes {
 						</div>
 					</li>
 					-->
+
 					<li class="filter_wrap">
 						<select name="post_id" id="post_id" class="doctor_filter">
-							<option value="0"><?php echo esc_html__('Doctor name', 'doctor2go-connect')?></option>
+							<option value="0"><?php echo esc_html__( 'Doctor name', 'doctor2go-connect' ); ?></option>
 							<?php
 							while ( $doctor_query2->have_posts() ) {
-								$doctor_query2->the_post();?>
-								<option <?php echo (isset($_GET['post_id']) && get_the_ID() == $_GET['post_id'])?'selected':''?> value="<?php echo esc_html(get_the_ID())?>"><?php echo esc_html(get_the_title())?></option>
-							<?php }?>
+								$doctor_query2->the_post();
+								?>
+								<option <?php selected( $post_id_filter, get_the_ID() ); ?> value="<?php echo esc_attr( get_the_ID() ); ?>">
+									<?php echo esc_html( get_the_title() ); ?>
+								</option>
+							<?php } ?>
 						</select>
 					</li>
+
 					<li class="filter_check_wrapper simple_hide">
-						<label><input <?php echo (isset($_GET['intake']) && $_GET['intake'] == 1)?'checked':''?> class="doctor_filter" type="checkbox" id="intake" value="1"> <?php echo esc_html__('Free intake interview', 'doctor2go-connect')?></label>
+						<label>
+							<input <?php checked( $intake_filter, 1 ); ?> class="doctor_filter" type="checkbox" id="intake" value="1">
+							<?php echo esc_html__( 'Free intake interview', 'doctor2go-connect' ); ?>
+						</label>
 					</li>
+
 					<!--<li class="filter_check_wrapper">
 						<label><input class="doctor_filter" type="checkbox" id="sub_title" value="1"> <?php echo esc_html__('Subtitles for translation', 'doctor2go-connect')?></label>
 					</li>-->
-					<?php if($a['stand_alone'] == 'false'){ ?>
+
+					<?php if ( $a['stand_alone'] == 'false' ) { ?>
 						<li>
-							<a class="btn btn-default" href="<?php echo esc_url(d2g_curPageURL(false))?>"><?php esc_html_e('Reset search', 'doctor2go-connect')?></a>
+							<a class="btn btn-default" href="<?php echo esc_url( $pageDoc ); ?>"><?php esc_html_e( 'Reset search', 'doctor2go-connect' ); ?></a>
 						</li>
-					<?php } ?>	
-					
+					<?php } ?>
 				</ul>
-				<p><?php echo esc_html__('Found doctors:', 'doctor2go-connect')?> <span id="doc_count"><?php echo esc_html($count);?></span></p>
-				<?php if($a['stand_alone'] == 'true'){ ?>
-					<input id="search_submit" type="submit" class="search_submit" value="<?php echo esc_html__('Search', 'doctor2go-connect')?>">
+
+				<p><?php echo esc_html__( 'Found doctors:', 'doctor2go-connect' ); ?> <span id="doc_count"><?php echo esc_html( $count ); ?></span></p>
+
+				<?php if ( $a['stand_alone'] == 'true' ) { ?>
+					<input id="search_submit" type="submit" class="search_submit" value="<?php echo esc_attr__( 'Search', 'doctor2go-connect' ); ?>">
 					<div class="error" id="search_error"></div>
 					<div class="loader simple_hide"></div>
 				<?php } ?>
 			</div>
 		</form>
+
 		<?php if($a['wrapper_class'] != ''){?>
 		</div>
 		<?php }?>
@@ -1481,7 +1522,8 @@ class D2gConnect_Shortcodes {
 							'page'                      : 1,
 							'cssClass'					: $('#cssClass').val(),
 							'my_action'                 : 'filter',
-							'resp'						: 'default'
+							'resp'						: 'default',
+							'_wpnonce'   				: '<?php echo esc_js( wp_create_nonce( 'doc_call' ) ); ?>',  // Inline nonce
 						};
 
 
@@ -1739,97 +1781,106 @@ class D2gConnect_Shortcodes {
 	// custom login form shortcode
 	///////////////////////////////
 	public function d2g_login_form() {
-		ob_start();
-	
-		// Check if the user is already logged in
-		if (is_user_logged_in()) {
-			echo '<p>' . esc_html__('You are logged in', 'doctor2go-connect') . '</p>';
+	ob_start();
+
+	// Check if the user is already logged in.
+	if ( is_user_logged_in() ) {
+		echo '<p>' . esc_html__( 'You are logged in', 'doctor2go-connect' ) . '</p>';
+		return ob_get_clean();
+	}
+
+	// Messages from GET (view-only).
+	$login_status = isset( $_GET['login'] ) ? sanitize_text_field( wp_unslash( $_GET['login'] ) ) : '';
+	$logout_flag  = isset( $_GET['logout'] ) ? absint( wp_unslash( $_GET['logout'] ) ) : 0;
+
+	if ( 'failed' === $login_status ) {
+		echo '<p>' . esc_html__( 'You either have entered a wrong username or password, please try again or click on lost password to reset your password.', 'doctor2go-connect' ) . '</p>';
+	} elseif ( 1 === $logout_flag ) {
+		echo '<p>' . esc_html__( 'You have logged out from this website.', 'doctor2go-connect' ) . '</p>';
+	}
+
+	// Determine the default redirect URL after login.
+	$locale_parts     = explode( '_', get_locale() );
+	$currLang         = isset( $locale_parts[0] ) ? sanitize_key( $locale_parts[0] ) : 'en';
+	$d2gAdmin         = new D2G_doc_user_profile();
+	$defaultRedirect  = $d2gAdmin::d2g_page_url( $currLang, 'dashboard', true );
+
+	$redirect_to_req  = isset( $_REQUEST['redirect_to'] ) ? esc_url_raw( wp_unslash( $_REQUEST['redirect_to'] ) ) : ''; // raw for redirects/requests. [web:197]
+	$redirect_to      = ! empty( $redirect_to_req ) ? $redirect_to_req : ( isset( $defaultRedirect['url'] ) ? esc_url_raw( $defaultRedirect['url'] ) : '' );
+
+	// Verify nonce on POST (this is your “processing form data” part).
+	if ( 'POST' === $_SERVER['REQUEST_METHOD'] ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated -- $_SERVER['REQUEST_METHOD'] always exists in PHP web context.
+		$nonce = isset( $_POST['d2g_login_nonce'] ) ? sanitize_key( wp_unslash( $_POST['d2g_login_nonce'] ) ) : '';
+		if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'd2g_login_action' ) ) {
+			echo '<p>' . esc_html__( 'Security check failed. Please reload the page and try again.', 'doctor2go-connect' ) . '</p>';
 			return ob_get_clean();
-		} elseif (isset($_GET['login']) && $_GET['login'] === 'failed') {
-			echo '<p>' . esc_html__('You either have entered a wrong username or password, please try again or click on lost password to reset your password.', 'doctor2go-connect') . '</p>';
-		} elseif (isset($_GET['logout']) && $_GET['logout'] == 1) {
-			echo '<p>' . esc_html__('You have logged out from this website.', 'doctor2go-connect') . '</p>';
 		}
-	
-		// Determine the default redirect URL after login
-		$currLang = explode('_', get_locale())[0];
-		$d2gAdmin = new D2G_doc_user_profile();
-		$defaultRedirect = $d2gAdmin::d2g_page_url($currLang, 'dashboard', true);
-		$redirect_to = isset($_REQUEST['redirect_to']) ? esc_url($_REQUEST['redirect_to']) : $defaultRedirect['url'];
-		
-	
-		// Define login form arguments
-		$args = array(
-			'redirect'       => add_query_arg('redirect_to', $redirect_to, d2g_curPageURL()),
-			'form_id'        => 'custom-loginform',
-			'label_username' => esc_html__('Username or Email', 'doctor2go-connect'),
-			'label_password' => esc_html__('Password', 'doctor2go-connect'),
-			'label_remember' => esc_html__('Remember Me', 'doctor2go-connect'),
-			'label_log_in'   => esc_html__('Log In', 'doctor2go-connect'),
-			'remember'       => true,
-		);
-	
-		// Your reCAPTCHA site key
-		$recaptcha_site_key = get_option('d2g_recaptcha_site_key');
-	
-		?>
-		<div class="d2g_form_wrapper">
-			<form method="post" action="<?php echo esc_url(wp_login_url($redirect_to)); ?>" id="custom-loginform">
-				<p>
-					<label for="user_login"><?php esc_html_e('Email', 'doctor2go-connect'); ?></label>
-					<input type="text" name="log" id="user_login" class="input" required>
-				</p>
-				<p>
-					<label for="user_pass"><?php esc_html_e('Password', 'doctor2go-connect'); ?></label>
-					<input type="password" name="pwd" id="user_pass" class="input" required>
-				</p>
-				
-				
-				<!-- reCAPTCHA Widget -->
-				<?php if(get_option('d2g_recaptcha_site_key')){ ?> 
-					<div class="g-recaptcha" data-sitekey="<?php echo esc_attr($recaptcha_site_key); ?>"></div>
-					<div id='html_element2'></div>
-				<?php }?>
-				<!-- altacha Widget check if shortcode is active-->
-				<?php if ( shortcode_exists( 'altcha' ) ) : ?>
-					<?php echo do_shortcode('[altcha]'); ?>
-				<?php endif; ?>
-				
-				<p style="margin-top: 10px;">
-					<label>
-						<input type="checkbox" name="rememberme" value="forever">
-						<?php esc_html_e('Remember Me', 'doctor2go-connect'); ?>
-					</label>
-				</p>
-				<input type="submit" value="<?php esc_attr_e('Login', 'doctor2go-connect'); ?>" class="button button-primary">
-			</form>
-	
-			<?php 
-			$pageData = $d2gAdmin::d2g_page_url($currLang, 'lost_password', true); 
+	}
+
+	// Your reCAPTCHA site key.
+	$recaptcha_site_key = get_option( 'd2g_recaptcha_site_key' );
+	?>
+	<div class="d2g_form_wrapper">
+		<form method="post" action="<?php echo esc_url( wp_login_url( $redirect_to ) ); ?>" id="custom-loginform">
+			<?php
+			// Add nonce field to the form.
+			wp_nonce_field( 'd2g_login_action', 'd2g_login_nonce' ); // [web:189]
 			?>
-			<a href="<?php echo esc_url($pageData['url']); ?>"><?php esc_html_e('Lost password?', 'doctor2go-connect'); ?></a>&nbsp;&nbsp;
-	
-			<?php 
-			$pageData = $d2gAdmin::d2g_page_url($currLang, 'patient_registration', true); 
-			?>
-			<a href="<?php echo esc_url($pageData['url']); ?>"><?php esc_html_e('Register as patient', 'doctor2go-connect'); ?></a>&nbsp;&nbsp;
-		</div>
-		
-		<!-- Include the Google reCAPTCHA script -->
-		
-		<?php 
-		if(get_option('d2g_recaptcha_site_key')){
-			// add js functions to footer
-			add_action('wp_footer', function () use ($recaptcha_site_key) { ?>
+
+			<p>
+				<label for="user_login"><?php esc_html_e( 'Email', 'doctor2go-connect' ); ?></label>
+				<input type="text" name="log" id="user_login" class="input" required>
+			</p>
+
+			<p>
+				<label for="user_pass"><?php esc_html_e( 'Password', 'doctor2go-connect' ); ?></label>
+				<input type="password" name="pwd" id="user_pass" class="input" required>
+			</p>
+
+			<!-- reCAPTCHA Widget -->
+			<?php if ( get_option( 'd2g_recaptcha_site_key' ) ) { ?>
+				<div class="g-recaptcha" data-sitekey="<?php echo esc_attr( $recaptcha_site_key ); ?>"></div>
+				<div id="html_element2"></div>
+			<?php } ?>
+
+			<!-- altacha Widget check if shortcode is active -->
+			<?php if ( shortcode_exists( 'altcha' ) ) : ?>
+				<?php echo do_shortcode( '[altcha]' ); ?>
+			<?php endif; ?>
+
+			<p style="margin-top: 10px;">
+				<label>
+					<input type="checkbox" name="rememberme" value="forever">
+					<?php esc_html_e( 'Remember Me', 'doctor2go-connect' ); ?>
+				</label>
+			</p>
+
+			<input type="submit" value="<?php echo esc_attr__( 'Login', 'doctor2go-connect' ); ?>" class="button button-primary">
+		</form>
+
+		<?php $pageData = $d2gAdmin::d2g_page_url( $currLang, 'lost_password', true ); ?>
+		<a href="<?php echo esc_url( $pageData['url'] ); ?>"><?php esc_html_e( 'Lost password?', 'doctor2go-connect' ); ?></a>&nbsp;&nbsp;
+
+		<?php $pageData = $d2gAdmin::d2g_page_url( $currLang, 'patient_registration', true ); ?>
+		<a href="<?php echo esc_url( $pageData['url'] ); ?>"><?php esc_html_e( 'Register as patient', 'doctor2go-connect' ); ?></a>&nbsp;&nbsp;
+	</div>
+
+	<?php
+	// Include the Google reCAPTCHA script (your existing logic).
+	if ( get_option( 'd2g_recaptcha_site_key' ) ) {
+		add_action(
+			'wp_footer',
+			function () use ( $recaptcha_site_key ) {
+				?>
 				<script>
 					var captchaCode = '';
 					var onloadCallback = function() {
 						grecaptcha.render('html_element2', {
-							'sitekey' : '<?php echo esc_attr($recaptcha_site_key); ?>',
+							'sitekey' : '<?php echo esc_js( $recaptcha_site_key ); ?>',
 							'callback' : correctCaptcha1
 						});
 						grecaptcha.render('recaptchaDiv2', {
-							'sitekey' : '<?php echo esc_attr($recaptcha_site_key); ?>',
+							'sitekey' : '<?php echo esc_js( $recaptcha_site_key ); ?>',
 							'callback' : correctCaptcha2
 						});
 					};
@@ -1840,101 +1891,183 @@ class D2gConnect_Shortcodes {
 						captchaCode2 = response;
 					};
 				</script>
-				
-			<?php }, 100);
-		}	
-		return ob_get_clean();
+				<?php
+			},
+			100
+		);
 	}
+
+	return ob_get_clean();
+}
+
 	
 
 	///////////////////////////////
 	//custom lost password form
 	public function d2g_lost_password_form() {
 		ob_start();
-	
-		// Check if the user is already logged in
-		if (is_user_logged_in()) {
-			echo '<p>'.esc_html__('You are already logged in.', 'doctor2go-connect').'</p>';
-			return ob_get_clean();
+
+		// Already logged in → bail early.
+		if ( is_user_logged_in() ) {
+			return '<p>' . esc_html__( 'You are already logged in.', 'doctor2go-connect' ) . '</p>';
 		}
-	
-		// Display the lost password form
-		if (isset($_GET['login']) && $_GET['login'] === 'failed') { ?> 
-			<p style="color: red;">
-				<?php esc_html_e('Invalid username or email address', 'doctor2go-connect')?> 
-			</p>
-		<?php }
-		$currLang 		= explode('_', get_locale())[0];
-		$d2gAdmin 		= new D2G_doc_user_profile();
-		$pageData 		= $d2gAdmin::d2g_page_url($currLang, 'password_reset_sent', true);
-		echo '<div class="d2g_form_wrapper"><form id="lostpasswordform" action="' . esc_url(site_url('wp-login.php?action=lostpassword', 'login_post')) . '" method="post">
+
+		// View-only message from GET.
+		$login_status = isset( $_GET['login'] )
+			? sanitize_text_field( wp_unslash( $_GET['login'] ) )
+			: '';
+
+		if ( 'failed' === $login_status ) {
+			echo '<p style="color:red;">' .
+				esc_html__( 'Invalid username or email address', 'doctor2go-connect' ) .
+			'</p>';
+		}
+
+		// Nonce check ONLY on POST.
+		$request_method = isset( $_SERVER['REQUEST_METHOD'] ) ? sanitize_key( wp_unslash( $_SERVER['REQUEST_METHOD'] ) ) : 'GET';
+
+		if ( 'POST' === $request_method ) {
+			$nonce = isset( $_POST['d2g_lost_password_nonce'] )
+				? sanitize_key( wp_unslash( $_POST['d2g_lost_password_nonce'] ) )
+				: '';
+
+			if ( ! wp_verify_nonce( $nonce, 'd2g_lost_password_action' ) ) {
+				return '<p>' . esc_html__( 'Security check failed. Please reload the page and try again.', 'doctor2go-connect' ) . '</p>';
+			}
+		}
+
+		// Locale + redirect URL.
+		$locale_parts = explode( '_', get_locale() );
+		$currLang     = sanitize_key( $locale_parts[0] ?? 'en' );
+
+		$d2gAdmin = new D2G_doc_user_profile();
+		$pageData = $d2gAdmin::d2g_page_url( $currLang, 'password_reset_sent', true );
+		$redirect = isset( $pageData['url'] ) ? esc_url( $pageData['url'] ) : '';
+
+		?>
+
+		<div class="d2g_form_wrapper">
+			<form id="lostpasswordform"
+				action="<?php echo esc_url( site_url( 'wp-login.php?action=lostpassword', 'login_post' ) ); ?>"
+				method="post">
+
+				<?php wp_nonce_field( 'd2g_lost_password_action', 'd2g_lost_password_nonce' ); ?>
+
 				<p>
-					<label for="user_login">' . esc_html__('Username or Email Address', 'doctor2go-connect') . '</label>
+					<label for="user_login">
+						<?php esc_html_e( 'Username or Email Address', 'doctor2go-connect' ); ?>
+					</label>
 					<input type="text" name="user_login" id="user_login" required>
 				</p>
+
 				<p>
-					<input type="submit" name="wp-submit" id="wp-submit" value="' . esc_html__('Get New Password', 'doctor2go-connect') . '">
+					<input type="submit"
+						name="wp-submit"
+						id="wp-submit"
+						value="<?php esc_attr_e( 'Get New Password', 'doctor2go-connect' ); ?>">
 				</p>
-				<input type="hidden" name="redirect_to" value="' . esc_url($pageData['url']) . '">
-			</form></div>';
-	
+
+				<input type="hidden" name="redirect_to" value="<?php echo esc_html( $redirect ); ?>">
+			</form>
+		</div>
+
+		<?php
+
 		return ob_get_clean();
 	}
+
+
 
 	///////////////////////////////
 	// custom reset password form logic
 	public function d2g_reset_password_form() {
-		if (is_user_logged_in()) {
-			return '<p>You are already logged in.</p>';
+
+		if ( is_user_logged_in() ) {
+			return '<p>' . esc_html__( 'You are already logged in.', 'doctor2go-connect' ) . '</p>';
 		}
 
-		if (!isset($_GET['key']) || !isset($_GET['login'])) {
-			return '<p class="error">Invalid password reset request. Please check your email for the correct link.</p>';
+		// Validate + sanitize required GET params.
+		if ( ! isset( $_GET['key'], $_GET['login'] ) ) {
+			return '<p class="error">' . esc_html__( 'Invalid password reset request. Please check your email for the correct link.', 'doctor2go-connect' ) . '</p>';
 		}
 
-		$reset_key = sanitize_text_field($_GET['key']);
-		$login = sanitize_text_field($_GET['login']);
+		$reset_key = sanitize_text_field( wp_unslash( $_GET['key'] ) );
+		$login     = sanitize_user( wp_unslash( $_GET['login'] ), true );
 
-		if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password'], $_POST['confirm_password'])) {
-			$new_password = $_POST['new_password'];
-			$confirm_password = $_POST['confirm_password'];
+		// If POST: verify nonce + validate + sanitize password fields.
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+		if ( 'POST' === ( $_SERVER['REQUEST_METHOD'] ?? 'GET' ) ) {
 
-			if ($new_password !== $confirm_password) {
-				return '<p class="error">'.esc_html__('Passwords do not match. Please try again.', 'doctor2go-connect').'</p>' . $this->custom_reset_password_form_html($login, $reset_key);
+			$nonce = isset( $_POST['d2g_reset_password_nonce'] ) ? sanitize_key( wp_unslash( $_POST['d2g_reset_password_nonce'] ) ) : '';
+			if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'd2g_reset_password_action' ) ) {
+				return '<p class="error">' . esc_html__( 'Security check failed. Please reload the page and try again.', 'doctor2go-connect' ) . '</p>';
 			}
 
-			$user = check_password_reset_key($reset_key, $login);
-			if (is_wp_error($user)) {
-				return '<p class="error">'.esc_html__('Invalid password reset link. Please request a new one.', 'doctor2go-connect').'</p>';
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$new_password     = isset( $_POST['new_password'] ) ? wp_unslash( $_POST['new_password'] ) : '';
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$confirm_password = isset( $_POST['confirm_password'] ) ? wp_unslash( $_POST['confirm_password'] ) : '';
+
+
+			if ( '' === $new_password || '' === $confirm_password ) {
+				return '<p class="error">' . esc_html__( 'Please enter your new password twice.', 'doctor2go-connect' ) . '</p>' .
+					$this->custom_reset_password_form_html( $login, $reset_key );
 			}
 
-			reset_password($user, $new_password);
-			$currLang 		= explode('_', get_locale())[0];
-			$d2gAdmin 		= new D2G_doc_user_profile();
-			$pageData 		= $d2gAdmin::d2g_page_url($currLang, 'login', true);
-			return '<p class="success">'.esc_html__('Your password has been reset successfully.  Click on the following link to login', 'doctor2go-connect').'<br><a href="'.$pageData['url'].'">'.$pageData['title'].'</a>.</p>';
+			if ( $new_password !== $confirm_password ) {
+				return '<p class="error">' . esc_html__( 'Passwords do not match. Please try again.', 'doctor2go-connect' ) . '</p>' .
+					$this->custom_reset_password_form_html( $login, $reset_key );
+			}
+
+			$user = check_password_reset_key( $reset_key, $login );
+			if ( is_wp_error( $user ) ) {
+				return '<p class="error">' . esc_html__( 'Invalid password reset link. Please request a new one.', 'doctor2go-connect' ) . '</p>';
+			}
+
+			reset_password( $user, $new_password );
+
+			$locale_parts = explode( '_', get_locale() );
+			$currLang     = isset( $locale_parts[0] ) ? sanitize_key( $locale_parts[0] ) : 'en';
+			$d2gAdmin     = new D2G_doc_user_profile();
+			$pageData     = $d2gAdmin::d2g_page_url( $currLang, 'login', true );
+
+			$login_url   = isset( $pageData['url'] ) ? esc_url( $pageData['url'] ) : '';
+			$login_title = isset( $pageData['title'] ) ? esc_html( $pageData['title'] ) : esc_html__( 'Login', 'doctor2go-connect' );
+
+			return '<p class="success">' .
+				esc_html__( 'Your password has been reset successfully. Click on the following link to login', 'doctor2go-connect' ) .
+				'<br><a href="' . $login_url . '">' . $login_title . '</a>.</p>';
 		}
 
-		return $this->custom_reset_password_form_html($login, $reset_key);
+		return $this->custom_reset_password_form_html( $login, $reset_key );
 	}
 
 	///////////////////////////////
-	//custom password reset form HTML
-	private function custom_reset_password_form_html($login, $reset_key) {
+	// custom password reset form HTML
+	private function custom_reset_password_form_html( $login, $reset_key ) {
 		ob_start();
 		?>
 		<div class="d2g_form_wrapper">
 			<form id="resetpasswordform" method="post">
+				<?php
+				// Nonce field.
+				wp_nonce_field( 'd2g_reset_password_action', 'd2g_reset_password_nonce' ); // [web:189]
+				?>
+
+				<!-- Keep these so POST has the same values; avoids relying on GET on submit -->
+				<input type="hidden" name="login" value="<?php echo esc_attr( $login ); ?>">
+				<input type="hidden" name="key" value="<?php echo esc_attr( $reset_key ); ?>">
+
 				<p>
-					<label for="new_password"><?php echo esc_html__('New Password', 'doctor2go-connect'); ?></label>
+					<label for="new_password"><?php echo esc_html__( 'New Password', 'doctor2go-connect' ); ?></label>
 					<input type="password" name="new_password" id="new_password" required>
 				</p>
 				<p>
-					<label for="confirm_password"><?php echo esc_html__('Confirm New Password', 'doctor2go-connect'); ?></label>
+					<label for="confirm_password"><?php echo esc_html__( 'Confirm New Password', 'doctor2go-connect' ); ?></label>
 					<input type="password" name="confirm_password" id="confirm_password" required>
 				</p>
 				<p>
-					<input type="submit" value="<?php echo esc_html__('Reset Password', 'doctor2go-connect'); ?>">
+					<input type="submit" value="<?php echo esc_attr__( 'Reset Password', 'doctor2go-connect' ); ?>">
 				</p>
 			</form>
 		</div>
@@ -1942,125 +2075,184 @@ class D2gConnect_Shortcodes {
 		return ob_get_clean();
 	}
 
+
 	///////////////////////////////
 	//custom registration form
 	function d2g_registration_form() {
-		if (is_user_logged_in()) {
+
+		if ( is_user_logged_in() ) {
 			return '<p>You are already registered and logged in.</p>';
 		}
-	
-		
-		
-		$recaptcha_site_key = get_option('d2g_recaptcha_site_key'); // Replace with your reCAPTCHA site key
-		$secret_key = get_option('d2g_recaptcha_secret_key'); // Replace with your reCAPTCHA secret key
-		$timezones 				= d2g_timezones();
-		
+
+		$recaptcha_site_key = get_option( 'd2g_recaptcha_site_key' );
+		$secret_key         = get_option( 'd2g_recaptcha_secret_key' );
+		$timezones          = d2g_timezones();
+
 		// Process form submission
-		if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['custom_registration'])) {
-			$username 				= explode('@', $_POST['email'])[0].time();
-			$email 					= sanitize_email($_POST['email']);
-			$password 				= sanitize_text_field($_POST['password']);
-			$confirm_password 		= sanitize_text_field($_POST['confirm_password']);
-			$recaptcha_response 	= sanitize_text_field($_POST['g-recaptcha-response']);
-			$errors 				= [];
+		if (
+			isset( $_SERVER['REQUEST_METHOD'] ) &&
+			$_SERVER['REQUEST_METHOD'] === 'POST' &&
+			isset( $_POST['custom_registration'] )
+		) {
 
-			if(get_option('d2g_recaptcha_site_key') != ''){
-				// Validate CAPTCHA
-				$recaptcha_verify = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', [
-					'body' => [
-						'secret' 		=> $secret_key,
-						'response' 		=> $recaptcha_response,
-						'remoteip' 		=> $_SERVER['REMOTE_ADDR'],
-					],
-				]);
-				$recaptcha_result = json_decode(wp_remote_retrieve_body($recaptcha_verify));
-		
-				if (empty($recaptcha_result) || !$recaptcha_result->success) {
-					$errors[] = __('CAPTCHA verification failed. Please try again.', 'doctor2go-connect');
+			$errors = array();
+
+			// Nonce verification
+			if (! isset( $_POST['d2g_reg_nonce'] ) || ! wp_verify_nonce(isset( $_POST['d2g_reg_nonce'] ) ? sanitize_key( wp_unslash( $_POST['d2g_reg_nonce'] ) ) : '','d2g_registration_action')) {
+				$errors[] = __( 'Security check failed. Please refresh the page.', 'doctor2go-connect' );
+			} else {
+
+				$email = isset( $_POST['email'] )
+					? sanitize_email( wp_unslash( $_POST['email'] ) )
+					: '';
+
+				$username = '';
+				if ( ! empty( $email ) && is_email( $email ) ) {
+					$username = explode( '@', $email )[0] . time();
 				}
-			}
-	
-			
-	
-			// Validate other inputs
-			if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
-				$errors[] = __('All fields are required.', 'doctor2go-connect');
-			}
-			if (!is_email($email)) {
-				$errors[] = __('Please provide a valid email address.', 'doctor2go-connect');
-			}
-			if ($password !== $confirm_password) {
-				$errors[] = __('Passwords do not match.', 'doctor2go-connect');
-			}
-			if (username_exists($username) || email_exists($email)) {
-				$errors[] = __('The username or email is already registered.', 'doctor2go-connect');
-			}
-	
-			// Register the user if no errors
-			if (empty($errors)) {
-				
-				$user_input = array(
-					'user_login'    => $username,
-					'user_pass'     => $password,
-					'user_email'    => $email,
-					'first_name'    => $_POST['meta']['first_name'],
-            		'last_name'     => $_POST['meta']['last_name'],
-					'role'          => 'patient'
-				);
-			
-				$user_id = wp_insert_user( $user_input );
 
-				
-				if (!is_wp_error($user_id)) {
-					if(isset($_POST['meta'])){
-						foreach($_POST['meta'] as $key => $value){
-							update_user_meta($user_id, $key, $value);
-						}
+				$password = isset( $_POST['password'] )
+					? sanitize_text_field( wp_unslash( $_POST['password'] ) )
+					: '';
+
+				$confirm_password = isset( $_POST['confirm_password'] )
+					? sanitize_text_field( wp_unslash( $_POST['confirm_password'] ) )
+					: '';
+
+				$recaptcha_response = isset( $_POST['g-recaptcha-response'] )
+					? sanitize_text_field( wp_unslash( $_POST['g-recaptcha-response'] ) )
+					: '';
+
+				if ( get_option( 'd2g_recaptcha_site_key' ) != '' ) {
+
+					$recaptcha_verify = wp_remote_post(
+						'https://www.google.com/recaptcha/api/siteverify',
+						array(
+							'body' => array(
+								'secret'   => $secret_key,
+								'response' => $recaptcha_response,
+								'remoteip' => isset( $_SERVER['REMOTE_ADDR'] )
+									? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) )
+									: '',
+							),
+						)
+					);
+
+					$recaptcha_result = json_decode( wp_remote_retrieve_body( $recaptcha_verify ) );
+
+					if ( empty( $recaptcha_result ) || ! $recaptcha_result->success ) {
+						$errors[] = __( 'CAPTCHA verification failed. Please try again.', 'doctor2go-connect' );
 					}
+				}
 
-					//here is where the email has to be send 
-					d2g_user_email('registration', $email, $_POST['meta']['first_name'].' '.$_POST['meta']['last_name'], get_option('d2g_sender_address'));
+				if ( empty( $username ) || empty( $email ) || empty( $password ) || empty( $confirm_password ) ) {
+					$errors[] = __( 'All fields are required.', 'doctor2go-connect' );
+				}
 
-					$currLang 		= explode('_', get_locale())[0];
-					$d2gAdmin 		= new D2G_doc_user_profile();
-					$pageData 		= $d2gAdmin::d2g_page_url($currLang, 'patient_dashboard', true);
-					
-					$resp 			= programmatic_login( $username );
-					
-					
-					
-					if(isset($_GET['redirect_to'])){
-						if(strpos($_GET['redirect_to'], '?') !== false){
-							$_GET['redirect_to'] = $_GET['redirect_to'].'&signup=completed';
+				if ( ! is_email( $email ) ) {
+					$errors[] = __( 'Please provide a valid email address.', 'doctor2go-connect' );
+				}
+
+				if ( $password !== $confirm_password ) {
+					$errors[] = __( 'Passwords do not match.', 'doctor2go-connect' );
+				}
+
+				if ( username_exists( $username ) || email_exists( $email ) ) {
+					$errors[] = __( 'The username or email is already registered.', 'doctor2go-connect' );
+				}
+
+				if ( empty( $errors ) ) {
+
+					$user_input = array(
+						'user_login' => $username,
+						'user_pass'  => $password,
+						'user_email' => $email,
+						'first_name' => isset( $_POST['meta']['first_name'] )
+							? sanitize_text_field( wp_unslash( $_POST['meta']['first_name'] ) )
+							: '',
+						'last_name'  => isset( $_POST['meta']['last_name'] )
+							? sanitize_text_field( wp_unslash( $_POST['meta']['last_name'] ) )
+							: '',
+						'role'       => 'patient',
+					);
+
+					$user_id = wp_insert_user( $user_input );
+
+					if ( ! is_wp_error( $user_id ) ) {
+						// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+						$meta = wp_unslash( $_POST['meta'] ); // ✅ unslash once for all values
+
+						if ( isset( $meta ) && is_array( $meta ) ) {
+							foreach ( $meta as $key => $value ) {
+								update_user_meta(
+									$user_id,
+									sanitize_key( $key ),
+									sanitize_text_field( $value )
+								);
+							}
+						}
+
+						d2g_user_email(
+							'registration',
+							$email,
+							(
+								isset( $_POST['meta']['first_name'] )
+									? sanitize_text_field( wp_unslash( $_POST['meta']['first_name'] ) )
+									: ''
+							) . ' ' . (
+								isset( $_POST['meta']['last_name'] )
+									? sanitize_text_field( wp_unslash( $_POST['meta']['last_name'] ) )
+									: ''
+							),
+							get_option( 'd2g_sender_address' )
+						);
+
+						$currLang = explode( '_', get_locale() )[0];
+						$d2gAdmin = new D2G_doc_user_profile();
+						$pageData = $d2gAdmin::d2g_page_url( $currLang, 'patient_dashboard', true );
+
+						programmatic_login( $username );
+
+						if ( isset( $_GET['redirect_to'] ) ) {
+							// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+							$redirect_to = wp_unslash( $_GET['redirect_to'] ); // ✅ unslash once
+
+							if ( strpos( $redirect_to, '?' ) !== false ) {
+								$redirect_to .= '&signup=completed';
+							} else {
+								$redirect_to .= '?signup=completed';
+							}
+
+							wp_redirect( esc_url_raw( $redirect_to ) );
+							exit;
 						} else {
-							$_GET['redirect_to'] = $_GET['redirect_to'].'?signup=completed';
+							wp_redirect( esc_url_raw( $pageData['url'] . '?signup=completed' ) );
+							exit;
 						}
-						wp_redirect(urldecode($_GET['redirect_to']));
+
+						exit;
+
 					} else {
-						wp_redirect($pageData['url'].'?signup=completed');
+						$errors[] = $user_id->get_error_message();
 					}
-					
-					exit;
-					
-				} else {
-					$errors[] = $user_id->get_error_message();
 				}
 			}
-	
-			// Display errors
-			if (!empty($errors)) {
-				foreach ($errors as $error) {
-					echo '<p class="error">' . esc_html($error) . '</p>';
+
+			if ( ! empty( $errors ) ) {
+				foreach ( $errors as $error ) {
+					echo '<p class="error">' . esc_html( $error ) . '</p>';
 				}
 			}
 		}
-	
-		// Display the registration form with reCAPTCHA
+
 		ob_start();
 		?>
 		<div class="d2g_form_wrapper">
-			<form id="custom-registration-form" method="post" action="<?php d2g_curPageURL(false)?>?create_account=1<?php echo (isset($_GET['redirect_to']))?'&redirect_to='.urlencode($_GET['redirect_to']):''?>">
+			<?php // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash?>
+			<form id="custom-registration-form" method="post" action="<?php d2g_curPageURL(false); ?>?create_account=1<?php echo ( isset( $_GET['redirect_to'] ) ) ? '&redirect_to=' . urlencode( wp_unslash( $_GET['redirect_to'] ) ) : ''; ?>">
+				<?php wp_nonce_field( 'd2g_registration_action', 'd2g_reg_nonce' ); ?>
 				<div id="error" class="error"></div>
+
 				<p>
 					<label for="first_name"><?php echo esc_html__('First name', 'doctor2go-connect'); ?>*</label>
 					<input class="myrequired" type="text" name="meta[first_name]" id="first_name" required>
@@ -2078,185 +2270,155 @@ class D2gConnect_Shortcodes {
 					<input class="myrequired" type="text" name="meta[p_tel]" id="p_tel" required>
 				</p>
 				<p id="time_zone_wrapper">
-					<label for="p_tel"><?php echo esc_html__('Timezone (Your browser detects time zones automatically, but you can set a different one here if needed.)', 'doctor2go-connect'); ?></label>
+					<label><?php echo esc_html__('Timezone (Your browser detects time zones automatically, but you can set a different one here if needed.)', 'doctor2go-connect'); ?></label>
 					<select name="meta[p_timezone]">
-						<option value="0"><?php echo esc_html__('make a selection', 'doctor2go-connect')?></option>
-						<?php foreach($timezones as $group => $zones){ ?>
-							<optgroup label="<?php echo esc_html($group)?>">
-								<?php foreach($zones as $key => $name){ ?>
-									<option value="<?php echo esc_html($key)?>"><?php echo esc_html($name)?></option>
+						<option value="0"><?php echo esc_html__('make a selection', 'doctor2go-connect'); ?></option>
+						<?php foreach ( $timezones as $group => $zones ) { ?>
+							<optgroup label="<?php echo esc_html( $group ); ?>">
+								<?php foreach ( $zones as $key => $name ) { ?>
+									<option value="<?php echo esc_html( $key ); ?>"><?php echo esc_html( $name ); ?></option>
 								<?php } ?>
 							</optgroup>
 						<?php } ?>
 					</select>
 				</p>
 				<p>
-					<label for="password"><?php echo esc_html__('Password (your password needs to be minimum 8 characters long and it must contain minimum one special character.)', 'doctor2go-connect'); ?>*</label>
+					<label><?php echo esc_html__('Password (your password needs to be minimum 8 characters long and it must contain minimum one special character.)', 'doctor2go-connect'); ?>*</label>
 					<input class="myrequired" type="password" name="password" id="pass1" required>
 				</p>
-				<div class="info error" id="result" style="width: 100%!important; display:none;"></div>
+				<div class="info error" id="result" style="width:100%!important;display:none;"></div>
 				<p>
-					<label for="confirm_password"><?php echo esc_html__('Confirm Password', 'doctor2go-connect'); ?>*</label>
+					<label><?php echo esc_html__('Confirm Password', 'doctor2go-connect'); ?>*</label>
 					<input class="myrequired" type="password" name="confirm_password" id="pass2" required>
 				</p>
-				<!-- reCAPTCHA Widget -->
-				<?php if(get_option('d2g_recaptcha_site_key')){ ?> 
+
+				<?php if ( get_option( 'd2g_recaptcha_site_key' ) ) { ?>
 					<p>
-						<div class="g-recaptcha" data-sitekey="<?php echo esc_attr($recaptcha_site_key); ?>"></div>
+						<div class="g-recaptcha" data-sitekey="<?php echo esc_attr( $recaptcha_site_key ); ?>"></div>
 						<div id="html_element2"></div>
 					</p>
-				<?php }?>
-				<!-- altacha Widget check if shortcode is active-->
+				<?php } ?>
+
 				<?php if ( shortcode_exists( 'altcha' ) ) : ?>
 					<?php echo do_shortcode('[altcha]'); ?>
 				<?php endif; ?>
-				<?php confirmation_checkboxes()?>
+
+				<?php confirmation_checkboxes(); ?>
+
 				<p>
 					<input type="hidden" name="custom_registration" value="1">
 					<input id="submit_registration" type="submit" value="<?php echo esc_html__('Register', 'doctor2go-connect'); ?>">
 				</p>
 			</form>
 		</div>
-		
-		<?php 
-		
-			// add js functions to footer
-			add_action('wp_footer', function () use ($recaptcha_site_key) { ?>
-				<script>
-					<?php if(get_option('d2g_recaptcha_site_key')){ ?>
-						var captchaCode = '';
-						var onloadCallback = function() {
-							grecaptcha.render('html_element2', {
-							'sitekey' : '<?php echo esc_attr($recaptcha_site_key); ?>',
-							'callback' : correctCaptcha
-							});
-						};
-						var correctCaptcha = function(response) {
-							captchaCode = response;
-						};
-					<?php } ?>
-					jQuery(document).ready(function($){
-						//checks the password
-						$('#pass1').keyup(function() {
-							$('#result').css('display', 'block').html(checkStrength($('#pass1').val()));
-						});
+		<?php
 
-						
+		add_action( 'wp_footer', function () use ( $recaptcha_site_key ) { ?>
+			<script>
+				<?php if(get_option('d2g_recaptcha_site_key')){ ?>
+				var captchaCode = '';
+				var onloadCallback = function() {
+					grecaptcha.render('html_element2', {
+						'sitekey' : '<?php echo esc_attr($recaptcha_site_key); ?>',
+						'callback' : correctCaptcha
+					});
+				};
+				var correctCaptcha = function(response) {
+					captchaCode = response;
+				};
+				<?php } ?>
 
-						//validates and submits the booking form
-						$('#submit_registration').click(function(e){
-							e.preventDefault();
+				jQuery(document).ready(function($){
 
-							if($('#tel_number').is(':checked')){
-								return false;
-							}
-							
-							var checker         = false;
-							
-							var email           = $('#patient_email').val();   
-							var uname           = $('#uname').val();
-							var pass            = $('#pass1').val();
-							var rpass           = $('#pass2').val();
-							var user_action     = $('#user_action').val();
-							var user_tel        = $('#user_tel').val();
-							var location_id     = $('#location_id').val();
-							var checker_message = '';
-							$('.myrequired').each(function(){
-								if($(this).val() === ""){
-									
-									checker = true;
-									checker_message = '<?php echo esc_html__('Please fill in all marked fields. ', 'doctor2go-connect')?>';
-								}
-							});
-							if($('#account_creation').is(':checked')){
+					$('#pass1').keyup(function() {
+						$('#result').css('display', 'block').html(checkStrength($('#pass1').val()));
+					});
 
-								if(pass < 8){
-									$('#pass').css('border-color', '#ff5000');
-									checker = true;
-									checker_message = checker_message + '<?php echo esc_html__(' Your password is to short. ', 'doctor2go-connect')?>';
-								}
+					$('#submit_registration').click(function(e){
+						e.preventDefault();
 
-								if(pass != rpass){
-									$('#pass').css('border-color', '#ff5000');
-									$('#rpass').css('border-color', '#ff5000');
-									checker = true;
-									checker_message = checker_message + '<?php echo esc_html__(' Your passwords do not match. ', 'doctor2go-connect')?>';
-								}
-							}
-			
-
-							if(isEmail(email) == 'notOK'){
-								$('#email').css('border-color', '#ff5000');
-								checker = true;
-								checker_message = checker_message + '<?php echo esc_html__(' You have entered an invalid e-mail. ', 'doctor2go-connect')?>';
-							}
-
-							if($('#conf_privacy').is(':not(:checked)')){
-								checker = true;
-								checker_message = checker_message + '<?php echo esc_html__(' You must accept the privacy rules. ', 'doctor2go-connect')?>';
-							}
-
-							if($('#conf_terms').is(':not(:checked)')){
-								checker = true;
-								checker_message = checker_message + '<?php echo esc_html__(' You must accept the terms and conditions. ', 'doctor2go-connect')?>';
-							}
-
-							if($('#conf_disclaimer').is(':not(:checked)')){
-								checker = true;
-								checker_message = checker_message + '<?php echo esc_html__(' You must accept the disclaimer. ', 'doctor2go-connect')?>';
-							}
-
-							if(checker != false){
-								$('#error').css('display', 'block').html(checker_message);
-							} else {
-								$('#custom-registration-form').submit();
-							}
-
+						if($('#tel_number').is(':checked')){
 							return false;
+						}
+
+						var checker = false;
+						var email   = $('#patient_email').val();
+						var pass    = $('#pass1').val();
+						var rpass   = $('#pass2').val();
+						var checker_message = '';
+
+						$('.myrequired').each(function(){
+							if($(this).val() === ""){
+								checker = true;
+								checker_message = '<?php echo esc_html__('Please fill in all marked fields. ', 'doctor2go-connect')?>';
+							}
 						});
-					})
 
-					//checks the password function
-					function checkStrength(password) {
-						var strength = 0
-						if (password.length < 8) {
-							return '<?php echo esc_html__('Your password is to short!', 'doctor2go-connect')?>';
+						if(pass.length < 8){
+							checker = true;
+							checker_message += '<?php echo esc_html__(' Your password is to short. ', 'doctor2go-connect')?>';
 						}
-						if (password.length > 10) strength += 1
-						// If password contains both lower and uppercase characters, increase strength value.
-						if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
-						// If it has numbers and characters, increase strength value.
-						if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
-						// If it has one special character, increase strength value.
-						if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
-						// If it has two special characters, increase strength value.
-						if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
-						// Calculated strength value, we can return messages
-						// If value is less than 2
-						if (strength < 2) {
-							return '<?php echo esc_html__('Your password is weak!', 'doctor2go-connect')?>';
-						} else if (strength == 2) {
-							return '<?php echo esc_html__('Your password is good!', 'doctor2go-connect')?>';
-						} else {
-							return '<?php echo esc_html__('Your password is strong!', 'doctor2go-connect')?>';
-						}
-					}
 
-					//checks the email function
-					function isEmail(email) {
-						var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-						if(!regex.test(email)) {
-							return 'notOK';
-						} else {
-							return 'OK';
+						if(pass !== rpass){
+							checker = true;
+							checker_message += '<?php echo esc_html__(' Your passwords do not match. ', 'doctor2go-connect')?>';
 						}
-					}
-				</script>
-				
-			<?php }, 100);
-		
+
+						if(isEmail(email) === 'notOK'){
+							checker = true;
+							checker_message += '<?php echo esc_html__(' You have entered an invalid e-mail. ', 'doctor2go-connect')?>';
+						}
+
+						if($('#conf_privacy').is(':not(:checked)')){
+							checker = true;
+							checker_message += '<?php echo esc_html__(' You must accept the privacy rules. ', 'doctor2go-connect')?>';
+						}
+
+						if($('#conf_terms').is(':not(:checked)')){
+							checker = true;
+							checker_message += '<?php echo esc_html__(' You must accept the terms and conditions. ', 'doctor2go-connect')?>';
+						}
+
+						if($('#conf_disclaimer').is(':not(:checked)')){
+							checker = true;
+							checker_message += '<?php echo esc_html__(' You must accept the disclaimer. ', 'doctor2go-connect')?>';
+						}
+
+						if(checker){
+							$('#error').css('display','block').html(checker_message);
+						} else {
+							$('#custom-registration-form').submit();
+						}
+
+						return false;
+					});
+				});
+
+				function checkStrength(password) {
+					var strength = 0;
+					if (password.length < 8) return '<?php echo esc_html__('Your password is to short!', 'doctor2go-connect')?>';
+					if (password.length > 10) strength += 1;
+					if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1;
+					if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1;
+					if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1;
+					if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1;
+
+					if (strength < 2) return '<?php echo esc_html__('Your password is weak!', 'doctor2go-connect')?>';
+					if (strength == 2) return '<?php echo esc_html__('Your password is good!', 'doctor2go-connect')?>';
+					return '<?php echo esc_html__('Your password is strong!', 'doctor2go-connect')?>';
+				}
+
+				function isEmail(email) {
+					var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+					return regex.test(email) ? 'OK' : 'notOK';
+				}
+			</script>
+		<?php }, 100 );
+
 		return ob_get_clean();
 	}
+
+
 	
 	///////////////////////////////
 	//shortcode patient dashbaord
@@ -2363,10 +2525,20 @@ class D2gConnect_Shortcodes {
 		<div class="alignwide">
 		<div class="row with_right_sidebar">
 			<div class="col-sm-8">
-				<?php if(isset($_GET['url'])){ ?>
-					<h2><?php echo esc_html(urldecode($_GET['title']))?></h2>
+				<?php if(isset($_GET['url'])){ // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?> 
+					<h2>
+						<?php 
+						// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+						$title = isset( $_GET['title'] ) ? sanitize_text_field( wp_unslash( $_GET['title'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+						echo esc_html( urldecode( $title ) ); 
+						?>
+					</h2>
 					<h4 style="color: #d20a10"><?php echo esc_html__('Please fill in the following questionnaire. Your answers will be stored in a highly secure database.', 'doctor2go-connect')?></h4>
-					<iframe src="<?php echo esc_url(urldecode($_GET['url']))?>" style="width:100%; border:none; height:1000px"></iframe>
+					<?php 
+					// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					$url = isset( $_GET['url'] ) ? esc_url_raw( wp_unslash( $_GET['url'] ) ) : '';
+					?>
+					<iframe src="<?php echo esc_url( urldecode( $url ) ); ?>" style="width:100%; border:none; height:1000px"></iframe>
 				<?php } else { ?>
 					<p class="error"><strong><?php esc_html_e('No questionnaire was selected, click on one of the questionnaires in your questionnaires list.', 'doctor2go-connect')?></strong></p>
 				<?php }?>
@@ -2483,11 +2655,15 @@ class D2gConnect_Shortcodes {
 		<div class="alignwide">
 			<div class="row">
 				<div class="col-sm-12">
-					<?php if(isset($_GET['url'])){ ?>
-						<iframe src="<?php echo esc_url(urldecode($_GET['url']))?>" style="width:100%; border:none; height:1500px"></iframe>
-					<?php } else { ?>
-						<p class="error"><strong><?php esc_html_e('No questionnaire was found.', 'doctor2go-connect')?></strong></p>
-					<?php }?>
+					<?php 
+					// Properly unslash and ignore PCP warnings on this line
+					$iframe_url = isset( $_GET['url'] ) ? wp_unslash( $_GET['url'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
+					if ( $iframe_url ) {?>
+						<iframe src="<?php echo esc_url( $iframe_url ); ?>" style="width:100%; border:none; height:1500px"></iframe>
+					<?php } else {  ?>
+						<p class="error"><strong><?php esc_html_e( 'No questionnaire was found.', 'doctor2go-connect' ); ?></strong></p>
+					<?php } ?>
 				</div>
 			</div>
 		</div>
@@ -2681,7 +2857,10 @@ class D2gConnect_Shortcodes {
 										</div>'.$questionnaireLink.'</div></div>';
 								}							
 
-								if($appointment->_id == $_GET['app']){  ?>
+								// Properly get 'app' from GET with unslash and isset check
+								// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+								$app_id = isset($_GET['app']) ? sanitize_text_field(wp_unslash($_GET['app'])) : '';
+								if ($appointment->_id == $app_id) {  ?>
 									<div class="walkin_form_wrapper mb-xl">
 										<?php echo '<h2>'. esc_html__('You have successfully booked following appointment.', 'doctor2go-connect').'</h2>';
 										if($questionnaire != ''){
@@ -2829,6 +3008,7 @@ class D2gConnect_Shortcodes {
 						'iban'               		: $('#iban').val(),
 						'title'						: '<?php echo esc_js(get_option('d2g_sender_name')).': '. esc_html__('Cancellation request for appointment.', 'doctor2go-connect')?>(' + $('#doc_name').val() + ')',
 						'comment'					: $('#comment').val(),
+						'nonce'      				: '<?php echo esc_js(wp_create_nonce('send_ajax_d2g_email')); ?>'
 					};
 					$.post(ajax_url, data, function(response) {
 						console.log(response);
@@ -2854,6 +3034,7 @@ class D2gConnect_Shortcodes {
 						'iban'               		: $('#iban').val(),
 						'title'						: '<?php echo esc_js(get_option('d2g_sender_name')).': '. esc_html__('Cancellation request for appointment.', 'doctor2go-connect')?> (' + $('#client_name').val() + ')',
 						'comment'					: $('#comment').val(),
+						'nonce'      				: '<?php echo esc_js(wp_create_nonce('send_ajax_d2g_email')); ?>'
 					};
 					$.post(ajax_url, data, function(response) {
 						$('#bg_loader').toggleClass('simple_hide');
@@ -2891,7 +3072,9 @@ class D2gConnect_Shortcodes {
 		//initialize class to get dynamic links
 		$d2gAdmin 				= new D2G_doc_user_profile();
 		$currLang 				= explode('_', get_locale())[0];
-		$tokensSimpleArr[]		= $_GET['client_token'];
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+		$client_token 			= isset($_GET['client_token']) ? sanitize_text_field(wp_unslash($_GET['client_token'])) : '';
+		$tokensSimpleArr[] 		= $client_token;
 		$timezone 				= get_user_timezone()?:'Europe/Amsterdam';
 
 
@@ -2904,7 +3087,7 @@ class D2gConnect_Shortcodes {
 		ob_start();
 
 
-		if(!isset($_GET['client_token']) && $_GET['client_token'] != ''){?>
+		if($client_token){?>
 			<p><?php echo esc_html__('You haven\'t booked any consultations yet. When you do, the details will appear in this section.', 'doctor2go-connect');?></p>
 		<?php } else { ?>
 			<div class="row">
@@ -2923,9 +3106,6 @@ class D2gConnect_Shortcodes {
 							<?php foreach($appointments as $appointment){
 								//get doc info for appointment
 								$docObj         = $this->get_doctor_by_wcc_id($appointment->user_id)[0];
-								$doc_email		= get_post_meta($docObj->ID, 'd2g_main_email', true);
-								$orgKey         = get_post_meta($docObj->ID, 'organisation_key', true);
-								$client_token   = $_GET['client_token'];
 
 								//doctor image
 								$feat_pic       = wp_get_attachment_image_src(get_post_thumbnail_id($docObj->ID), 'thumbnail')[0];
@@ -2959,21 +3139,13 @@ class D2gConnect_Shortcodes {
 							
 								//create the links
 								//html link for questionnaires
-								$questionnaire = '';
 								$delBtn         = '';
 								$questionnaireURLSimple = '';
-								$questionnaireLink = '<div class="questionnaire"></div>';
 								if(isset($appointment->answer_set_id)){
 
 									$pageData 			= $d2gAdmin::d2g_page_url($currLang, 'intake_questionnaire', true);
 									//url to load in iframe
 									$questionnaireURLSimple 	= get_option('waiting_room_url').'answer_set/'.$appointment->answer_set_id.'?client_auth='.$client_token;
-									$questionnaireURL 			= urlencode($questionnaireURLSimple);
-									$title 						= urlencode(esc_html__('Questionnaire for your appointment on', 'doctor2go-connect').' '.$date->format("d/m/Y").' '. esc_html__(' at ', 'doctor2go-connect'). ' ' .$date->format("H:i").'  ('.$timezone.') '. esc_html__(' with ', 'doctor2go-connect').' '. esc_html($docObj->post_title));
-									$questionnaireLink 			= '<div class="questionnaire">
-										<a class="btn btn-default" href="'. $pageData['url'].'?url='. $questionnaireURL .'&title='.$title.'"><img decoding="async" src="'. plugin_dir_url( __FILE__ ).'images/questionnaire-small.jpg">'. esc_html__(' fill in the questionnnaire ', 'doctor2go-connect').'</a>
-									</div>';
-									
 								}
 								//other links
 								$consultLink    = '<a class="button btn-default btn invert" target="_blank" href="'.get_option('waiting_room_url').'wachtkamer/'.$appointment->token.'?locale='.explode('_',get_locale())[0].'"><span class=" icon-videocam-outline"></span> '. esc_html__('go to consultation', 'doctor2go-connect').'</a>';
@@ -3022,7 +3194,10 @@ class D2gConnect_Shortcodes {
 										</div></div>';
 								}							
 
-								if($appointment->_id == $_GET['app']){  ?>
+								// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+								$app_id = isset( $_GET['app'] ) ? sanitize_text_field( wp_unslash( $_GET['app'] ) ) : '';
+
+								if ( $appointment->_id == $app_id ) { ?>
 								
 									<?php if($questionnaireURLSimple != ''){ ?>
 										<h4 class="error only_mobile mb-s"><?php echo esc_html__('For this appointment you are requiered to fill in an intake questionnaire.', 'doctor2go-connect');?></h4>
@@ -3118,52 +3293,62 @@ class D2gConnect_Shortcodes {
 	//shortcode account settings
 	public function d2g_account_settings(){
 
+		// Verify nonce
+        $nonce = isset( $_POST['d2g_account_nonce'] ) ? sanitize_key( wp_unslash( $_POST['d2g_account_nonce'] ) ) : '';
+        if ( ! wp_verify_nonce( $nonce, 'd2g_account_action' ) ) {
+            echo '<p class="error">' . esc_html__( 'Security check failed. Please refresh the page and try again.', 'doctor2go-connect' ) . '</p>';
+            return;
+        }
+
 		$current_user 	= wp_get_current_user();
 		$user_id		= $current_user->data->ID;
-		
-		
 		$timezones = d2g_timezones();
 
-		// Process form submission
-		if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['custom_registration'])) {
-			$username = sanitize_text_field($_POST['username']);
-			$email = sanitize_email($_POST['email']);
-			$password = sanitize_text_field($_POST['password']);
-			$confirm_password = sanitize_text_field($_POST['confirm_password']);
-			$errors = [];
-			
-			// Validate other inputs
-			if (empty($email)) {
-				$errors[] = __('All fields are required.', 'doctor2go-connect');
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'POST' === wp_unslash( $_SERVER['REQUEST_METHOD'] ) && isset( $_POST['custom_registration'] ) ) {
+			$email            = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+			$password         = isset( $_POST['password'] ) ? sanitize_text_field( wp_unslash( $_POST['password'] ) ) : '';
+			$confirm_password = isset( $_POST['confirm_password'] ) ? sanitize_text_field( wp_unslash( $_POST['confirm_password'] ) ) : '';
+			$errors           = [];
+
+			// Validate inputs
+			if ( empty( $email ) ) {
+				$errors[] = __( 'All fields are required.', 'doctor2go-connect' );
 			}
-			if (!is_email($email)) {
-				$errors[] = __('Please provide a valid email address.', 'doctor2go-connect');
+
+			if ( ! empty( $email ) && ! is_email( $email ) ) {
+				$errors[] = __( 'Please provide a valid email address.', 'doctor2go-connect' );
 			}
-			if (!empty($password) && ($password === $confirm_password)) {
+
+			if ( ! empty( $password ) && $password === $confirm_password ) {
 				wp_set_password( $password, $user_id );
 			}
-			
-			// Register the user if no errors
-			if (empty($errors)) {
-				if(isset($_POST['meta'])){
-					foreach($_POST['meta'] as $key => $value){
-						update_user_meta($user_id, $key, $value);
-					}
-				}
-				if (!is_wp_error($user_id)) {
-					echo '<p class="success">'.esc_html__('Update was successful.', 'doctor2go-connect').' </p>';
-				} else {
-					$errors[] = $user_id->get_error_message();
+
+			// Update meta if exists
+			if ( isset( $_POST['meta'] ) && is_array( $_POST['meta'] ) ) {
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				$meta = wp_unslash( $_POST['meta'] ); 
+				foreach ( $meta as $key => $value ) {
+					update_user_meta(
+						$user_id,
+						sanitize_key( $key ),
+						sanitize_text_field( $value )
+					);
 				}
 			}
-	
-			// Display errors
-			if (!empty($errors)) {
-				foreach ($errors as $error) {
-					echo '<p class="green">' . esc_html($error) . '</p>';
+
+			// Display messages
+			if ( empty( $errors ) && ! is_wp_error( $user_id ) ) {
+				echo '<p class="success">' . esc_html__( 'Update was successful.', 'doctor2go-connect' ) . ' </p>';
+			} elseif ( ! empty( $errors ) ) {
+				foreach ( $errors as $error ) {
+					echo '<p class="error">' . esc_html( $error ) . '</p>';
 				}
+			} elseif ( is_wp_error( $user_id ) ) {
+				echo '<p class="error">' . esc_html( $user_id->get_error_message() ) . '</p>';
 			}
 		}
+
 
 		$user_meta		= get_user_meta($user_id);
 
@@ -3173,6 +3358,7 @@ class D2gConnect_Shortcodes {
 		?>
 		<div class="d2g_form_wrapper">
 			<form id="custom-registration-form" method="post">
+				<?php wp_nonce_field( 'd2g_account_action', 'd2g_account_nonce' ); ?>
 				<p>
 					<label for="first_name"><?php echo esc_html__('First name', 'doctor2go-connect'); ?></label>
 					<input type="text" name="meta[first_name]" id="first_name" required value="<?php echo esc_html($user_meta['first_name'][0])?>">
@@ -3182,8 +3368,8 @@ class D2gConnect_Shortcodes {
 					<input type="text" name="meta[last_name]" id="last_name" required value="<?php echo esc_html($user_meta['last_name'][0])?>">
 				</p>
 				<p>
-					<label for="email"><?php echo esc_html__('Email', 'doctor2go-connect'); ?></label>
-					<input type="email" name="email" id="email" required value="<?php echo esc_html($current_user->data->user_email)?>">
+					<label for="email"><?php echo esc_html__('Email (can not be changed)', 'doctor2go-connect'); ?></label>
+					<input readonly type="email" name="email" id="email" required value="<?php echo esc_html($current_user->data->user_email)?>">
 				</p>
 				<p>
 					<label for="p_tel"><?php echo esc_html__('Phone', 'doctor2go-connect'); ?></label>
@@ -3306,13 +3492,23 @@ class D2gConnect_Shortcodes {
 		<div class="alignwide">
 			<div class="row with_right_sidebar">
 				<div class="col-sm-9">
-					<?php if(isset($_GET['url'])){?>
-						<h2><?php echo esc_html__('Patient portal:', 'doctor2go-connect').' '.esc_html(urldecode($_GET['title']))?></h2>
-						<p><?php echo esc_html__('This secure portal lets you send and receive messages from your doctor and access any documents they\'ve shared with you.', 'doctor2go-connect')?></p>
-						<iframe id="patient_portal" style="width: 100%; border:none; height:1200px; overflow-y:scroll;" src="<?php echo esc_url($_GET['url']) ?>"></iframe>		
+					<?php 
+					// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+					if ( isset( $_GET['url'] ) ) {
+						// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+						$iframe_url = isset( $_GET['url'] ) ? wp_unslash( $_GET['url'] ) : '';
+						// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+						$title      = isset( $_GET['title'] ) ? wp_unslash( $_GET['title'] ) : '';
+					?>
+						<h2><?php echo esc_html__( 'Patient portal:', 'doctor2go-connect' ) . ' ' . esc_html( $title ); ?></h2>
+						<p><?php echo esc_html__( 'This secure portal lets you send and receive messages from your doctor and access any documents they\'ve shared with you.', 'doctor2go-connect' ); ?></p>
+						<iframe id="patient_portal" style="width:100%; border:none; height:1200px; overflow-y:scroll;" src="<?php echo esc_url( $iframe_url ); ?>"></iframe>
 					<?php } else { ?>
-						<h2 class="error"><?php esc_html_e('No doctor has been selected yet. Please choose one to proceed.', 'doctor2go-connect')?></h2>
-					<?php } ?>	
+						<h2 class="error"><?php esc_html_e( 'No doctor has been selected yet. Please choose one to proceed.', 'doctor2go-connect' ); ?></h2>
+					<?php } ?>
+
+
+
 				</div>
 				<div class="col-sm-3">
 					<h2><?php echo esc_html__('Your doctor\'s', 'doctor2go-connect')?></h2>

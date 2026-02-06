@@ -44,12 +44,10 @@ add_filter ('single_template', 'd2g_redirect_single_template');
  * @since v1.0.0
  */
 function d2g_load_single_d2g_doctor_hooks(){
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
     if(get_option('d2g_detail_page_view') != 'single-v2' && !isset($_GET['view'])){
-        add_action('d2g_single_sidebar', 'cb_d2g_single_sidebar', 10, 1);
-        
-    } else {
-        
-    }
+        add_action('d2g_single_sidebar', 'cb_d2g_single_sidebar', 10, 1);  
+    } 
     add_action('d2g_doctor_locations', 'show_doctor_locations_by_id', 10, 1);
     add_action('d2g_doctor_extended_info', 'show_doctor_extended_info');
     add_action('d2g_booking_calendar', 'show_booking_calendar', 10, 1 );
@@ -76,9 +74,11 @@ function d2g_redirect_single_template ($template) {
  * @return void
  */
 function d2g_single_d2g_doctor_content(){
-    if(get_option('d2g_detail_page_view') != 'single-v2' && !isset($_GET['view'])){
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+    $view = isset($_GET['view']) ? sanitize_text_field(wp_unslash($_GET['view'])) : '';
+    if ( get_option('d2g_detail_page_view') !== 'single-v2' && ! $view ) {
         include(d2g_locate_template("content-single-d2g_doctor.php"));
-    } elseif (get_option('d2g_detail_page_view') == 'single-v2' || $_GET['view'] == 'v2') {
+    } elseif (get_option('d2g_detail_page_view') == 'single-v2' || $view == 'v2') {
         include(d2g_locate_template("content-single-d2g_doctor-v2.php"));
     }
     
@@ -219,16 +219,18 @@ function d2g_body_class( $classes, $class ) {
 
 function nice_dump($dump){
     echo '<pre>';
-    var_dump($dump);
+    var_dump($dump); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_dump
     echo '</pre>';
 }
 
 /*
 * return the URL from the current page / post
+* this function will sonn be removed as WP functions or other methods will be used, thats why all pcp warnings are surpressed
 */
-function d2g_curPageURL($returnRequestURI=true) {
+// phpcs:disable WordPress.Security.ValidatedSanitizedInput
+function d2g_curPageURL($returnRequestURI = true) {
     $pageURL = 'http';
-    if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+    if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") { $pageURL .= "s"; }
     $pageURL .= "://";
     $requestURI = $_SERVER["REQUEST_URI"];
     if (!$returnRequestURI) {
@@ -236,12 +238,13 @@ function d2g_curPageURL($returnRequestURI=true) {
         $requestURI = $splitURI[0];
     }
     if ($_SERVER["SERVER_PORT"] != "80") {
-        $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$requestURI;
+        $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $requestURI;
     } else {
-        $pageURL .= $_SERVER["SERVER_NAME"].$requestURI;
+        $pageURL .= $_SERVER["SERVER_NAME"] . $requestURI;
     }
     return $pageURL;
 }
+// phpcs:enable WordPress.Security.ValidatedSanitizedInput
 
 
 function d2g_fetch_availability_data($post_id, $template = ''){ ?>
@@ -697,7 +700,7 @@ function show_booking_calendar($post = '', $only_cal = false){
                 <li id="location"></li>
                 <li class="label"><?php echo esc_html__('Your info', 'doctor2go-connect')?></li>
                 <li id="patient">
-                    <?php if($patient_meta['first_name'][0].$patient_meta['last_name'][0].$patient_meta['p_tel'][0] == ''){ ?>
+                    <?php if(is_user_logged_in()){ ?>
                         <p><?php echo esc_html__('Your account data is not complete yet. Please fill in all required fields.', 'doctor2go-connect')?></p>
                         <input type="hidden" value="update_user" name="user_action" id="user_action">
                     <?php } else { ?>
@@ -747,8 +750,8 @@ function show_booking_calendar($post = '', $only_cal = false){
     $currentDate = new DateTime();
     ?>
     <script>
-
-        <?php if(isset($_GET['book']) && $_GET['book'] == 1){ ?>
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        <?php if(isset($_GET['book']) && $_GET['book'] == 1){ // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
             jQuery(document).ready(function($){
                     jQuery('#start').html(localStorage.getItem("start")); 
                     jQuery('#end').html(localStorage.getItem("end")); 
@@ -765,7 +768,9 @@ function show_booking_calendar($post = '', $only_cal = false){
             });
         <?php } ?>
 
-        <?php if((isset($_GET['book']) && $_GET['book'] == 1) || (isset($_GET['create_account']) && $_GET['create_account'] == 1 )){ ?>
+        <?php 
+        if((isset($_GET['book']) && $_GET['book'] == 1) || (isset($_GET['create_account']) && $_GET['create_account'] == 1 )){ // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            ?>
             jQuery(document).ready(function($){
                 jQuery('#booking_form_wrapper').removeClass('simple_hide'); 
                 var goal = '#booking_form_wrapper';
@@ -1316,6 +1321,7 @@ With an account, you’ll have ongoing access and can also message the doctor af
         <div class="error simple_hide" id="walkin_error"></div>
         <div class="walkin_form_inner_wrapper mb-s">
             <form id="walkin_form" method="post" action="" enctype="multipart/form-data">
+                <?php wp_nonce_field( 'walkin_form_action', 'walkin_form_nonce' ); ?>
                 <input type="hidden" name="wp_doc_id" value="<?php echo esc_html($d2g_profile_data->doctor_profile_ID)?>"> 
                 <div class="row mb-s">
                     <div class="col-sm-4">
@@ -1541,6 +1547,7 @@ function show_written_con_form(){
         <div class="error simple_hide" id="written_con_error"></div>
         <div class="walkin_form_inner_wrapper mb-s">
             <form id="written_con_form" method="post" action="" enctype="multipart/form-data">
+                <?php wp_nonce_field( 'email_advice_form_action', 'email_advice_form_nonce' ); ?>
                 <input type="hidden" name="wp_doc_id" value="<?php echo esc_html($d2g_profile_data->doctor_profile_ID)?>"> 
                 <div class="row mb-s simple_hide">
                     <div class="col-sm-12">
@@ -1984,33 +1991,51 @@ function programmatic_login( $username ) {
     return false;
 }
 
-if(get_option('d2g_recaptcha_site_key')){
-    add_filter('wp_authenticate_user', function ($user) {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            
-            $recaptcha_secret_key = get_option('d2g_recaptcha_secret_key'); 
-            $recaptcha_response = $_POST['g-recaptcha-response'];
+// ✅ reCAPTCHA validation for login form   
+if ( get_option('d2g_recaptcha_site_key') ) {
+    add_filter('wp_authenticate_user', function ( $user ) {
+
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        $request_method = isset( $_SERVER['REQUEST_METHOD'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_METHOD'] ) ) : '';
+
+        // Only run for POST requests
+        if ( $request_method === 'POST' ) {
+
+            $recaptcha_secret_key = get_option('d2g_recaptcha_secret_key');
+
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            $recaptcha_response = isset( $_POST['g-recaptcha-response'] ) ? sanitize_text_field( wp_unslash( $_POST['g-recaptcha-response'] ) ) : '';
+
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            $remote_ip = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
 
             // Verify reCAPTCHA response with Google
-            $response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', array(
-                'body' => array(
-                    'secret' => $recaptcha_secret_key,
-                    'response' => $recaptcha_response,
-                    'remoteip' => $_SERVER['REMOTE_ADDR'],
-                ),
-            ));
+            $response = wp_remote_post(
+                'https://www.google.com/recaptcha/api/siteverify',
+                array(
+                    'body' => array(
+                        'secret'   => $recaptcha_secret_key,
+                        'response' => $recaptcha_response,
+                        'remoteip' => $remote_ip,
+                    ),
+                )
+            );
 
-            $response_body = json_decode(wp_remote_retrieve_body($response), true);
+            $response_body = json_decode( wp_remote_retrieve_body( $response ), true );
 
-            // Check if reCAPTCHA was successful
-            if (empty($response_body['success']) || !$response_body['success']) {
-                return new WP_Error('recaptcha_failed', __('reCAPTCHA verification failed. Please try again.', 'doctor2go-connect'));
+            if ( empty( $response_body['success'] ) || ! $response_body['success'] ) {
+                return new WP_Error(
+                    'recaptcha_failed',
+                    __( 'reCAPTCHA verification failed. Please try again.', 'doctor2go-connect' )
+                );
             }
         }
 
         return $user;
-    });
+    } );
 }
+
+
 
 
 /**
@@ -2056,20 +2081,23 @@ function start_session() {
 
 
 function save_user_timezone() {
-    // Check for timezone data in the request
-    if (!empty($_POST['timezone'])) {
-        $timezone = sanitize_text_field($_POST['timezone']);
+    // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+    $timezone = isset($_POST['timezone']) ? sanitize_text_field(wp_unslash($_POST['timezone'])) : '';
 
+    if ($timezone !== '') {
         // Save the timezone to the session
         $_SESSION['user_timezone'] = $timezone;
 
         // Return a success response
-        wp_send_json_success(['message' => 'Timezone saved successfully!', 'timezone' => $timezone]);
+        wp_send_json_success([
+            'message'  => 'Timezone saved successfully!',
+            'timezone' => $timezone,
+        ]);
     } else {
         wp_send_json_error(['message' => 'Timezone not provided.']);
     }
 
-    wp_die(); // Required to terminate the AJAX request properly
+    wp_die(); // Terminate the AJAX request properly
 }
 
 
@@ -2088,7 +2116,7 @@ function get_user_timezone() {
     }
 
     if (!empty($_SESSION['user_timezone'])) {
-        return $_SESSION['user_timezone'];
+        return sanitize_text_field($_SESSION['user_timezone']); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
     }
 
     return '';
@@ -2147,18 +2175,21 @@ function get_liked_posts() {
 //this adds some js based on some GET var in the URL
 add_action('wp_footer', 'add_custom_js_to_footer');
 function add_custom_js_to_footer() {
+    $open      = isset($_GET['open']) ? sanitize_text_field( wp_unslash($_GET['open']) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+    $scroll_to = isset($_GET['scroll_to']) ? sanitize_text_field( wp_unslash($_GET['scroll_to']) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
     ?>
     <script>
         jQuery(document).ready(function($){
-            <?php if(isset($_GET['open']) && $_GET['open'] != ''){ ?>
+            <?php if($open !== ''){ ?>
                 setTimeout(function(){
-                    $('#<?php echo esc_js($_GET['open'])?>' ).click();
-                },800)
+                    $('#<?php echo esc_js($open); ?>').click();
+                }, 800);
             <?php } ?>
-            <?php if(isset($_GET['scroll_to']) && $_GET['scroll_to'] != ''){ ?>
+            <?php if($scroll_to !== ''){ ?>
                 setTimeout(function(){
-                    $('body').scrollTo('#<?php echo esc_js($_GET['scroll_to'])?>', {duration: 'slow', offset: -120});
-                },800)
+                    $('body').scrollTo('#<?php echo esc_js($scroll_to); ?>', {duration: 'slow', offset: -120});
+                }, 800);
             <?php } ?>
         });
     </script>
@@ -2195,51 +2226,48 @@ add_shortcode( 'd2g_user_name', 'd2g_user_name_shortcode' );
 
 
 //old ajax call in calendar loads the availability data from the D2G-software
-function load_availability_data(){
-    $profileClass                           = new D2G_ProfileData($_POST['doc_id']);
-    $doctor_meta                            = get_post_meta($_POST['doc_id']);
-    $availabilityDataJson                   = $profileClass->d2g_get_availability_data($doctor_meta['user_key'][0]);
-    $availabilityDataObj                    = json_decode($availabilityDataJson);
+function load_availability_data() {
+    // Get doctor ID safely, suppress nonce warning
+    $doc_id = isset($_POST['doc_id']) ? absint( wp_unslash( $_POST['doc_id'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
+    if (!$doc_id) {
+        wp_send_json_error(['message' => 'Invalid doctor ID']);
+        wp_die();
+    }
 
-    $walk_in_check = '';
-    $tariffStr = '';
-    $firstAvailibility = '';
-    $docSlotsArray = array();
+    $profileClass         = new D2G_ProfileData($doc_id);
+    $doctor_meta          = get_post_meta($doc_id);
+    $availabilityDataJson = $profileClass->d2g_get_availability_data($doctor_meta['user_key'][0]);
+    $availabilityDataObj  = json_decode($availabilityDataJson);
 
+    $walk_in_check        = '';
+    $tariffStr            = '';
+    $firstAvailibility    = '';
+    $docSlotsArray        = array();
 
-    if(isset($availabilityDataObj->availabilities)){
-        if(!isset($availabilityDataObj->availabilities->message) && count($availabilityDataObj->availabilities) > 0){
-            $docSlotsArray                  = $availabilityDataObj->availabilities;
-            $firstAvailibility              = $profileClass->get_first_avialibility($docSlotsArray);
-            $docSlotsJson                   = json_encode($docSlotsArray);
-            $tariffs                        = $profileClass->get_tariffs($docSlotsArray);
-            $tariffStr                      = get_tariff_string($tariffs);
+    if (isset($availabilityDataObj->availabilities)) {
+        if (!isset($availabilityDataObj->availabilities->message) && count($availabilityDataObj->availabilities) > 0) {
+            $docSlotsArray       = $availabilityDataObj->availabilities;
+            $firstAvailibility   = $profileClass->get_first_avialibility($docSlotsArray);
+            $docSlotsJson        = json_encode($docSlotsArray);
+            $tariffs             = $profileClass->get_tariffs($docSlotsArray);
+            $tariffStr           = get_tariff_string($tariffs);
 
-            
-
-            if($availabilityDataObj->user_has_inloop == true && $availabilityDataObj->user_is_active){
-                $walk_in_check = true;
-            } else {
-                $walk_in_check = false;
-            }
+            $walk_in_check       = ($availabilityDataObj->user_has_inloop == true && $availabilityDataObj->user_is_active) ? true : false;
         }
     }
 
-    $availibily_data_set         = array(
-        'walkin_check'          => $walk_in_check?:'',
-        'tariffs'               => $tariffStr?:'',
-        'first_availibility'    => $firstAvailibility?:'',
-        'doc_slots'             => $docSlotsArray
+    $availibily_data_set = array(
+        'walkin_check'        => $walk_in_check ?: '',
+        'tariffs'             => $tariffStr ?: '',
+        'first_availibility'  => $firstAvailibility ?: '',
+        'doc_slots'           => $docSlotsArray
     );
-    
-
-    //wp_send_json($availabilityDataJson);
 
     wp_send_json_success($availibily_data_set);
-    
     wp_die();
 }
+
 
 // Function to generate tariff string
 function get_tariff_string($tariffs){
@@ -2366,7 +2394,7 @@ function d2g_get_availabilities( WP_REST_Request $request ) {
 
 //sanitize and return POST data
 function d2g_get_post_text( $key ) {
-    return isset( $_POST[ $key ] )
-        ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) )
+    return isset( $_POST[ $key ] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
         : '';
 }

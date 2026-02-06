@@ -65,7 +65,7 @@ class D2G_ProfileData {
             $this->pubs                 = $this->d2g_unserialzer_checker($this->doctor_meta['pubs']);
         } else {
             if(get_option('d2g_debug') == 1){
-                error_log('Warning: $this->doctor is not an object: ' . var_export($this->doctor, true));
+                error_log('Warning: $this->doctor is not an object: ' . print_r($this->doctor, true)); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log,WordPress.PHP.DevelopmentFunctions.error_log_print_r -- Debug logging.
             }
             $this->doctor_profile_ID = null; // fallback
         }
