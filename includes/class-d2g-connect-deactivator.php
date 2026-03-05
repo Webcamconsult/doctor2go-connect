@@ -32,5 +32,4 @@ class D2gConnect_Deactivator {
 	public static function deactivate() {
 		unregister_post_type( 'd2g_doctor' );
 	}
-
 }

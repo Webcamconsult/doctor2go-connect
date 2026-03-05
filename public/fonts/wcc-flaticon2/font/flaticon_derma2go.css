@@ -10,8 +10,8 @@
 */
 
 @font-face {
-    font-family: "flaticon_derma2go";
-    src: url("./flaticon_derma2go.woff2?0b9a9ddf5e50f4d25234f6778770659d") format("woff2"),
+	font-family: "flaticon_derma2go";
+	src: url("./flaticon_derma2go.woff2?0b9a9ddf5e50f4d25234f6778770659d") format("woff2"),
 url("./flaticon_derma2go.woff?0b9a9ddf5e50f4d25234f6778770659d") format("woff"),
 url("./flaticon_derma2go.eot?0b9a9ddf5e50f4d25234f6778770659d#iefix") format("embedded-opentype"),
 url("./flaticon_derma2go.ttf?0b9a9ddf5e50f4d25234f6778770659d") format("truetype"),
@@ -19,98 +19,97 @@ url("./flaticon_derma2go.svg?0b9a9ddf5e50f4d25234f6778770659d#flaticon_derma2go"
 }
 
 i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before, span[class^="flaticon-"]:before, span[class*=" flaticon-"]:before {
-    font-family: flaticon_derma2go !important;
-    font-style: normal;
-    font-weight: normal !important;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+	font-family: flaticon_derma2go !important;
+	font-style: normal;
+	font-weight: normal !important;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 .flaticon-research:before {
-    content: "\f101";
+	content: "\f101";
 }
 .flaticon-dermatologist:before {
-    content: "\f102";
+	content: "\f102";
 }
 .flaticon-serum:before {
-    content: "\f103";
+	content: "\f103";
 }
 .flaticon-dermatology:before {
-    content: "\f104";
+	content: "\f104";
 }
 .flaticon-dermatologist-1:before {
-    content: "\f105";
+	content: "\f105";
 }
 .flaticon-uv-protection:before {
-    content: "\f106";
+	content: "\f106";
 }
 .flaticon-allergy-test:before {
-    content: "\f107";
+	content: "\f107";
 }
 .flaticon-patient:before {
-    content: "\f108";
+	content: "\f108";
 }
 .flaticon-medical:before {
-    content: "\f109";
+	content: "\f109";
 }
 .flaticon-satisfaction:before {
-    content: "\f10a";
+	content: "\f10a";
 }
 .flaticon-supporting:before {
-    content: "\f10b";
+	content: "\f10b";
 }
 .flaticon-credit-card:before {
-    content: "\f10c";
+	content: "\f10c";
 }
 .flaticon-online-payment:before {
-    content: "\f10d";
+	content: "\f10d";
 }
 .flaticon-credit-cards-payment:before {
-    content: "\f10e";
+	content: "\f10e";
 }
 .flaticon-personal-information:before {
-    content: "\f10f";
+	content: "\f10f";
 }
 .flaticon-login:before {
-    content: "\f110";
+	content: "\f110";
 }
 .flaticon-security:before {
-    content: "\f111";
+	content: "\f111";
 }
 .flaticon-verified-account:before {
-    content: "\f112";
+	content: "\f112";
 }
 .flaticon-calendar:before {
-    content: "\f113";
+	content: "\f113";
 }
 .flaticon-communication:before {
-    content: "\f114";
+	content: "\f114";
 }
 .flaticon-meeting-schedule:before {
-    content: "\f115";
+	content: "\f115";
 }
 .flaticon-video-call:before {
-    content: "\f116";
+	content: "\f116";
 }
 .flaticon-online-meeting:before {
-    content: "\f117";
+	content: "\f117";
 }
 .flaticon-video-call-1:before {
-    content: "\f118";
+	content: "\f118";
 }
 .flaticon-video-conference:before {
-    content: "\f119";
+	content: "\f119";
 }
 .flaticon-online-interview:before {
-    content: "\f11a";
+	content: "\f11a";
 }
 .flaticon-bubble-chat:before {
-    content: "\f11b";
+	content: "\f11b";
 }
 .flaticon-medical-information:before {
-    content: "\f11c";
+	content: "\f11c";
 }
-

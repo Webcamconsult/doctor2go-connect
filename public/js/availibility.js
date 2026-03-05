@@ -21,13 +21,12 @@ window.loadAvailabilityData = function () {
         const template = jQuery(this).data('template');
         const colClass = template === 'list' ? 'col-sm-6' : '';
 
-        /*
-        console.log(
-            'Doctor', postID,
-            'icon_list:', jQuery('#icon_list_' + postID).length,
-            'doc:', jQuery('#doc_' + postID).length
-        );
-        */
+
+        // CHECK: if this doctor already has the 'icon-cc-mastercard', skip loading
+        if (jQuery(this).hasClass('avail_loaded')) {
+            console.log('Availabilities already loaded for doctor', postID);
+            return; // skip this doctor
+        }
        
         const req = fetch(availibilityData.restUrl + 'availabilities', {
             method: 'POST',
@@ -57,7 +56,7 @@ window.loadAvailabilityData = function () {
 
 
 function do_doctor_availibility(data, postID, colClass, wrapper){
-    
+    jQuery('#doc_' + postID).addClass('avail_loaded');
     //process data here
     if(data.walkin_check == true){
         var walkin = '<span class="walkin '+ colClass +'">' + availibilityData.string1 + '</span>';

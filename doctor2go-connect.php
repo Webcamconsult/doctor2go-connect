@@ -29,8 +29,8 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'D2G_PLUGIN_DIR', untrailingslashit( dirname( __FILE__ ) ) );
-define('D2G_PLUGIN_URL', untrailingslashit(plugin_dir_url( __FILE__ )));
+define( 'D2G_PLUGIN_DIR', untrailingslashit( __DIR__ ) );
+define( 'D2G_PLUGIN_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 
 
 /**
@@ -74,6 +74,5 @@ function run_d2gConnect() {
 
 	$plugin = new D2gConnect();
 	$plugin->run();
-
 }
 run_d2gConnect();

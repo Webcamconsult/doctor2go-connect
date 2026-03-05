@@ -1,5 +1,7 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  *
  * This template can be overridden by copying it to yourtheme/d2-gconnect/single-d2g_doctor.php.
@@ -17,25 +19,25 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 
 
-if(get_option('d2g_single_header_footer') != 1){
-	get_header(  ); 
+if ( get_option( 'd2g_single_header_footer' ) != 1 ) {
+	get_header();
 }
 
 while ( have_posts() ) :
 	the_post();
 
-	if( !apply_filters( 'd2g_enable_profile_content', false ) ){
+	if ( ! apply_filters( 'd2g_enable_profile_content', false ) ) {
 		do_action( 'd2g_single_d2g_doctor_main_content' );
 	}
-	
-	if( apply_filters( 'd2g_enable_profile_content', false ) ){
+
+	if ( apply_filters( 'd2g_enable_profile_content', false ) ) {
 		the_content();
 	}
 
-	
+
 
 endwhile; // end of the loop.
 
-if(get_option('d2g_single_header_footer') != 1){
-	get_footer(  );
+if ( get_option( 'd2g_single_header_footer' ) != 1 ) {
+	get_footer();
 }
