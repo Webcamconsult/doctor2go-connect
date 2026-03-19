@@ -125,16 +125,19 @@ class D2G_ProfileData {
 				'type'  => 'user',
 			),
 			'calendar'  => 'super',
+			'nocache'  => microtime(true)
 		);
 
 		$args = array(
 			'method'      => 'POST',
 			'timeout'     => 30,
 			'headers'     => array(
-				'Content-Type' => 'application/json',
+				'Content-Type' 	=> 'application/json',
+				'Cache-Control' => 'no-cache',
+        		'Pragma'        => 'no-cache'
 			),
 			'body'        => wp_json_encode( $body ),
-			'data_format' => 'body',
+			'data_format' => 'body'
 		);
 
 		$response = wp_remote_request( $url, $args );

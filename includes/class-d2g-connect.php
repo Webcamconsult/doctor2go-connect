@@ -217,8 +217,8 @@ class D2gConnect {
 		// load more doctors
 		$this->loader->add_action( 'wp_ajax_doctor_call', $plugin_public, 'doctor_call' );
 		$this->loader->add_action( 'wp_ajax_nopriv_doctor_call', $plugin_public, 'doctor_call' );
-		$this->loader->add_action( 'wp_ajax_doctor_count_call', $plugin_public, 'doctor_count_call' );
-		$this->loader->add_action( 'wp_ajax_nopriv_doctor_count_call', $plugin_public, 'doctor_count_call' );
+		$this->loader->add_action( 'wp_ajax_d2g_doctor_count_call', $plugin_public, 'd2g_doctor_count_call' );
+		$this->loader->add_action( 'wp_ajax_nopriv_d2g_doctor_count_call', $plugin_public, 'd2g_doctor_count_call' );
 
 		// single sign on hook for doctors coming from the D2G software
 		$this->loader->add_action( 'template_redirect', $plugin_public, 'd2g_sso' );

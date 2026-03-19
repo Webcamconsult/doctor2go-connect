@@ -94,6 +94,10 @@ jQuery(document).ready(function($){
                 url.searchParams.set('country-origin', $('#country_filter').val());
             }
 
+            if($('#consult_type').val() != 0){
+                url.searchParams.set('consult_type', $('#consult_type').val());
+            }
+
             if($('#post_id').val() != 0){
                 url.searchParams.set('post_id', $('#post_id').val());
             }
@@ -124,6 +128,7 @@ jQuery(document).ready(function($){
             'specialty'                 : $('#specialty_filter').val(),
             'doctor-language'           : $('#language_filter').val(),
             'country-origin'            : $('#country_filter').val(),
+            'consult_type'              : $('#consult_type').val() || '',
             'post_id'            		: $('#post_id').val(),
             'orderby'					: $('#orderby').val(),
             'order'						: $('#order').val(),
@@ -166,7 +171,7 @@ jQuery(document).ready(function($){
 
         data.posts_per_page 	= -1;
         data.resp 				= 'only_count';
-        data.action				= 'doctor_count_call';
+        data.action				= 'd2g_doctor_count_call';
         
         
         jQuery.post(ajax_url, data, function(response) {

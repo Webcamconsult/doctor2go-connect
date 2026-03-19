@@ -91,8 +91,8 @@ class D2gConnect_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-		if ( get_option( 'd2g_css_grid' ) != '1' ) {
-			wp_enqueue_style( $this->plugin_name . '-grid', plugin_dir_url( __FILE__ ) . 'css/grid.css', array(), $this->version, 'all' );
+		if ( get_option( 'd2g_bootstrap_css' ) != '1' ) {
+			wp_enqueue_style( $this->plugin_name . '-bootstrap', plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css', array(), $this->version, 'all' );
 		}
 		wp_enqueue_style( $this->plugin_name . '-select', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name . '-fancybox', plugin_dir_url( __FILE__ ) . 'css/jquery.fancybox.css', array(), $this->version, 'all' );
@@ -120,6 +120,9 @@ class D2gConnect_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
+		if ( get_option( 'd2g_css_grid' ) != '1' ) {
+			wp_enqueue_script( $this->plugin_name . '-bootstrap', plugin_dir_url( __FILE__ ) . 'js/bootstrap.bundle.min.js', array( 'jquery' ), $this->version, true );
+		}
 		wp_enqueue_script( $this->plugin_name . '-fancybox', plugin_dir_url( __FILE__ ) . 'js/jquery.fancybox.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( $this->plugin_name . '-select', plugin_dir_url( __FILE__ ) . 'js/select2.full.min.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( $this->plugin_name . '-scrollTo', plugin_dir_url( __FILE__ ) . 'js/jquery.scrollTo.min.js', array( 'jquery' ), $this->version, true );
@@ -131,14 +134,7 @@ class D2gConnect_Public {
 		if ( get_option( 'd2g_recaptcha_site_key' ) != '' && get_option( 'deactivate_recapctha_script' ) != 1 ) {
 			$recaptcha_site_key = get_option( 'd2g_recaptcha_site_key' );
 			wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js?onload=d2gOnloadCallback&render=explicit', array(), $this->version, true );
-			wp_enqueue_script(
-				'd2g-recaptcha',
-				plugin_dir_url( __FILE__ ) . 'js/d2g-recaptcha.js',
-				array( 'google-recaptcha' ),
-				'1.0',
-				true
-			);
-
+			wp_enqueue_script('d2g-recaptcha', plugin_dir_url( __FILE__ ) . 'js/d2g-recaptcha.js', array( 'google-recaptcha' ), '1.0', true);
 			wp_localize_script(
 				'd2g-recaptcha',
 				'd2gRecaptchaVars',
@@ -156,11 +152,57 @@ class D2gConnect_Public {
 		//load doctors
 		wp_enqueue_script( 'd2g-load-doctors', plugin_dir_url( __FILE__ ) . 'js/load-doctors.js', array( 'jquery' ), $this->version, true );
 
+		//booking via calendar
+		wp_enqueue_script( $this->plugin_name . '-booking', plugin_dir_url( __FILE__ ) . 'js/doctor2go-booking.js', array( 'jquery' ), $this->version, true );
+
+		$site_key     = get_option( 'd2g_recaptcha_site_key' );
+		$d2gAdmin     = new D2G_doc_user_profile();
+		$currLang     = explode( '_', get_locale() )[0];
+		$only_cal     = false; // keep your original logic here if needed
+		$patient_meta = get_user_meta( get_current_user_id() );
+		$d2g_profile_data = isset( $GLOBALS['d2g_profile_data'] ) ? $GLOBALS['d2g_profile_data'] : null;
+		$in_tabs      = false; // keep your original logic here if needed
+		$currentDate  = new DateTime();
+
+		$booking_vars = array(
+			'ajax_url'             => admin_url( 'admin-ajax.php' ),
+			'current_date'         => $currentDate->format( 'Y-m-d' ),
+			'locale'               => $currLang,
+			'only_cal'             => (bool) $only_cal,
+			'in_tabs'              => (bool) $in_tabs,
+			'waiting_room_url'     => get_option( 'waiting_room_url' ),
+			'recaptcha_site_key'   => (string) $site_key,
+			'd2g_timezone'         => ! empty( $patient_meta['p_timezone'][0] ) ? $patient_meta['p_timezone'][0] : '',
+			'is_user_logged_in'    => is_user_logged_in(),
+			'appointments_url'     => $d2gAdmin::d2g_page_url( $currLang, 'appointments', true )['url'],
+			'appointment_conf_url' => $d2gAdmin::d2g_page_url( $currLang, 'appointment_confirmation', true )['url'],
+			'start_holiday'        => ( $d2g_profile_data && ! empty( $d2g_profile_data->doctor_meta['start_holiday'][0] ) ) ? $d2g_profile_data->doctor_meta['start_holiday'][0] : '',
+			'end_holiday'          => ( $d2g_profile_data && ! empty( $d2g_profile_data->doctor_meta['end_holiday'][0] ) ) ? $d2g_profile_data->doctor_meta['end_holiday'][0] : '',
+			'i18n'                 => array(
+				'walk_in_consult'          => esc_html__( 'walk-in consult', 'doctor2go-connect' ),
+				'not_available'            => esc_html__( 'not available', 'doctor2go-connect' ),
+				'at'                       => esc_html__( 'at', 'doctor2go-connect' ),
+				'video'                    => esc_html__( 'Video', 'doctor2go-connect' ),
+				'fill_required'            => esc_html__( 'Please fill in all marked fields. ', 'doctor2go-connect' ),
+				'invalid_email'            => esc_html__( ' You have entered an invalid e-mail. ', 'doctor2go-connect' ),
+				'recaptcha_required'       => esc_html__( ' Please verify that you are not a robot. ', 'doctor2go-connect' ),
+				'reservation_success'      => esc_html__( 'Your reservation has been successfully. You will now be redirected to your appointment manager. You might need to fill in an intake questionnaire.', 'doctor2go-connect' ),
+				'reservation_payment_info' => esc_html__( 'Online consultation reservations are valid for 24 hours and require payment within this period. Otherwise, they will be canceled.', 'doctor2go-connect' ),
+				'reservation_redirect'     => esc_html__( 'If you were not redirected automatically than please click on the button.', 'doctor2go-connect' ),
+				'pay_now'                  => esc_html__( 'pay now', 'doctor2go-connect' ),
+				'error_general'            => esc_html__( 'There has been an error, please try an other slot or try later. In case of futher issues, please contact the support.', 'doctor2go-connect' ),
+				'holiday_attention'        => esc_html__( 'Attention: I am unavailable in the following periode.', 'doctor2go-connect' ),
+				'more_slots_text'          => esc_html__( 'slots', 'doctor2go-connect' )
+			),
+		);
+
+		wp_add_inline_script( $this->plugin_name . '-booking', 'const d2gBookingVars = ' . wp_json_encode( $booking_vars ) . ';', 'before' );
+
+
+
 		// like button
 		wp_enqueue_script( $this->plugin_name . '-likebtn', plugin_dir_url( __FILE__ ) . 'js/like-button.js', array( 'jquery' ), $this->version, true );
-		wp_localize_script(
-			$this->plugin_name . '-likebtn',
-			'likeButtonData',
+		wp_localize_script($this->plugin_name . '-likebtn','likeButtonData',
 			array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 				'nonce'    => wp_create_nonce( 'like_nonce' )
@@ -169,19 +211,13 @@ class D2gConnect_Public {
 
 		// load availability info on overview page
 		if ( get_option( 'd2g_load_availability_info' ) == 1 ) {
-			wp_enqueue_script(
-				$this->plugin_name . '-availibility',
-				plugin_dir_url( __FILE__ ) . 'js/availibility.js',
-				array( 'jquery' ),
-				$this->version,
+			wp_enqueue_script($this->plugin_name . '-availibility', plugin_dir_url( __FILE__ ) . 'js/availibility.js', array( 'jquery' ), $this->version,
 				array(
 					'in_footer' => true,
 					'strategy'  => 'defer',
 				)
 			);
-			wp_localize_script(
-				$this->plugin_name . '-availibility',
-				'availibilityData',
+			wp_localize_script($this->plugin_name . '-availibility', 'availibilityData',
 				array(
 					'restUrl' => esc_url_raw( rest_url( 'd2g-connect/v1/' ) ),
 					'nonce'   => wp_create_nonce( 'wp_rest' ),
@@ -202,7 +238,7 @@ class D2gConnect_Public {
 				/* AJAX + security */
 				'ajax' => array(
 					'url'          => admin_url( 'admin-ajax.php' ),
-					'delete_nonce' => wp_create_nonce( 'delete_wcc_appointment_nonce' ),
+					'delete_nonce' => wp_create_nonce( 'd2g_delete_wcc_appointment_nonce' ),
 					'mail_nonce'   => wp_create_nonce( 'send_ajax_d2g_email' ),
 					'delete_pic'   => wp_create_nonce( 'd2g_delete_pic' ),
 				),
@@ -303,11 +339,10 @@ class D2gConnect_Public {
 		add_shortcode( 'd2g_patient_menu', array( $this->shortcode_loader, 'd2g_patient_menu' ) );
 		add_shortcode( 'd2g_search_mask', array( $this->shortcode_loader, 'd2g_search_mask' ) );
 		add_shortcode( 'd2g_liked_posts', array( $this->shortcode_loader, 'd2g_liked_posts' ) );
-		add_shortcode( 'd2g_questionnaires', array( $this->shortcode_loader, 'd2g_questionnaires' ) );
 		add_shortcode( 'd2g_patient_portal', array( $this->shortcode_loader, 'd2g_patient_portal' ) );
-		add_shortcode( 'd2g_public_questionnaire', array( $this->shortcode_loader, 'd2g_public_questionnaire' ) );
 		add_shortcode( 'd2g_public_patient_portal', array( $this->shortcode_loader, 'd2g_public_patient_portal' ) );
 		add_shortcode( 'd2g_appointment_confirmation', array( $this->shortcode_loader, 'd2g_appointment_confirmation' ) );
+		add_shortcode( 'doctor_consultancy_tabs', array( $this->shortcode_loader, 'd2g_single_doctor_consultancy_tabs' ) );
 	}
 
 
@@ -339,6 +374,8 @@ class D2gConnect_Public {
 		$intake         = isset( $_POST['intake'] ) ? absint( wp_unslash( $_POST['intake'] ) ) : '';
 		$post_id        = isset( $_POST['post_id'] ) ? absint( wp_unslash( $_POST['post_id'] ) ) : 0;
 		$template       = isset( $_POST['template'] ) ? sanitize_file_name( wp_unslash( $_POST['template'] ) ) : '';
+		$consult_type 	= isset( $_POST['consult_type'] ) ? sanitize_text_field( wp_unslash( $_POST['consult_type'] ) ) : '';
+
 
 
 		$args = array(
@@ -394,15 +431,29 @@ class D2gConnect_Public {
 			$args['tax_query']['relation'] = 'AND';
 		}
 
-		if ( $intake === 1 ) {
-			$args['meta_query'] = array(
-				array(
-					'key'   => 'd2g_intake_call',
-					'value' => $intake,
-				),
+		// prepare meta_query if you already have one
+		if ( empty( $args['meta_query'] ) ) {
+			$args['meta_query'] = array();
+		}
+
+		// email consult: written_con_price not empty
+		if ( 'email' === $consult_type ) {
+			$args['meta_query'][] = array(
+				'key'     => 'written_con_price',
+				'value'   => '',
+				'compare' => '!=',
 			);
 		}
 
+		// video consult: d2g_availibility_check = 1
+		if ( 'video' === $consult_type ) {
+			$args['meta_query'][] = array(
+				'key'     => 'd2g_availibility_check',
+				'value'   => '1',
+				'compare' => '=',
+			);
+		}
+		
 		if ( $post_id !== 0 ) {
 			$args = array(
 				'post_type' => 'd2g_doctor',
@@ -433,7 +484,7 @@ class D2gConnect_Public {
 	/*
 	* this function gets the count from doctors
 	*/
-	public function doctor_count_call() {
+	public function d2g_doctor_count_call() {
 
 		// Verify nonce first
 		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['_wpnonce'] ) ), 'doc_call' ) ) {
@@ -451,6 +502,7 @@ class D2gConnect_Public {
 		$country        = isset( $_POST['country-origin'] ) ? absint( wp_unslash( $_POST['country-origin'] ) ) : '';
 		$intake         = isset( $_POST['intake'] ) ? absint( wp_unslash( $_POST['intake'] ) ) : 0;
 		$post_id        = isset( $_POST['post_id'] ) ? absint( wp_unslash( $_POST['post_id'] ) ) : 0;
+		$consult_type 	= isset( $_POST['consult_type'] ) ? sanitize_text_field( wp_unslash( $_POST['consult_type'] ) ) : '';
 
 		global $cssClass;
 
@@ -502,12 +554,30 @@ class D2gConnect_Public {
 			$args['tax_query']['relation'] = 'AND';
 		}
 
-		if ( $intake === 1 ) {
-			$args['meta_query'] = array(
-				array(
-					'key'   => 'd2g_intake_call',
-					'value' => $intake,
-				),
+		
+
+		// email consult: written_con_price not empty
+		if ( 'email' === $consult_type ) {
+			$args['meta_query'][] = array(
+				'key'     => 'written_con_price',
+				'value'   => '',
+				'compare' => '!=',
+			);
+		}
+
+		// video consult: d2g_availibility_check = 1
+		if ( 'video' === $consult_type ) {
+			$args['meta_query'][] = array(
+				'key'     => 'd2g_availibility_check',
+				'value'   => '1',
+				'compare' => '=',
+			);
+		}
+		
+		if ( $post_id !== 0 ) {
+			$args = array(
+				'post_type' => 'd2g_doctor',
+				'p'         => $post_id,
 			);
 		}
 
@@ -656,7 +726,7 @@ class D2gConnect_Public {
 
 					if ( isset( $myUser[0] ) ) {
 						$userName = $myUser[0]->data->user_login;
-						$response = programmatic_login( $userName );
+						$response = d2g_programmatic_login( $userName );
 
 						if ( $response === true ) {
 							$currLang = explode( '_', get_locale() )[0];

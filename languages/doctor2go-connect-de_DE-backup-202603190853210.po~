@@ -1,0 +1,1656 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Doctor2Go Connect\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-19 08:49+0000\n"
+"PO-Revision-Date: 2026-03-19 08:52+0000\n"
+"Last-Translator: Thomas Wiese\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.8.2; wp-6.9.1; php-8.3.21\n"
+"X-Domain: doctor2go-connect"
+
+#: public/class-d2g-profile-data.php:187 public/template-functions.php:1308
+#: public/template-functions.php:1321
+msgid " at "
+msgstr ""
+
+#: public/class-d2g-connect-public.php:188
+msgid " Please verify that you are not a robot. "
+msgstr ""
+
+#: public/class-d2g-connect-public.php:187
+msgid " You have entered an invalid e-mail. "
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:101
+#: admin/partials/d2g-connect-shortcode-help.php:106
+#: admin/partials/d2g-connect-shortcode-help.php:111
+#: admin/partials/d2g-connect-shortcode-help.php:131
+#: admin/partials/d2g-connect-shortcode-help.php:160
+#: admin/partials/d2g-connect-shortcode-help.php:190
+#: admin/partials/d2g-connect-shortcode-help.php:193
+#: admin/partials/d2g-connect-shortcode-help.php:196
+#: admin/partials/d2g-connect-shortcode-help.php:199
+#: admin/partials/d2g-connect-shortcode-help.php:202
+#: admin/partials/d2g-connect-shortcode-help.php:205
+#: admin/partials/d2g-connect-shortcode-help.php:208
+#: admin/partials/d2g-connect-shortcode-help.php:211
+#: admin/partials/d2g-connect-shortcode-help.php:214
+#: admin/partials/d2g-connect-shortcode-help.php:217
+#: admin/partials/d2g-connect-shortcode-help.php:220
+msgid "(PRO version only*)"
+msgstr ""
+
+#: public/template-functions.php:897 public/template-functions.php:1040
+msgid "* required fields."
+msgstr ""
+
+#: public/template-functions.php:664
+msgid "* These are mandatory fields"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:136
+msgid ""
+"1. Install the \"Solid Security Basic\" plugin and configure two-factor "
+"authentication (2FA) for all individuals with access to the user accounts. "
+"This is can be crucial to ensure the highest level of security for sensitive "
+"patient data."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:138
+msgid ""
+"2. Create a Google reCAPTCHA account specifically for your website and enter "
+"the generated keys into the appropriate settings within your site’s "
+"configuration."
+msgstr ""
+
+#: public/template-functions.php:1296
+msgid "A payment is required for this appointment."
+msgstr ""
+
+#: public/template-functions.php:1349
+msgid ""
+"A physical consultation involves an in-person visit to the doctor's clinic "
+"or designated location. You will have the opportunity to discuss your skin "
+"concerns face-to-face and receive a thorough examination and treatment plan."
+msgstr ""
+
+#: public/template-functions.php:1353
+msgid ""
+"A video consultation enables you to have a remote appointment with the "
+"doctor via a secure video platform. This option provides convenience and "
+"flexibility, allowing you to discuss your skin concerns from the comfort of "
+"your own home."
+msgstr ""
+
+#: public/template-functions.php:1341
+msgid ""
+"A walk-in consultation allows you to have a real-time video consultation "
+"with the doctor without a prior appointment. You will enter a virtual "
+"waiting room and the doctor will attend to you as soon as they are available."
+msgstr ""
+
+#: public/class-d2g-connect-public.php:740
+msgid "A wrong login hash has been sent"
+msgstr ""
+
+#: public/template-functions.php:343
+#: public/templates/content-single-d2g_doctor.php:55
+msgid "About"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:508
+msgid "Access"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:407
+msgid "Action"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:152
+msgid "Activate under construction"
+msgstr ""
+
+#: admin/partials/metaboxes.php:373
+msgid "add an extra publication"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:284 admin/class-d2g-connect-admin.php:298
+#: admin/class-d2g-connect-admin.php:312 admin/class-d2g-connect-admin.php:326
+#: admin/class-d2g-connect-admin.php:340 admin/class-d2g-connect-admin.php:354
+#: admin/class-d2g-connect-admin.php:368
+msgid "Add New"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:723 public/template-functions.php:404
+#: admin/partials/metaboxes.php:21
+msgid "Address"
+msgstr ""
+
+#: public/template-functions.php:940
+msgid "After payment, you will receive your assessment within 2 working days."
+msgstr ""
+
+#: public/template-functions.php:582
+msgid ""
+"After selecting your time, fill in the booking form with your details and "
+"submit it to complete your reservation."
+msgstr ""
+
+#: public/template-functions.php:894
+msgid ""
+"After your payment goes through, you’ll enter the waiting room. The doctor "
+"will begin the consultation shortly"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:279 admin/class-d2g-connect-admin.php:293
+#: admin/class-d2g-connect-admin.php:307 admin/class-d2g-connect-admin.php:321
+#: admin/class-d2g-connect-admin.php:335 admin/class-d2g-connect-admin.php:349
+#: admin/class-d2g-connect-admin.php:363
+msgid "All"
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:64
+msgid "All doctors will be shown."
+msgstr ""
+
+#: admin/partials/metaboxes.php:411
+msgid ""
+"All pages used by the D2G connect plugin need a page type! Otherwise links "
+"in the front end might be broken!"
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:51
+msgid "Amount of columns (only applicable with the grid template.)"
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:60
+msgid "Amount of doctors shown on a page."
+msgstr ""
+
+#: public/template-functions.php:1345
+msgid ""
+"An email advice allows you to receive a professional assessment from a "
+"certified dermatologist via email within two working days. You will complete "
+"a questionnaire describing your skin concern, and the doctor will provide "
+"their evaluation and recommendations in writing."
+msgstr ""
+
+#: endpoints/doctor.php:66
+msgid "An unknown error has occurred"
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:63
+msgid "Any number larger than 0 (6 = default)"
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:73
+#: admin/partials/d2g-connect-shortcode-help.php:156
+#: admin/partials/d2g-connect-shortcode-help.php:185
+msgid "Any string"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:32
+msgid "API connection"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:635
+msgid "API token cannot be empty."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:91
+msgid "ASC (ascending) or DESC (descending)"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:184
+msgid "at"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:194
+msgid "Attention: I am unavailable in the following periode."
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:406 admin/class-d2g-connect-admin.php:510
+msgid "Author"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:112
+#: public/class-d2g-connect-public.php:305 admin/partials/metaboxes.php:317
+#: admin/partials/metaboxes.php:342 admin/partials/metaboxes.php:365
+msgid "author"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:732 admin/partials/metaboxes.php:30
+msgid "Average price"
+msgstr ""
+
+#: admin/partials/metaboxes.php:51
+msgid "Average price currency"
+msgstr ""
+
+#: public/template-functions.php:292
+msgid "Average price:"
+msgstr ""
+
+#: public/template-functions.php:734
+msgid "back to overview"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:47
+msgid "Base URL from the Doctor2go software"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:153
+msgid ""
+"Block all pages for not logged in users and redirect to the under "
+"construction page"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:370
+msgid "Body parts"
+msgstr ""
+
+#: public/template-functions.php:594
+msgid "Booking details"
+msgstr ""
+
+#: public/template-functions.php:573
+msgid "Booking instructions"
+msgstr ""
+
+#: public/template-functions.php:1285
+msgid "cancel appointment"
+msgstr ""
+
+#: admin/partials/metaboxes.php:433
+msgid "Cancellation for doctor"
+msgstr ""
+
+#: admin/partials/metaboxes.php:434
+msgid "Cancellation for patient"
+msgstr ""
+
+#: public/template-functions.php:1287
+msgid "cancellation not possible"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:281
+msgid "Cancellation request for appointment."
+msgstr ""
+
+#: public/class-d2g-connect-public.php:284
+msgid "Cancellation request mail to doctor has successfully been send."
+msgstr ""
+
+#: public/template-functions.php:1287
+msgid ""
+"Cancellations are only possible up to 24 hours before the upcoming "
+"appointment."
+msgstr ""
+
+#: admin/class-d2g-booking-patient.php:69
+msgid "CAPTCHA verification failed. Please try again."
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:725 admin/partials/metaboxes.php:23
+msgid "city"
+msgstr ""
+
+#: public/template-functions.php:939
+msgid "Click pay and continue, you will be redirected to the payment page."
+msgstr ""
+
+#: public/template-functions.php:579
+msgid "Click the button for your preferred day to choose a time."
+msgstr ""
+
+#: admin/partials/metaboxes.php:143 admin/partials/metaboxes.php:169
+#: admin/partials/metaboxes.php:193
+msgid "company"
+msgstr ""
+
+#: admin/partials/metaboxes.php:435
+msgid "Confirmation for patient registration"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:282
+msgid "Confirmation mail to patient has successfully been send."
+msgstr ""
+
+#: public/template-functions.php:603
+msgid "consultation"
+msgstr ""
+
+#: public/template-functions.php:791 public/template-functions.php:933
+msgid "Consultation fee:"
+msgstr ""
+
+#: public/template-functions.php:1337
+msgid "Consultation types"
+msgstr ""
+
+#: public/template-functions.php:1033
+msgid "continue and pay"
+msgstr ""
+
+#: public/template-functions.php:601
+msgid "Costs"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:399 public/template-functions.php:847
+#: public/template-functions.php:849
+msgid "Country"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:300
+msgid "Country of origin"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:731 admin/partials/metaboxes.php:29
+msgid "Country of registration"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:286
+msgid "Counytry of operations"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:128
+msgid "Create doctor user and profile locally"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:56
+msgid "CSS & JS"
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:70
+#: admin/partials/d2g-connect-shortcode-help.php:153
+#: admin/partials/d2g-connect-shortcode-help.php:182
+msgid "css class used for the outer wrapper (optional)"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:79
+msgid "Custom layout"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:402
+msgid "D2G domain"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:403
+msgid "D2G org. key"
+msgstr ""
+
+#: public/template-functions.php:1675
+msgid ""
+"D2G patient menu (used on the appointments page for patients without an "
+"account)."
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:404
+msgid "D2G user ID"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:405
+msgid "D2G user key"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:204
+msgid "D2GC E-mail"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:60
+msgid "dark"
+msgstr ""
+
+#: public/template-functions.php:437 public/template-functions.php:472
+msgid "Date"
+msgstr ""
+
+#: public/template-functions.php:830 public/template-functions.php:985
+msgid "Date of Birth: day/month/year  "
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:64
+msgid "Deactivate bootstrap css"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:66
+msgid "Deactivate bootstrap JS"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:83
+msgid "Deactivate header and footer in single-d2g_doctor.php"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:148
+msgid "Deactivate loading google recaptcha script"
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:45
+#: admin/partials/d2g-connect-shortcode-help.php:54
+msgid "default"
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:82
+msgid ""
+"default orderby is \"title\", you can use any orderby as described in the "
+"WordPress codex, when you want use orderby for a meta field you have to use "
+"orderby=\"meta_value\" and you will have to set for instance the "
+"meta_key=\"written_con_price\""
+msgstr ""
+
+#: admin/partials/metaboxes.php:438
+msgid "Define which email this template is for."
+msgstr ""
+
+#: public/template-functions.php:478
+msgid "Degree"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:103
+#: public/class-d2g-connect-public.php:296 admin/partials/metaboxes.php:229
+#: admin/partials/metaboxes.php:255 admin/partials/metaboxes.php:279
+msgid "degree"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:342
+msgid "Degrees"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:73
+msgid "Detail page settings"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:328
+msgid "Diseases"
+msgstr ""
+
+#: includes/class-d2g-connect-activator.php:106
+#: public/template-functions.php:597
+msgid "Doctor"
+msgstr ""
+
+#. Name of the plugin
+msgid "Doctor2Go Connect"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:180
+msgid "Doctors"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:157
+msgid ""
+"Doctors will be translated via meta values in the post and in the meta "
+"values in the connected taxonomies."
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:398 admin/class-d2g-connect-admin.php:539
+#: admin/class-d2g-connect-admin.php:728 public/template-functions.php:654
+#: public/template-functions.php:977 admin/partials/metaboxes.php:26
+msgid "E-mail"
+msgstr ""
+
+#: public/template-functions.php:931 public/template-functions.php:1059
+#: public/template-functions.php:1344
+#: public/templates/content-single-d2g_doctor-v3.php:78
+msgid "E-mail advice"
+msgstr ""
+
+#: admin/partials/metaboxes.php:85
+msgid "E-mail consult currency"
+msgstr ""
+
+#: admin/partials/metaboxes.php:81 admin/partials/metaboxes.php:82
+msgid "E-mail consult price"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:98
+msgid "E-mail settings"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:282 admin/class-d2g-connect-admin.php:296
+#: admin/class-d2g-connect-admin.php:310 admin/class-d2g-connect-admin.php:324
+#: admin/class-d2g-connect-admin.php:338 admin/class-d2g-connect-admin.php:352
+#: admin/class-d2g-connect-admin.php:366
+msgid "Edit"
+msgstr ""
+
+#: admin/class-d2g-doc-user-profile.php:305
+msgid "edit"
+msgstr ""
+
+#: public/template-functions.php:351 public/template-functions.php:469
+msgid "Education"
+msgstr ""
+
+#: public/template-functions.php:612
+msgid "End"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:101
+#: public/class-d2g-connect-public.php:294 admin/partials/metaboxes.php:132
+#: admin/partials/metaboxes.php:158 admin/partials/metaboxes.php:182
+#: admin/partials/metaboxes.php:221 admin/partials/metaboxes.php:247
+#: admin/partials/metaboxes.php:271
+msgid "end date"
+msgstr ""
+
+#: public/template-functions.php:938
+msgid "Enter your personal information and describe your complaint"
+msgstr ""
+
+#: public/template-functions.php:348
+msgid "Experience"
+msgstr ""
+
+#: public/template-functions.php:440
+msgid "Expertise"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:105
+#: public/class-d2g-connect-public.php:298 admin/partials/metaboxes.php:137
+msgid "expertise"
+msgstr ""
+
+#: admin/partials/metaboxes.php:163 admin/partials/metaboxes.php:187
+msgid "exptertise"
+msgstr ""
+
+#: public/template-functions.php:957
+msgid "Extended Questionnaire – for complex or multiple skin concerns"
+msgstr ""
+
+#: public/template-functions.php:840 public/template-functions.php:995
+msgid "female"
+msgstr ""
+
+#: public/class-d2g-profile-data.php:187
+msgid "First availibility"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:720 public/template-functions.php:644
+#: public/template-functions.php:965 admin/partials/metaboxes.php:18
+msgid "First name"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:396
+msgid "Fist name"
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:30
+msgid "Following parameters can be used to change the view from the listing"
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:27
+msgid ""
+"Following shortcodes are included in the free version and can be used in "
+"pages from your website."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:103
+msgid ""
+"Following shortcodes are included only included in the paid version and can "
+"be used in pages from your website. Click"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:78
+msgid "Full width (no sidebar)"
+msgstr ""
+
+#: public/template-functions.php:836 public/template-functions.php:991
+msgid "Gender"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:130
+msgid "Give doctor access to wp-admin"
+msgstr ""
+
+#: public/template-functions.php:1282
+msgid "go to consultation"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:81
+msgid "Header & footer"
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:103
+msgid "here"
+msgstr ""
+
+#: admin/partials/metaboxes.php:96
+msgid "Holiday settings"
+msgstr ""
+
+#: public/template-functions.php:412
+msgid "How to get there"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://demo-plugin.doctor2go.online/"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.webcamconsult.com"
+msgstr ""
+
+#: public/template-functions.php:720
+msgid "I accept the disclaimer."
+msgstr ""
+
+#: public/template-functions.php:716
+msgid "I accept the privacy rules."
+msgstr ""
+
+#: public/template-functions.php:712
+msgid "I accept the terms and conditions."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:137
+msgid "I have installed \"Solid Security Basic\" and I have activated 2FA"
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:127
+#: admin/partials/d2g-connect-shortcode-help.php:147
+#: admin/partials/d2g-connect-shortcode-help.php:176
+msgid ""
+"ID from doctor post, can be found in the backend overview from the doctors"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:509
+msgid "Identifier"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:622
+msgid ""
+"If this was not intended, simply ignore this e-mail. Nothing will happen. "
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:82
+msgid ""
+"If you are using a base file in your theme, where you load the footer and "
+"header, than you can deactivate loading those in youre single-d2g_doctor.php "
+"file."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:129
+msgid ""
+"If you create the user account and profile locally you will not need to set "
+"the API connection"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:191
+msgid ""
+"If you were not redirected automatically than please click on the button."
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:394
+msgid "Image"
+msgstr ""
+
+#: public/template-functions.php:576
+msgid ""
+"In the calendar, select a day that has available appointments. The available "
+"days are marked with a button showing the number of free slots (for example, "
+"\"3 slots\")."
+msgstr ""
+
+#: public/template-functions.php:481
+msgid "Institution"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:104
+#: public/class-d2g-connect-public.php:297 admin/partials/metaboxes.php:232
+#: admin/partials/metaboxes.php:258 admin/partials/metaboxes.php:282
+msgid "institution"
+msgstr ""
+
+#: public/template-functions.php:1280
+msgid "intake quesionnaire"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:110
+#: public/class-d2g-connect-public.php:303 admin/partials/metaboxes.php:311
+#: admin/partials/metaboxes.php:336 admin/partials/metaboxes.php:359
+msgid "journal"
+msgstr ""
+
+#: public/template-functions.php:510
+msgid "journal / website"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:272
+msgid ""
+"Kindly review all fields, as some required information is still missing."
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:400
+msgid "Language"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:314
+msgid "Languages"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:397 admin/class-d2g-connect-admin.php:721
+#: public/template-functions.php:649 public/template-functions.php:971
+#: admin/partials/metaboxes.php:19
+msgid "Last name"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:75
+msgid "Layout"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:59
+msgid "light (default)"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:70
+msgid "Load availability information"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:71
+msgid "Load availability information on overview page"
+msgstr ""
+
+#: public/template-functions.php:616
+msgid "Location"
+msgstr ""
+
+#: public/template-functions.php:345 public/template-functions.php:380
+msgid "Location(s)"
+msgstr ""
+
+#: public/template-functions.php:696 public/template-functions.php:1237
+msgid "login"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:113
+msgid "logo used in e-mail"
+msgstr ""
+
+#: public/template-functions.php:838 public/template-functions.php:993
+msgid "make a choice"
+msgstr ""
+
+#: admin/partials/metaboxes.php:413 admin/partials/metaboxes.php:440
+msgid "make a selection"
+msgstr ""
+
+#: public/template-functions.php:839 public/template-functions.php:994
+msgid "male"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:727 admin/partials/metaboxes.php:25
+msgid "Mobile"
+msgstr ""
+
+#: public/template-functions.php:1229
+msgid "More info about the consultation types"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:285 admin/class-d2g-connect-admin.php:299
+#: admin/class-d2g-connect-admin.php:313 admin/class-d2g-connect-admin.php:327
+#: admin/class-d2g-connect-admin.php:341 admin/class-d2g-connect-admin.php:355
+#: admin/class-d2g-connect-admin.php:369
+msgid "New"
+msgstr ""
+
+#: public/template-functions.php:296
+msgid "next best availibilty"
+msgstr ""
+
+#: public/template-functions.php:296
+msgid "no availibilities"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:61
+msgid "no styling"
+msgstr ""
+
+#: endpoints/doctor.php:132
+msgid "No user ID has been sent"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:183
+#: public/class-d2g-connect-public.php:225
+msgid "not available"
+msgstr ""
+
+#: public/template-functions.php:937
+msgid ""
+"Obtain a professional assessment from a certified dermatologist by email "
+"within two working days through a straightforward three-step process."
+msgstr ""
+
+#: public/template-functions.php:1320
+msgid "Online consultation"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:190
+msgid ""
+"Online consultation reservations are valid for 24 hours and require payment "
+"within this period. Otherwise, they will be canceled."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:88
+msgid "order (optional) this follows the general WordPress order rules"
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:79
+msgid "orderby (optional) this follows the general WordPress ordering rules"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:729 admin/partials/metaboxes.php:27
+msgid "Organisation"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:107
+#: public/class-d2g-connect-public.php:300
+msgid "organisation / company"
+msgstr ""
+
+#: public/template-functions.php:446
+msgid "Organisation / Hospital"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:35
+msgid "Organisation API"
+msgstr ""
+
+#: public/template-functions.php:841 public/template-functions.php:996
+msgid "other"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:68
+msgid "Overview page settings"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:506
+msgid "Page ID"
+msgstr ""
+
+#: public/template-functions.php:1291
+msgid "paid"
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:34
+#: admin/partials/d2g-connect-shortcode-help.php:116
+#: admin/partials/d2g-connect-shortcode-help.php:136
+#: admin/partials/d2g-connect-shortcode-help.php:165
+msgid "Parameter"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:280 admin/class-d2g-connect-admin.php:294
+#: admin/class-d2g-connect-admin.php:308 admin/class-d2g-connect-admin.php:322
+#: admin/class-d2g-connect-admin.php:336 admin/class-d2g-connect-admin.php:350
+#: admin/class-d2g-connect-admin.php:364
+msgid "Parent"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:281 admin/class-d2g-connect-admin.php:295
+#: admin/class-d2g-connect-admin.php:309 admin/class-d2g-connect-admin.php:323
+#: admin/class-d2g-connect-admin.php:337 admin/class-d2g-connect-admin.php:351
+#: admin/class-d2g-connect-admin.php:365
+msgid "Parent:"
+msgstr ""
+
+#: includes/class-d2g-connect-activator.php:121
+msgid "Patient"
+msgstr ""
+
+#: public/template-functions.php:816
+msgid "Patient email"
+msgstr ""
+
+#: public/template-functions.php:810
+msgid "Patient name"
+msgstr ""
+
+#: public/template-functions.php:822
+msgid "Patient phone"
+msgstr ""
+
+#: public/template-functions.php:893
+msgid "pay and continue"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:192 public/template-functions.php:1298
+msgid "pay now"
+msgstr ""
+
+#: public/template-functions.php:1296
+msgid ""
+"Payment may be made in advance or upon arrival at your appointment. Please "
+"note that appointments paid upfront cannot be cancelled."
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:726 admin/partials/metaboxes.php:24
+msgid "Phone"
+msgstr ""
+
+#: public/template-functions.php:1176
+msgid "Physical Consult"
+msgstr ""
+
+#: public/template-functions.php:1348
+msgid "Physical Consultation"
+msgstr ""
+
+#: public/template-functions.php:1307
+msgid "Physical consultation"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:86
+msgid "Placeholder image for doctors"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:186
+msgid "Please fill in all marked fields. "
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:155
+msgid "Please find more info's about imigix on their website."
+msgstr ""
+
+#: public/class-d2g-connect-public.php:274
+msgid "Please make sure to fill in all required fields."
+msgstr ""
+
+#: public/class-d2g-connect-public.php:279
+msgid "Please verify that you are not a robot."
+msgstr ""
+
+#: public/template-functions.php:443
+msgid "Position"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:106
+#: public/class-d2g-connect-public.php:299 admin/partials/metaboxes.php:140
+#: admin/partials/metaboxes.php:166
+msgid "position"
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:37
+#: admin/partials/d2g-connect-shortcode-help.php:119
+#: admin/partials/d2g-connect-shortcode-help.php:139
+#: admin/partials/d2g-connect-shortcode-help.php:168
+msgid "Possible values"
+msgstr ""
+
+#: public/template-functions.php:604
+msgid "Prices are excl. VAT"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:392
+msgid "Profile ID"
+msgstr ""
+
+#: public/template-functions.php:516 admin/partials/metaboxes.php:320
+#: admin/partials/metaboxes.php:368
+msgid "publication Date"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:113
+#: public/class-d2g-connect-public.php:306 admin/partials/metaboxes.php:345
+msgid "publication date"
+msgstr ""
+
+#: public/template-functions.php:354 public/template-functions.php:504
+msgid "Publications"
+msgstr ""
+
+#: public/template-functions.php:527
+msgid "read online"
+msgstr ""
+
+#: public/template-functions.php:880
+msgid "Reason for consult"
+msgstr ""
+
+#: public/template-functions.php:1526
+msgid "reCAPTCHA verification failed. Please try again."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:105
+#: admin/partials/d2g-connect-admin-display.php:106
+msgid "recipient address"
+msgstr ""
+
+#: public/template-functions.php:287
+msgid "Reg. country"
+msgstr ""
+
+#: public/template-functions.php:282
+msgid "Reg. Nr."
+msgstr ""
+
+#: public/template-functions.php:697 public/template-functions.php:1238
+msgid "register"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:730 admin/partials/metaboxes.php:28
+msgid "Registration number"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:278 admin/class-d2g-connect-admin.php:292
+#: admin/class-d2g-connect-admin.php:306 admin/class-d2g-connect-admin.php:320
+#: admin/class-d2g-connect-admin.php:334 admin/class-d2g-connect-admin.php:348
+#: admin/class-d2g-connect-admin.php:362
+msgid "Search"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:144
+#: admin/partials/d2g-connect-admin-display.php:145
+msgid "secret key"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:132
+msgid "Security (Google Recaptcha V2 / Solid Security Basic) "
+msgstr ""
+
+#: public/class-d2g-connect-public.php:639
+msgid "Security check failed."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:101
+#: admin/partials/d2g-connect-admin-display.php:102
+msgid "sender address"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:109
+#: admin/partials/d2g-connect-admin-display.php:110
+msgid "sender name"
+msgstr ""
+
+#: public/template-functions.php:342
+msgid "Short info"
+msgstr ""
+
+#: public/template-functions.php:951
+msgid "Short Questionnaire – for simple or minor skin issues"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:140
+#: admin/partials/d2g-connect-admin-display.php:141
+msgid "site key"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:195
+msgid "slots"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:619
+msgid "Someone has requested a password reset."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:150
+msgid "Special settings"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:401
+msgid "Specialisation"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:356
+msgid "Specialties"
+msgstr ""
+
+#: public/template-functions.php:608
+msgid "Start"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:100
+#: public/class-d2g-connect-public.php:293 admin/partials/metaboxes.php:129
+#: admin/partials/metaboxes.php:155 admin/partials/metaboxes.php:179
+#: admin/partials/metaboxes.php:218 admin/partials/metaboxes.php:244
+#: admin/partials/metaboxes.php:268
+msgid "start date"
+msgstr ""
+
+#: public/template-functions.php:475
+msgid "Study area"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:102
+#: public/class-d2g-connect-public.php:295 admin/partials/metaboxes.php:226
+#: admin/partials/metaboxes.php:252 admin/partials/metaboxes.php:276
+msgid "study area"
+msgstr ""
+
+#: public/template-functions.php:683
+msgid "submit"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:360
+msgctxt "taxonomy general name"
+msgid "Body parts"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:290
+msgctxt "taxonomy general name"
+msgid "Country of origin"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:276
+msgctxt "taxonomy general name"
+msgid "Counytries of operations"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:332
+msgctxt "taxonomy general name"
+msgid "Degrees"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:318
+msgctxt "taxonomy general name"
+msgid "Diseases"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:304
+msgctxt "taxonomy general name"
+msgid "Languages"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:346
+msgctxt "taxonomy general name"
+msgid "Specialties"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:361
+msgctxt "taxonomy singular name"
+msgid "Body part"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:291
+msgctxt "taxonomy singular name"
+msgid "Country of origin"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:277
+msgctxt "taxonomy singular name"
+msgid "Counytry of operations"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:333
+msgctxt "taxonomy singular name"
+msgid "Degree"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:319
+msgctxt "taxonomy singular name"
+msgid "Disease"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:305
+msgctxt "taxonomy singular name"
+msgid "Language"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:347
+msgctxt "taxonomy singular name"
+msgid "Specialty"
+msgstr ""
+
+#: public/template-functions.php:659
+msgid "Tel"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:743
+msgid "The link is not valid anymore"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:159
+msgid ""
+"The questinonaire will be fetched in the WCC software based on langauge and "
+"on type default."
+msgstr ""
+
+#: endpoints/doctor.php:79
+msgid "The user + public profile have been created. User ID: "
+msgstr ""
+
+#: public/class-d2g-connect-public.php:285
+msgid "There has been a problem sending the mail to the doctor."
+msgstr ""
+
+#: public/class-d2g-connect-public.php:283
+msgid "There has been a problem sending the mail to the patient."
+msgstr ""
+
+#: public/class-d2g-connect-public.php:193
+msgid ""
+"There has been an error, please try an other slot or try later. In case of "
+"futher issues, please contact the support."
+msgstr ""
+
+#: admin/class-d2g-booking-patient.php:399
+#: admin/class-d2g-booking-patient.php:427
+#: admin/class-d2g-booking-patient.php:556
+#: admin/class-d2g-booking-patient.php:582
+msgid "There has been an error."
+msgstr ""
+
+#: public/template-functions.php:796
+msgid ""
+"This doctor is currently available for a walk-in consultation.\n"
+"\t\t\tPlease complete the form and click “Pay and Continue” to proceed.\n"
+"\t\t\tAfter your payment is confirmed, you’ll be placed in the waiting room. "
+"If others are ahead of you, a short wait may apply."
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:395 admin/class-d2g-connect-admin.php:507
+#: admin/class-d2g-connect-admin.php:538 admin/class-d2g-connect-admin.php:722
+#: admin/partials/metaboxes.php:20
+msgid "Title"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:108
+#: public/class-d2g-connect-public.php:301 public/template-functions.php:507
+#: admin/partials/metaboxes.php:190 admin/partials/metaboxes.php:305
+#: admin/partials/metaboxes.php:330 admin/partials/metaboxes.php:353
+msgid "title"
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:103
+msgid "to get your paid license now."
+msgstr ""
+
+#: public/class-d2g-connect-public.php:623
+msgid "To reset your password, visit the following address: "
+msgstr ""
+
+#: public/template-functions.php:694 public/template-functions.php:1235
+msgid ""
+"To start your choosen consult, you first need to login or register an "
+"account."
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:111
+#: public/class-d2g-connect-public.php:304 public/template-functions.php:513
+#: admin/partials/metaboxes.php:314 admin/partials/metaboxes.php:339
+#: admin/partials/metaboxes.php:362
+msgid "type of publication"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:283 admin/class-d2g-connect-admin.php:297
+#: admin/class-d2g-connect-admin.php:311 admin/class-d2g-connect-admin.php:325
+#: admin/class-d2g-connect-admin.php:339 admin/class-d2g-connect-admin.php:353
+#: admin/class-d2g-connect-admin.php:367
+msgid "Update"
+msgstr ""
+
+#: endpoints/doctor.php:126
+msgid "Update was a success"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:96
+#: admin/partials/d2g-connect-admin-display.php:123
+msgid "Upload"
+msgstr ""
+
+#: public/template-functions.php:1010
+msgid "Upload image 1"
+msgstr ""
+
+#: public/template-functions.php:1014
+msgid "Upload image 2"
+msgstr ""
+
+#: public/template-functions.php:1018
+msgid "Upload image 3"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:39
+msgid "URL used for API"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:43
+msgid "URL used for waiting room from the Doctor2go software"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:649
+msgid "use BIC from where the payment was done"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:158
+msgid "Use default questionnaire as intake form for appointments."
+msgstr ""
+
+#: public/class-d2g-connect-public.php:648
+msgid "use IBAN from where the payment was done"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:154
+msgid "Use imgix image processing"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:156
+msgid "Use pseudo translations."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:161
+msgid ""
+"Use this shortcode to display a doctor's calendar, similar to the calendar "
+"section on the doctor detail page. Ideal for a front page or website sidebar."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:132
+msgid ""
+"Use this shortcode to display a doctor's locations, similar to the locations "
+"section on the doctor detail page. Ideal for a contact page or website "
+"footer."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:29
+msgid ""
+"Use this shortcode to display a list of doctors on a page. It includes a "
+"\"Load More Doctors\" button that loads additional doctors based on the "
+"\"posts_per_page\" setting."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:203
+msgid ""
+"Use this shortcode to display a menu form the patient pages. Ideal it is "
+"used with in combination with the following shortcodes: d2g_account_settings "
+"/ d2g_patient_appointments / d2g_liked_posts / d2g_patient_dashbaord . No "
+"parameters are required."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:112
+msgid ""
+"Use this shortcode to display a single doctor in a compact format, similar "
+"to the grid overview on the front end. It can be placed anywhere on your "
+"website, such as the sidebar."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:212
+msgid ""
+"Use this shortcode to display the account settings form, allowing patients "
+"to update their email, phone number, and password. No parameters are "
+"required."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:97
+msgid ""
+"Use this shortcode to display the form doctors use to create or update their "
+"profiles. No parameters are required."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:215
+msgid ""
+"Use this shortcode to display the liked doctor's from a patient. No "
+"parameters are required."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:194
+msgid ""
+"Use this shortcode to display the login form. No parameters are required."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:197
+msgid ""
+"Use this shortcode to display the lost password form. No parameters are "
+"required."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:206
+msgid ""
+"Use this shortcode to display the patient dashboard, the page patients are "
+"redirected to after logging in. No parameters are required."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:221
+msgid ""
+"Use this shortcode to display the patient portal where the patient can chat "
+"with doctors and receive medical documents from, where he/she has a "
+"connection with. No parameters are required."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:218
+msgid ""
+"Use this shortcode to display the questionnaires for an intake or from a "
+"written consultation. No parameters are required."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:191
+msgid ""
+"Use this shortcode to display the registration form for patients. No "
+"parameters are required."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:200
+msgid ""
+"Use this shortcode to display the reset password form. No parameters are "
+"required."
+msgstr ""
+
+#: admin/partials/d2g-connect-shortcode-help.php:107
+#: admin/partials/d2g-connect-shortcode-help.php:209
+msgid ""
+"Use this shortcode to display the search form on the doctor overview page. "
+"It must be used with the listing shortcode. No parameters are required."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:126
+msgid "User / profile settings for doctors"
+msgstr ""
+
+#: endpoints/doctor.php:129
+msgid "User does not exist"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:621
+msgid "User name: "
+msgstr ""
+
+#: public/class-d2g-connect-public.php:185
+msgid "Video"
+msgstr ""
+
+#: public/template-functions.php:1190
+msgid "Video Consult"
+msgstr ""
+
+#: public/template-functions.php:1065
+#: public/templates/content-single-d2g_doctor-v3.php:83
+msgid "Video consult"
+msgstr ""
+
+#: public/template-functions.php:1352
+msgid "Video Consultation"
+msgstr ""
+
+#: public/template-functions.php:1134
+msgid "View doctor"
+msgstr ""
+
+#: public/template-functions.php:721
+msgid "view the disclaimer"
+msgstr ""
+
+#: public/template-functions.php:717
+msgid "view the privacy rules"
+msgstr ""
+
+#: public/template-functions.php:713
+msgid "view the terms & conditions"
+msgstr ""
+
+#: public/template-functions.php:357
+msgid "Walk in now"
+msgstr ""
+
+#: public/template-functions.php:1072
+#: public/templates/content-single-d2g_doctor-v3.php:89
+msgid "Walk-in"
+msgstr ""
+
+#: public/template-functions.php:1148
+msgid "Walk-in Consult"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:182
+#: public/class-d2g-connect-public.php:224
+msgid "walk-in consult"
+msgstr ""
+
+#: public/template-functions.php:1340
+msgid "Walk-in Consultation"
+msgstr ""
+
+#: public/template-functions.php:789
+msgid "Walk-in consultation"
+msgstr ""
+
+#: admin/partials/metaboxes.php:68
+msgid "Walk-in currency"
+msgstr ""
+
+#: admin/partials/metaboxes.php:65
+msgid "Walk-In price"
+msgstr ""
+
+#: admin/partials/metaboxes.php:64
+msgid "Walk-in price"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:135
+msgid "We advise you following:"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:475
+msgid ""
+"We are very sorry but we could not find any doctors for your search query. "
+"Please try using less filters to find a suitable doctor."
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:109
+#: public/class-d2g-connect-public.php:302 admin/partials/metaboxes.php:308
+#: admin/partials/metaboxes.php:333 admin/partials/metaboxes.php:356
+msgid "web link"
+msgstr ""
+
+#. Author of the plugin
+msgid "Webcamconsult"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:620
+msgid "Website name: "
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:77
+msgid "With sidebar (anchor links)"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"With this plugin you can manage doctor profiles on your website, make a "
+"connection with the Webcamconsult software. Patients can book you on your "
+"profile page and they can create a patient profile for follow up."
+msgstr ""
+
+#: public/template-functions.php:434
+msgid "Working experience"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:393
+msgid "WP user ID"
+msgstr ""
+
+#: public/template-functions.php:1162
+msgid "Written Consult"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:63
+msgid ""
+"You can deactivate the following css file if your theme already contains a "
+"bootstrap css."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:65
+msgid ""
+"You can deactivate the following JS file if your theme already contains a "
+"bootstrap5 JS file."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:147
+msgid ""
+"You can deactivate the loading from the Google recaptcha script  if "
+"necessary, particularly if it is already being loaded from another source."
+msgstr ""
+
+#: public/class-d2g-connect-public.php:288
+msgid "You have entered an invalid e-mail."
+msgstr ""
+
+#: public/class-d2g-connect-public.php:278
+msgid "You must accept the disclaimer."
+msgstr ""
+
+#: public/class-d2g-connect-public.php:276
+msgid "You must accept the privacy rules."
+msgstr ""
+
+#: public/class-d2g-connect-public.php:277
+msgid "You must accept the terms and conditions."
+msgstr ""
+
+#: public/class-d2g-connect-public.php:273
+msgid ""
+"You need to provide us with information about the languages that you speak."
+msgstr ""
+
+#: public/template-functions.php:631
+msgid ""
+"Your account data is not complete yet. Please fill in all required fields."
+msgstr ""
+
+#: admin/class-d2g-booking-patient.php:280
+#: admin/class-d2g-booking-patient.php:290
+msgid "Your appointment cloud not be canceled. Please contact your doctor."
+msgstr ""
+
+#: admin/class-d2g-booking-patient.php:288
+msgid "Your appointment has been canceled."
+msgstr ""
+
+#: public/template-functions.php:1005
+msgid "Your complaint"
+msgstr ""
+
+#: public/template-functions.php:620
+msgid "Your info"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:313
+msgid "Your password is good!"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:314
+msgid "Your password is strong!"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:311
+msgid "Your password is too short!"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:312
+msgid "Your password is weak!"
+msgstr ""
+
+#: public/class-d2g-connect-public.php:189
+msgid ""
+"Your reservation has been successfully. You will now be redirected to your "
+"appointment manager. You might need to fill in an intake questionnaire."
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:724 admin/partials/metaboxes.php:22
+msgid "Zip code"
+msgstr ""

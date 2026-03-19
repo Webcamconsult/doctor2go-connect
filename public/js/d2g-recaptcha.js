@@ -17,7 +17,7 @@ function correctCaptchaEmail(response) {
     captchaCodeEmail = response;
 }
 function correctCaptchaCalendar(response) {
-    captchaCodeEmail = response;
+    captchaCodeCalendar = response;
 }
 
 function d2gOnloadCallback() {

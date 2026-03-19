@@ -11,26 +11,26 @@ class D2G_booking_wcc_user {
 	public static function init() {
 
 		// create appointment
-		add_action( 'wp_ajax_create_wcc_appointment', array( __CLASS__, 'create_wcc_appointment' ) );
-		add_action( 'wp_ajax_nopriv_create_wcc_appointment', array( __CLASS__, 'create_wcc_appointment' ) );
+		add_action( 'wp_ajax_d2g_create_wcc_appointment', array( __CLASS__, 'd2g_create_wcc_appointment' ) );
+		add_action( 'wp_ajax_nopriv_d2g_create_wcc_appointment', array( __CLASS__, 'd2g_create_wcc_appointment' ) );
 
 		// delete appointment
-		add_action( 'wp_ajax_delete_wcc_appointment', array( __CLASS__, 'delete_wcc_appointment' ) );
-		add_action( 'wp_ajax_nopriv_delete_wcc_appointment', array( __CLASS__, 'delete_wcc_appointment' ) );
+		add_action( 'wp_ajax_d2g_delete_wcc_appointment', array( __CLASS__, 'd2g_delete_wcc_appointment' ) );
+		add_action( 'wp_ajax_nopriv_d2g_delete_wcc_appointment', array( __CLASS__, 'd2g_delete_wcc_appointment' ) );
 
 		// walk in appointment
-		add_action( 'wp_ajax_create_wcc_walkin', array( __CLASS__, 'create_wcc_walkin' ) );
-		add_action( 'wp_ajax_nopriv_create_wcc_walkin', array( __CLASS__, 'create_wcc_walkin' ) );
+		add_action( 'wp_ajax_d2g_create_wcc_walkin', array( __CLASS__, 'd2g_create_wcc_walkin' ) );
+		add_action( 'wp_ajax_nopriv_d2g_create_wcc_walkin', array( __CLASS__, 'd2g_create_wcc_walkin' ) );
 
 		// written consult
-		add_action( 'wp_ajax_create_wcc_written_cosnsult', array( __CLASS__, 'create_wcc_written_cosnsult' ) );
-		add_action( 'wp_ajax_nopriv_create_wcc_written_cosnsult', array( __CLASS__, 'create_wcc_written_cosnsult' ) );
+		add_action( 'wp_ajax_d2g_create_wcc_written_cosnsult', array( __CLASS__, 'd2g_create_wcc_written_cosnsult' ) );
+		add_action( 'wp_ajax_nopriv_d2g_create_wcc_written_cosnsult', array( __CLASS__, 'd2g_create_wcc_written_cosnsult' ) );
 	}
 
 	/*
 	* this function creates an appointment in the D2G-application
 	*/
-	public static function create_wcc_appointment() {
+	public static function d2g_create_wcc_appointment() {
 
 		$nonce = isset( $_POST['_wpnonce'] )
 			? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) )
@@ -125,12 +125,12 @@ class D2G_booking_wcc_user {
 			// check if user has necessary tokesn and id's
 			if ( ! isset( $ids[ $docOrgKey ] ) ) {
 				// check if user excists in the organisation
-				$client = json_decode( self::get_wcc_client_by_mail( $patientEmail, $docOrgKey ) );
+				$client = json_decode( self::d2g_get_wcc_client_by_mail( $patientEmail, $docOrgKey ) );
 				if ( ! isset( $client->authentication_token ) ) {
 					// user was not found in WCC or has no auth_token and needs to be created
 					$userMeta['first_name'][0] = $patient_fname;
 					$userMeta['last_name'][0]  = $patient_lname;
-					$client                    = self::create_wcc_client_new( $currUser, $userMeta, $docKey, $patientEmail, $patientTel, $docOrgKey );
+					$client                    = self::d2g_create_wcc_client_new( $currUser, $userMeta, $docKey, $patientEmail, $patientTel, $docOrgKey );
 				}
 
 				$wcc_client_id = $client->_id;
@@ -153,13 +153,13 @@ class D2G_booking_wcc_user {
 		} else {
 
 			// check if user excists in the organisation
-			$client = json_decode( self::get_wcc_client_by_mail( $patientEmail, $docOrgKey ) );
+			$client = json_decode( self::d2g_get_wcc_client_by_mail( $patientEmail, $docOrgKey ) );
 
 			if ( ! isset( $client->authentication_token ) ) {
 				// user was not found in WCC or has no auth_token and needs to be created
 				$userMeta['first_name'][0] = $patient_fname;
 				$userMeta['last_name'][0]  = $patient_lname;
-				$client                    = self::create_wcc_client_new( $currUser, $userMeta, $docKey, $patientEmail, $patientTel, $docOrgKey );
+				$client                    = self::d2g_create_wcc_client_new( $currUser, $userMeta, $docKey, $patientEmail, $patientTel, $docOrgKey );
 			}
 
 			$wcc_client_id = $client->_id;
@@ -204,9 +204,9 @@ class D2G_booking_wcc_user {
 		$response = wp_remote_post(
 			get_option( 'api_url_short' ) . 'doclisting/appointments/',
 			array(
-				'method'      => 'POST',
-				'headers'     => array(
-					'Content-Type' => 'application/json',
+				'method'      	=> 'POST',
+				'headers'     	=> array(
+				'Content-Type' 	=> 'application/json',
 				),
 				'body'        => wp_json_encode( $postfields ),
 				'timeout'     => 30,
@@ -250,10 +250,10 @@ class D2G_booking_wcc_user {
 	/*
 	* this function is used to delete an appointment in the D2G software
 	*/
-	public static function delete_wcc_appointment() {
+	public static function d2g_delete_wcc_appointment() {
 
 		// Nonce check
-		check_ajax_referer( 'delete_wcc_appointment_nonce', 'security' );
+		check_ajax_referer( 'd2g_delete_wcc_appointment_nonce', 'security' );
 
 		if ( ! isset( $_POST['wcc_user_id'], $_POST['app_id'] ) ) {
 			return;
@@ -262,7 +262,7 @@ class D2G_booking_wcc_user {
 		$wcc_user_id = sanitize_text_field( wp_unslash( $_POST['wcc_user_id'] ) );
 		$app_id      = sanitize_text_field( wp_unslash( $_POST['app_id'] ) );
 
-		$docObj = self::get_doctor_by_wcc_id( $wcc_user_id )[0];
+		$docObj = self::d2g_get_doctor_by_wcc_id( $wcc_user_id )[0];
 
 		$orgKey = get_post_meta( $docObj->ID, 'organisation_key', true );
 
@@ -298,7 +298,7 @@ class D2G_booking_wcc_user {
 
 	// this retrieves a URL for the walk-in appointment
 	// if success user gets redirected to the doctor waiting room
-	public static function create_wcc_walkin() {
+	public static function d2g_create_wcc_walkin() {
 
 		if ( ! isset( $_POST['walkin_form_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['walkin_form_nonce'] ) ), 'walkin_form_action' ) ) {
 			return false; // stop processing immediately
@@ -432,7 +432,7 @@ class D2G_booking_wcc_user {
 
 	// this retrieves a URL for the walk-in appointment
 	// if success user gets redirected to the doctor waiting room
-	public static function create_wcc_written_cosnsult() {
+	public static function d2g_create_wcc_written_cosnsult() {
 
 		if ( ! isset( $_POST['email_advice_form_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['email_advice_form_nonce'] ) ), 'email_advice_form_action' ) ) {
 			return false; // stop processing immediately
@@ -472,11 +472,32 @@ class D2G_booking_wcc_user {
 			}
 		}
 
-		$wpDocID      = isset( $_POST['wp_doc_id'] ) ? absint( wp_unslash( $_POST['wp_doc_id'] ) ) : 0;
-		$first_name   = isset( $_POST['first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['first_name'] ) ) : '';
-		$last_name    = isset( $_POST['last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['last_name'] ) ) : '';
-		$client_email = isset( $_POST['client_email'] ) ? sanitize_email( wp_unslash( $_POST['client_email'] ) ) : '';
+		$wpDocID      	= isset( $_POST['wp_doc_id'] ) ? absint( wp_unslash( $_POST['wp_doc_id'] ) ) : 0;
+		$first_name   	= isset( $_POST['first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['first_name'] ) ) : '';
+		$last_name    	= isset( $_POST['last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['last_name'] ) ) : '';
+		$client_email 	= isset( $_POST['client_email'] ) ? sanitize_email( wp_unslash( $_POST['client_email'] ) ) : '';
+		$client_gender  = isset( $_POST['client_gender'] ) ? sanitize_text_field( wp_unslash( $_POST['client_gender'] ) ) : '';
+		$complaint		= isset( $_POST['complaint_description'] ) ? sanitize_text_field( wp_unslash( $_POST['complaint_description'] ) ) : '';
+		$client_bday 	= isset($_POST['option_bday']) ? sanitize_text_field(wp_unslash($_POST['option_bday'])) : '';
+		if ($client_bday && ($dt = DateTime::createFromFormat('d/m/Y', $client_bday))) $client_bday = $dt->format('Y-m-d'); else $client_bday = '';
+
+		//images
+		$image_1 = $image_2 = $image_3 = '';
+		$allowed_mimes = ['image/jpeg','image/png','image/gif','image/webp'];
+
+		foreach (['image_1','image_2','image_3'] as $img) {
+			if (!empty($_FILES[$img]['tmp_name']) && $_FILES[$img]['error'] === UPLOAD_ERR_OK) {
+				$file_type = wp_check_filetype_and_ext($_FILES[$img]['tmp_name'], $_FILES[$img]['name']);
+				if (!empty($file_type['type']) && in_array($file_type['type'], $allowed_mimes, true)) {
+					$imgType = mime_content_type($_FILES[$img]['tmp_name']); // bv. image/png
+					${$img} = 'data:' . $imgType . ';base64,' . base64_encode(file_get_contents($_FILES[$img]['tmp_name']));
+				}
+			}
+		}
+
+		/*maybe for later
 		$type         = isset( $_POST['type'] ) ? sanitize_text_field( wp_unslash( $_POST['type'] ) ) : '';
+		*/
 
 		$docKey    = get_post_meta( $wpDocID, 'user_key', true );
 		$docOrgKey = get_post_meta( $wpDocID, 'organisation_key', true );
@@ -492,23 +513,26 @@ class D2G_booking_wcc_user {
 
 		$d2gAdmin     = new D2G_doc_user_profile();
 		$currLang     = explode( '_', get_locale() )[0];
-		$consult_url  = $d2gAdmin::d2g_page_url( $currLang, 'email_consultation', false );
-		$complete_url = $d2gAdmin::d2g_page_url( $currLang, 'email_advice_confirmation', false );
+		$confirmation_url = $d2gAdmin::d2g_page_url( $currLang, 'email_advice_confirmation', false );
 
 		$currUser        = wp_get_current_user();
 		$require_payment = (float) $price > 0;
 
 		$payload = array(
-			'consultant_id'      => (string) $docWCC_ID,
-			'requires_payment'   => (string) $require_payment,
-			'payment_price'      => (string) $price,
-			'payment_currency'   => (string) $currency,
-			'client_email'       => $client_email,
-			'optie_naam'         => $last_name,
-			'optie_first_name'   => $first_name,
-			'questionnaire_id'   => '',
-			'language'           => $currLang,
-			'questionnaire_type' => $type,
+			'consultant_id'      	=> (string) $docWCC_ID,
+			'requires_payment'   	=> (string) $require_payment,
+			'payment_price'      	=> (string) $price,
+			'payment_currency'   	=> (string) $currency,
+			'client_email'       	=> $client_email,
+			'optie_naam'         	=> $last_name,
+			'optie_first_name'   	=> $first_name,
+			'optie_aanhef'       	=> $client_gender,
+			'optie_geboortedatum'	=> $client_bday,
+			'language'           	=> $currLang,
+			'complaint_desc'        => $complaint,
+			'image_1' 				=> $image_1,
+			'image_2' 				=> $image_2,
+			'image_3' 				=> $image_3,
 			'handshake'          => array(
 				'time'  => (string) $unixTime,
 				'token' => $docKey,
@@ -518,7 +542,7 @@ class D2G_booking_wcc_user {
 		);
 
 		$response = wp_remote_post(
-			get_option( 'api_url_short' ) . 'doclisting/written_consult',
+			get_option( 'api_url_short' ) . 'doclisting/written_consult_complete',
 			array(
 				'headers' => array(
 					'Content-Type' => 'application/json',
@@ -529,6 +553,8 @@ class D2G_booking_wcc_user {
 		);
 
 		if ( is_wp_error( $response ) ) {
+			$response_body = json_decode( $response  );
+			nice_dump($response_body);
 			wp_die( esc_html__( 'There has been an error.', 'doctor2go-connect' ) );
 		}
 
@@ -551,14 +577,7 @@ class D2G_booking_wcc_user {
 
 		if ( isset( $response_body->url ) ) {
 			$questionnaire_url = 'https://' . $orgSlug . $baseUrl . $response_body->url;
-			$questionnaire_url = urlencode(
-				$questionnaire_url . '?redirect_url=' . $complete_url . '?booked_consult=email'
-			);
-
-			$redirect_url = $consult_url .
-				'?url=' . $questionnaire_url .
-				'&skip_cookie_wall=true&view_page=email_form';
-
+			$redirect_url = $questionnaire_url . '?redirect_url=' . urlencode($confirmation_url) . '&booked_consult=email&skip_cookie_wall=true';
 			wp_send_json_success( array( 'redirect_url' => $redirect_url ) );
 		}
 
@@ -574,7 +593,7 @@ class D2G_booking_wcc_user {
 	 * @param $email
 	 * @return mixed
 	 */
-	protected static function create_wcc_client_new(
+	protected static function d2g_create_wcc_client_new(
 		$currUser,
 		$userMeta,
 		$docKey,
@@ -658,7 +677,7 @@ class D2G_booking_wcc_user {
 	 * @param $token
 	 * @return mixed
 	 */
-	protected static function get_wcc_client_by_mail( $email, $token ) {
+	protected static function d2g_get_wcc_client_by_mail( $email, $token ) {
 
 		$response = wp_remote_post(
 			get_option( 'api_url_short' ) . 'clients/get_client_by_email',
@@ -728,7 +747,7 @@ class D2G_booking_wcc_user {
 	 * @param $wcc_user_id
 	 * @return int[]|WP_Post[]
 	 */
-	public static function get_doctor_by_wcc_id( $wcc_user_id ) {
+	public static function d2g_get_doctor_by_wcc_id( $wcc_user_id ) {
 		$args   = array(
 			'post_type'  => 'd2g_doctor',
 			'meta_query' => array(

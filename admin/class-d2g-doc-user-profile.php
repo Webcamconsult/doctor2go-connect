@@ -308,7 +308,7 @@ class D2G_doc_user_profile {
 		if (!empty($doc_tax)) self::updateDocTerms($doc_tax, $update_id);
 
 		// Handle File Uploads
-		if (!empty($_FILES)) self::set_doc_images($update_id);
+		if (!empty($_FILES)) self::d2g_set_doc_images($update_id);
 
 		$success = true;
 		do_action('breeze_clear_all_cache');
@@ -327,7 +327,7 @@ class D2G_doc_user_profile {
 	 *
 	 * @param int $post_id
 	 */
-	private static function set_doc_images( $post_id ) {
+	private static function d2g_set_doc_images( $post_id ) {
 
 		// Internal function called only by d2g_update_doc() which is nonce-protected
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended

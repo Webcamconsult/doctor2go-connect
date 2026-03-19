@@ -53,15 +53,17 @@ if ( ! defined( 'WPINC' ) ) {
 					<input style="min-width: 400px;" type="text" name="admin_mail" placeholder="admin_mail" value="<?php echo esc_html( get_option( 'admin_mail' ) ); ?>">
 				</p>-->    
 			</div>
-			<h3 class="section_title opener"><?php echo esc_html__( 'General style', 'doctor2go-connect' ); ?></h3>
+			<h3 class="section_title opener"><?php echo esc_html__( 'CSS & JS', 'doctor2go-connect' ); ?></h3>
 			<div class="section_wrapper simple_hide">
 				<select id="d2g_theme_css" name="d2g_theme_css">
 					<option <?php echo ( get_option( 'd2g_theme_css' ) == 'light' || get_option( 'd2g_theme_css' ) == '' ) ? 'selected' : ''; ?> value="light"><?php echo esc_html__( 'light (default)', 'doctor2go-connect' ); ?></option>
 					<option <?php echo ( get_option( 'd2g_theme_css' ) == 'dark' ) ? 'selected' : ''; ?> value="dark"><?php echo esc_html__( 'dark', 'doctor2go-connect' ); ?></option>
 					<option <?php echo ( get_option( 'd2g_theme_css' ) == 'no-style' ) ? 'selected' : ''; ?> value="no-style"><?php echo esc_html__( 'no styling', 'doctor2go-connect' ); ?></option>   
 				</select>
-				<p><?php echo esc_html__( 'You can deactivate the following css file if your theme already contains a bootstrap css grid.', 'doctor2go-connect' ); ?></p>        
-				<input type="checkbox" name="d2g_css_grid" id="d2g_css_grid" value="1"  <?php echo ( get_option( 'd2g_css_grid' ) == '1' ) ? 'checked' : ''; ?>><label for="d2g_css_grid"><?php echo esc_html__( 'Deactivate bootstrap css grid', 'doctor2go-connect' ); ?></label>    
+				<p><?php echo esc_html__( 'You can deactivate the following css file if your theme already contains a bootstrap css.', 'doctor2go-connect' ); ?></p>        
+				<input type="checkbox" name="d2g_bootstrap_css" id="d2g_bootstrap_css" value="1"  <?php echo ( get_option( 'd2g_bootstrap_css' ) == '1' ) ? 'checked' : ''; ?>><label for="d2g_bootstrap_css"><?php echo esc_html__( 'Deactivate bootstrap css', 'doctor2go-connect' ); ?></label>    
+				<p><?php echo esc_html__( 'You can deactivate the following JS file if your theme already contains a bootstrap5 JS file.', 'doctor2go-connect' ); ?></p>        
+				<input type="checkbox" name="d2g_bootstrap_js" id="d2g_bootstrap_js" value="1"  <?php echo ( get_option( 'd2g_bootstrap_js' ) == '1' ) ? 'checked' : ''; ?>><label for="d2g_bootstrap_js"><?php echo esc_html__( 'Deactivate bootstrap JS', 'doctor2go-connect' ); ?></label>    
 			</div>
 			<h3 class="section_title opener"><?php echo esc_html__( 'Overview page settings', 'doctor2go-connect' ); ?></h3>
 			<div class="section_wrapper simple_hide">
@@ -74,6 +76,7 @@ if ( ! defined( 'WPINC' ) ) {
 				<select id="d2g_detail_page_view" name="d2g_detail_page_view">
 					<option <?php echo ( get_option( 'd2g_detail_page_view' ) == 'single-v1' || get_option( 'd2g_detail_page_view' ) == '' ) ? 'selected' : ''; ?> value="single-v1"><?php echo esc_html__( 'With sidebar (anchor links)', 'doctor2go-connect' ); ?></option>
 					<option <?php echo ( get_option( 'd2g_detail_page_view' ) == 'single-v2' ) ? 'selected' : ''; ?> value="single-v2"><?php echo esc_html__( 'Full width (no sidebar)', 'doctor2go-connect' ); ?></option>
+					<option <?php echo ( get_option( 'd2g_detail_page_view' ) == 'single-v3' ) ? 'selected' : ''; ?> value="single-v3"><?php echo esc_html__( 'Custom layout', 'doctor2go-connect' ); ?></option>
 				</select>
 				<h4><?php echo esc_html__( 'Header & footer', 'doctor2go-connect' ); ?></h4>
 				<p><?php echo esc_html__( 'If you are using a base file in your theme, where you load the footer and header, than you can deactivate loading those in youre single-d2g_doctor.php file.', 'doctor2go-connect' ); ?></p>

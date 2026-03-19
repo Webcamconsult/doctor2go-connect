@@ -81,6 +81,25 @@ function add_form_row(type, rowID) {
     });
 }
 
+// Add this function at the top with other helpers
+function initTooltips() {
+    var isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+
+    var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+
+    tooltipTriggerList.forEach(function (el) {
+        // Decide trigger based on device
+        var triggerMode = isTouch ? 'click' : 'hover';
+
+        // Always get or create with correct config
+        bootstrap.Tooltip.getOrCreateInstance(el, {
+            trigger: triggerMode,
+            delay: isTouch ? { show: 0, hide: 0 } : { show: 200, hide: 100 },
+            container: 'body'
+        });
+    });
+}
+
 // Unified document ready: all front-end behaviour
 jQuery(document).ready(function ($) {
 
@@ -90,6 +109,16 @@ jQuery(document).ready(function ($) {
     /* =========================================
        GENERAL UI: fancybox, select2, toggles
     ==========================================*/
+
+    // init once when DOM is ready
+    initTooltips();
+
+    // if you really need it for dynamic content, you can keep this,
+    // but now it always disposes + recreates with correct options:
+    var observer = new MutationObserver(function () {
+        initTooltips();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
 
     // Fancybox with Select2 re-init in modal
     $(".fancybox").fancybox({
@@ -101,7 +130,7 @@ jQuery(document).ready(function ($) {
     $('.fancybox_spec').fancybox();
 
     // Graphical selects
-    $("#outer_main_wrapper").find('select').select2();
+    $(".d2g_wrapper").find('select').select2();
     $("#content").find('select').select2();
 
     // Simple opener toggle
@@ -191,13 +220,6 @@ jQuery(document).ready(function ($) {
         });
     }
 
-    // Simple tab content switcher
-    $('.tab_link').click(function () {
-        var myRef = $(this).attr('ref-loc');
-        $('.d2g_tab_content_wrapper').addClass('hide');
-        $(myRef).removeClass('hide');
-    });
-
     // Generic remove button
     $('.remove_btn').click(function () {
         $(this).parent().remove();
@@ -209,6 +231,8 @@ jQuery(document).ready(function ($) {
     if (backLink !== null) {
         $('#backLink').attr('href', backLink);
     }
+
+
 
     /* =========================================
        DOCTOR PROFILE EDIT FORM (front-end)
@@ -277,6 +301,7 @@ jQuery(document).ready(function ($) {
             contentType: false,
             success: function (response) {
                 $(".d2g_doctor-form").toggleClass('loading');
+                location.reload(true);
                 console.log(response);
             },
             error: function (xhr, textStatus, errorThrown) {
@@ -289,7 +314,7 @@ jQuery(document).ready(function ($) {
     });
 
     // Tab click inside doctor form (autosave then reload content)
-    $('.tab').click(function (event) {
+    $('#docTab').find('.nav-link').click(function (event) {
         if (!d || !d.ajax) return;
 
         tinymce.triggerSave();
@@ -549,100 +574,39 @@ jQuery(document).ready(function ($) {
 
     if (d && d.ajax && d.msg && d.mail && d.ajax.delete_nonce && d.ajax.mail_nonce) {
 
-        // Loader helper for dashboard actions
-        var loader = function () {
-            $('#bg_loader,#loader').toggleClass('simple_hide');
-        };
 
         // Delete appointment
         $(document).on('click', '.del_app', function (e) {
             e.preventDefault();
 
-            var app_id = $(this).data('app-id');
+            var $btn        = $(this);
+            var app_id      = $(this).data('app-id');
             var wcc_user_id = $(this).data('user-id');
 
-            loader();
+            // Turn on loader in this button
+            $btn.addClass('btn-loading').addClass('disabled').attr('aria-disabled', 'true');
 
             $.post(d.ajax.url, {
-                action: 'delete_wcc_appointment',
+                action: 'd2g_delete_wcc_appointment',
                 app_id: app_id,
                 wcc_user_id: wcc_user_id,
                 security: d.ajax.delete_nonce
             }, function (res) {
 
-                loader();
-                $('#app-' + app_id)
-                    .html(res)
-                    .css({ fontWeight: 700, color: '#6eb9b7' });
+                // Usually the whole row is replaced after success
+                $('#app-' + app_id).html('<div class="alert alert-success w-100 m-0">' + res + '<div>');
+                $('#app-' + app_id).parent().find('.payment_needed').addClass('simple_hide');
+
+            }).fail(function () {
+
+                // On error, restore the button so user can retry
+                $btn.removeClass('disabled').removeAttr('aria-disabled');
+                $btn.find('.del-label').css('opacity', 1);
+                $btn.find('.del-spinner').hide();
             });
         });
 
-        // Show cancellation form prefilled
-        $(document).on('click', '.prep_cancellation_email', function (e) {
-            e.preventDefault();
-
-            $('#cancellation_form_wrapper').removeClass('simple_hide');
-
-            $('#app_date').val($(this).data('app-date'));
-            $('#doc_name').val($(this).data('doc-name'));
-            $('#doc_email').val($(this).data('doc-email'));
-            $('#app_link').val($(this).data('app-link'));
-        });
-
-        // Send cancellation mails (patient + doctor)
-        $(document).on('click', '#request_cancellation', function (e) {
-            e.preventDefault();
-
-            loader();
-
-            var baseData = {
-                action: 'send_ajax_d2g_email',
-                app_date: $('#app_date').val(),
-                app_link: $('#app_link').val(),
-                bic: $('#bic').val(),
-                iban: $('#iban').val(),
-                comment: $('#comment').val(),
-                nonce: d.ajax.mail_nonce
-            };
-
-            // Mail to patient
-            $.post(d.ajax.url, Object.assign({}, baseData, {
-                'e-mail': 'cancellation_patient',
-                from_name: $('#doc_name').val(),
-                from_email: d.mail.sender_email,
-                to_name: $('#client_name').val(),
-                to_email: $('#client_email').val(),
-                title: d.mail.sender_name + ': ' + d.msg.cancel_title + ' (' + $('#doc_name').val() + ')'
-            }), function (res) {
-
-                $('#return1')
-                    .show()
-                    .html(res.message === 'mail_send_cancellation_patient'
-                        ? d.msg.mail_patient_ok
-                        : d.msg.mail_patient_err);
-            });
-
-            // Mail to doctor
-            $.post(d.ajax.url, Object.assign({}, baseData, {
-                'e-mail': 'cancellation_doctor',
-                to_name: $('#doc_name').val(),
-                to_email: $('#doc_email').val(),
-                from_name: $('#client_name').val(),
-                from_email: $('#client_email').val(),
-                title: d.mail.sender_name + ': ' + d.msg.cancel_title + ' (' + $('#client_name').val() + ')'
-            }), function (res) {
-
-                loader();
-
-                $('#return2')
-                    .show()
-                    .html(res.message === 'mail_send_cancellation_doctor'
-                        ? d.msg.mail_doc_ok
-                        : d.msg.mail_doc_err);
-            });
-
-            $('#cancellation_form_wrapper').addClass('simple_hide');
-        });
+      
     }
 
     /* =========================================
@@ -671,17 +635,17 @@ jQuery(document).ready(function ($) {
 
                 if (!$('#conf_privacy_wf').is(':checked')) {
                     checker = true;
-                    checker_message += d.msg.privacy;
+                    checker_message += ' ' + d.msg.privacy;
                 }
 
                 if (!$('#conf_terms_wf').is(':checked')) {
                     checker = true;
-                    checker_message += d.msg.terms;
+                    checker_message += ' ' + d.msg.terms;
                 }
 
                 if (!$('#conf_disclaimer_wf').is(':checked')) {
                     checker = true;
-                    checker_message += d.msg.disclaimer;
+                    checker_message += ' ' + d.msg.disclaimer;
                 }
             }
 
@@ -699,7 +663,7 @@ jQuery(document).ready(function ($) {
             $("#inloop").toggleClass('loading');
 
             var formData = new FormData($('#walkin_form')[0]);
-            formData.append('action', 'create_wcc_walkin');
+            formData.append('action', 'd2g_create_wcc_walkin');
 
             $.ajax({
                 type: 'POST',
@@ -742,7 +706,7 @@ jQuery(document).ready(function ($) {
                 if ($(this).val() === "") {
                     $(this).css('border-color', '#970808');
                     checker = true;
-                    checker_message = d.msg.check1;
+                    checker_message = d.msg.check1 + '<br>';
                 }
             });
 
@@ -750,40 +714,65 @@ jQuery(document).ready(function ($) {
             if (isEmail($('#client_email_ec').val()) === 'notOK') {
                 $('#client_email_ec').css('border-color', '#ff5000');
                 checker = true;
-                checker_message = checker_message + ' ' + d.msg.invalid_email;
+                checker_message = checker_message + d.msg.invalid_email  + '<br>';
             }
 
             // reCAPTCHA check (same pattern as walk-in)
             if (d.recaptcha.enabled && (typeof window.captchaCodeEmail === 'undefined' || window.captchaCodeEmail.length === 0)) {
                 checker = true;
-                checker_message += ' ' + d.msg.robot;
+                checker_message += d.msg.robot;
+            }
+
+            // Extra checks for guests
+            if (!d.user || !d.user.is_logged_in) {
+
+                if (!$('#conf_privacy_ea').is(':checked')) {
+                    checker = true;
+                    checker_message +=  d.msg.privacy + '<br>';
+                }
+
+                if (!$('#conf_terms_ea').is(':checked')) {
+                    checker = true;
+                    checker_message += d.msg.terms + '<br>';
+                }
+
+                if (!$('#conf_disclaimer_ea').is(':checked')) {
+                    checker = true;
+                    checker_message += d.msg.disclaimer + '<br>';
+                }
             }
 
             if (checker === false) {
                 $("#written_consult").toggleClass('loading');
 
                 var myformData = new FormData($("#written_con_form")[0]);
-                myformData.append('action', 'create_wcc_written_cosnsult');
+                myformData.append('action', 'd2g_create_wcc_written_cosnsult');
 
-                $.ajax({
-                    type: "POST",
-                    data: myformData,
-                    url: d.ajax.url,
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-                        console.log(response);
-                        $("#written_consult").toggleClass('loading');
+               $.ajax({
+                type: "POST",
+                data: myformData,
+                url: d.ajax.url,
+                processData: false,
+                contentType: false,
+                beforeSend: function() {
+                    $("#loader").show(); // show loader before request
+                },
+                success: function (response) {
+                    console.log(response);
+                    $("#written_consult").toggleClass('loading');
 
-                        if (response && response.data && response.data.redirect_url) {
-                            window.location.href = response.data.redirect_url;
-                        }
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        $("#written_consult").toggleClass('loading');
-                        console.log(errorThrown);
+                    if (response && response.data && response.data.redirect_url) {
+                        window.location.href = response.data.redirect_url;
                     }
-                });
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    $("#written_consult").toggleClass('loading');
+                    console.log(errorThrown);
+                },
+                complete: function() {
+                    $("#loader").hide(); // hide loader after request finishes
+                }
+            });
             } else {
                 $('#written_con_error').html(checker_message).toggleClass('simple_hide');
                 return false;

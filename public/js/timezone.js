@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams({
-            action: 'save_user_timezone',
+            action: 'd2g_save_user_timezone',
             timezone: timezone,
         }),
     })

@@ -163,442 +163,657 @@ class D2gConnect_Shortcodes {
 
 		ob_start();
 		?>
-		<div class="d2g_doctor-form alignwide"><!-- content-wrap start-->
-			<div class="loader simple_hide"><?php esc_html_e( 'Your profile is beeing saved.', 'doctor2go-connect' ); ?></div>
+		<div class="d2g_doctor-form container d2g_wrapper">
 			<div class="row">
-				<div class="col-sm-12 outer_form_wrapper">
+				<div class="col-12 outer_form_wrapper">
 					<form id="doctor_post" name="new_post" method="post" action="<?php echo esc_html( $permalink ); ?>" enctype="multipart/form-data">
-						<div class="row margin-bottom-big">
-							<div class="col-sm-12">
-								<p id="submitwrap">
+						<div class="row mb-4">
+							<div class="col-12">
+								<p id="submitwrap" class="d-flex flex-wrap gap-2 justify-content-center mt-5">
 									<?php if ( $profileStatus == 'draft' ) { ?>
-										<button class="btn btn-default wp-block-button__link save_doctor button" tabindex="6" id="save"><?php esc_html_e( 'save as draft', 'doctor2go-connect' ); ?></button>
-										<button class="btn btn-default wp-block-button__link publish_doctor button" tabindex="6" id="submit"><?php esc_html_e( 'publish profile', 'doctor2go-connect' ); ?></button>
-										
+										<button class="btn btn-primary wp-block-button__link save_doctor" tabindex="6" id="save">
+											<?php esc_html_e( 'save as draft', 'doctor2go-connect' ); ?>
+										</button>
+										<button class="btn btn-success wp-block-button__link publish_doctor" tabindex="6" id="submit">
+											<?php esc_html_e( 'publish profile', 'doctor2go-connect' ); ?>
+										</button>
 									<?php } else { ?>
-										<button class="btn btn-default wp-block-button__link save_doctor button" tabindex="6" id="save"><?php esc_html_e( 'save profile', 'doctor2go-connect' ); ?></button>
-										<button class="btn btn-default wp-block-button__link unpublish_doctor button" tabindex="6" id="unpublish"><?php esc_html_e( 'unpublish profile', 'doctor2go-connect' ); ?></button>   
+										<button class="btn btn-primary wp-block-button__link save_doctor" tabindex="6" id="save">
+											<?php esc_html_e( 'save profile', 'doctor2go-connect' ); ?>
+										</button>
+										<button class="btn btn-warning wp-block-button__link unpublish_doctor" tabindex="6" id="unpublish">
+											<?php esc_html_e( 'unpublish profile', 'doctor2go-connect' ); ?>
+										</button>
 									<?php } ?>
-									<a target="_blank" class="btn-default btn button wp-block-button__link" href="/?post_type=d2g_doctor&p=<?php echo esc_html( $pubProfileID ); ?>&preview=true"><?php esc_html_e( 'preview profile', 'doctor2go-connect' ); ?></a>
+									<a target="_blank" class="btn btn-outline-primary wp-block-button__link" href="/?post_type=d2g_doctor&p=<?php echo esc_html( $pubProfileID ); ?>&preview=true">
+										<?php esc_html_e( 'preview profile', 'doctor2go-connect' ); ?>
+									</a>
 								</p>
 							</div>
 						</div>
-						<ul class="pm_tabs row">
-							<?php
-							$tab = isset( $_GET['tab'] ) ? absint( wp_unslash( $_GET['tab'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- View-only tab state, no form processing.
-							?>
-							<li class="<?php echo ( $tab != 2 && $tab != 3 ) ? 'active' : ''; ?> tab col-sm-6" data-tab-id="1" data-ref="basic_data">
-								<span>1</span><span><?php echo esc_html( __( 'Basics', 'doctor2go-connect' ) ); ?></span>
+
+						<ul class="nav nav-tabs mb-3" id="docTab" role="tablist">
+							<li class="nav-item" role="presentation">
+								<button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic-tab-pane" type="button" role="tab" aria-controls="basic-tab-pane" aria-selected="true">
+									<strong><?php echo esc_html( __( 'Basic personal information', 'doctor2go-connect' ) ); ?></strong>
+								</button>
 							</li>
-							<li class="<?php echo ( $tab == 2 ) ? 'active' : ''; ?> tab col-sm-6" data-ref="edu" data-tab-id="2">
-								<span>2</span><span><?php echo esc_html( __( 'Education & working experience', 'doctor2go-connect' ) ); ?></span>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link exp_edu_button" id="exp_edu-tab" data-bs-toggle="tab" data-bs-target="#exp_edu-tab-pane" type="button" role="tab" aria-controls="exp_edu-tab-pane" aria-selected="false">
+									<strong><?php echo esc_html( __( 'Education & working experience', 'doctor2go-connect' ) ); ?></strong>
+								</button>
 							</li>
 						</ul>
-						<div class="error_msg_sales"></div>
-						<div class="basic_data pm_d2g_tab_content first <?php echo ( $tab != 2 && $tab != 3 ) ? '' : 'simple_hide'; ?>">
-							<div class="row margin-bottom-standard">
-								<div class="col-sm-6">
-									<h3><?php echo esc_html__( 'Personal information', 'doctor2go-connect' ); ?></h3>
-									<div  class="form-table">
-										<div class="margin-bottom-standard">
-											<label class="small"><?php echo esc_html__( 'Organisation', 'doctor2go-connect' ); ?></label>
-											<input type="text" class="" id="d2g_organisation" value="<?php echo esc_html( $doctor_meta['d2g_organisation'][0] ); ?>" tabindex="1" size="40" name="meta[d2g_organisation]" placeholder="<?php echo esc_html__( 'Organisation', 'doctor2go-connect' ); ?>"/>
-											<label class="small"><?php echo esc_html__( 'First name *', 'doctor2go-connect' ); ?></label>
-											<input type="text" class="required" id="d2g_first_name" value="<?php echo esc_html( $doctor_meta['d2g_first_name'][0] ); ?>" tabindex="1" size="40" name="meta[d2g_first_name]" placeholder="<?php echo esc_html__( 'First name *', 'doctor2go-connect' ); ?>"/>
-											<label class="small"><?php echo esc_html__( 'Last name *', 'doctor2go-connect' ); ?></label>
-											<input type="text" class="required" id="d2g_last_name" value="<?php echo esc_html( $doctor_meta['d2g_last_name'][0] ); ?>" tabindex="1" size="40" name="meta[d2g_last_name]" placeholder="<?php echo esc_html__( 'Last name *', 'doctor2go-connect' ); ?>"/>
-											<label class="small"><?php echo esc_html__( 'Title *', 'doctor2go-connect' ); ?></label>
-											<input type="text" id="d2g_emp_title" value="<?php echo esc_html( $doctor_meta['d2g_emp_title'][0] ); ?>" tabindex="1" size="40" name="meta[d2g_emp_title]" placeholder="<?php echo esc_html__( 'Title *', 'doctor2go-connect' ); ?>"/>
-											<label class="small"><?php echo esc_html__( 'Display name', 'doctor2go-connect' ); ?></label>
-											<input type="text" id="d2g_post_title" value="<?php echo esc_html( $pubProfile->post_title ); ?>" tabindex="1" size="40" name="post_title" placeholder="<?php echo esc_html__( 'Display name', 'doctor2go-connect' ); ?>"/>
-											<label class="small"><?php echo esc_html__( 'Address', 'doctor2go-connect' ); ?></label>
-											<input type="text" class="" id="address" value="<?php echo esc_html( $doctor_meta['d2g_address'][0] ); ?>" tabindex="1" size="40" name="meta[d2g_address]" placeholder="<?php echo esc_html__( 'Address', 'doctor2go-connect' ); ?>"/>
-											<label class="small"><?php echo esc_html__( 'Zip', 'doctor2go-connect' ); ?></label>
-											<input type="text" class="" id="zip" value="<?php echo esc_html( $doctor_meta['d2g_zip'][0] ); ?>" tabindex="1" size="40" name="meta[d2g_zip]" placeholder="<?php echo esc_html__( 'Zip code', 'doctor2go-connect' ); ?>"/>
-											<label class="small"><?php echo esc_html__( 'City', 'doctor2go-connect' ); ?></label>
-											<input type="text" class="" id="city" value="<?php echo esc_html( $doctor_meta['d2g_city'][0] ); ?>" tabindex="1" size="40" name="meta[d2g_city]"  placeholder="<?php echo esc_html__( 'City *', 'doctor2go-connect' ); ?>"/>
-											<label class="small"><?php echo esc_html__( 'Country *', 'doctor2go-connect' ); ?></label>
-											<select name="tax[country-origin]">
-												<option value=""><?php echo esc_html__( 'Country', 'doctor2go-connect' ); ?></option>
+
+						<div class="alert alert-danger mt-3 mb-3 simple_hide"></div>
+
+						<div class="tab-content mb-5" id="myTabContent">
+							<div class="basic_data pm_d2g_tab_content first tab-pane fade show active" id="basic-tab-pane" role="tabpanel" aria-labelledby="email-tab" tabindex="0">
+								<div class="row mb-3">
+									<div class="col-12 col-lg-6">
+										<h3><?php echo esc_html__( 'Personal information', 'doctor2go-connect' ); ?></h3>
+										<div class="form-table">
+											<div class="mb-3">
+												<label class="form-label small">
+													<?php echo esc_html__( 'Organisation', 'doctor2go-connect' ); ?>
+												</label>
+												<input type="text" class="form-control" id="d2g_organisation" value="<?php echo esc_html( $doctor_meta['d2g_organisation'][0] ); ?>" tabindex="1" name="meta[d2g_organisation]" placeholder="<?php echo esc_html__( 'Organisation', 'doctor2go-connect' ); ?>"/>
+
+												<label class="form-label small mt-2">
+													<?php echo esc_html__( 'First name *', 'doctor2go-connect' ); ?>
+												</label>
+												<input type="text" class="form-control required" id="d2g_first_name" value="<?php echo esc_html( $doctor_meta['d2g_first_name'][0] ); ?>" tabindex="1" name="meta[d2g_first_name]" placeholder="<?php echo esc_html__( 'First name *', 'doctor2go-connect' ); ?>"/>
+
+												<label class="form-label small mt-2">
+													<?php echo esc_html__( 'Last name *', 'doctor2go-connect' ); ?>
+												</label>
+												<input type="text" class="form-control required" id="d2g_last_name" value="<?php echo esc_html( $doctor_meta['d2g_last_name'][0] ); ?>" tabindex="1" name="meta[d2g_last_name]" placeholder="<?php echo esc_html__( 'Last name *', 'doctor2go-connect' ); ?>"/>
+
+												<label class="form-label small mt-2">
+													<?php echo esc_html__( 'Title *', 'doctor2go-connect' ); ?>
+												</label>
+												<input type="text" class="form-control" id="d2g_emp_title" value="<?php echo esc_html( $doctor_meta['d2g_emp_title'][0] ); ?>" tabindex="1" name="meta[d2g_emp_title]" placeholder="<?php echo esc_html__( 'Title *', 'doctor2go-connect' ); ?>"/>
+
+												<label class="form-label small mt-2">
+													<?php echo esc_html__( 'Display name', 'doctor2go-connect' ); ?>
+												</label>
+												<input type="text" class="form-control" id="d2g_post_title" value="<?php echo esc_html( $pubProfile->post_title ); ?>" tabindex="1" name="post_title" placeholder="<?php echo esc_html__( 'Display name', 'doctor2go-connect' ); ?>"/>
+
+												<label class="form-label small mt-2">
+													<?php echo esc_html__( 'Address', 'doctor2go-connect' ); ?>
+												</label>
+												<input type="text" class="form-control" id="address" value="<?php echo esc_html( $doctor_meta['d2g_address'][0] ); ?>" tabindex="1" name="meta[d2g_address]" placeholder="<?php echo esc_html__( 'Address', 'doctor2go-connect' ); ?>"/>
+
+												<label class="form-label small mt-2">
+													<?php echo esc_html__( 'Zip', 'doctor2go-connect' ); ?>
+												</label>
+												<input type="text" class="form-control" id="zip" value="<?php echo esc_html( $doctor_meta['d2g_zip'][0] ); ?>" tabindex="1" name="meta[d2g_zip]" placeholder="<?php echo esc_html__( 'Zip code', 'doctor2go-connect' ); ?>"/>
+
+												<label class="form-label small mt-2">
+													<?php echo esc_html__( 'City', 'doctor2go-connect' ); ?>
+												</label>
+												<input type="text" class="form-control" id="city" value="<?php echo esc_html( $doctor_meta['d2g_city'][0] ); ?>" tabindex="1" name="meta[d2g_city]" placeholder="<?php echo esc_html__( 'City *', 'doctor2go-connect' ); ?>"/>
+
+												<label class="form-label small mt-2">
+													<?php echo esc_html__( 'Country *', 'doctor2go-connect' ); ?>
+												</label>
+												<select name="tax[country-origin]" class="form-select">
+													<option value="">
+														<?php echo esc_html__( 'Country', 'doctor2go-connect' ); ?>
+													</option>
+													<?php
+													foreach ( $allCountries as $country ) {
+														$selected = '';
+														if ( isset( $countriesArray[ $country->slug ] ) ) {
+															$selected = 'selected';
+														}
+														?>
+														<option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $country->slug ); ?>">
+															<?php
+															if ( get_option( 'd2g_pseudo_translations' ) == 1 ) {
+																echo ( $currLang == 'en' ) ? esc_html( $country->name ) : esc_html( get_term_meta( $country->term_id, 'rudr_text_' . $currLang, true ) );
+															} else {
+																echo esc_html( $country->name );
+															}
+															?>
+														</option>
+														<?php
+													}
+													?>
+												</select>
+
+												<label class="form-label small mt-2">
+													<?php echo esc_html__( 'Practice phone number (optional but recommended for use with a reception)', 'doctor2go-connect' ); ?>
+												</label>
+												<input type="text" class="form-control" id="tel" value="<?php echo esc_html( $doctor_meta['tel'][0] ); ?>" tabindex="1" name="meta[tel]" placeholder="<?php echo esc_html__( 'Tel ', 'doctor2go-connect' ); ?>"/>
+
+												<label class="form-label small mt-2">
+													<?php echo esc_html__( 'Mobile phone number  (optional)', 'doctor2go-connect' ); ?>
+												</label>
+												<input type="text" class="form-control" id="mobile" value="<?php echo esc_html( $doctor_meta['d2g_mobile'][0] ); ?>" tabindex="1" name="meta[d2g_mobile]" placeholder="<?php echo esc_html__( 'Mobile ', 'doctor2go-connect' ); ?>"/>
+
+												<label class="form-label small mt-2">
+													<?php echo esc_html__( 'E-mail *', 'doctor2go-connect' ); ?>
+												</label>
+												<input type="text" class="form-control required" id="email" value="<?php echo esc_html( $doctor_meta['d2g_main_email'][0] ); ?>" tabindex="1" name="meta[d2g_main_email]" placeholder="<?php echo esc_html__( 'E-mail *', 'doctor2go-connect' ); ?>"/>
+											</div>
+
+											<h3 class="mt-5">
+												<?php echo esc_html__( 'Registration information', 'doctor2go-connect' ); ?>
+											</h3>
+
+											<label class="form-label small">
+												<?php echo esc_html__( 'Registration number', 'doctor2go-connect' ); ?>
+											</label>
+											<input type="text" class="form-control" id="reg_nr" value="<?php echo esc_html( $doctor_meta['reg_nr'][0] ); ?>" tabindex="1" name="meta[reg_nr]" placeholder="<?php echo esc_html__( 'Registration number ', 'doctor2go-connect' ); ?>"/>
+
+											<label class="form-label small mt-2">
+												<?php echo esc_html__( 'Country of registration', 'doctor2go-connect' ); ?>
+											</label>
+											<input type="text" class="form-control" id="reg_country" value="<?php echo esc_html( $doctor_meta['reg_country'][0] ); ?>" tabindex="1" name="meta[reg_country]" placeholder="<?php echo esc_html__( 'Country of registration', 'doctor2go-connect' ); ?>"/>
+										</div>
+
+										<?php if ( get_option( 'd2g_local_user' ) == 1 ) { ?>
+											<h3 class="mt-5">
+												<?php echo esc_html__( 'Code for booking calendar', 'doctor2go-connect' ); ?>
+											</h3>
+											<div class="form-table">
+												<input type="text" class="form-control" id="d2g_cal_code" value="<?php echo esc_html( $doctor_meta['d2g_cal_code'][0] ); ?>" tabindex="1" name="meta[d2g_cal_code]" placeholder="<?php echo esc_html__( 'Shortcode or iframe for booking calendar', 'doctor2go-connect' ); ?>"/>
+											</div>
+										<?php } else { ?>
+											<?php
+											$currencies = array( 'EUR', 'USD', 'GBP', 'ALL', 'MXN', 'AUD', 'INR', 'AZN', 'BYN', 'BGN', 'HRK', 'CZK', 'DKK', 'GEL', 'HUF', 'ISK', 'CHF', 'MKD', 'MDL', 'NOK', 'PLN', 'RON', 'RUB', 'RSD', 'SEK', 'CHF', 'TRY', 'UAH', 'CAD', 'NZD', 'BRL', 'ZAR' );
+											?>
+											<h3 class="mt-5">
+												<?php echo esc_html__( 'Payment settings', 'doctor2go-connect' ); ?>
+											</h3>
+											<div class="form-table payment_settings mb-3">
+												<p class="alert alert-light">
+													<strong>
+														<?php echo esc_html__( 'Tariffs for the booking calendar are configured in your Webcamconsult / Doctor2Go dashboard, as outlined in the Getting Started guide. However, prices for email and walk-in consultations must be set separately here, as they are special consults.', 'doctor2go-connect' ); ?>
+													</strong>
+												</p>
+
+												<label class="form-label small">
+													<?php echo esc_html__( 'Walk-in price & currency', 'doctor2go-connect' ); ?>*
+												</label>
+												<div class="row g-2 align-items-center">
+													<div class="col-8">
+														<input type="text" class="form-control price_input" id="walk_in_price" value="<?php echo esc_html( $doctor_meta['walk_in_price'][0] ); ?>" tabindex="1" name="meta[walk_in_price]" placeholder="<?php echo esc_html__( 'Walk-In price', 'doctor2go-connect' ); ?>*"/>
+													</div>
+													<div class="col-4">
+														<select class="form-select" name="meta[walk_in_currency]" id="walk_in_currency">
+															<?php foreach ( $currencies as $currency ) { ?>
+																<option <?php echo ( $currency == $doctor_meta['walk_in_currency'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $currency ); ?>">
+																	<?php echo esc_html( $currency ); ?>
+																</option>
+															<?php } ?>
+														</select>
+													</div>
+												</div>
+
+												<label class="form-label small mt-3">
+													<?php echo esc_html__( 'Written consult price & currency', 'doctor2go-connect' ); ?>*
+												</label>
+												<div class="row g-2 align-items-center">
+													<div class="col-8">
+														<input type="text" class="form-control price_input" id="written_con_price" value="<?php echo esc_html( $doctor_meta['written_con_price'][0] ); ?>" tabindex="1" name="meta[written_con_price]" placeholder="<?php echo esc_html__( 'Written consult price', 'doctor2go-connect' ); ?>"/>
+													</div>
+													<div class="col-4">
+														<select class="form-select" name="meta[written_con_currency]" id="written_con_currency">
+															<?php foreach ( $currencies as $currency ) { ?>
+																<option <?php echo ( $currency == $doctor_meta['written_con_currency'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $currency ); ?>">
+																	<?php echo esc_html( $currency ); ?>
+																</option>
+															<?php } ?>
+														</select>
+													</div>
+												</div>
+
+												<p class="mt-3 mb-4 simple_hide">
+													<label class="form-check-label">
+														<input <?php echo ( $doctor_meta['d2g_intake_call'][0] == 1 ) ? 'checked' : ''; ?> class="form-check-input" name="meta[d2g_intake_call]" type="checkbox" value="1">
+														<span>
+															<?php echo esc_html__( 'I offer a free intake call', 'doctor2go-connect' ); ?>
+														</span>
+													</label>
+												</p>
+											</div>
+										<?php } ?>
+
+										<h3 class="mt-5">
+											<?php echo esc_html__( 'Holiday settings', 'doctor2go-connect' ); ?>
+										</h3>
+										<p class="alert alert-light">
+											<strong>
+												<?php echo esc_html__( 'Enter your next holiday here to block e-mail consults and to show a notice on your detail page during your absence.', 'doctor2go-connect' ); ?>
+											</strong>
+										</p>
+										<div class="row g-3">
+											<div class="col-12 col-md-6">
+												<label class="form-label small">
+													<?php echo esc_html__( 'Start date', 'doctor2go-connect' ); ?>
+												</label>
+												<input type="date" class="form-control" name="meta[start_holiday]" value="<?php echo esc_html( $doctor_meta['start_holiday'][0] ); ?>">
+											</div>
+											<div class="col-12 col-md-6">
+												<label class="form-label small">
+													<?php echo esc_html__( 'End date', 'doctor2go-connect' ); ?>
+												</label>
+												<input type="date" class="form-control" name="meta[end_holiday]" value="<?php echo esc_html( $doctor_meta['end_holiday'][0] ); ?>">
+											</div>
+										</div>
+									</div>
+
+									<div class="col-12 col-lg-6 lists">
+										<h3><?php echo esc_html__( 'Profile image', 'doctor2go-connect' ); ?></h3>
+										<div class="form-table pic_upload_wrapper mb-3">
+											<?php if ( ! $feat_pic_full ) { ?>
+												<p class="mb-2">
+													<input type="file" class="form-control" name="picture_1"/>
+												</p>
+												<p class="small text-muted">
+													<?php esc_html_e( 'To upload your image you first need to choose one and than save your profile. The image will be displayed after the pagereload.', 'doctor2go-connect' ); ?>
+												</p>
+											<?php } else { ?>
+												<p class="mb-3">
+													<?php esc_html_e( 'Before you can upload a new image, please first delete the old one.', 'doctor2go-connect' ); ?>
+												</p>
+												<div class="profile_pic_wrapper" style="max-width:400px">
+													<a class="del_img_link btn btn-outline-danger flaticon-dustbin mb-2" data-doc-id="<?php echo esc_html( $pubProfileID ); ?>" data-image-id="<?php echo esc_html( $img_ID ); ?>" href="#"></a>
+													<img class="img-fluid" src="<?php echo esc_html( $feat_pic_full ); ?>">
+												</div>
+											<?php } ?>
+										</div>
+										<div class="mb-3">
+											<h3>
+												<?php echo esc_html__( 'Languages', 'doctor2go-connect' ); ?> *
+											</h3>
+											<select name="tax[doctor-language][]" multiple="multiple" class="form-select mb-3">
 												<?php
-												foreach ( $allCountries as $country ) {
+												foreach ( $allLanguages as $language ) {
 													$selected = '';
-													if ( isset( $countriesArray[ $country->slug ] ) ) {
+													if ( isset( $langArray[ $language->slug ] ) ) {
 														$selected = 'selected';
 													}
 													?>
-													<option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $country->slug ); ?>">
+													<option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $language->slug ); ?>">
 														<?php
 														if ( get_option( 'd2g_pseudo_translations' ) == 1 ) {
-															echo ( $currLang == 'en' ) ? esc_html( $country->name ) : esc_html( get_term_meta( $country->term_id, 'rudr_text_' . $currLang, true ) );
+															echo ( $currLang == 'en' ) ? esc_html( $language->name ) : esc_html( get_term_meta( $language->term_id, 'rudr_text_' . $currLang, true ) );
 														} else {
-															echo esc_html( $country->name );
+															echo esc_html( $language->name );
 														}
 														?>
 													</option>
-												<?php } ?>
+													<?php
+												}
+												?>
 											</select>
-											<label class="small"><?php echo esc_html__( 'Practice phone number (optional but recommended for use with a reception)', 'doctor2go-connect' ); ?></label>
-											<input type="text" class="" id="tel" value="<?php echo esc_html( $doctor_meta['tel'][0] ); ?>" tabindex="1" size="40" name="meta[tel]"  placeholder="<?php echo esc_html__( 'Tel ', 'doctor2go-connect' ); ?>"/>
-											<label class="small"><?php echo esc_html__( 'Mobile phone number  (optional)', 'doctor2go-connect' ); ?></label>
-											<input type="text" class="" id="mobile" value="<?php echo esc_html( $doctor_meta['d2g_mobile'][0] ); ?>" tabindex="1" size="40" name="meta[d2g_mobile]"  placeholder="<?php echo esc_html__( 'Mobile ', 'doctor2go-connect' ); ?>"/>
-											<label class="small"><?php echo esc_html__( 'E-mail *', 'doctor2go-connect' ); ?></label>
-											<input type="text" class="required" id="email" value="<?php echo esc_html( $doctor_meta['d2g_main_email'][0] ); ?>" tabindex="1" size="40" name="meta[d2g_main_email]"  placeholder="<?php echo esc_html__( 'E-mail *', 'doctor2go-connect' ); ?>"/>
 										</div>
-										<h3><?php echo esc_html__( 'Registration information', 'doctor2go-connect' ); ?></h3>
-										<label class="small"><?php echo esc_html__( 'Registration number', 'doctor2go-connect' ); ?></label>
-										<input type="text" class="" id="reg_nr" value="<?php echo esc_html( $doctor_meta['reg_nr'][0] ); ?>" tabindex="1" size="40" name="meta[reg_nr]"  placeholder="<?php echo esc_html__( 'Registration number ', 'doctor2go-connect' ); ?>"/>
-										<label class="small"><?php echo esc_html__( 'Country of registration', 'doctor2go-connect' ); ?></label>
-										<input type="text" class="" id="reg_country" value="<?php echo esc_html( $doctor_meta['reg_country'][0] ); ?>" tabindex="1" size="40" name="meta[reg_country]"  placeholder="<?php echo esc_html__( 'Country of registration', 'doctor2go-connect' ); ?>"/>   <br />
-									</div>
-									<?php if ( get_option( 'd2g_local_user' ) == 1 ) { ?>
-										<h3><?php echo esc_html__( 'Code for booking calendar', 'doctor2go-connect' ); ?></h3>
-										<div class="form-table">
-											<input type="text" class="" id="d2g_cal_code" value='<?php echo esc_html( $doctor_meta['d2g_cal_code'][0] ); ?>' tabindex="1" size="40" name="meta[d2g_cal_code]"  placeholder="<?php echo esc_html__( 'Shortcode or iframe for booking calendar', 'doctor2go-connect' ); ?>"/>   <br />
+
+										<div class="extra mb-5">
+											<label class="form-check-label" for="sub_title">
+												<input name="meta[sub_title]" id="sub_title" type="checkbox" checked value="y" class="form-check-input">
+												<?php echo esc_html__( 'I offer subtitles (this is standard function with in webcamconsult)', 'doctor2go-connect' ); ?>
+											</label>
 										</div>
-										<?php
-									} else {
-										$currencies = array( 'EUR', 'USD', 'GBP', 'ALL', 'MXN', 'AUD', 'INR', 'AZN', 'BYN', 'BGN', 'HRK', 'CZK', 'DKK', 'GEL', 'HUF', 'ISK', 'CHF', 'MKD', 'MDL', 'NOK', 'PLN', 'RON', 'RUB', 'RSD', 'SEK', 'CHF', 'TRY', 'UAH', 'CAD', 'NZD', 'BRL', 'ZAR' );
-										?>
-										<h3><?php echo esc_html__( 'payment settings', 'doctor2go-connect' ); ?></h3> 
-										<div class="form-table payment_settings mb-m">
-											<p><strong><?php echo esc_html__( 'Tariffs for the booking calendar are configured in your Webcamconsult / Doctor2Go dashboard, as outlined in the Getting Started guide. However, prices for email and walk-in consultations must be set separately here, as they are special consults.', 'doctor2go-connect' ); ?></strong></p>
-											<label class="small"><?php echo esc_html__( 'Walk-in price & currency', 'doctor2go-connect' ); ?>*</label>
-											<input type="text" class="price_input" id="walk_in_price" value="<?php echo esc_html( $doctor_meta['walk_in_price'][0] ); ?>" tabindex="1" size="40" name="meta[walk_in_price]"  placeholder="<?php echo esc_html__( 'Walk-In price', 'doctor2go-connect' ); ?>*"/> 
-											<select class="form-control" name="meta[walk_in_currency]" id="walk_in_currency">
-												<?php foreach ( $currencies as $currency ) { ?>
-														<option <?php echo ( $currency == $doctor_meta['walk_in_currency'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $currency ); ?>"><?php echo esc_html( $currency ); ?></option>    
-													<?php } ?>
+
+										<div id="specialty_wrapper" class="mb-5">
+											<h3>
+												<?php echo esc_html__( 'Fields of study', 'doctor2go-connect' ); ?> *
+											</h3>
+											<select name="tax[doctor-specialty][]" multiple="multiple" class="form-select mb-3">
+												<?php
+												foreach ( $allSpecialities as $speciality ) {
+													$selected = '';
+													if ( isset( $specArray[ $speciality->slug ] ) ) {
+														$selected = 'selected';
+													}
+													?>
+													<option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $speciality->slug ); ?>">
+														<?php
+														if ( get_option( 'd2g_pseudo_translations' ) == 1 ) {
+															echo ( $currLang == 'en' ) ? esc_html( $speciality->name ) : esc_html( get_term_meta( $speciality->term_id, 'rudr_text_' . $currLang, true ) );
+														} else {
+															echo esc_html( $speciality->name );
+														}
+														?>
+													</option>
+													<?php
+												}
+												?>
 											</select>
-											<label class="small"><?php echo esc_html__( 'Written consult price & currency', 'doctor2go-connect' ); ?>*</label>
-											<input type="text" class="price_input" id="written_con_price" value="<?php echo esc_html( $doctor_meta['written_con_price'][0] ); ?>" tabindex="1" size="40" name="meta[written_con_price]"  placeholder="<?php echo esc_html__( 'Written consult price', 'doctor2go-connect' ); ?>"/> 
-											<select class="form-control" name="meta[written_con_currency]" id="written_con_currency">
-												<?php foreach ( $currencies as $currency ) { ?>
-														<option <?php echo ( $currency == $doctor_meta['written_con_currency'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $currency ); ?>"><?php echo esc_html( $currency ); ?></option>    
-													<?php } ?>
-											</select>
-											<p class="mb-xl simple_hide"><label><input <?php echo ( $doctor_meta['d2g_intake_call'][0] == 1 ) ? 'checked' : ''; ?> name="meta[d2g_intake_call]" type="checkbox" value="1">&nbsp;<span><?php echo esc_html__( 'I offer a free intake call', 'doctor2go-connect' ); ?></span></label></p>
 										</div>
-									<?php } ?>
-									<h3><?php echo esc_html__( 'Holiday settings', 'doctor2go-connect' ); ?></h3>
-									<p><strong><?php echo esc_html__( 'Enter your next holiday here to block e-mail consults and to show a notice on your detail page during your absence.', 'doctor2go-connect' ); ?></strong></p>
-									<div class="row">
-										<div class="col-sm-6">
-											<label class="small"><?php echo esc_html__( 'Start date', 'doctor2go-connect' ); ?></label>
-											<input type="date" name="meta[start_holiday]" value="<?php echo esc_html( $doctor_meta['start_holiday'][0] ); ?>">
-										</div>
-										<div class="col-sm-6">
-											<label class="small"><?php echo esc_html__( 'End date', 'doctor2go-connect' ); ?></label>
-											<input type="date" name="meta[end_holiday]" value="<?php echo esc_html( $doctor_meta['end_holiday'][0] ); ?>">
+
+										<h3>
+											<?php echo esc_html__( 'About your self', 'doctor2go-connect' ); ?>
+										</h3>
+										<p>
+											<strong>
+												<?php echo esc_html__( 'Please provide a brief biography highlighting your background and strengths for visitors.', 'doctor2go-connect' ); ?>
+											</strong>
+										</p>
+										<div class="form-table mb-3">
+											<?php wp_editor( $pubProfile->post_content, 'docdesc' ); ?>
 										</div>
 									</div>
 								</div>
-								<div class="col-sm-6 lists">
-									<h3><?php echo esc_html__( 'Profile image', 'doctor2go-connect' ); ?></h3>
-									<div class="form-table pic_upload_wrapper margin-bottom-standard">
-										<?php if ( ! $feat_pic_full ) { ?>
-											<p>
-												<input type="file" name="picture_1"/><br />
-											</p>
-											<p><?php esc_html_e( 'To upload your image you first need to choose one and than save your profile. The image will be displayed after the pagereload.', 'doctor2go-connect' ); ?></p>
-										<?php } else { ?>
-											<p class="mb-l"><?php esc_html_e( 'Before you can upload a new image, please first delete the old one.', 'doctor2go-connect' ); ?></p>
-											<div style="max-width: 400px" class="profile_pic_wrapper">
-												<a class="del_img_link button flaticon-dustbin" data-doc-id="<?php echo esc_html( $pubProfileID ); ?>" data-image-id="<?php echo esc_html( $img_ID ); ?>" style="display: inline-block; margin: 15px 0" href="#"></a>
-												<img style="width:100%" src="<?php echo esc_html( $feat_pic_full ); ?>">
+							</div>
+
+							<div class="tab-pane fade pm_d2g_tab_content edu exp_edu" id="exp_edu-tab-pane" role="tabpanel" aria-labelledby="exp_edu-tab" tabindex="0">
+								<h3><?php echo esc_html__( 'education', 'doctor2go-connect' ); ?></h3>
+
+								<div class="form-table edu_wrapper mb-4">
+									<?php $counter = 0; ?>
+
+									<div class="row exp_edu fw-bold mb-2">
+										<div class="col-12 col-md-3">
+											<?php echo esc_html__( 'start & end date', 'doctor2go-connect' ); ?>
+										</div>
+										<div class="col-12 col-md-3">
+											<?php echo esc_html__( 'study area', 'doctor2go-connect' ); ?>
+										</div>
+										<div class="col-12 col-md-3">
+											<?php echo esc_html__( 'degree', 'doctor2go-connect' ); ?>
+										</div>
+										<div class="col-12 col-md-3">
+											<?php echo esc_html__( 'institution', 'doctor2go-connect' ); ?>
+										</div>
+									</div>
+
+									<?php if ( isset( $doctor_meta['edus'] ) ) { ?>
+										<?php foreach ( $doctor_meta['edus'] as $edu ) { ?>
+											<div class="row exp_edu edu_<?php echo esc_html( $counter ); ?> align-items-start mb-2">
+												<?php if ( $counter > 0 ) { ?>
+													<div class="col-12 text-end mb-1">
+														<a class="remove_btn btn btn-sm btn-outline-danger btn-add" href="#">
+															<span class="icon-minus-circled"></span>
+														</a>
+													</div>
+												<?php } ?>
+
+												<div class="col-12 col-md-3">
+													<div class="row g-2">
+														<div class="col-6">
+															<input type="text" class="form-control" id="d2g_exp_edu_date" value="<?php echo esc_html( $edu['d2g_exp_edu_start_date'] ); ?>" tabindex="1" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_start_date]" placeholder="<?php echo esc_html__( 'start date', 'doctor2go-connect' ); ?>"/>
+														</div>
+														<div class="col-6">
+															<input type="text" class="form-control" id="d2g_exp_edu_study" value="<?php echo esc_html( $edu['d2g_exp_edu_end_date'] ); ?>" tabindex="1" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_end_date]" placeholder="<?php echo esc_html__( 'end date', 'doctor2go-connect' ); ?>"/>
+														</div>
+													</div>
+												</div>
+
+												<div class="col-12 col-md-3 mt-2 mt-md-0">
+													<input type="text" class="form-control" id="d2g_exp_edu_study" value="<?php echo esc_html( $edu['d2g_exp_edu_study'] ); ?>" tabindex="1" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_study]" placeholder="<?php echo esc_html__( 'study area', 'doctor2go-connect' ); ?>"/>
+												</div>
+
+												<div class="col-12 col-md-3 mt-2 mt-md-0">
+													<input type="text" class="form-control" id="d2g_exp_edu_title" value="<?php echo esc_html( $edu['d2g_exp_edu_title'] ); ?>" tabindex="1" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_title]" placeholder="<?php echo esc_html__( 'degree', 'doctor2go-connect' ); ?>"/>
+												</div>
+
+												<div class="col-12 col-md-3 mt-2 mt-md-0">
+													<input type="text" class="form-control" id="d2g_exp_edu_org" value="<?php echo esc_html( $edu['d2g_exp_edu_org'] ); ?>" tabindex="1" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_org]" placeholder="<?php echo esc_html__( 'institution', 'doctor2go-connect' ); ?>"/>
+												</div>
 											</div>
+											<?php ++$counter; ?>
 										<?php } ?>
+									<?php } else { ?>
+										<div class="row exp_edu edu_0 mb-2">
+											<div class="col-12 col-md-3">
+												<div class="row g-2">
+													<div class="col-6">
+														<input type="text" class="form-control" id="d2g_exp_edu_date" tabindex="1" name="meta[edus][0][d2g_exp_edu_start_date]" placeholder="<?php echo esc_html__( 'start date', 'doctor2go-connect' ); ?>"/>
+													</div>
+													<div class="col-6">
+														<input type="text" class="form-control" id="d2g_exp_edu_study" tabindex="1" name="meta[edus][0][d2g_exp_edu_end_date]" placeholder="<?php echo esc_html__( 'end date', 'doctor2go-connect' ); ?>"/>
+													</div>
+												</div>
+											</div>
+
+											<div class="col-12 col-md-3 mt-2 mt-md-0">
+												<input type="text" class="form-control" id="d2g_exp_edu_study" tabindex="1" name="meta[edus][0][d2g_exp_edu_study]" placeholder="<?php echo esc_html__( 'study area', 'doctor2go-connect' ); ?>"/>
+											</div>
+
+											<div class="col-12 col-md-3 mt-2 mt-md-0">
+												<input type="text" class="form-control" id="d2g_exp_edu_title" tabindex="1" name="meta[edus][0][d2g_exp_edu_title]" placeholder="<?php echo esc_html__( 'degree', 'doctor2go-connect' ); ?>"/>
+											</div>
+
+											<div class="col-12 col-md-3 mt-2 mt-md-0">
+												<input type="text" class="form-control" id="d2g_exp_edu_org" tabindex="1" name="meta[edus][0][d2g_exp_edu_org]" placeholder="<?php echo esc_html__( 'institution', 'doctor2go-connect' ); ?>"/>
+											</div>
+										</div>
+									<?php } ?>
+								</div>
+
+								<div class="btn_wrapper mb-4">
+									<a class="btn btn-outline-primary wp-block-button__link add_edu invert" data-entry-id="<?php echo esc_html( $counter ) - 1; ?>" href="#">
+										<?php echo esc_html__( 'add an extra education', 'doctor2go-connect' ); ?>
+									</a>
+								</div>
+
+								<h3><?php echo esc_html__( 'working experience', 'doctor2go-connect' ); ?></h3>
+
+								<div class="form-table exp_wrapper mb-4">
+									<?php $counter = 0; ?>
+
+									<div class="row exp_edu fw-bold mb-2">
+										<div class="col-12 col-md-3">
+											<?php echo esc_html__( 'start & end date', 'doctor2go-connect' ); ?>
+										</div>
+										<div class="col-12 col-md-3">
+											<?php echo esc_html__( 'expertise', 'doctor2go-connect' ); ?>
+										</div>
+										<div class="col-12 col-md-3">
+											<?php echo esc_html__( 'position', 'doctor2go-connect' ); ?>
+										</div>
+										<div class="col-12 col-md-3">
+											<?php echo esc_html__( 'company', 'doctor2go-connect' ); ?>
+										</div>
 									</div>
-									<h3><?php echo esc_html__( 'Languages', 'doctor2go-connect' ); ?>  *</h3>
-									<select name="tax[doctor-language][]" multiple="multiple">
-										<?php
-										foreach ( $allLanguages as $language ) {
-											$selected = '';
-											if ( isset( $langArray[ $language->slug ] ) ) {
-												$selected = 'selected';
-											}
-											?>
-											<option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $language->slug ); ?>">
-												<?php
-												if ( get_option( 'd2g_pseudo_translations' ) == 1 ) {
-													echo ( $currLang == 'en' ) ? esc_html( $language->name ) : esc_html( get_term_meta( $language->term_id, 'rudr_text_' . $currLang, true ) );
-												} else {
-													echo esc_html( $language->name );
-												}
-												?>
-											</option>
+
+									<?php if ( isset( $doctor_meta['exps'] ) ) { ?>
+										<?php foreach ( $doctor_meta['exps'] as $exp ) { ?>
+											<div class="row exp_edu exp_<?php echo esc_html( $counter ); ?> align-items-start mb-2">
+												<?php if ( $counter > 0 ) { ?>
+													<div class="col-12 text-end mb-1">
+														<a class="remove_btn btn btn-sm btn-outline-danger btn-add" href="#">
+															<span class="icon-minus-circled"></span>
+														</a>
+													</div>
+												<?php } ?>
+
+												<div class="col-12 col-md-3">
+													<div class="row g-2">
+														<div class="col-6">
+															<input type="text" class="form-control" id="d2g_exp_edu_date" value="<?php echo esc_html( $exp['d2g_exp_edu_start_date'] ); ?>" tabindex="1" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_start_date]" placeholder="<?php echo esc_html__( 'start date', 'doctor2go-connect' ); ?>"/>
+														</div>
+														<div class="col-6">
+															<input type="text" class="form-control" id="d2g_exp_edu_study" value="<?php echo esc_html( $exp['d2g_exp_edu_end_date'] ); ?>" tabindex="1" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_end_date]" placeholder="<?php echo esc_html__( 'end date', 'doctor2go-connect' ); ?>"/>
+														</div>
+													</div>
+												</div>
+
+												<div class="col-12 col-md-3 mt-2 mt-md-0">
+													<input type="text" class="form-control" id="d2g_exp_edu_expertise" value="<?php echo esc_html( $exp['d2g_exp_edu_expertise'] ); ?>" tabindex="1" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_expertise]" placeholder="<?php echo esc_html__( 'exptertise', 'doctor2go-connect' ); ?>"/>
+												</div>
+
+												<div class="col-12 col-md-3 mt-2 mt-md-0">
+													<input type="text" class="form-control" id="d2g_exp_edu_title" value="<?php echo esc_html( $exp['d2g_exp_edu_title'] ); ?>" tabindex="1" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_title]" placeholder="<?php echo esc_html__( 'position', 'doctor2go-connect' ); ?>"/>
+												</div>
+
+												<div class="col-12 col-md-3 mt-2 mt-md-0">
+													<input type="text" class="form-control" id="d2g_exp_edu_org" value="<?php echo esc_html( $exp['d2g_exp_edu_org'] ); ?>" tabindex="1" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_org]" placeholder="<?php echo esc_html__( 'company', 'doctor2go-connect' ); ?>"/>
+												</div>
+											</div>
+											<?php ++$counter; ?>
 										<?php } ?>
-									</select>
-									<div class="extra margin-bottom-standard">
-										<label for="sub_title"><input name="meta[sub_title]" id="sub_title" type="checkbox" checked value="y"> <?php echo esc_html__( 'I offer subtitles (this is standard function with in webcamconsult)', 'doctor2go-connect' ); ?></label>
+									<?php } else { ?>
+										<div class="row exp_edu exp_0 mb-2">
+											<div class="col-12 col-md-3">
+												<div class="row g-2">
+													<div class="col-6">
+														<input type="text" class="form-control" id="d2g_exp_edu_date" tabindex="1" name="meta[exps][0][d2g_exp_edu_start_date]" placeholder="<?php echo esc_html__( 'start date', 'doctor2go-connect' ); ?>"/>
+													</div>
+													<div class="col-6">
+														<input type="text" class="form-control" id="d2g_exp_edu_study" tabindex="1" name="meta[exps][0][d2g_exp_edu_end_date]" placeholder="<?php echo esc_html__( 'end date', 'doctor2go-connect' ); ?>"/>
+													</div>
+												</div>
+											</div>
+
+											<div class="col-12 col-md-3 mt-2 mt-md-0">
+												<input type="text" class="form-control" id="d2g_exp_edu_expertise" tabindex="1" name="meta[exps][0][d2g_exp_edu_expertise]" placeholder="<?php echo esc_html__( 'exptertise', 'doctor2go-connect' ); ?>"/>
+											</div>
+
+											<div class="col-12 col-md-3 mt-2 mt-md-0">
+												<input type="text" class="form-control" id="d2g_exp_edu_title" tabindex="1" name="meta[exps][0][d2g_exp_edu_title]" placeholder="<?php echo esc_html__( 'title', 'doctor2go-connect' ); ?>"/>
+											</div>
+
+											<div class="col-12 col-md-3 mt-2 mt-md-0">
+												<input type="text" class="form-control" id="d2g_exp_edu_org" tabindex="1" name="meta[exps][0][d2g_exp_edu_org]" placeholder="<?php echo esc_html__( 'company', 'doctor2go-connect' ); ?>"/>
+											</div>
+										</div>
+									<?php } ?>
+								</div>
+
+								<div class="btn_wrapper mb-4">
+									<a class="btn btn-outline-primary wp-block-button__link add_exp invert" data-entry-id="<?php echo esc_html( $counter ) - 1; ?>" href="#">
+										<?php echo esc_html__( 'add an extra working experience', 'doctor2go-connect' ); ?>
+									</a>
+								</div>
+
+								<h3><?php echo esc_html__( 'publications', 'doctor2go-connect' ); ?></h3>
+
+								<div class="form-table pub_wrapper mb-4">
+									<?php $counter = 0; ?>
+
+									<div class="row exp_edu fw-bold mb-2">
+										<div class="col-12 col-md-2">
+											<?php echo esc_html__( 'title', 'doctor2go-connect' ); ?>
+										</div>
+										<div class="col-12 col-md-2">
+											<?php echo esc_html__( 'web link', 'doctor2go-connect' ); ?>
+										</div>
+										<div class="col-12 col-md-2">
+											<?php echo esc_html__( 'journal', 'doctor2go-connect' ); ?>
+										</div>
+										<div class="col-12 col-md-2">
+											<?php echo esc_html__( 'type of publication', 'doctor2go-connect' ); ?>
+										</div>
+										<div class="col-12 col-md-2">
+											<?php echo esc_html__( 'author', 'doctor2go-connect' ); ?>
+										</div>
+										<div class="col-12 col-md-2">
+											<?php echo esc_html__( 'publication Date', 'doctor2go-connect' ); ?>
+										</div>
 									</div>
-									<div id="specialty_wrapper">
-										<h3><?php echo esc_html__( 'Fields of study', 'doctor2go-connect' ); ?>  *</h3>
-										<select name="tax[doctor-specialty][]" multiple="multiple">
-											<?php
-											foreach ( $allSpecialities as $speciality ) {
-												$selected = '';
-												if ( isset( $specArray[ $speciality->slug ] ) ) {
-													$selected = 'selected';
-												}
-												?>
-												<option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $speciality->slug ); ?>">
-													<?php
-													if ( get_option( 'd2g_pseudo_translations' ) == 1 ) {
-														echo ( $currLang == 'en' ) ? esc_html( $speciality->name ) : esc_html( get_term_meta( $speciality->term_id, 'rudr_text_' . $currLang, true ) );
-													} else {
-														echo esc_html( $speciality->name );
-													}
-													?>
-												</option>
-											<?php } ?>
-										</select>
-									</div>
-									<h3><?php echo esc_html__( 'About your self', 'doctor2go-connect' ); ?></h3>
-									<p><strong><?php echo esc_html__( 'Please provide a brief biography highlighting your background and strengths for visitors.', 'doctor2go-connect' ); ?></strong></p>
-									<div class="form-table mb-l">
-										<?php wp_editor( $pubProfile->post_content, 'docdesc' ); ?>
-									</div>
+
+									<?php if ( isset( $doctor_meta['pubs'] ) ) { ?>
+										<?php foreach ( $doctor_meta['pubs'] as $exp ) { ?>
+											<div class="row exp_edu exp_<?php echo esc_html( $counter ); ?> align-items-start mb-2">
+												<?php if ( $counter > 0 ) { ?>
+													<div class="col-12 text-end mb-1">
+														<a class="remove_btn btn btn-sm btn-outline-danger btn-add" href="#">
+															<span class="icon-minus-circled"></span>
+														</a>
+													</div>
+												<?php } ?>
+
+												<div class="col-12 col-md-2">
+													<input type="text" class="form-control" id="d2g_pub_title" value="<?php echo esc_html( $exp['d2g_pub_title'] ); ?>" tabindex="1" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_title]" placeholder="<?php echo esc_html__( 'title', 'doctor2go-connect' ); ?>"/>
+												</div>
+
+												<div class="col-12 col-md-2 mt-2 mt-md-0">
+													<input type="text" class="form-control" id="d2g_pub_link" value="<?php echo esc_html( $exp['d2g_pub_link'] ); ?>" tabindex="1" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_link]" placeholder="<?php echo esc_html__( 'web link', 'doctor2go-connect' ); ?>"/>
+												</div>
+
+												<div class="col-12 col-md-2 mt-2 mt-md-0">
+													<input type="text" class="form-control" id="d2g_pub_journal" value="<?php echo esc_html( $exp['d2g_pub_journal'] ); ?>" tabindex="1" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_journal]" placeholder="<?php echo esc_html__( 'journal', 'doctor2go-connect' ); ?>"/>
+												</div>
+
+												<div class="col-12 col-md-2 mt-2 mt-md-0">
+													<input type="text" class="form-control" id="d2g_pub_type" value="<?php echo esc_html( $exp['d2g_pub_type'] ); ?>" tabindex="1" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_type]" placeholder="<?php echo esc_html__( 'type of publication', 'doctor2go-connect' ); ?>"/>
+												</div>
+
+												<div class="col-12 col-md-2 mt-2 mt-md-0">
+													<input type="text" class="form-control" id="d2g_pub_author" value="<?php echo esc_html( $exp['d2g_pub_author'] ); ?>" tabindex="1" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_author]" placeholder="<?php echo esc_html__( 'author', 'doctor2go-connect' ); ?>"/>
+												</div>
+
+												<div class="col-12 col-md-2 mt-2 mt-md-0">
+													<input type="text" class="form-control" id="d2g_pub_date" value="<?php echo esc_html( $exp['d2g_pub_date'] ); ?>" tabindex="1" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_date]" placeholder="<?php echo esc_html__( 'publication date', 'doctor2go-connect' ); ?>"/>
+												</div>
+											</div>
+											<?php ++$counter; ?>
+										<?php } ?>
+									<?php } else { ?>
+										<div class="row exp_edu exp_0 mb-2">
+											<div class="col-12 col-md-2">
+												<input type="text" class="form-control" id="d2g_pub_title" tabindex="1" name="meta[pubs][0][d2g_pub_title]" placeholder="<?php echo esc_html__( 'title', 'doctor2go-connect' ); ?>"/>
+											</div>
+
+											<div class="col-12 col-md-2 mt-2 mt-md-0">
+												<input type="text" class="form-control" id="d2g_pub_link" tabindex="1" name="meta[pubs][0][d2g_pub_link]" placeholder="<?php echo esc_html__( 'web link', 'doctor2go-connect' ); ?>"/>
+											</div>
+
+											<div class="col-12 col-md-2 mt-2 mt-md-0">
+												<input type="text" class="form-control" id="d2g_pub_journal" tabindex="1" name="meta[pubs][0][d2g_pub_journal]" placeholder="<?php echo esc_html__( 'journal', 'doctor2go-connect' ); ?>"/>
+											</div>
+
+											<div class="col-12 col-md-2 mt-2 mt-md-0">
+												<input type="text" class="form-control" id="d2g_pub_type" tabindex="1" name="meta[pubs][0][d2g_pub_type]" placeholder="<?php echo esc_html__( 'type of publication', 'doctor2go-connect' ); ?>"/>
+											</div>
+
+											<div class="col-12 col-md-2 mt-2 mt-md-0">
+												<input type="text" class="form-control" id="d2g_pub_author" tabindex="1" name="meta[pubs][0][d2g_pub_author]" placeholder="<?php echo esc_html__( 'author', 'doctor2go-connect' ); ?>"/>
+											</div>
+
+											<div class="col-12 col-md-2 mt-2 mt-md-0">
+												<input type="text" class="form-control" id="d2g_pub_date" tabindex="1" name="meta[pubs][0][d2g_pub_date]" placeholder="<?php echo esc_html__( 'publication Date', 'doctor2go-connect' ); ?>"/>
+											</div>
+										</div>
+									<?php } ?>
 								</div>
 							</div>
 						</div>
 
-						<div class="<?php echo ( $tab == 2 ) ? '' : 'simple_hide'; ?> pm_d2g_tab_content edu exp_edu">
-							<h3><?php echo esc_html__( 'education', 'doctor2go-connect' ); ?></h3>
-							<div class="form-table edu_wrapper">
-								<?php $counter = 0; ?>
-								<div class="row exp_edu">
-									<div class="col-sm-3">
-										<strong><?php echo esc_html__( 'start & end date', 'doctor2go-connect' ); ?></strong>
-									</div>
-									<div class="col-sm-3">
-										<strong><?php echo esc_html__( 'study area', 'doctor2go-connect' ); ?></strong>
-									</div>
-									<div class="col-sm-3">
-										<strong><?php echo esc_html__( 'degree', 'doctor2go-connect' ); ?></strong>
-									</div>
-									<div class="col-sm-3">
-										<strong><?php echo esc_html__( 'institution', 'doctor2go-connect' ); ?></strong>
-									</div>
-								</div>
-								<?php if ( isset( $doctor_meta['edus'] ) ) { ?>
-									<?php foreach ( $doctor_meta['edus'] as $edu ) { ?>
-										<div class="row exp_edu edu_<?php echo esc_html( $counter ); ?>">
-											<?php if ( $counter > 0 ) { ?>
-												<a class="remove_btn btn-add" href="#"><span class="icon-minus-circled"></span> </a>
-											<?php } ?>
-											<div class="col-sm-3">
-												<div class="row">
-													<div class="col-sm-6">
-														<input type="text" class="" id="d2g_exp_edu_date" value="<?php echo esc_html( $edu['d2g_exp_edu_start_date'] ); ?>" tabindex="1" size="40" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_start_date]" placeholder="<?php echo esc_html__( 'start date', 'doctor2go-connect' ); ?>"/>
-													</div>
-													<div class="col-sm-6">
-														<input type="text" class="" id="d2g_exp_edu_study" value="<?php echo esc_html( $edu['d2g_exp_edu_end_date'] ); ?>" tabindex="1" size="40" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_end_date]" placeholder="<?php echo esc_html__( 'end date', 'doctor2go-connect' ); ?>"/>		
-													</div>
-												</div>
-											</div>
-											<div class="col-sm-3">
-												<input type="text" class="" id="d2g_exp_edu_study" value="<?php echo esc_html( $edu['d2g_exp_edu_study'] ); ?>" tabindex="1" size="40" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_study]" placeholder="<?php echo esc_html__( 'study area', 'doctor2go-connect' ); ?>"/>
-											</div>
-											<div class="col-sm-3">
-												<input type="text" class="" id="d2g_exp_edu_title" value="<?php echo esc_html( $edu['d2g_exp_edu_title'] ); ?>" tabindex="1" size="40" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_title]" placeholder="<?php echo esc_html__( 'degree', 'doctor2go-connect' ); ?>"/>
-											</div>
-											<div class="col-sm-3">
-												<input type="text" class="" id="d2g_exp_edu_org" value="<?php echo esc_html( $edu['d2g_exp_edu_org'] ); ?>" tabindex="1" size="40" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_org]" placeholder="<?php echo esc_html__( 'institution', 'doctor2go-connect' ); ?>"/>
-											</div>
-										</div>
-										<?php ++$counter; ?>
-									<?php } ?>
-								<?php } else { ?>
-									<div class="row exp_edu edu_0">
-										<div class="col-sm-3">
-											<input style="width:50%; float:left" type="text" class="" id="d2g_exp_edu_date" tabindex="1" size="40" name="meta[edus][0][d2g_exp_edu_start_date]" placeholder="<?php echo esc_html__( 'start date', 'doctor2go-connect' ); ?>"/>
-											<input style="width:50%; display:inline-block" type="text" class="" id="d2g_exp_edu_study" tabindex="1" size="40" name="meta[edus][0][d2g_exp_edu_end_date]" placeholder="<?php echo esc_html__( 'end date', 'doctor2go-connect' ); ?>"/>
-										</div>
-										<div class="col-sm-3">
-											<input type="text" class="" id="d2g_exp_edu_study" tabindex="1" size="40" name="meta[edus][0][d2g_exp_edu_study]" placeholder="<?php echo esc_html__( 'study area', 'doctor2go-connect' ); ?>"/>
-										</div>
-										<div class="col-sm-3">
-											<input type="text" class="" id="d2g_exp_edu_title" tabindex="1" size="40" name="meta[edus][0][d2g_exp_edu_title]" placeholder="<?php echo esc_html__( 'degree', 'doctor2go-connect' ); ?>"/>
-										</div>
-										<div class="col-sm-3">
-											<input type="text" class="" id="d2g_exp_edu_org" tabindex="1" size="40" name="meta[edus][0][d2g_exp_edu_org]" placeholder="<?php echo esc_html__( 'institution', 'doctor2go-connect' ); ?>"/>
-										</div>
-									</div>
-								<?php } ?>
-							</div>
-							<div class="btn_wrapper mb-l"><a class="btn btn-default wp-block-button__link add_edu invert" data-entry-id="<?php echo esc_html( $counter ) - 1; ?>" href="#"><?php echo esc_html__( 'add an extra education', 'doctor2go-connect' ); ?></a></div>
-							<h3><?php echo esc_html__( 'working experience', 'doctor2go-connect' ); ?></h3>
-							<div class="form-table exp_wrapper">
-								<?php $counter = 0; ?>
-								<div class="row exp_edu">
-									<div class="col-sm-3">
-										<strong><?php echo esc_html__( 'start & end date', 'doctor2go-connect' ); ?></strong>
-									</div>
-									<div class="col-sm-3">
-										<strong><?php echo esc_html__( 'expertise', 'doctor2go-connect' ); ?></strong>
-									</div>
-									<div class="col-sm-3">
-										<strong><?php echo esc_html__( 'position', 'doctor2go-connect' ); ?></strong>
-									</div>
-									<div class="col-sm-3">
-										<strong><?php echo esc_html__( 'company', 'doctor2go-connect' ); ?></strong>
-									</div>
-								</div>
-								<?php if ( isset( $doctor_meta['exps'] ) ) { ?>
-									<?php foreach ( $doctor_meta['exps'] as $exp ) { ?>
-										<div class="row exp_edu exp_<?php echo esc_html( $counter ); ?>">
-											<?php if ( $counter > 0 ) { ?>
-												<a class="remove_btn btn-add" href="#"><span class="icon-minus-circled"></span> </a>
-											<?php } ?>
-											<div class="col-sm-3">
-												<div class="row">
-													<div class="col-sm-6">
-														<input type="text" class="" id="d2g_exp_edu_date" value="<?php echo esc_html( $exp['d2g_exp_edu_start_date'] ); ?>" tabindex="1" size="40" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_start_date]" placeholder="<?php echo esc_html__( 'start date', 'doctor2go-connect' ); ?>"/>
-													</div>
-													<div class="col-sm-6">
-														<input type="text" class="" id="d2g_exp_edu_study" value="<?php echo esc_html( $exp['d2g_exp_edu_end_date'] ); ?>" tabindex="1" size="40" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_end_date]" placeholder="<?php echo esc_html__( 'end date', 'doctor2go-connect' ); ?>"/>
-													</div>
-												</div>
-											</div>
-											<div class="col-sm-3">
-												<input type="text" class="" id="d2g_exp_edu_expertise" value="<?php echo esc_html( $exp['d2g_exp_edu_expertise'] ); ?>" tabindex="1" size="40" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_expertise]" placeholder="<?php echo esc_html__( 'exptertise', 'doctor2go-connect' ); ?>"/>
-											</div>
-											<div class="col-sm-3">
-												<input type="text" class="" id="d2g_exp_edu_title" value="<?php echo esc_html( $exp['d2g_exp_edu_title'] ); ?>" tabindex="1" size="40" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_title]" placeholder="<?php echo esc_html__( 'position', 'doctor2go-connect' ); ?>"/>
-											</div>
-											<div class="col-sm-3">
-												<input type="text" class="" id="d2g_exp_edu_org" value="<?php echo esc_html( $exp['d2g_exp_edu_org'] ); ?>" tabindex="1" size="40" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_org]" placeholder="<?php echo esc_html__( 'company', 'doctor2go-connect' ); ?>"/>
-											</div>
-										</div>
-										<?php ++$counter; ?>
-									<?php } ?>
-								<?php } else { ?>
-									<div class="row exp_edu exp_0">
-										<div class="col-sm-3">
-											<div class="row">
-												<div class="col-sm-6">
-													<input type="text" class="" id="d2g_exp_edu_date" tabindex="1" size="40" name="meta[exps][0][d2g_exp_edu_start_date]" placeholder="<?php echo esc_html__( 'start date', 'doctor2go-connect' ); ?>"/>
-												</div>
-												<div class="col-sm-6">
-													<input type="text" class="" id="d2g_exp_edu_study" tabindex="1" size="40" name="meta[exps][0][d2g_exp_edu_end_date]" placeholder="<?php echo esc_html__( 'end date', 'doctor2go-connect' ); ?>"/>
-												</div>
-											</div>
-										</div>
-										<div class="col-sm-3">
-											<input type="text" class="" id="d2g_exp_edu_expertise" tabindex="1" size="40" name="meta[exps][0][d2g_exp_edu_expertise]" placeholder="<?php echo esc_html__( 'exptertise', 'doctor2go-connect' ); ?>"/>
-										</div>
-										<div class="col-sm-3">
-											<input type="text" class="" id="d2g_exp_edu_title"  tabindex="1" size="40" name="meta[exps][0][d2g_exp_edu_title]" placeholder="<?php echo esc_html__( 'title', 'doctor2go-connect' ); ?>"/>
-										</div>
-										<div class="col-sm-3">
-											<input type="text" class="" id="d2g_exp_edu_org"  tabindex="1" size="40" name="meta[exps][0][d2g_exp_edu_org]" placeholder="<?php echo esc_html__( 'company', 'doctor2go-connect' ); ?>"/>
-										</div>
-									</div>
-								<?php } ?>
-							</div>
-							<div class="btn_wrapper mb-l"><a class="btn btn-default wp-block-button__link add_exp invert" data-entry-id="<?php echo esc_html( $counter ) - 1; ?>" href="#"><?php echo esc_html__( 'add an extra working experience', 'doctor2go-connect' ); ?></a></div>
-							<h3><?php echo esc_html__( 'publications', 'doctor2go-connect' ); ?></h3>
-							<div class="form-table pub_wrapper">
-								<?php $counter = 0; ?>
-								<div class="row exp_edu">
-									<div class="col-sm-2">
-										<strong><?php echo esc_html__( 'title', 'doctor2go-connect' ); ?></strong>
-									</div>
-									<div class="col-sm-2">
-										<strong><?php echo esc_html__( 'web link', 'doctor2go-connect' ); ?></strong>
-									</div>
-									<div class="col-sm-2">
-										<strong><?php echo esc_html__( 'journal', 'doctor2go-connect' ); ?></strong>
-									</div>
-									<div class="col-sm-2">
-										<strong><?php echo esc_html__( 'type of publication', 'doctor2go-connect' ); ?></strong>
-									</div>
-									<div class="col-sm-2">
-										<strong><?php echo esc_html__( 'author', 'doctor2go-connect' ); ?></strong>
-									</div>
-									<div class="col-sm-2">
-										<strong><?php echo esc_html__( 'publication Date', 'doctor2go-connect' ); ?></strong>
-									</div>
-								</div>
-								<?php if ( isset( $doctor_meta['pubs'] ) ) { ?>
-									<?php foreach ( $doctor_meta['pubs'] as $exp ) { ?>
-										<div class="row exp_edu exp_<?php echo esc_html( $counter ); ?>">
-											<?php if ( $counter > 0 ) { ?>
-												<a class="remove_btn btn-add" href="#"><span class="icon-minus-circled"></span> </a>
-											<?php } ?>
-											<div class="col-sm-2">
-												<input type="text" class="" id="d2g_pub_title" value="<?php echo esc_html( $exp['d2g_pub_title'] ); ?>" tabindex="1" size="40" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_title]" placeholder="<?php echo esc_html__( 'title', 'doctor2go-connect' ); ?>"/>
-											</div>
-											<div class="col-sm-2">
-												<input type="text" class="" id="d2g_pub_link" value="<?php echo esc_html( $exp['d2g_pub_link'] ); ?>" tabindex="1" size="40" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_link]" placeholder="<?php echo esc_html__( 'web link', 'doctor2go-connect' ); ?>"/>
-											</div>
-											<div class="col-sm-2">
-												<input type="text" class="" id="d2g_pub_journal" value="<?php echo esc_html( $exp['d2g_pub_journal'] ); ?>" tabindex="1" size="40" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_journal]" placeholder="<?php echo esc_html__( 'journal', 'doctor2go-connect' ); ?>"/>
-											</div>
-											<div class="col-sm-2">
-												<input type="text" class="" id="d2g_pub_type" value="<?php echo esc_html( $exp['d2g_pub_type'] ); ?>" tabindex="1" size="40" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_type]" placeholder="<?php echo esc_html__( 'type of publication', 'doctor2go-connect' ); ?>"/>
-											</div>
-											<div class="col-sm-2">
-												<input type="text" class="" id="d2g_pub_author" value="<?php echo esc_html( $exp['d2g_pub_author'] ); ?>" tabindex="1" size="40" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_author]" placeholder="<?php echo esc_html__( 'author', 'doctor2go-connect' ); ?>"/>
-											</div>
-											<div class="col-sm-2">
-												<input type="text" class="" id="d2g_pub_date" value="<?php echo esc_html( $exp['d2g_pub_date'] ); ?>" tabindex="1" size="40" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_date]" placeholder="<?php echo esc_html__( 'publication date', 'doctor2go-connect' ); ?>"/>
-											</div>
-										</div>
-										<?php ++$counter; ?>
-									<?php } ?>
-								<?php } else { ?>
-									<div class="row exp_edu exp_0">
-										<div class="col-sm-2">
-											<input type="text" class="" id="d2g_pub_title"  tabindex="1" size="40" name="meta[pubs][0][d2g_pub_title]" placeholder="<?php echo esc_html__( 'title', 'doctor2go-connect' ); ?>"/>
-										</div>
-										<div class="col-sm-2">
-											<input type="text" class="" id="d2g_pub_link"  tabindex="1" size="40" name="meta[pubs][0][d2g_pub_link]" placeholder="<?php echo esc_html__( 'web link', 'doctor2go-connect' ); ?>"/>
-										</div>
-										<div class="col-sm-2">
-											<input type="text" class="" id="d2g_pub_journal" tabindex="1" size="40" name="meta[pubs][0][d2g_pub_journal]" placeholder="<?php echo esc_html__( 'journal', 'doctor2go-connect' ); ?>"/>
-										</div>
-										<div class="col-sm-2">
-												<input type="text" class="" id="d2g_pub_type" tabindex="1" size="40" name="meta[pubs][0][d2g_pub_type]" placeholder="<?php echo esc_html__( 'type of publication', 'doctor2go-connect' ); ?>"/>
-											</div>
-											<div class="col-sm-2">
-												<input type="text" class="" id="d2g_pub_author" tabindex="1" size="40" name="meta[pubs][0][d2g_pub_author]" placeholder="<?php echo esc_html__( 'author', 'doctor2go-connect' ); ?>"/>
-											</div>
-										<div class="col-sm-2">
-											<input type="text" class="" id="d2g_pub_date"  tabindex="1" size="40" name="meta[pubs][0][d2g_pub_date]" placeholder="<?php echo esc_html__( 'publication Date', 'doctor2go-connect' ); ?>"/>
-										</div>
-									</div>
-								<?php } ?>
-							</div>
-							<div class="btn_wrapper mb-l"><a class="btn btn-default wp-block-button__link add_pub invert" data-entry-id="<?php echo esc_html( $counter ) - 1; ?>" href="#"><?php echo esc_html__( 'add an extra publication', 'doctor2go-connect' ); ?></a></div>
-						</div>
 						<input type="hidden" name="doc_action" value="doc_update" />
 						<input type="hidden" name="d2g_lang" value="<?php echo esc_html( $currLang ); ?>" />
 						<input type="hidden" name="update_id" value="<?php echo esc_html( $pubProfileID ); ?>" />
 						<input type="hidden" id="post_status" name="post_status" value="<?php echo esc_html( $profileStatus ); ?>" />
-						<div class="row margin-bottom-big">
-							<h3 class="simple_hide check_url"><?php esc_html_e( 'We are checking your data, this might take a while', 'doctor2go-connect' ); ?></h3>
-							<div class="col-sm-12">
-								<p id="submitwrap">
+
+						<div class="row mb-4">
+							<div class="col-12">
+								<h3 class="simple_hide check_url mb-3">
+									<?php esc_html_e( 'We are checking your data, this might take a while', 'doctor2go-connect' ); ?>
+								</h3>
+								<p id="submitwrap" class="d-flex flex-wrap gap-2 justify-content-center">
 									<?php if ( $profileStatus == 'draft' ) { ?>
-										<button class="btn btn-default wp-block-button__link save_doctor button" tabindex="6" id="save"><?php esc_html_e( 'save as draft', 'doctor2go-connect' ); ?></button>
-										<button class="btn btn-default wp-block-button__link publish_doctor button" tabindex="6" id="submit"><?php esc_html_e( 'publish profile', 'doctor2go-connect' ); ?></button>
-										
+										<button class="btn btn-primary wp-block-button__link save_doctor" tabindex="6" id="save">
+											<?php esc_html_e( 'save as draft', 'doctor2go-connect' ); ?>
+										</button>
+										<button class="btn btn-success wp-block-button__link publish_doctor" tabindex="6" id="submit">
+											<?php esc_html_e( 'publish profile', 'doctor2go-connect' ); ?>
+										</button>
 									<?php } else { ?>
-										<button class="btn btn-default wp-block-button__link save_doctor button" tabindex="6" id="save"><?php esc_html_e( 'save profile', 'doctor2go-connect' ); ?></button>
-										<button class="btn btn-default wp-block-button__link unpublish_doctor button" tabindex="6" id="unpublish"><?php esc_html_e( 'unpublish profile', 'doctor2go-connect' ); ?></button>   
+										<button class="btn btn-primary wp-block-button__link save_doctor" tabindex="6" id="save">
+											<?php esc_html_e( 'save profile', 'doctor2go-connect' ); ?>
+										</button>
+										<button class="btn btn-warning wp-block-button__link unpublish_doctor" tabindex="6" id="unpublish">
+											<?php esc_html_e( 'unpublish profile', 'doctor2go-connect' ); ?>
+										</button>
 									<?php } ?>
-									<a target="_blank" class="btn-default btn button wp-block-button__link" href="/?post_type=d2g_doctor&p=<?php echo esc_html( $pubProfileID ); ?>&preview=true"><?php esc_html_e( 'preview profile', 'doctor2go-connect' ); ?></a>
+									<a target="_blank" class="btn btn-outline-primary wp-block-button__link" href="/?post_type=d2g_doctor&p=<?php echo esc_html( $pubProfileID ); ?>&preview=true">
+										<?php esc_html_e( 'preview profile', 'doctor2go-connect' ); ?>
+									</a>
 								</p>
 								<?php wp_nonce_field( 'doc-update' ); ?>
 							</div>
 						</div>
 					</form>
-				
 				</div>
 			</div>
 		</div>
+
 		<?php
 		/* Get the buffered content into a var */
 		$sc = ob_get_contents();
@@ -663,6 +878,30 @@ class D2gConnect_Shortcodes {
 		$doctorLanguage = isset( $_GET['doctor-language'] ) ? sanitize_text_field( wp_unslash( $_GET['doctor-language'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
 		$country        = isset( $_GET['country-origin'] ) ? sanitize_text_field( wp_unslash( $_GET['country-origin'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
 		$intake         = isset( $_GET['intake'] ) ? sanitize_text_field( wp_unslash( $_GET['intake'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
+		$consult_type 	= isset( $_GET['consult_type'] ) ? sanitize_text_field( wp_unslash( $_GET['consult_type'] ) ) : '';
+
+		// prepare meta_query if you already have one
+		if ( empty( $args['meta_query'] ) ) {
+			$args['meta_query'] = array();
+		}
+
+		// email consult: written_con_price not empty
+		if ( 'email' === $consult_type ) {
+			$args['meta_query'][] = array(
+				'key'     => 'written_con_price',
+				'value'   => '',
+				'compare' => '!=',
+			);
+		}
+
+		// video consult: d2g_availibility_check = 1
+		if ( 'video' === $consult_type ) {
+			$args['meta_query'][] = array(
+				'key'     => 'd2g_availibility_check',
+				'value'   => '1',
+				'compare' => '=',
+			);
+		}
 
 		$checker = 0;
 
@@ -731,7 +970,7 @@ class D2gConnect_Shortcodes {
 				</div>
 			</div>
 			<?php if ( $maxPage > 1 ) { ?>
-				<div class="center load_more_btn_wrapper"><a class="more_doctors button btn btn-default wp-block-button__link" data-page="2"><?php echo esc_html__( 'load more', 'doctor2go-connect' ); ?></a></div>
+				<div class="center load_more_btn_wrapper"><a class="more_doctors button btn btn-primary wp-block-button__link" data-page="2"><?php echo esc_html__( 'load more', 'doctor2go-connect' ); ?></a></div>
 			<?php } ?>
 			<input id="cssClass" type="hidden" value="<?php echo esc_html( $cssClass ); ?>">
 			<input id="posts_per_page" type="hidden" value="<?php echo esc_html( $a['posts_per_page'] ); ?>">
@@ -791,6 +1030,7 @@ class D2gConnect_Shortcodes {
 			),
 			$atts
 		);
+		
 		$currLang = explode( '_', get_locale() )[0];
 		$d2gAdmin = new D2G_doc_user_profile();
 		$pageDoc  = $d2gAdmin::d2g_page_url( $currLang, 'doctors', false );
@@ -851,13 +1091,7 @@ class D2gConnect_Shortcodes {
 		}
 		$countries = get_terms( $argsCountry );
 
-		// search params from url
-		$args = array(
-			'post_type'      => 'd2g_doctor',
-			'posts_per_page' => -1,
-			'post_status'    => 'publish',
-		);
-
+		
 		$args = array(
 			'post_type'      => 'd2g_doctor',
 			'posts_per_page' => -1,
@@ -870,36 +1104,62 @@ class D2gConnect_Shortcodes {
 			'post_status'    => 'publish',
 		);
 
-		$specialty      = isset( $_GET['doctor-specialty'] ) ? sanitize_text_field( wp_unslash( $_GET['doctor-specialty'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
-		$doctorLanguage = isset( $_GET['doctor-language'] ) ? sanitize_text_field( wp_unslash( $_GET['doctor-language'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
-		$country        = isset( $_GET['country-origin'] ) ? sanitize_text_field( wp_unslash( $_GET['country-origin'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
-		$intake         = isset( $_GET['intake'] ) ? sanitize_text_field( wp_unslash( $_GET['intake'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
+		$doctor_specialty      	= isset( $_GET['doctor-specialty'] ) ? sanitize_text_field( wp_unslash( $_GET['doctor-specialty'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
+		$doctor_language 		= isset( $_GET['doctor-language'] ) ? sanitize_text_field( wp_unslash( $_GET['doctor-language'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
+		$country_origin        	= isset( $_GET['country-origin'] ) ? sanitize_text_field( wp_unslash( $_GET['country-origin'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
+		$consult_type 			= isset( $_GET['consult_type'] ) ? sanitize_text_field( wp_unslash( $_GET['consult_type'] ) ) : '';
+		$post_id_filter   = isset( $_GET['post_id'] ) ? absint( wp_unslash( $_GET['post_id'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET filters only (view/search), no state change.
+
+		echo $consult_type;
+
+		// prepare meta_query if you already have one
+		if ( empty( $args['meta_query'] ) ) {
+			$args['meta_query'] = array();
+		}
+
+		// email consult: written_con_price not empty
+		if ( 'email' === $consult_type ) {
+			$args['meta_query'][] = array(
+				'key'     => 'written_con_price',
+				'value'   => '',
+				'compare' => '!=',
+			);
+		}
+
+		// video consult: d2g_availibility_check = 1
+		if ( 'video' === $consult_type ) {
+			$args['meta_query'][] = array(
+				'key'     => 'd2g_availibility_check',
+				'value'   => '1',
+				'compare' => '=',
+			);
+		}
 
 		$checker = 0;
 
-		if ( $specialty != '' && $specialty != '0' ) {
+		if ( $doctor_specialty != '' && $doctor_specialty != '0' ) {
 			$args['tax_query'][] = array(
 				'taxonomy' => 'doctor-specialty',
 				'field'    => 'term_id',
-				'terms'    => array( (int) $specialty ),
+				'terms'    => array( (int) $doctor_specialty ),
 			);
 			++$checker;
 		}
 
-		if ( $doctorLanguage != '' && $doctorLanguage != '0' ) {
+		if ( $doctor_language != '' && $doctor_language != '0' ) {
 			$args['tax_query'][] = array(
 				'taxonomy' => 'doctor-language',
 				'field'    => 'term_id',
-				'terms'    => array( (int) $doctorLanguage ),
+				'terms'    => array( (int) $doctor_language ),
 			);
 			++$checker;
 		}
 
-		if ( $country != '' && $country != '0' ) {
+		if ( $country_origin != '' && $country_origin != '0' ) {
 			$args['tax_query'][] = array(
 				'taxonomy' => 'country-origin',
 				'field'    => 'term_id',
-				'terms'    => array( (int) $country ),
+				'terms'    => array( (int) $country_origin ),
 			);
 			++$checker;
 		}
@@ -908,14 +1168,6 @@ class D2gConnect_Shortcodes {
 			$args['tax_query']['relation'] = 'AND';
 		}
 
-		if ( $intake == 1 ) {
-			$args['meta_query'] = array(
-				array(
-					'key'   => 'd2g_intake_call',
-					'value' => $intake,
-				),
-			);
-		}
 
 		$post_id = isset( $_GET['post_id'] ) ? absint( wp_unslash( $_GET['post_id'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Single post view by ID.
 		if ( $post_id && $post_id != 0 ) {
@@ -925,12 +1177,10 @@ class D2gConnect_Shortcodes {
 			);
 		}
 
+
 		$doctor_query  = new WP_Query( $args );
 		$doctor_query2 = new WP_Query( $args2 );
 		$count         = $doctor_query->found_posts;
-
-		$current_theme = wp_get_theme();
-		$theme_id      = $current_theme->get( 'Template' );
 
 		ob_start();
 		?>
@@ -943,14 +1193,14 @@ class D2gConnect_Shortcodes {
 		$country_origin   = isset( $_GET['country-origin'] ) ? absint( wp_unslash( $_GET['country-origin'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET filters only (view/search), no state change.
 		$doctor_language  = isset( $_GET['doctor-language'] ) ? absint( wp_unslash( $_GET['doctor-language'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET filters only (view/search), no state change.
 		$post_id_filter   = isset( $_GET['post_id'] ) ? absint( wp_unslash( $_GET['post_id'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET filters only (view/search), no state change.
-		$intake_filter    = isset( $_GET['intake'] ) ? absint( wp_unslash( $_GET['intake'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET filters only (view/search), no state change.
+	
 		?>
 
 		<form method="GET" action="<?php echo esc_url( $pageDoc ); ?>">
 			<h3 class="opener special">Filters <span class="icon-angle-down"></span></h3>
 			<div class="doctor_filters_outer">
 				<ul id="doctor_filters" class="<?php echo esc_attr( $a['ul_class'] ); ?>">
-					<li class="filter_wrap">
+					<li class="filter_wrap flex-fill">
 						<select name="doctor-specialty" id="specialty_filter" class="doctor_filter">
 							<option value="0"><?php echo esc_html__( 'all specialties', 'doctor2go-connect' ); ?></option>
 							<?php foreach ( $specialties as $specialty ) { ?>
@@ -968,8 +1218,7 @@ class D2gConnect_Shortcodes {
 							<?php } ?>
 						</select>
 					</li>
-
-					<li class="filter_wrap">
+					<li class="filter_wrap flex-fill">
 						<select name="country-origin" id="country_filter" class="doctor_filter">
 							<option value="0"><?php echo esc_html__( 'all countries', 'doctor2go-connect' ); ?></option>
 							<?php foreach ( $countries as $country ) { ?>
@@ -987,8 +1236,7 @@ class D2gConnect_Shortcodes {
 							<?php } ?>
 						</select>
 					</li>
-
-					<li class="filter_wrap">
+					<li class="filter_wrap flex-fill">
 						<select name="doctor-language" id="language_filter" class="doctor_filter">
 							<option value="0"><?php echo esc_html__( 'all languages', 'doctor2go-connect' ); ?></option>
 							<?php foreach ( $languages as $language ) { ?>
@@ -1004,6 +1252,18 @@ class D2gConnect_Shortcodes {
 									?>
 								</option>
 							<?php } ?>
+						</select>
+					</li>
+
+					<li class="filter_wrap flex-fill">
+						<select name="consult_type" id="consult_type" class="doctor_filter">
+							<option value=""><?php echo esc_html__( 'all consult types', 'doctor2go-connect' ); ?></option>
+							<option value="email" <?php selected( isset( $_GET['consult_type'] ) ? $_GET['consult_type'] : '', 'email' ); ?>>
+								<?php echo esc_html__( 'email consult', 'doctor2go-connect' ); ?>
+							</option>
+							<option value="video" <?php selected( isset( $_GET['consult_type'] ) ? $_GET['consult_type'] : '', 'video' ); ?>>
+								<?php echo esc_html__( 'video consult', 'doctor2go-connect' ); ?>
+							</option>
 						</select>
 					</li>
 
@@ -1024,7 +1284,7 @@ class D2gConnect_Shortcodes {
 					</li>
 					-->
 
-					<li class="filter_wrap">
+					<li class="filter_wrap flex-fill">
 						<select name="post_id" id="post_id" class="doctor_filter">
 							<option value="0"><?php echo esc_html__( 'Doctor name', 'doctor2go-connect' ); ?></option>
 							<?php
@@ -1037,21 +1297,13 @@ class D2gConnect_Shortcodes {
 							<?php } ?>
 						</select>
 					</li>
+					
+					
 
-					<li class="filter_check_wrapper simple_hide">
-						<label>
-							<input <?php checked( $intake_filter, 1 ); ?> class="doctor_filter" type="checkbox" id="intake" value="1">
-							<?php echo esc_html__( 'Free intake interview', 'doctor2go-connect' ); ?>
-						</label>
-					</li>
-
-					<!--<li class="filter_check_wrapper">
-						<label><input class="doctor_filter" type="checkbox" id="sub_title" value="1"> <?php echo esc_html__( 'Subtitles for translation', 'doctor2go-connect' ); ?></label>
-					</li>-->
 
 					<?php if ( $a['stand_alone'] == 'false' ) { ?>
 						<li>
-							<a class="btn btn-default" href="<?php echo esc_url( $pageDoc ); ?>"><?php esc_html_e( 'Reset search', 'doctor2go-connect' ); ?></a>
+							<a class="btn btn-primary" href="<?php echo esc_url( $pageDoc ); ?>"><?php esc_html_e( 'Reset search', 'doctor2go-connect' ); ?></a>
 						</li>
 					<?php } ?>
 				</ul>
@@ -1060,7 +1312,7 @@ class D2gConnect_Shortcodes {
 
 				<?php if ( $a['stand_alone'] == 'true' ) { ?>
 					<input id="search_submit" type="submit" class="search_submit" value="<?php echo esc_attr__( 'Search', 'doctor2go-connect' ); ?>">
-					<div class="error" id="search_error"></div>
+					<div class="alert alert-danger" id="search_error"></div>
 					<div class="loader simple_hide"></div>
 				<?php } ?>
 			</div>
@@ -1140,7 +1392,7 @@ class D2gConnect_Shortcodes {
 				}
 				?>
 			</div>
-			<a class="button btn btn-default wp-block-button__link" href="<?php echo esc_html( get_the_permalink() ); ?>"><?php echo esc_html__( 'view doctor', 'doctor2go-connect' ); ?></a>
+			<a class="button btn btn-primary wp-block-button__link" href="<?php echo esc_html( get_the_permalink() ); ?>"><?php echo esc_html__( 'view doctor', 'doctor2go-connect' ); ?></a>
 		</article>
 		<?php
 		/* Restore original Post Data */
@@ -1172,7 +1424,7 @@ class D2gConnect_Shortcodes {
 					
 					<?php
 					if ( $a['doc_id'] != '' ) {
-						show_doctor_locations_by_id( $a['doc_id'], false );
+						d2g_show_doctor_locations_by_id( $a['doc_id'], false );
 					} else {
 						echo esc_html__( 'You must pass a doctor profile ID', 'doctor2go-connect' );
 					}
@@ -1211,7 +1463,46 @@ class D2gConnect_Shortcodes {
 				<div class="inner_wrapper">
 					<?php
 					if ( $a['doc_id'] != '' ) {
-						show_booking_calendar( $post, true );
+						d2g_show_booking_calendar( $post, true );
+					} else {
+						echo esc_html__( 'You must pass a doctor profile ID', 'doctor2go-connect' );
+					}
+					?>
+				</div>
+			</div>
+		</div>
+		<?php
+		/* Restore original Post Data */
+		wp_reset_postdata();
+
+		$sc = ob_get_contents();
+		ob_end_clean();
+		return $sc;
+	}
+
+
+	/*
+	* shortcode to show the doctor info box`
+	*/
+	public function d2g_single_doctor_consultancy_tabs( $atts ) {
+
+		$a    = shortcode_atts(
+			array(
+				'doc_id'        => '',
+				'wrapper_class' => '',
+			),
+			$atts
+		);
+		$post = get_post( $a['doc_id'] );
+
+		ob_start();
+		?>
+		<div class="<?php echo esc_html( $a['wrapper_class'] ); ?>">
+			<div class="type-d2g_doctor tab_wrapper">
+				<div class="inner_wrapper">
+					<?php
+					if ( $a['doc_id'] != '' ) {
+						d2g_show_consultancy_tabs( $post, true );
 					} else {
 						echo esc_html__( 'You must pass a doctor profile ID', 'doctor2go-connect' );
 					}
@@ -1278,15 +1569,8 @@ class D2gConnect_Shortcodes {
 			wp_nonce_field( 'd2g_login_action', 'd2g_login_nonce' ); // [web:189]
 			?>
 
-			<p>
-				<label for="user_login"><?php esc_html_e( 'Email', 'doctor2go-connect' ); ?></label>
-				<input type="text" name="log" id="user_login" class="input" required>
-			</p>
-
-			<p>
-				<label for="user_pass"><?php esc_html_e( 'Password', 'doctor2go-connect' ); ?></label>
-				<input type="password" name="pwd" id="user_pass" class="input" required>
-			</p>
+			<p><label for="user_login"><?php esc_html_e( 'Email', 'doctor2go-connect' ); ?></label><input type="text" name="log" id="user_login" class="input" required></p>
+			<p><label for="user_pass"><?php esc_html_e( 'Password', 'doctor2go-connect' ); ?></label><input type="password" name="pwd" id="user_pass" class="input" required></p>
 
 			<!-- reCAPTCHA Widget -->
 			<?php if ( get_option( 'd2g_recaptcha_site_key' ) ) { ?>
@@ -1370,32 +1654,19 @@ class D2gConnect_Shortcodes {
 		?>
 
 		<div class="d2g_form_wrapper">
-			<form id="lostpasswordform"
-				action="<?php echo esc_url( site_url( 'wp-login.php?action=lostpassword', 'login_post' ) ); ?>"
-				method="post">
-
+			<form id="lostpasswordform" action="<?php echo esc_url( site_url( 'wp-login.php?action=lostpassword', 'login_post' ) ); ?>" method="post">
 				<?php wp_nonce_field( 'd2g_lost_password_action', 'd2g_lost_password_nonce' ); ?>
-
 				<p>
 					<label for="user_login">
 						<?php esc_html_e( 'Username or Email Address', 'doctor2go-connect' ); ?>
 					</label>
 					<input type="text" name="user_login" id="user_login" required>
 				</p>
-
-				<p>
-					<input type="submit"
-						name="wp-submit"
-						id="wp-submit"
-						value="<?php esc_attr_e( 'Get New Password', 'doctor2go-connect' ); ?>">
-				</p>
-
+				<p><input type="submit" name="wp-submit" id="wp-submit" value="<?php esc_attr_e( 'Get New Password', 'doctor2go-connect' ); ?>"></p>
 				<input type="hidden" name="redirect_to" value="<?php echo esc_html( $redirect ); ?>">
 			</form>
 		</div>
-
 		<?php
-
 		return ob_get_clean();
 	}
 
@@ -1479,7 +1750,6 @@ class D2gConnect_Shortcodes {
 				<!-- Keep these so POST has the same values; avoids relying on GET on submit -->
 				<input type="hidden" name="login" value="<?php echo esc_attr( $login ); ?>">
 				<input type="hidden" name="key" value="<?php echo esc_attr( $reset_key ); ?>">
-
 				<p>
 					<label for="new_password"><?php echo esc_html__( 'New Password', 'doctor2go-connect' ); ?></label>
 					<input type="password" name="new_password" id="new_password" required>
@@ -1524,29 +1794,14 @@ class D2gConnect_Shortcodes {
 				$errors[] = __( 'Security check failed. Please refresh the page.', 'doctor2go-connect' );
 			} else {
 
-				$email = isset( $_POST['email'] )
-					? sanitize_email( wp_unslash( $_POST['email'] ) )
-					: '';
+				$email = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+				$username = ! empty( $email ) && is_email( $email ) ? explode( '@', $email )[0] . time() : '';
+				$password = isset( $_POST['password'] ) ? sanitize_text_field( wp_unslash( $_POST['password'] ) ) : '';
+				$confirm_password = isset( $_POST['confirm_password'] ) ? sanitize_text_field( wp_unslash( $_POST['confirm_password'] ) ) : '';
+				$recaptcha_response = isset( $_POST['g-recaptcha-response'] ) ? sanitize_text_field( wp_unslash( $_POST['g-recaptcha-response'] ) ) : '';
 
-				$username = '';
-				if ( ! empty( $email ) && is_email( $email ) ) {
-					$username = explode( '@', $email )[0] . time();
-				}
-
-				$password = isset( $_POST['password'] )
-					? sanitize_text_field( wp_unslash( $_POST['password'] ) )
-					: '';
-
-				$confirm_password = isset( $_POST['confirm_password'] )
-					? sanitize_text_field( wp_unslash( $_POST['confirm_password'] ) )
-					: '';
-
-				$recaptcha_response = isset( $_POST['g-recaptcha-response'] )
-					? sanitize_text_field( wp_unslash( $_POST['g-recaptcha-response'] ) )
-					: '';
 
 				if ( get_option( 'd2g_recaptcha_site_key' ) != '' ) {
-
 					$recaptcha_verify = wp_remote_post(
 						'https://www.google.com/recaptcha/api/siteverify',
 						array(
@@ -1606,26 +1861,14 @@ class D2gConnect_Shortcodes {
 
 						if ( isset( $meta ) && is_array( $meta ) ) {
 							foreach ( $meta as $key => $value ) {
-								update_user_meta(
-									$user_id,
-									sanitize_key( $key ),
-									sanitize_text_field( $value )
-								);
+								update_user_meta($user_id, sanitize_key( $key ), sanitize_text_field( $value ));
 							}
 						}
 
 						d2g_user_email(
 							'registration',
 							$email,
-							(
-								isset( $_POST['meta']['first_name'] )
-									? sanitize_text_field( wp_unslash( $_POST['meta']['first_name'] ) )
-									: ''
-							) . ' ' . (
-								isset( $_POST['meta']['last_name'] )
-									? sanitize_text_field( wp_unslash( $_POST['meta']['last_name'] ) )
-									: ''
-							),
+							(isset( $_POST['meta']['first_name'] )? sanitize_text_field( wp_unslash( $_POST['meta']['first_name'] ) ): '') . ' ' . (isset( $_POST['meta']['last_name'] )? sanitize_text_field( wp_unslash( $_POST['meta']['last_name'] ) ): ''),
 							get_option( 'd2g_sender_address' )
 						);
 
@@ -1633,30 +1876,22 @@ class D2gConnect_Shortcodes {
 						$d2gAdmin = new D2G_doc_user_profile();
 						$pageData = $d2gAdmin::d2g_page_url( $currLang, 'patient_dashboard', true );
 
-						programmatic_login( $username );
+						d2g_programmatic_login( $username );
 
 						if ( isset( $_GET['redirect_to'] ) ) {
 
 							// Unslash once
 							$redirect_to = wp_unslash( $_GET['redirect_to'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-
 							// Validate URL (ensure it's safe)
 							$redirect_to = wp_validate_redirect( $redirect_to, home_url() );
-
 							// Append parameter safely
 							$redirect_to = add_query_arg( 'signup', 'completed', $redirect_to );
-
 							wp_safe_redirect( $redirect_to );
 							exit;
 
 						} else {
 
-							$redirect_url = add_query_arg(
-								'signup',
-								'completed',
-								$pageData['url']
-							);
-
+							$redirect_url = add_query_arg('signup', 'completed', $pageData['url']);
 							wp_safe_redirect( $redirect_url );
 							exit;
 						}
@@ -1734,7 +1969,7 @@ class D2gConnect_Shortcodes {
 					<?php echo do_shortcode( '[altcha]' ); ?>
 				<?php endif; ?>
 
-				<?php confirmation_checkboxes(); ?>
+				<?php d2g_confirmation_checkboxes(); ?>
 
 				<p>
 					<input type="hidden" name="custom_registration" value="1">
@@ -1757,14 +1992,12 @@ class D2gConnect_Shortcodes {
 			)
 		);
 
-		
-
 		return ob_get_clean();
 	}
 
 
 
-	//
+	
 	// shortcode patient dashbaord
 	public function d2g_patient_dashbaord() {
 		$d2gAdmin = new D2G_doc_user_profile();
@@ -1773,37 +2006,35 @@ class D2gConnect_Shortcodes {
 			'account_settings' => 'account.jpg',
 			'appointments'     => 'appointments.jpg',
 			'liked_doctors'    => 'heart.jpg',
-			'questionnaires'   => 'questionnaire.jpg',
+			'secure_patient_portal'   => 'patient.jpg',
 
 		);
 
 		// patient / user data
 		$currUser  = wp_get_current_user();
 		$user_meta = get_user_meta( $currUser->data->ID );
-
-		$tokensCheck     = $user_meta['tokens'][0];
 		$tokensAssArray  = unserialize( $user_meta['tokens'][0] );
 		$tokensSimpleArr = array();
 		foreach ( $tokensAssArray as $token ) {
 			$tokensSimpleArr[] = $token;
 		}
 
-		$client_info = json_decode( $this->get_wcc_client_info( $tokensSimpleArr ) );
-
 		ob_start();
 
 		?>
-		<div class="alignwide p_dashboard">
+		<div class="alignwide p_dashboard mt-5">
 			<div class="row">
 				<?php
 				foreach ( $pages as $page => $image ) {
 					$pageData = $d2gAdmin::d2g_page_url( $currLang, $page, true );
 					?>
 					<div class="col-sm-3">
-						<a href="<?php echo esc_url( $pageData['url'] ); ?>">
-							<img src="<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'images/' . $image ); ?>">
-							<h3><?php echo esc_html( $pageData['title'] ); ?></h3>
-						</a>
+						<div class="card p-5 text-center h-100">
+							<a href="<?php echo esc_url( $pageData['url'] ); ?>">
+								<img src="<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'images/' . $image ); ?>">
+								<h3><?php echo esc_html( $pageData['title'] ); ?></h3>
+							</a>
+						</div>
 					</div>
 				<?php } ?>
 			</div>
@@ -1819,208 +2050,8 @@ class D2gConnect_Shortcodes {
 		return $sc;
 	}
 
-	//
-	// shortcode patient dashbaord
-	public function d2g_questionnaires() {
 
-		// patient / user data
-		$currUser  = wp_get_current_user();
-		$user_meta = get_user_meta( $currUser->data->ID );
-
-		$tokensCheck     = $user_meta['tokens'][0];
-		$tokensAssArray  = unserialize( $user_meta['tokens'][0] );
-		$tokensSimpleArr = array();
-		foreach ( $tokensAssArray as $token ) {
-			$tokensSimpleArr[] = $token;
-		}
-
-		$client_infos     = json_decode( $this->get_wcc_client_info( $tokensSimpleArr ) );
-		$written_consults = array();
-		$simple_consults  = array();
-
-		// sort answer sets in written and simple consults based on apt_is_written and assoiated to a token (client has multiple tokens when he has multiple practitioners from different organizations)
-		foreach ( $client_infos as $info ) {
-			if ( is_array( $info->answer_set_info ) ) {
-				$answer_sets[ $info->authentication_token ] = $info->answer_set_info;
-				foreach ( $info->answer_set_info as $answer_set ) {
-					if ( $answer_set->apt_is_written == true ) {
-						$written_consults[ $info->authentication_token ][] = $answer_set;
-					} else {
-						$simple_consults[ $info->authentication_token ][] = $answer_set;
-					}
-				}
-			}
-		}
-
-		$d2gAdmin = new D2G_doc_user_profile();
-		$currLang = explode( '_', get_locale() )[0];
-		$pageData = $d2gAdmin::d2g_page_url( $currLang, 'questionnaires', true );
-
-		ob_start();
-
-		?>
-		<div class="alignwide">
-		<div class="row with_right_sidebar">
-			<div class="col-sm-8">
-				<?php if ( isset( $_GET['url'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?> 
-					<h2>
-						<?php
-						// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-						$title = isset( $_GET['title'] ) ? sanitize_text_field( wp_unslash( $_GET['title'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-						echo esc_html( urldecode( $title ) );
-						?>
-					</h2>
-					<h4 style="color: #d20a10"><?php echo esc_html__( 'Please fill in the following questionnaire. Your answers will be stored in a highly secure database.', 'doctor2go-connect' ); ?></h4>
-					<?php
-					// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-					$url = isset( $_GET['url'] ) ? esc_url_raw( wp_unslash( $_GET['url'] ) ) : '';
-					?>
-					<iframe src="<?php echo esc_url( urldecode( $url ) ); ?>" style="width:100%; border:none; height:1000px"></iframe>
-				<?php } else { ?>
-					<p class="error"><strong><?php esc_html_e( 'No questionnaire was selected, click on one of the questionnaires in your questionnaires list.', 'doctor2go-connect' ); ?></strong></p>
-				<?php } ?>
-			</div>
-			<div class="col-sm-4">
-				<h2><?php echo esc_html__( 'Your questionnaires', 'doctor2go-connect' ); ?></h2>
-				<h3 class="simple"><?php echo esc_html__( 'Online and pysical consults', 'doctor2go-connect' ); ?></h3>
-				<h3 class="opener"><?php echo esc_html__( 'Online and pysical consults', 'doctor2go-connect' ); ?> <span class="icon-down-open"></span></h3>
-				<?php if ( count( $simple_consults ) > 0 ) { ?> 
-					<ul class="mb-xl  questionnaires_list"  id="questionnaires" style="list-style: none; padding:0;">
-						<?php
-						foreach ( $simple_consults as $client_token => $answer_sets ) {
-							foreach ( $answer_sets as $answer_set ) {
-								$date     = new DateTime( $answer_set->apt_date );
-								$timezone = $user_meta['p_timezone'][0] ?: get_user_timezone();
-								$date->setTimezone( new DateTimeZone( $timezone ) );
-
-								$title = urlencode( esc_html( $answer_set->name ) . ' ' . esc_html__( 'for your appointment on', 'doctor2go-connect' ) . ' ' . $date->format( 'd/m/Y' ) . ' ' . esc_html__( ' at ', 'doctor2go-connect' ) . ' ' . $date->format( 'H:i' ) . '  (' . $timezone . ') ' . esc_html__( ' with ', 'doctor2go-connect' ) . ' ' . esc_html( $answer_set->apt_user ) );
-								?>
-								<li>
-									<a href="<?php esc_url( $pageData['url'] ); ?>?url=<?php echo urlencode( get_option( 'waiting_room_url' ) . 'answer_set/' . $answer_set->id . '?client_auth=' . $client_token ); ?>&title=<?php echo esc_html( $title ); ?>">
-										<span style="font-size:16px" class="demo-icon icon-right-open"></span>
-										<ul>
-											<li><strong><?php echo esc_html__( 'Consult preparation:', 'doctor2go-connect' ); ?></strong> <?php echo esc_html( $answer_set->name ); ?></li>
-											<li><strong><?php echo esc_html__( 'Date:', 'doctor2go-connect' ); ?></strong> <?php echo esc_html( $date->format( 'd/m/Y' ) ) . ' ' . esc_html__( ' at ', 'doctor2go-connect' ) . ' ' . esc_html( $date->format( 'H:i' ) ) . '  (' . esc_html( $timezone ) . ') '; ?></li>
-											<li><strong><?php echo esc_html__( 'Practitioner:', 'doctor2go-connect' ); ?></strong> <?php echo esc_html( $answer_set->apt_user ); ?></li>
-										</ul>
-									</a>
-								</li>
-							<?php } ?>
-						<?php } ?>
-					</ul>
-					<?php
-				} else {
-					echo '<p class="error">' . esc_html__( 'There are no questionnaires to be filled in.', 'doctor2go-connect' ) . '</p>';
-				}
-				?>
-				<h3 class="simple"><?php echo esc_html__( 'Written consults', 'doctor2go-connect' ); ?></h3>
-				<h3 class="opener"><?php echo esc_html__( 'Written consults', 'doctor2go-connect' ); ?>  <span class="icon-down-open"></span></h3>
-				<?php if ( count( $written_consults ) > 0 ) { ?> 
-					<ul class="mb-xl questionnaires_list"  id="questionnaire_written" style="list-style: none; padding:0;">
-						<?php
-						foreach ( $written_consults as $client_token => $answer_sets ) {
-							foreach ( $answer_sets as $answer_set ) {
-								$baseUrl  = get_option( 'wcc_base_url' );
-								$date     = new DateTime( $answer_set->apt_date );
-								$timezone = $user_meta['p_timezone'][0] ?: get_user_timezone();
-								$date->setTimezone( new DateTimeZone( $timezone ) );
-								$title = urlencode( __( 'Written consult:', 'doctor2go-connect' ) . ' ' . esc_html( $answer_set->name ) . ' ' . esc_html__( 'started on', 'doctor2go-connect' ) . ' ' . $date->format( 'd/m/Y' ) . ' ' . esc_html__( ' at ', 'doctor2go-connect' ) . ' ' . $date->format( 'H:i' ) . '  (' . $timezone . ') ' . esc_html__( ' with ', 'doctor2go-connect' ) . ' ' . esc_html( $answer_set->apt_user ) );
-
-								?>
-									<?php
-									if ( $answer_set->apt_use_payment == true ) {
-										if ( $answer_set->apt_was_paid == true ) {
-											$payment_info  = __( 'done', 'doctor2go-connect' );
-											$payment_check = 'success';
-
-											$link = $pageData['url'] . '?url=' . urlencode( get_option( 'waiting_room_url' ) . 'answer_set/' . $answer_set->id . '?client_auth=' . $client_token ) . '&title=' . $title;
-
-										} else {
-											$payment_info  = __( 'outstanding', 'doctor2go-connect' );
-											$payment_check = 'error';
-
-											$questionnaire_url = urlencode( 'https://app.' . $baseUrl . '/written_appointment/' . $answer_set->apt_token );
-											$payment_url_full  = 'https://app.' . $baseUrl . '/payment/' . $answer_set->apt_token;
-											$redirect_url      = urlencode( $pageData['url'] . '?url=' . $questionnaire_url . '&title=' . $title . '&skip_cookie_wall=true' );
-											$link              = $payment_url_full . '?redirect_url=' . $redirect_url;
-										}
-									} else {
-										$payment_info = __( 'free consult', 'doctor2go-connect' );
-										$link         = $pageData['url'] . '?url=' . urlencode( get_option( 'waiting_room_url' ) . 'answer_set/' . $answer_set->id . '?client_auth=' . $client_token ) . '&title=' . $title;
-									}
-
-									?>
-									<li>
-										<a href="<?php echo esc_url( $link ); ?>">
-											<span style="font-size:16px" class="demo-icon icon-right-open"></span>
-											<ul>
-												<li><strong><?php echo esc_html__( 'Written consult:', 'doctor2go-connect' ); ?></strong> <?php echo esc_html( $answer_set->name ); ?></li>
-												<li><strong><?php echo esc_html__( 'Started on:', 'doctor2go-connect' ); ?></strong> <?php echo esc_html( $date->format( 'd/m/Y' ) ) . ' ' . esc_html__( ' at ', 'doctor2go-connect' ) . ' ' . esc_html( $date->format( 'H:i' ) ) . '  (' . esc_html( $timezone ) . ') '; ?></li>
-												<li><strong><?php echo esc_html__( 'Practitioner:', 'doctor2go-connect' ); ?></strong> <?php echo esc_html( $answer_set->apt_user ); ?></li>
-												<li class="<?php echo esc_url( $payment_check ); ?>"><strong><?php echo esc_html__( 'Payment:', 'doctor2go-connect' ); ?></strong> <?php echo esc_html( $payment_info ); ?></li>
-											</ul>
-										</a>
-									</li>
-							<?php } ?>
-						<?php } ?>
-					</ul>
-					<?php
-				} else {
-					echo '<p class="error">' . esc_html__( 'You have not started any written consults.', 'doctor2go-connect' ) . '</p>';
-				}
-				?>
-				
-			</div>
-		</div>
-		</div>
-		<?php
-		/* Get the buffered content into a var */
-		$sc = ob_get_contents();
-
-		/* Clean buffer */
-		ob_end_clean();
-
-		/* Return the content as usual */
-		return $sc;
-	}
-
-
-	//
-	// shortcode patient dashbaord
-	public function d2g_public_questionnaire() {
-
-		ob_start();
-
-		?>
-		<div class="alignwide">
-			<div class="row">
-				<div class="col-sm-12">
-					<?php
-					// Properly unslash and ignore PCP warnings on this line
-					$iframe_url = isset( $_GET['url'] ) ? wp_unslash( $_GET['url'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-
-					if ( $iframe_url ) {
-						?>
-						<iframe src="<?php echo esc_url( $iframe_url ); ?>" style="width:100%; border:none; height:1500px"></iframe>
-					<?php } else { ?>
-						<p class="error"><strong><?php esc_html_e( 'No questionnaire was found.', 'doctor2go-connect' ); ?></strong></p>
-					<?php } ?>
-				</div>
-			</div>
-		</div>
-		<?php
-		/* Get the buffered content into a var */
-		$sc = ob_get_contents();
-
-		/* Clean buffer */
-		ob_end_clean();
-
-		/* Return the content as usual */
-		return $sc;
-	}
-
-	//
-	// shortcode patient dashbaord
+	// shortcode patient menu
 	public function d2g_patient_menu() {
 		$d2gAdmin = new D2G_doc_user_profile();
 		$currLang = explode( '_', get_locale() )[0];
@@ -2028,7 +2059,6 @@ class D2gConnect_Shortcodes {
 
 			'appointments'          => 'appointments-small.jpg',
 			'liked_doctors'         => 'heart-small.jpg',
-			'questionnaires'        => 'questionnaire-small.jpg',
 			'secure_patient_portal' => 'patient-small.jpg',
 			'account_settings'      => 'account-small.jpg',
 		);
@@ -2036,12 +2066,12 @@ class D2gConnect_Shortcodes {
 		ob_start();
 
 		?>
-		<ul class="user_menu">
+		<ul class="user_menu row justify-content-between w-100 mt-5 mb-5">
 			<?php
 			foreach ( $pages as $page => $image ) {
 				$pageData = $d2gAdmin::d2g_page_url( $currLang, $page, true );
 				?>
-				<li>
+				<li class="col-sm-3">
 					<a href="<?php echo esc_html( $pageData['url'] ); ?>">
 						<img style="width:50px; display:inline-block; margin-right:10px;" src="<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'images/' . $image ); ?>">
 						<span><?php echo esc_html( $pageData['title'] ); ?></span>
@@ -2092,7 +2122,7 @@ class D2gConnect_Shortcodes {
 					<?php
 					if ( $appointments == null ) {
 						?>
-						<h3 class="error"><?php echo esc_html__( 'Something went wrong while retrieving your appointments. Please try again later, or refresh the page.', 'doctor2go-connect' ); ?></h3>
+						<h3 class="alert alert-danger"><?php echo esc_html__( 'Something went wrong while retrieving your appointments. Please try again later, or refresh the page.', 'doctor2go-connect' ); ?></h3>
 						<?php
 						$sc = ob_get_contents();
 						ob_end_clean();
@@ -2100,127 +2130,27 @@ class D2gConnect_Shortcodes {
 					} elseif ( is_array( $appointments ) ) {
 						if ( count( $appointments ) < 1 ) {
 							?>
-							<h3 class="error"><?php echo esc_html__( 'You don\’t have any upcoming consultations. Book a new appointment when you\'re ready.', 'doctor2go-connect' ); ?></h3>
+							<h3 class="alert alert-danger"><?php echo esc_html__( 'You don\’t have any upcoming consultations. Book a new appointment when you\'re ready.', 'doctor2go-connect' ); ?></h3>
 						<?php } else { ?>
 							<?php
 							foreach ( $appointments as $appointment ) {
 								// get doc info for appointment
-								$docObj       = $this->get_doctor_by_wcc_id( $appointment->user_id )[0];
+								$docObj       = $this->d2g_get_doctor_by_wcc_id( $appointment->user_id )[0];
 								$doc_email    = get_post_meta( $docObj->ID, 'd2g_main_email', true );
 								$orgKey       = get_post_meta( $docObj->ID, 'organisation_key', true );
 								$client_token = $tokensAssArray[ $orgKey ];
 
-								// doctor image
-								$feat_pic = wp_get_attachment_image_src( get_post_thumbnail_id( $docObj->ID ), 'thumbnail' )[0];
-								if ( $feat_pic == '' ) {
-									if ( get_option( 'd2g_placeholder' ) != '' ) {
-										$feat_pic = wp_get_attachment_image_src( get_option( 'd2g_placeholder' ), 'thumbnail' )[0];
-									} else {
-										$feat_pic = plugin_dir_url( __FILE__ ) . 'images/doctor-placeholder.jpg';
-
-									}
-								}
-								// doctor specialties
-								$specialties   = get_the_terms( $docObj->ID, 'specialty' );
-								$specialty_str = '';
-								if ( $specialties !== false ) {
-									foreach ( $specialties as $specialty ) {
-										$specialty_str .= '<span>' . $specialty->name . '</span>';
-									}
-								}
-
-								// appointment date
-								$date = new DateTime( $appointment->date );
-
-								$date_now = new DateTime();
-								// Calculate difference in seconds
-								$diffInSeconds = $date->getTimestamp() - $date_now->getTimestamp();
-
-								$date->setTimezone( new DateTimeZone( $timezone ) );
-
-								// create the links
-								// html link for questionnaires
-								$questionnaire     = '';
-								$questionnaireLink = '<div class="questionnaire"></div>';
-								if ( isset( $appointment->answer_set_id ) && $appointment->answer_set_id != null ) {
-									$pageData = $d2gAdmin::d2g_page_url( $currLang, 'questionnaires', true );
+								if ( isset( $appointment->answer_set_id ) ) {
 									// url to load in iframe
-									$questionnaireURL  = urlencode( get_option( 'waiting_room_url' ) . 'answer_set/' . $appointment->answer_set_id . '?client_auth=' . $client_token );
-									$title             = urlencode( esc_html__( 'Questionnaire for your appointment on', 'doctor2go-connect' ) . ' ' . $date->format( 'd/m/Y' ) . ' ' . esc_html__( ' at ', 'doctor2go-connect' ) . ' ' . $date->format( 'H:i' ) . '  (' . $timezone . ') ' . esc_html__( ' with ', 'doctor2go-connect' ) . ' ' . esc_html( $docObj->post_title ) );
-									$questionnaireLink = '<div class="questionnaire">
-										<a class="btn btn-default" href="' . $pageData['url'] . '?url=' . $questionnaireURL . '&title=' . $title . '"><img decoding="async" src="' . plugin_dir_url( __FILE__ ) . 'images/questionnaire-small.jpg">' . esc_html__( ' fill in the questionnnaire ', 'doctor2go-connect' ) . '</a>
-									</div>';
-
-								}
-								// other links
-								$consultLink = '<a target="_blank" href="' . get_option( 'waiting_room_url' ) . 'wachtkamer/' . $appointment->token . '?locale=' . explode( '_', get_locale() )[0] . '"><span class=" icon-videocam-outline"></span> ' . esc_html__( 'go to consultation', 'doctor2go-connect' ) . '</a>';
-								$docLink     = '<a href="/doctor/' . $docObj->post_name . '"><span class=" icon-eye"></span> ' . esc_html__( 'view doctor page', 'doctor2go-connect' ) . '</a>';
-								// cancellation button or locked message
-								if ( $diffInSeconds <= 0 || $diffInSeconds > 86400 ) {
-									$delBtn = '<a class="del_app" href="#" data-app-id="' . $appointment->_id . '" data-user-id="' . $appointment->user_id . '"><span class=" icon-cancel-circled"></span> ' . esc_html__( 'cancel appointment', 'doctor2go-connect' ) . '</a>';
-								} else {
-									$delBtn = '<span class="icon-lock"></span> ' . esc_html__( 'cancellation locked (less than 24h before appointment)', 'doctor2go-connect' );
-								}
-								$cancelBtn = '<a class="prep_cancellation_email scroll_to" href="#cancellation_form_wrapper" data-app-date="' . $date->format( 'd/m/Y' ) . ' ' . esc_html__( ' at ', 'doctor2go-connect' ) . ' ' . $date->format( 'H:i' ) . '  (' . $timezone . ')" data-app-link="' . get_option( 'waiting_room_url' ) . 'admin/appointments/' . $appointment->_id . '" data-doc-email="' . $doc_email . '" data-doc-name="' . $docObj->post_title . '"><span class=" icon-cancel-circled"></span> ' . esc_html__( 'request cancellation', 'doctor2go-connect' ) . '</a>';
-
-								if ( $appointment->payment_has_paid == true ) {
-									$payment_info = '<div class="paid"><strong>' . esc_html__( 'paid', 'doctor2go-connect' ) . '</strong></div>';
-								} else {
-									$pageData    = $d2gAdmin::d2g_page_url( $currLang, 'appointments', true );
-									$redirectURL = '&redirect_url=' . urlencode( $pageData['url'] . '?app=' ) . $appointment->_id;
-
-									$payment_info = '<div class="payment_needed error">
-									<div class=""><strong>' . esc_html__( 'A payment is required for this appointment. You can either do it upofront or when entering the waiting room', 'doctor2go-connect' ) . '</strong></div>
-									<div class="btn_wrap"><a class="btn btn-default payment_btn" target="_blank" href="' . get_option( 'waiting_room_url' ) . 'payment/' . $appointment->_id . '?locale=' . explode( '_', get_locale() )[0] . $redirectURL . '">' . esc_html__( 'pay now', 'doctor2go-connect' ) . '</a></div>
-									</div>';
+									$questionnaireURLSimple = get_option( 'waiting_room_url' ) . 'answer_set/' . $appointment->answer_set_id . '?client_auth=' . $client_token;
 								}
 
-								// create the appointment rows and save in array to sort them later
-								if ( $appointment->location_to_go != null ) {
-									$structuredAppointments[ $appointment->date ] = '<div class="outer_app_wrapper card mb-3"><div id="app-' . $appointment->_id . '" class="app_row">
-										<div class="feat_pic"><img src="' . $feat_pic . '"></div>
-										<div class="content_outer">
-											<div class="content">
-												<p class="consult_type"><strong>' . esc_html__( 'Physical consultation', 'doctor2go-connect' ) . '</strong></p>
-												<h3>' . $date->format( 'd/m/Y' ) . ' ' . esc_html__( ' at ', 'doctor2go-connect' ) . ' ' . $date->format( 'H:i' ) . '  <span class="small">(' . $timezone . ')</span></h3>
-												<a href="' . get_the_permalink( $docObj->ID ) . '"><h4>' . $docObj->post_title . '</h4></a>
-												<p class="address">' . $appointment->location_to_go->location_name . ': ' . $appointment->location_to_go->location_full_adress_url . '</p>
-											</div> 
-											<div class="btn_wrap">' . $docLink . ' ' . $delBtn . '</div>
-										</div>' . $questionnaireLink . '</div></div>';
-								} else {
-									$structuredAppointments[ $appointment->date ] = '<div class="outer_app_wrapper card mb-3">' . $payment_info . '<div id="app-' . $appointment->_id . '" class="app_row">
-										<div class="feat_pic"><img src="' . $feat_pic . '"></div>
-										<div class="content_outer">
-											<div class="content">
-												<p class="consult_type"><strong>' . esc_html__( 'Online consultation', 'doctor2go-connect' ) . '</strong></p>
-												<h3>' . $date->format( 'd/m/Y' ) . ' ' . esc_html__( ' at ', 'doctor2go-connect' ) . ' ' . $date->format( 'H:i' ) . '  <span class="small">(' . $timezone . ')</span></h3>
-												<a href="' . get_the_permalink( $docObj->ID ) . '"><h4>' . $docObj->post_title . '</h4></a>
-											</div> 
-											<div class="btn_wrap">' . $consultLink . ' ' . $docLink . '<br>' . $delBtn . '</div>
-										</div>' . $questionnaireLink . '</div></div>';
-								}
+								$d2g_single_appointment = d2g_single_appointment($appointment, $docObj, $client_token, $timezone, $currLang, $d2gAdmin, true);
 
-								// Properly get 'app' from GET with unslash and isset check
-								// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-								$app_id = isset( $_GET['app'] ) ? sanitize_text_field( wp_unslash( $_GET['app'] ) ) : '';
-								if ( $appointment->_id == $app_id ) {
-									?>
-									<div class="walkin_form_wrapper mb-xl">
-										<?php
-										echo '<h2>' . esc_html__( 'You have successfully booked following appointment.', 'doctor2go-connect' ) . '</h2>';
-										if ( $questionnaire != '' ) {
-											echo '<h4 class="error">' . esc_html__( 'Please note: A questionnaire needs to be completed.', 'doctor2go-connect' ) . '</h4>';
-										}
-										echo wp_kses_post( $structuredAppointments[ $appointment->date ] );
-										?>
-									</div>
-								<?php } ?>
-								<?php
+								$structuredAppointments += $d2g_single_appointment;
 							}
 							// display the appointments with sorting on date
 							?>
-							<h2><?php echo esc_html__( 'Your appointments', 'doctor2go-connect' ); ?></h2>
 							<?php
 							ksort( $structuredAppointments );
 							foreach ( $structuredAppointments as $appointment ) {
@@ -2229,70 +2159,11 @@ class D2gConnect_Shortcodes {
 							<?php } ?>
 						<?php } ?>
 					<?php } else { ?>
-						<h3 class="error"><?php echo esc_html__( 'Something went wrong while retrieving your appointments. Please try again later, or refresh the page.', 'doctor2go-connect' ); ?></h3>
+						<h3 class="alert alert-danger"><?php echo esc_html__( 'Something went wrong while retrieving your appointments. Please try again later, or refresh the page.', 'doctor2go-connect' ); ?></h3>
 					<?php } ?>
 				</div>
 			</div>
-		<?php } ?>
-		
-		<div id="bg_loader" class="simple_hide"></div>
-		<div id="loader" class="simple_hide"><?php echo esc_html__( 'Your request is beeing handled.', 'doctor2go-connect' ); ?></div>
-		<div id="return1" class="simple_hide mb-m center"></div>
-		<div id="return2" class="simple_hide mb-m center"></div>
-		<div id="cancellation_form_wrapper" class="simple_hide list_app walkin_form_wrapper mb-xl">
-			<h2><?php echo esc_html__( 'Cancellation request', 'doctor2go-connect' ); ?></h2>
-			
-			<form id="cancellation_form" method="post" action="">
-				<div class="row mb-m">
-					<div class="col-sm-6">
-						<div>
-							<label for="client_name"><?php echo esc_html__( 'Patient name', 'doctor2go-connect' ); ?> *</label>
-							<input class="required" type="text" value="<?php echo esc_html( $user_meta['first_name'][0] ); ?> <?php echo esc_html( $user_meta['last_name'][0] ); ?>" name="client_name" id="client_name">
-						</div>
-					</div>
-					<div class="col-sm-6">
-						<div>
-							<label for="client_email"><?php echo esc_html__( 'Patient email', 'doctor2go-connect' ); ?> *</label>
-							<input class="required" type="text" value="<?php echo esc_html( $currUser->data->user_email ); ?>" name="client_email" id="client_email">
-						</div>
-					</div>
-					<div class="col-sm-6">
-						<div>
-							<label for="doc_name"><?php echo esc_html__( 'Doctor name', 'doctor2go-connect' ); ?> *</label>
-							<input readonly class="required" type="text" value="" name="doc_name" id="doc_name">
-						</div>
-					</div>
-					<div class="col-sm-6">
-						<div>
-							<label for="doc_email"><?php echo esc_html__( 'Doctor email', 'doctor2go-connect' ); ?> *</label>
-							<input readonly class="required" type="text" value="" name="client_email" id="doc_email">
-						</div>
-					</div>
-					<div class="col-sm-12">
-						<div>
-							<label for="app_date"><?php echo esc_html__( 'Appointment date and time', 'doctor2go-connect' ); ?> *</label>
-							<input readonly class="required" type="text" value="" name="doc_name" id="app_date">
-						</div>
-					</div>
-					<div class="col-sm-12 simple_hide">
-						<div>
-							<label for="app_link"><?php echo esc_html__( 'Appointment link for doctor', 'doctor2go-connect' ); ?> *</label>
-							<input readonly class="required" type="text" value="" name="doc_name" id="app_link">
-						</div>
-					</div>
-				</div>
-				<div class="row mb-m">
-					<div class="col-sm-12">
-						<div>
-						<label for="app_date"><?php echo esc_html__( 'Comment (optional)', 'doctor2go-connect' ); ?></label>
-							<textarea id="comment" name="comment"></textarea>
-						</div>
-					</div>
-				</div>
-				<a href="#" class="btn btn-default wp-block-button__link request_cancellation button" id="request_cancellation"><?php esc_html_e( 'send', 'doctor2go-connect' ); ?></a>
-			</form>
-		</div>
-		<?php
+		<?php } 
 
 		$sc = ob_get_contents();
 		ob_end_clean();
@@ -2316,17 +2187,17 @@ class D2gConnect_Shortcodes {
 		$structuredAppointments = array();
 
 		ob_start();
-
-		if ( $client_token ) {
-			?>
-			<p><?php echo esc_html__( 'You haven\'t booked any consultations yet. When you do, the details will appear in this section.', 'doctor2go-connect' ); ?></p>
+		?>
+		
+		<?php if ( !$client_token ) { ?>
+			<p class="alert alert-danger mb-5 mt-5"><?php echo esc_html__( 'Something went wrong, as it seems you do nbot have a valid client, therefor we can not show you your appointment. Please contact the website administrator.', 'doctor2go-connect' ); ?></p>
 		<?php } else { ?>
-			<div class="row">
-				<div class="list_app left single_app_wrapper col-sm-8">
+			
+				<div class="list_app left single_app_wrapper">
 					<?php
 					if ( $appointments == null ) {
 						?>
-						<h3 class="error"><?php echo esc_html__( 'Something went wrong while retrieving your appointments. Please try again later, or refresh the page.', 'doctor2go-connect' ); ?></h3>
+						<h3 class="alert alert-danger"><?php echo esc_html__( 'Something went wrong while retrieving your appointments. Please try again later, or refresh the page.', 'doctor2go-connect' ); ?></h3>
 						<?php
 						$sc = ob_get_contents();
 						ob_end_clean();
@@ -2334,154 +2205,43 @@ class D2gConnect_Shortcodes {
 					} elseif ( is_array( $appointments ) ) {
 						if ( count( $appointments ) < 1 ) {
 							?>
-							<h3 class="error"><?php echo esc_html__( 'You don\’t have any upcoming consultations. Book a new appointment when you\'re ready.', 'doctor2go-connect' ); ?></h3>
+							<h3 class="alert alert-danger"><?php echo esc_html__( 'You don\’t have any upcoming consultations. Book a new appointment when you\'re ready.', 'doctor2go-connect' ); ?></h3>
 						<?php } else { ?>
-							<?php
-							foreach ( $appointments as $appointment ) {
-								// get doc info for appointment
-								$docObj = $this->get_doctor_by_wcc_id( $appointment->user_id )[0];
+							<?php foreach ( $appointments as $appointment ) {
+								$docObj = $this->d2g_get_doctor_by_wcc_id( $appointment->user_id )[0];
+								
+								$d2g_single_appointment = d2g_single_appointment($appointment, $docObj, $client_token, $timezone, $currLang, $d2gAdmin, false);
+								$structuredAppointments += $d2g_single_appointment;
 
-								// doctor image
-								$feat_pic = wp_get_attachment_image_src( get_post_thumbnail_id( $docObj->ID ), 'thumbnail' )[0];
-								if ( $feat_pic == '' ) {
-									if ( get_option( 'd2g_placeholder' ) != '' ) {
-										$feat_pic = wp_get_attachment_image_src( get_option( 'd2g_placeholder' ), 'thumbnail' )[0];
-									} else {
-										$feat_pic = plugin_dir_url( __FILE__ ) . 'images/doctor-placeholder.jpg';
-
-									}
-								}
-								// doctor specialties
-								$specialties   = get_the_terms( $docObj->ID, 'specialty' );
-								$specialty_str = '';
-								if ( $specialties !== false ) {
-									foreach ( $specialties as $specialty ) {
-										$specialty_str .= '<span>' . $specialty->name . '</span>';
-									}
-								}
-
-								// appointment date
-								$date     = new DateTime( $appointment->date );
-								$date_now = new DateTime();
-								// Calculate difference in seconds
-								$diffInSeconds = $date->getTimestamp() - $date_now->getTimestamp();
-
-								$date->setTimezone( new DateTimeZone( $timezone ) );
-
-								// create the links
-								// html link for questionnaires
-								$delBtn                 = '';
-								$questionnaireURLSimple = '';
 								if ( isset( $appointment->answer_set_id ) ) {
-
-									$pageData = $d2gAdmin::d2g_page_url( $currLang, 'intake_questionnaire', true );
 									// url to load in iframe
 									$questionnaireURLSimple = get_option( 'waiting_room_url' ) . 'answer_set/' . $appointment->answer_set_id . '?client_auth=' . $client_token;
 								}
-								// other links
-								$consultLink = '<a class="button btn-default btn invert" target="_blank" href="' . get_option( 'waiting_room_url' ) . 'wachtkamer/' . $appointment->token . '?locale=' . explode( '_', get_locale() )[0] . '"><span class=" icon-videocam-outline"></span> ' . esc_html__( 'go to consultation', 'doctor2go-connect' ) . '</a>';
-								$docLink     = '<a class="button btn-default btn" href="/doctor/' . $docObj->post_name . '"><span class=" icon-eye"></span> ' . esc_html__( 'view doctor page', 'doctor2go-connect' ) . '</a>';
-								if ( $diffInSeconds <= 0 || $diffInSeconds > 86400 ) {
-									$delBtn = '<a class="del_app button btn-default btn" href="#" data-app-id="' . $appointment->_id . '" data-user-id="' . $appointment->user_id . '"><span class=" icon-cancel-circled"></span> ' . esc_html__( 'cancel appointment', 'doctor2go-connect' ) . '</a>';
-								}
 
-								if ( $appointment->payment_has_paid == true ) {
-									$payment_info = '<div class="paid"><strong>' . esc_html__( 'paid', 'doctor2go-connect' ) . '</strong></div>';
-								} else {
-									$pageData    = $d2gAdmin::d2g_page_url( $currLang, 'appointments', true );
-									$redirectURL = '&redirect_url=' . urlencode( $pageData['url'] . '?app=' ) . $appointment->_id;
-
-									$payment_info = '<div class="payment_needed error">
-									<div class=""><strong>' . esc_html__( 'A payment is required for this appointment. You can either do it upofront or when entering the waiting room', 'doctor2go-connect' ) . '</strong></div>
-									<div class="btn_wrap"><a class="btn btn-default payment_btn" target="_blank" href="' . get_option( 'waiting_room_url' ) . 'payment/' . $appointment->_id . '?locale=' . explode( '_', get_locale() )[0] . $redirectURL . '">' . esc_html__( 'pay now', 'doctor2go-connect' ) . '</a></div>
-									</div>';
-								}
-
-								// create the appointment rows and save in array to sort them later
-								if ( $appointment->location_to_go != null ) {
-									$structuredAppointments[ $appointment->date ] = '<div class="outer_app_wrapper"><div id="app-' . $appointment->_id . '" class="app_row">
-										<div class="feat_pic"><img src="' . $feat_pic . '"></div>
-										<div class="content_outer">
-											<div class="content">
-												<p class="consult_type"><strong>' . esc_html__( 'Physical consultation', 'doctor2go-connect' ) . '</strong></p>
-												<h3>' . $date->format( 'd/m/Y' ) . ' ' . esc_html__( ' at ', 'doctor2go-connect' ) . ' ' . $date->format( 'H:i' ) . '  <span class="small">(' . $timezone . ')</span></h3>
-												<a href="' . get_the_permalink( $docObj->ID ) . '"><h4>' . $docObj->post_title . '</h4></a>
-												<p class="address">' . $appointment->location_to_go->location_name . ': ' . $appointment->location_to_go->location_full_adress_url . '</p>
-											</div> 
-										</div>
-										<div class="btn_wrap">' . $delBtn . '</div>
-										</div></div>';
-								} else {
-									$structuredAppointments[ $appointment->date ] = '<div class="outer_app_wrapper">' . $payment_info . '<div id="app-' . $appointment->_id . '" class="app_row">
-										<div class="feat_pic"><img src="' . $feat_pic . '"></div>
-										<div class="content_outer">
-											<div class="content">
-												<p class="consult_type"><strong>' . esc_html__( 'Online consultation', 'doctor2go-connect' ) . '</strong></p>
-												<h3>' . $date->format( 'd/m/Y' ) . ' ' . esc_html__( ' at ', 'doctor2go-connect' ) . ' ' . $date->format( 'H:i' ) . '  <span class="small">(' . $timezone . ')</span></h3>
-												<a href="' . get_the_permalink( $docObj->ID ) . '"><h4>' . $docObj->post_title . '</h4></a>
-											</div> 	
-										</div>
-										<div class="btn_wrap">' . $consultLink . ' ' . $delBtn . '</div>
-										</div></div>';
-								}
-
-								// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 								$app_id = isset( $_GET['app'] ) ? sanitize_text_field( wp_unslash( $_GET['app'] ) ) : '';
-
-								if ( $appointment->_id == $app_id ) {
-									?>
 								
-									<?php if ( $questionnaireURLSimple != '' ) { ?>
-										<h4 class="error only_mobile mb-s"><?php echo esc_html__( 'For this appointment you are requiered to fill in an intake questionnaire.', 'doctor2go-connect' ); ?></h4>
-										<p class="mb-m only_mobile"><a class="scroll_to btn button btn-default" href="#questionnaire"><?php echo esc_html__( 'Go to questionnaire', 'doctor2go-connect' ); ?></a></p>
+								if ( $appointment->_id == $app_id ) {
+									if ( $questionnaireURLSimple != '' ) { ?>
+										<div class="alert d-flex alert-warning mb-5 mt-5 align-items-center justify-content-between">
+											<strong><?php echo esc_html__( 'For this appointment you are requiered to fill in an intake questionnaire.', 'doctor2go-connect' ); ?></strong>
+											<a class="scroll_to btn button btn-primary" href="#questionnaire"><?php echo esc_html__( 'Go to questionnaire', 'doctor2go-connect' ); ?></a>
+										</div>
 									<?php } ?>
-									<div class="mb-xl">
-										<?php echo wp_kses_post( $structuredAppointments[ $appointment->date ] ); ?>
-									</div>
-									<div class="mb-l only_mobile help_menu">
-										<h2><?php echo esc_html__( 'Need help?', 'doctor2go-connect' ); ?></h2>
-										<?php
-											wp_nav_menu(
-												array(
-													'theme_location' => 'd2g-help-menu',
-													'container' => 'nav',
-													'container_class' => 'd2g-help-menu',
-													'fallback_cb' => false,
-													'echo' => true, // So we can return it instead of echoing
-												)
-											);
-										?>
-									</div>
-									<?php if ( $questionnaireURLSimple != '' ) { ?>
-										<h2 class="not_mobile"><?php echo esc_html__( 'For this appointment you are requiered to fill in an intake questionnaire.', 'doctor2go-connect' ); ?></h2>
+									
+									<?php echo wp_kses_post( $structuredAppointments[ $appointment->date ] ); ?>
 										
+									<?php if ( $questionnaireURLSimple != '' ) { ?>
 										<iframe id="questionnaire" src="<?php echo esc_url( $questionnaireURLSimple ); ?>" style="width:100%; border:none; height:2500px"></iframe>
 									<?php } ?>
 								<?php } ?>
+								
 							<?php } ?>  
 						<?php } ?>
 					<?php } else { ?>
-						<h3 class="error"><?php echo esc_html__( 'Something went wrong while retrieving your appointments. Please try again later, or refresh the page.', 'doctor2go-connect' ); ?></h3>
+						<h3 class="alert alert-danger"><?php echo esc_html__( 'Something went wrong while retrieving your appointments. Please try again later, or refresh the page.', 'doctor2go-connect' ); ?></h3>
 					<?php } ?>
 				</div>
-				<div class="col-sm-4 not_mobile">
-					<h2><?php echo esc_html__( 'Need help?', 'doctor2go-connect' ); ?></h2>
-					<?php
-						wp_nav_menu(
-							array(
-								'theme_location'  => 'd2g-help-menu',
-								'container'       => 'nav',
-								'container_class' => 'd2g-help-menu',
-								'fallback_cb'     => false,
-								'echo'            => true, // So we can return it instead of echoing
-							)
-						);
-					?>
-				</div>
-			</div>
 		<?php } ?>
-		<div id="bg_loader" class="simple_hide"></div>
-		<div id="loader" class="simple_hide"><?php echo esc_html__( 'Your request is beeing handled.', 'doctor2go-connect' ); ?></div>
 		<?php
 
 		$sc = ob_get_contents();
@@ -2495,8 +2255,8 @@ class D2gConnect_Shortcodes {
 
 		// Verify nonce
 		$nonce = isset( $_POST['d2g_account_nonce'] ) ? sanitize_key( wp_unslash( $_POST['d2g_account_nonce'] ) ) : '';
-		if ( ! wp_verify_nonce( $nonce, 'd2g_account_action' ) ) {
-			echo '<p class="error">' . esc_html__( 'Security check failed. Please refresh the page and try again.', 'doctor2go-connect' ) . '</p>';
+		if ( isset($_POST) && count($_POST) > 0 && ! wp_verify_nonce( $nonce, 'd2g_account_action' ) ) {
+			echo '<p class="alert alert-danger">' . esc_html__( 'Security check failed. Please refresh the page and try again.', 'doctor2go-connect' ) . '</p>';
 			return;
 		}
 
@@ -2542,10 +2302,10 @@ class D2gConnect_Shortcodes {
 				echo '<p class="success">' . esc_html__( 'Update was successful.', 'doctor2go-connect' ) . ' </p>';
 			} elseif ( ! empty( $errors ) ) {
 				foreach ( $errors as $error ) {
-					echo '<p class="error">' . esc_html( $error ) . '</p>';
+					echo '<p class="alert alert-danger">' . esc_html( $error ) . '</p>';
 				}
 			} elseif ( is_wp_error( $user_id ) ) {
-				echo '<p class="error">' . esc_html( $user_id->get_error_message() ) . '</p>';
+				echo '<p class="alert alert-danger">' . esc_html( $user_id->get_error_message() ) . '</p>';
 			}
 		}
 
@@ -2557,25 +2317,25 @@ class D2gConnect_Shortcodes {
 		<div class="d2g_form_wrapper">
 			<form id="custom-registration-form" method="post">
 				<?php wp_nonce_field( 'd2g_account_action', 'd2g_account_nonce' ); ?>
-				<p>
-					<label for="first_name"><?php echo esc_html__( 'First name', 'doctor2go-connect' ); ?></label>
-					<input type="text" name="meta[first_name]" id="first_name" required value="<?php echo esc_html( $user_meta['first_name'][0] ); ?>">
-				</p>
-				<p>
-					<label for="last_name"><?php echo esc_html__( 'Last name', 'doctor2go-connect' ); ?></label>
-					<input type="text" name="meta[last_name]" id="last_name" required value="<?php echo esc_html( $user_meta['last_name'][0] ); ?>">
-				</p>
-				<p>
-					<label for="email"><?php echo esc_html__( 'Email (can not be changed)', 'doctor2go-connect' ); ?></label>
-					<input readonly type="email" name="email" id="email" required value="<?php echo esc_html( $current_user->data->user_email ); ?>">
-				</p>
-				<p>
-					<label for="p_tel"><?php echo esc_html__( 'Phone', 'doctor2go-connect' ); ?></label>
-					<input type="text" name="meta[p_tel]" id="p_tel" required value="<?php echo esc_html( $user_meta['p_tel'][0] ); ?>">
-				</p>
-				<p id="time_zone_wrapper">
-				<label for="p_tel"><?php echo esc_html__( 'Timezone', 'doctor2go-connect' ); ?></label>
-					<select name="meta[p_timezone]">
+				<div class="mb-3">
+					<label for="first_name" class="form-label"><?php echo esc_html__( 'First name', 'doctor2go-connect' ); ?></label>
+					<input type="text" name="meta[first_name]" id="first_name" class="form-control" required value="<?php echo esc_html( $user_meta['first_name'][0] ); ?>">
+				</div>
+				<div class="mb-3">
+					<label for="last_name" class="form-label"><?php echo esc_html__( 'Last name', 'doctor2go-connect' ); ?></label>
+					<input type="text" name="meta[last_name]" id="last_name" class="form-control" required value="<?php echo esc_html( $user_meta['last_name'][0] ); ?>">
+				</div>
+				<div class="mb-3 alert alert-warning">
+					<label for="email" class="form-label"><?php echo esc_html__( 'Email (can not be changed)', 'doctor2go-connect' ); ?></label>
+					<input type="email" readonly class="form-control-plaintext" name="email" id="email" required value="<?php echo esc_html( $current_user->data->user_email ); ?>">
+				</div>
+				<div class="mb-3">
+					<label for="p_tel" class="form-label"><?php echo esc_html__( 'Phone', 'doctor2go-connect' ); ?></label>
+					<input type="text" name="meta[p_tel]" id="p_tel" class="form-control" required value="<?php echo esc_html( $user_meta['p_tel'][0] ); ?>">
+				</div>
+				<div class="mb-3" id="time_zone_wrapper">
+					<label for="p_timezone" class="form-label"><?php echo esc_html__( 'Timezone', 'doctor2go-connect' ); ?></label>
+					<select name="meta[p_timezone]" class="form-select" id="p_timezone">
 						<option value="0"><?php echo esc_html__( 'make a selection', 'doctor2go-connect' ); ?></option>
 						<?php foreach ( $timezones as $group => $zones ) { ?>
 							<optgroup label="<?php echo esc_html( $group ); ?>">
@@ -2585,27 +2345,28 @@ class D2gConnect_Shortcodes {
 							</optgroup>
 						<?php } ?>
 					</select>
-				</p>
-				<p class="attention"><?php echo esc_html__( 'Only fill in the password fields, if you want to change your password. ', 'doctor2go-connect' ); ?></p>
-				<p>
-					<label for="password"><?php echo esc_html__( 'Password', 'doctor2go-connect' ); ?></label>
-					<input type="password" name="password" id="password" >
-				</p>
-				<p>
-					<label for="confirm_password"><?php echo esc_html__( 'Confirm Password', 'doctor2go-connect' ); ?></label>
-					<input type="password" name="confirm_password" id="confirm_password" >
-				</p>
-				<p>
+				</div>
+				<p class="mb-3 text-warning"><?php echo esc_html__( 'Only fill in the password fields, if you want to change your password. ', 'doctor2go-connect' ); ?></p>
+				<div class="mb-3">
+					<label for="password" class="form-label"><?php echo esc_html__( 'Password', 'doctor2go-connect' ); ?></label>
+					<input type="password" name="password" id="password" class="form-control">
+				</div>
+				<div class="mb-3">
+					<label for="confirm_password" class="form-label"><?php echo esc_html__( 'Confirm Password', 'doctor2go-connect' ); ?></label>
+					<input type="password" name="confirm_password" id="confirm_password" class="form-control">
+				</div>
+				<div class="mb-3">
 					<input type="hidden" name="custom_registration" value="1">
-					<input type="submit" value="<?php echo esc_html__( 'save', 'doctor2go-connect' ); ?>">
-				</p>
+					<input type="submit" class="btn btn-primary" value="<?php echo esc_html__( 'save', 'doctor2go-connect' ); ?>">
+				</div>
 			</form>
 		</div>
 		<?php if ( ( get_option( 'activate_2fa_link' ) == '1' ) ) { ?>
 			<div class="btn_wrapper">
-				<a class="btn btn-default" href="/wp/wp-login.php?itsec_after_interstitial=2fa-on-board"><?php esc_html_e( 'configure 2FA', 'doctor2go-connect' ); ?></a>
+				<a class="btn btn-outline-primary" href="/wp/wp-login.php?itsec_after_interstitial=2fa-on-board"><?php esc_html_e( 'configure 2FA', 'doctor2go-connect' ); ?></a>
 			</div>
 		<?php } ?>
+
 		
 		<?php
 		return ob_get_clean();
@@ -2615,10 +2376,10 @@ class D2gConnect_Shortcodes {
 	public function d2g_liked_posts() {
 		global $cssClass;
 		$cssClass    = 'col-sm-6 col-md-4';
-		$liked_posts = get_liked_posts();
+		$liked_posts = d2g_get_liked_posts();
 
 		if ( empty( $liked_posts ) ) {
-			return '<p class="error">' . esc_html__( 'No liked doctors yet.', 'doctor2go-connect' ) . '</p>';
+			return '<p class="alert alert-danger">' . esc_html__( 'No liked doctors yet.', 'doctor2go-connect' ) . '</p>';
 		}
 
 		// WP_Query arguments
@@ -2643,7 +2404,7 @@ class D2gConnect_Shortcodes {
 			}
 			echo '</div></div>';
 		} else {
-			echo '<p class="error">' . esc_html__( 'No liked doctors yet.', 'doctor2go-connect' ) . '</p>';
+			echo '<p class="alert alert-danger">' . esc_html__( 'No liked doctors yet.', 'doctor2go-connect' ) . '</p>';
 		}
 
 		// Restore original post data
@@ -2698,33 +2459,21 @@ class D2gConnect_Shortcodes {
 						$title      = isset( $_GET['title'] ) ? sanitize_text_field( wp_unslash( $_GET['title'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 
 						?>
-						<h2>
-							<?php
-							echo esc_html__( 'Patient portal:', 'doctor2go-connect' ) . ' ' . esc_html( $title );
-							?>
-						</h2>
-						<p>
-							<?php
-							echo esc_html__( "This secure portal lets you send and receive messages from your doctor and access any documents they've shared with you.", 'doctor2go-connect' );
-							?>
-						</p>
+						<h2><?php echo esc_html__( 'Patient portal:', 'doctor2go-connect' ) . ' ' . esc_html( $title );?></h2>
+						<p><?php echo esc_html__( "This secure portal lets you send and receive messages from your doctor and access any documents they've shared with you.", 'doctor2go-connect' );?></p>
 						<iframe 
 							id="patient_portal" 
 							style="width:100%; border:none; height:1200px; overflow-y:scroll;" 
 							src="<?php echo esc_url( $iframe_url ); ?>">
 						</iframe>
 					<?php } else { ?>
-						<h2 class="error">
+						<h2 class="alert alert-danger">
 							<?php esc_html_e( 'No doctor has been selected yet. Please choose one to proceed.', 'doctor2go-connect' ); ?>
 						</h2>
 					<?php } ?>
-
-
-
 				</div>
 				<div class="col-sm-3">
 					<h2><?php echo esc_html__( 'Your doctor\'s', 'doctor2go-connect' ); ?></h2>
-				
 					<?php
 					$args = array(
 						'post_type'      => 'd2g_doctor',
@@ -2740,9 +2489,9 @@ class D2gConnect_Shortcodes {
 
 					$query = new WP_Query( $args );
 
-					if ( $query->have_posts() ) :
+					if ( $query->have_posts() ) {
 						?>
-						<ul class="mb-xl  questionnaires_list"  id="questionnaires" style="list-style: none; padding:0;">
+						<ul class="list-group mb-5  doctors_list"  id="doctors_list">
 						<?php
 						while ( $query->have_posts() ) :
 							$query->the_post();
@@ -2759,10 +2508,9 @@ class D2gConnect_Shortcodes {
 								}
 							}
 							?>
-							<li>
-								<a class="center" href="<?php echo esc_url( $pageData['url'] ); ?>?url=<?php echo urlencode( get_option( 'waiting_room_url' ) . 'portal/' . $tokensAssArray[ $orgKey ] . '?skip_cookie_wall=true&locale=' . $currLang ); ?>&title=<?php echo esc_html( $title ); ?>">
-									<span style="font-size:16px" class="demo-icon icon-right-open"></span>
-									<div class="feat_pic"><img src="<?php echo esc_url( $feat_pic ); ?>"></div>
+							<li class="list-group-item text-center p-0">
+								<a class="p-3 doc_portal_link d-block" href="<?php echo esc_url( $pageData['url'] ); ?>?url=<?php echo urlencode( get_option( 'waiting_room_url' ) . 'portal/' . $tokensAssArray[ $orgKey ] . '?skip_cookie_wall=true&locale=' . $currLang ); ?>&title=<?php echo esc_html( $title ); ?>">
+									<div class="feat_pic"><img class="doc_portal_image rounded-circle" src="<?php echo esc_url( $feat_pic ); ?>"></div>
 									<strong>
 										<?php echo esc_html( $title ); ?>
 									</strong>
@@ -2774,29 +2522,16 @@ class D2gConnect_Shortcodes {
 						?>
 						</ul>
 						<?php
-					else :
-						echo '<p class="error">No doctors found for the selected organisation.</p>';
-					endif;
-					?>
-					
+					} else {
+						echo '<p class="alert alert-danger">No doctors found for the selected organisation.</p>';
+					} ?>
 				</div>
 			</div>
 		</div>
-			<?php
-		}
-
+	<?php }
 		return ob_get_clean();
 	}
 
-
-	public function d2g_public_patient_portal() {
-		ob_start();
-		?>
-		<iframe id="patient_portal" style="width: 100%; border:none; height:1200px; overflow-y:scroll;" src="<?php echo esc_url( get_option( 'waiting_room_url' ) . 'portal/' ); ?>"></iframe>
-		<?php
-
-		return ob_get_clean();
-	}
 
 	/**
 	 * @param $objects
@@ -2898,7 +2633,7 @@ class D2gConnect_Shortcodes {
 	 * @param $wcc_user_id
 	 * @return int[]|WP_Post[]
 	 */
-	private function get_doctor_by_wcc_id( $wcc_user_id ) {
+	private function d2g_get_doctor_by_wcc_id( $wcc_user_id ) {
 		$args   = array(
 			'post_type'  => 'd2g_doctor',
 			'meta_query' => array(

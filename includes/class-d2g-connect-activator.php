@@ -36,7 +36,6 @@ class D2gConnect_Activator {
 			'Appointments'          => '[d2g_patient_appointments]',
 			'Account settings'      => '[d2g_account_settings]',
 			'Liked doctors'         => '[d2g_liked_posts]',
-			'Questionnaires'        => '[d2g_questionnaires]',
 			'Secure patient portal' => '[d2g_patient_portal]',
 
 		);
@@ -64,9 +63,6 @@ class D2gConnect_Activator {
 			'Reset password'            => '[d2g_reset_password_form]',
 			'Login'                     => '[d2g_login_form]',
 			'Patient registration'      => '[d2g_registration_form]',
-			'Email consultation'        => '[d2g_public_questionnaire]',
-			'Intake questionnaire'      => '[d2g_public_questionnaire]',
-			'Public patient portal'     => '[d2g_public_patient_portal]',
 			'Appointment confirmation'  => '[d2g_appointment_confirmation]',
 			'Email advice confirmation' => 'Your email advice has been successfully submitted. Our dermatologists will get back to you within two working days.',
 			'Privacy policy'            => 'To be compliant with GDPR you will need to fill this page in.',

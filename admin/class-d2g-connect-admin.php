@@ -589,15 +589,14 @@ class D2gConnect_Admin {
 		$settings_with_callbacks = array(
 			'd2g_detail_page_view'          => array( $this, 'sanitize_detail_page_view' ),
 			'd2g_theme_css'                 => array( $this, 'sanitize_theme_css' ),
-			'd2g_css_grid'                  => 'absint',
+			'd2g_bootstrap_css'                  => 'absint',
 			'wcc_token'                     => array( $this, 'd2g_sanitize_token' ),
 			'api_url_short'                 => 'esc_url_raw',
 			'waiting_room_url'              => 'esc_url_raw',
-			'wcc_base_url'                  => 'esc_url_raw',
+			'wcc_base_url'                  => 'sanitize_text_field',
 			'admin_mail'                    => 'sanitize_email',
 			'd2g_local_user'                => 'absint',
 			'd2g_placeholder'               => 'absint',
-			'd2g_detail_page_view'          => array( $this, 'sanitize_detail_page_view' ),
 			'd2g_recaptcha_site_key'        => array( $this, 'd2g_sanitize_token' ),
 			'd2g_recaptcha_secret_key'      => array( $this, 'd2g_sanitize_token' ),
 			'd2g_admin_access'              => 'absint',
@@ -613,6 +612,7 @@ class D2gConnect_Admin {
 			'd2g_use_imgix'                 => 'absint',
 			'd2g_use_default_questionnaire' => 'absint',
 			'd2g_load_availability_info'    => 'absint',
+			'd2g_bootstrap_js'				=> 'absint'
 		);
 		// registration for the short code activation options
 		foreach ( $settings_with_callbacks as $setting => $callback ) {
@@ -667,6 +667,7 @@ class D2gConnect_Admin {
 		$allowed = array(
 			'single-v1',
 			'single-v2',
+			'single-v3'
 		);
 
 		if ( in_array( $value, $allowed, true ) ) {

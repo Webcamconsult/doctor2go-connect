@@ -96,7 +96,7 @@ function myplugin_get_availabilities( WP_REST_Request $request ) {
 		$firstAvailibility = $profileClass->get_first_avialibility( $docSlotsArray );
 
 		$tariffs   = $profileClass->get_tariffs( $docSlotsArray );
-		$tariffStr = get_tariff_string( $tariffs );
+		$tariffStr = d2g_get_tariff_string( $tariffs );
 
 		if (
 			! empty( $availabilityDataObj->user_has_inloop ) &&

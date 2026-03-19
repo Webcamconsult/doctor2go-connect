@@ -69,7 +69,7 @@ function do_doctor_availibility(data, postID, colClass, wrapper){
         let newStr = str;
         jQuery('.fillup_' + postID).html(newStr);
         
-        var tariffs = '<li class="icon-cc-mastercard '+ colClass +'">'+ data.tariffs +'</li>'
+        var tariffs = '<li class="list-group-item icon-cc-mastercard '+ colClass +'"> '+ data.tariffs +'</li>'
         jQuery('#icon_list_' + postID).append(tariffs);
         jQuery('.post-' + postID).find('.booking_con').css('display', 'list-item');
         
@@ -78,7 +78,7 @@ function do_doctor_availibility(data, postID, colClass, wrapper){
     }
 
     if(data.first_availibility != ''){
-        var first_availability = '<li class="icon-clock '+ colClass +'">'+ data.first_availibility +'</li>'
+        var first_availability = '<li class="list-group-item icon-clock '+ colClass +'"> '+ data.first_availibility +'</li>'
         jQuery('#icon_list_' + postID).append(first_availability);
     }
 
