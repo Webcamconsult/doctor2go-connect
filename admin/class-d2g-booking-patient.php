@@ -553,8 +553,6 @@ class D2G_booking_wcc_user {
 		);
 
 		if ( is_wp_error( $response ) ) {
-			$response_body = json_decode( $response  );
-			nice_dump($response_body);
 			wp_die( esc_html__( 'There has been an error.', 'doctor2go-connect' ) );
 		}
 

@@ -573,8 +573,6 @@ jQuery(document).ready(function ($) {
     ==========================================*/
 
     if (d && d.ajax && d.msg && d.mail && d.ajax.delete_nonce && d.ajax.mail_nonce) {
-
-
         // Delete appointment
         $(document).on('click', '.del_app', function (e) {
             e.preventDefault();
@@ -605,9 +603,74 @@ jQuery(document).ready(function ($) {
                 $btn.find('.del-spinner').hide();
             });
         });
-
-      
     }
+
+    // Show cancellation form prefilled
+    $(document).on('click', '.prep_cancellation_email', function (e) {
+        e.preventDefault();
+
+        $('#cancellation_form_wrapper').removeClass('simple_hide');
+
+        $('#app_date').val($(this).data('app-date'));
+        $('#doc_name').val($(this).data('doc-name'));
+        $('#doc_email').val($(this).data('doc-email'));
+        $('#app_link').val($(this).data('app-link'));
+    });
+
+    // Send cancellation mails (patient + doctor)
+    $(document).on('click', '#request_cancellation', function (e) {
+        e.preventDefault();
+
+        loader();
+
+        var baseData = {
+            action: 'send_ajax_d2g_email',
+            app_date: $('#app_date').val(),
+            app_link: $('#app_link').val(),
+            bic: $('#bic').val(),
+            iban: $('#iban').val(),
+            comment: $('#comment').val(),
+            nonce: d.ajax.mail_nonce
+        };
+
+        // Mail to patient
+        $.post(d.ajax.url, Object.assign({}, baseData, {
+            'e-mail': 'cancellation_patient',
+            from_name: $('#doc_name').val(),
+            from_email: d.mail.sender_email,
+            to_name: $('#client_name').val(),
+            to_email: $('#client_email').val(),
+            title: d.mail.sender_name + ': ' + d.msg.cancel_title + ' (' + $('#doc_name').val() + ')'
+        }), function (res) {
+
+            $('#return1')
+                .show()
+                .html(res.message === 'mail_send_cancellation_patient'
+                    ? d.msg.mail_patient_ok
+                    : d.msg.mail_patient_err);
+        });
+
+        // Mail to doctor
+        $.post(d.ajax.url, Object.assign({}, baseData, {
+            'e-mail': 'cancellation_doctor',
+            to_name: $('#doc_name').val(),
+            to_email: $('#doc_email').val(),
+            from_name: $('#client_name').val(),
+            from_email: $('#client_email').val(),
+            title: d.mail.sender_name + ': ' + d.msg.cancel_title + ' (' + $('#client_name').val() + ')'
+        }), function (res) {
+
+            loader();
+
+            $('#return2')
+                .show()
+                .html(res.message === 'mail_send_cancellation_doctor'
+                    ? d.msg.mail_doc_ok
+                    : d.msg.mail_doc_err);
+        });
+
+        $('#cancellation_form_wrapper').addClass('simple_hide');
+    });
 
     /* =========================================
        WALK-IN REQUEST FORM

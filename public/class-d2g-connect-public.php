@@ -102,13 +102,10 @@ class D2gConnect_Public {
 		wp_enqueue_style( $this->plugin_name . '-flaticon-derma', plugin_dir_url( __FILE__ ) . 'fonts/wcc-flaticon2/font/flaticon_derma2go.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name . '-cal', plugin_dir_url( __FILE__ ) . 'css/cal-main.min.css', array(), $this->version, 'all' );
 
-		if ( get_option( 'd2g_theme_css' ) != 'no-style' ) {
-			wp_enqueue_style( $this->plugin_name . '-public', plugin_dir_url( __FILE__ ) . 'css/d2g-public.css', array(), $this->version, 'all' );
-			wp_enqueue_style( $this->plugin_name . '-overview', plugin_dir_url( __FILE__ ) . 'css/d2g-overview-doctor.css', array(), $this->version, 'all' );
-			wp_enqueue_style( $this->plugin_name . '-single', plugin_dir_url( __FILE__ ) . 'css/d2g-single-doctor.css', array(), $this->version, 'all' );
-			if ( get_option( 'd2g_theme_css' ) == 'light' || get_option( 'd2g_theme_css' ) == '' ) {
-				wp_enqueue_style( $this->plugin_name . '-light', plugin_dir_url( __FILE__ ) . 'css/d2g-light.css', array(), $this->version, 'all' );
-			} elseif ( get_option( 'd2g_theme_css' ) == 'dark' ) {
+		if ( get_option( 'd2g_bootstrap_css' ) != 'no-style' ) {
+			if ( get_option( 'd2g_bootstrap_css' ) == 'light' || get_option( 'd2g_bootstrap_css' ) == '' ) {
+				wp_enqueue_style( $this->plugin_name . '-d2g-light', plugin_dir_url( __FILE__ ) . 'css/d2g-light.css', array(), $this->version, 'all' );
+			} elseif ( get_option( 'd2g_bootstrap_css' ) == 'dark' ) {
 				wp_enqueue_style( $this->plugin_name . '-dark', plugin_dir_url( __FILE__ ) . 'css/d2g-dark.css', array(), $this->version, 'all' );
 			}
 		}
@@ -120,7 +117,7 @@ class D2gConnect_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-		if ( get_option( 'd2g_css_grid' ) != '1' ) {
+		if ( get_option( 'd2g_bootstrap_js' ) != '1' ) {
 			wp_enqueue_script( $this->plugin_name . '-bootstrap', plugin_dir_url( __FILE__ ) . 'js/bootstrap.bundle.min.js', array( 'jquery' ), $this->version, true );
 		}
 		wp_enqueue_script( $this->plugin_name . '-fancybox', plugin_dir_url( __FILE__ ) . 'js/jquery.fancybox.js', array( 'jquery' ), $this->version, true );
@@ -497,7 +494,7 @@ class D2gConnect_Public {
 		$orderby        = isset( $_POST['orderby'] ) ? sanitize_text_field( wp_unslash( $_POST['orderby'] ) ) : '';
 		$order          = isset( $_POST['order'] ) ? sanitize_text_field( wp_unslash( $_POST['order'] ) ) : '';
 		$cssClass       = isset( $_POST['cssClass'] ) ? sanitize_html_class( wp_unslash( $_POST['cssClass'] ) ) : '';
-		$specialty      = isset( $_POST['doctor-specialty'] ) ? absint( wp_unslash( $_POST['doctor-specialty'] ) ) : '';
+		$specialty      = isset( $_POST['specialty'] ) ? absint( wp_unslash( $_POST['specialty'] ) ) : '';
 		$doctorLanguage = isset( $_POST['doctor-language'] ) ? absint( wp_unslash( $_POST['doctor-language'] ) ) : '';
 		$country        = isset( $_POST['country-origin'] ) ? absint( wp_unslash( $_POST['country-origin'] ) ) : '';
 		$intake         = isset( $_POST['intake'] ) ? absint( wp_unslash( $_POST['intake'] ) ) : 0;
@@ -612,8 +609,10 @@ class D2gConnect_Public {
 
 	// this overwrites the reset password mail to return the url to the custom password reset form
 	public function d2g_retrieve_password_message( $retrieve_password_message, $key, $user_login, $user_data ) {
-		$currLang = explode( '_', get_locale() )[0];
-		$d2gAdmin = new \D2G_doc_user_profile();
+		$wp_lang 	= sanitize_text_field( $_REQUEST['wp_lang'] ?? get_locale() );  // 'ro_RO' if passed
+    	$currLang 	= explode( '_', $wp_lang )[0];  // 'ro'
+
+		$d2gAdmin = new D2G_doc_user_profile();
 		$pageData = $d2gAdmin::d2g_page_url( $currLang, 'reset_password', true );
 
 		$content  = esc_html__( 'Someone has requested a password reset.', 'doctor2go-connect' ) . "\n\n";
@@ -621,7 +620,7 @@ class D2gConnect_Public {
 		$content .= esc_html__( 'User name: ', 'doctor2go-connect' ) . $user_data->data->user_email . "\n\n";
 		$content .= esc_html__( 'If this was not intended, simply ignore this e-mail. Nothing will happen. ', 'doctor2go-connect' ) . "\n\n";
 		$content .= esc_html__( 'To reset your password, visit the following address: ', 'doctor2go-connect' ) . "\n";
-		$content .= $pageData['url'] . '?action=rp&key=' . $key . '&login=' . $user_login . '&wp_lang=' . get_locale();
+		$content .= $pageData['url'] . '?action=rp&key=' . $key . '&login=' . $user_login . '&wp_lang=' . $wp_lang;
 		$content  = wpautop( $content );
 
 		$msg = d2g_html_email( $content );
@@ -785,6 +784,12 @@ class D2gConnect_Public {
 
 	// redirects are defined for when wp-login.php is triggered
 	public function d2g_login_redirect( $redirect_to, $requested_redirect_to, $user ) {
+
+		// 1) Bypass for wp-auth-check iframe (session expired popup)
+		if ( isset( $_REQUEST['interim-login'] ) || isset( $_REQUEST['wp-auth-check'] ) ) {
+			return $redirect_to; // let WP handle it normally
+		}
+
 		$currLang = explode( '_', get_locale() )[0];
 		$d2gAdmin = new D2G_doc_user_profile();
 

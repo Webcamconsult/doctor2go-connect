@@ -1562,43 +1562,63 @@ class D2gConnect_Shortcodes {
 		// Your reCAPTCHA site key.
 		$recaptcha_site_key = get_option( 'd2g_recaptcha_site_key' );
 		?>
-	<div class="d2g_form_wrapper">
-		<form method="post" action="<?php echo esc_url( wp_login_url( $redirect_to ) ); ?>" id="custom-loginform">
-			<?php
-			// Add nonce field to the form.
-			wp_nonce_field( 'd2g_login_action', 'd2g_login_nonce' ); // [web:189]
-			?>
+	<div class="d2g_form_wrapper  mt-4">
+		<div class="row justify-content-center">
+			<div class="col-md-6 col-lg-5 col-xl-4">
+				<form method="post" action="<?php echo esc_url( wp_login_url( $redirect_to ) ); ?>" id="custom-loginform">
+					<?php
+					// Add nonce field to the form.
+					wp_nonce_field( 'd2g_login_action', 'd2g_login_nonce' );
+					?>
 
-			<p><label for="user_login"><?php esc_html_e( 'Email', 'doctor2go-connect' ); ?></label><input type="text" name="log" id="user_login" class="input" required></p>
-			<p><label for="user_pass"><?php esc_html_e( 'Password', 'doctor2go-connect' ); ?></label><input type="password" name="pwd" id="user_pass" class="input" required></p>
+					<div class="mb-3">
+						<label for="user_login" class="form-label"><?php esc_html_e( 'Email', 'doctor2go-connect' ); ?></label>
+						<input type="email" name="log" id="user_login" class="form-control" required>
+					</div>
 
-			<!-- reCAPTCHA Widget -->
-			<?php if ( get_option( 'd2g_recaptcha_site_key' ) ) { ?>
-				<div class="g-recaptcha" data-sitekey="<?php echo esc_attr( $recaptcha_site_key ); ?>"></div>
-				<div id="captcha_login"></div>
-			<?php } ?>
+					<div class="mb-3">
+						<label for="user_pass" class="form-label"><?php esc_html_e( 'Password', 'doctor2go-connect' ); ?></label>
+						<input type="password" name="pwd" id="user_pass" class="form-control" required>
+					</div>
 
-			<!-- altacha Widget check if shortcode is active -->
-			<?php if ( shortcode_exists( 'altcha' ) ) : ?>
-				<?php echo do_shortcode( '[altcha]' ); ?>
-			<?php endif; ?>
+					<!-- reCAPTCHA Widget -->
+					<?php if ( get_option( 'd2g_recaptcha_site_key' ) ) { ?>
+						<div class="mb-3">
+							<div class="g-recaptcha" data-sitekey="<?php echo esc_attr( $recaptcha_site_key ); ?>"></div>
+							<div id="captcha_login"></div>
+						</div>
+					<?php } ?>
 
-			<p style="margin-top: 10px;">
-				<label>
-					<input type="checkbox" name="rememberme" value="forever">
-					<?php esc_html_e( 'Remember Me', 'doctor2go-connect' ); ?>
-				</label>
-			</p>
+					<!-- altacha Widget check if shortcode is active -->
+					<?php if ( shortcode_exists( 'altcha' ) ) : ?>
+						<div class="mb-3">
+							<?php echo do_shortcode( '[altcha]' ); ?>
+						</div>
+					<?php endif; ?>
 
-			<input type="submit" value="<?php echo esc_attr__( 'Login', 'doctor2go-connect' ); ?>" class="button button-primary">
-		</form>
+					<div class="mb-4">
+						<div class="form-check">
+							<input type="checkbox" name="rememberme" value="forever" class="form-check-input" id="rememberme">
+							<label class="form-check-label" for="rememberme">
+								<?php esc_html_e( 'Remember Me', 'doctor2go-connect' ); ?>
+							</label>
+						</div>
+					</div>
 
-		<?php $pageData = $d2gAdmin::d2g_page_url( $currLang, 'lost_password', true ); ?>
-		<a href="<?php echo esc_url( $pageData['url'] ); ?>"><?php esc_html_e( 'Lost password?', 'doctor2go-connect' ); ?></a>&nbsp;&nbsp;
+					<button type="submit" class="btn btn-primary w-100 mb-3"><?php echo esc_attr__( 'Login', 'doctor2go-connect' ); ?></button>
+				</form>
 
-		<?php $pageData = $d2gAdmin::d2g_page_url( $currLang, 'patient_registration', true ); ?>
-		<a href="<?php echo esc_url( $pageData['url'] ); ?>"><?php esc_html_e( 'Register as patient', 'doctor2go-connect' ); ?></a>&nbsp;&nbsp;
+				<div class="text-center">
+					<?php $pageData = $d2gAdmin::d2g_page_url( $currLang, 'lost_password', true ); ?>
+					<a href="<?php echo esc_url( $pageData['url'] ); ?>" class="btn btn-link p-0"><?php esc_html_e( 'Lost password?', 'doctor2go-connect' ); ?></a>
+
+					<?php $pageData = $d2gAdmin::d2g_page_url( $currLang, 'patient_registration', true ); ?>
+					<a href="<?php echo esc_url( $pageData['url'] ); ?>" class="btn btn-link p-0"><?php esc_html_e( 'Register as patient', 'doctor2go-connect' ); ?></a>
+				</div>
+			</div>
+		</div>
 	</div>
+
 
 		<?php
 		// Include the Google reCAPTCHA script (your existing logic).
@@ -1644,8 +1664,10 @@ class D2gConnect_Shortcodes {
 		}
 
 		// Locale + redirect URL.
-		$locale_parts = explode( '_', get_locale() );
-		$currLang     = sanitize_key( $locale_parts[0] ?? 'en' );
+		$locale 		= get_locale();  // e.g., 'ro_RO'
+		$locale_parts 	= explode( '_', get_locale() );
+		$currLang     	= sanitize_key( $locale_parts[0] ?? 'en' );
+		$action_url 	= add_query_arg( 'wp_lang', $locale, site_url( 'wp-login.php?action=lostpassword', 'login_post' ) );
 
 		$d2gAdmin = new D2G_doc_user_profile();
 		$pageData = $d2gAdmin::d2g_page_url( $currLang, 'password_reset_sent', true );
@@ -1653,19 +1675,25 @@ class D2gConnect_Shortcodes {
 
 		?>
 
-		<div class="d2g_form_wrapper">
-			<form id="lostpasswordform" action="<?php echo esc_url( site_url( 'wp-login.php?action=lostpassword', 'login_post' ) ); ?>" method="post">
+		<div class="d2g_form_wrapper  py-4">
+			<form id="lostpasswordform" action="<?php echo esc_url( $action_url ); ?>" method="post" class="w-100 w-md-50 mx-auto border rounded-3 p-4 bg-light shadow-sm">
 				<?php wp_nonce_field( 'd2g_lost_password_action', 'd2g_lost_password_nonce' ); ?>
-				<p>
-					<label for="user_login">
-						<?php esc_html_e( 'Username or Email Address', 'doctor2go-connect' ); ?>
+
+				<div class="mb-3">
+					<label for="user_login" class="form-label">
+						<?php esc_html_e( 'E-mail', 'doctor2go-connect' ); ?>
 					</label>
-					<input type="text" name="user_login" id="user_login" required>
-				</p>
-				<p><input type="submit" name="wp-submit" id="wp-submit" value="<?php esc_attr_e( 'Get New Password', 'doctor2go-connect' ); ?>"></p>
+					<input type="text" name="user_login" id="user_login" class="form-control" required>
+				</div>
+
+				<div class="d-grid mb-3">
+					<input type="submit" name="wp-submit" id="wp-submit" value="<?php esc_attr_e( 'Get New Password', 'doctor2go-connect' ); ?>" class="btn btn-primary">
+				</div>
+
 				<input type="hidden" name="redirect_to" value="<?php echo esc_html( $redirect ); ?>">
 			</form>
 		</div>
+
 		<?php
 		return ob_get_clean();
 	}
@@ -1740,29 +1768,37 @@ class D2gConnect_Shortcodes {
 	private function custom_reset_password_form_html( $login, $reset_key ) {
 		ob_start();
 		?>
-		<div class="d2g_form_wrapper">
-			<form id="resetpasswordform" method="post">
+		<div class="d2g_form_wrapper  py-4">
+			<form id="resetpasswordform" method="post" class="w-100 w-md-50 mx-auto border rounded-3 p-4 bg-light shadow-sm">
 				<?php
 				// Nonce field.
-				wp_nonce_field( 'd2g_reset_password_action', 'd2g_reset_password_nonce' ); // [web:189]
+				wp_nonce_field( 'd2g_reset_password_action', 'd2g_reset_password_nonce' );
 				?>
 
 				<!-- Keep these so POST has the same values; avoids relying on GET on submit -->
 				<input type="hidden" name="login" value="<?php echo esc_attr( $login ); ?>">
 				<input type="hidden" name="key" value="<?php echo esc_attr( $reset_key ); ?>">
-				<p>
-					<label for="new_password"><?php echo esc_html__( 'New Password', 'doctor2go-connect' ); ?></label>
-					<input type="password" name="new_password" id="new_password" required>
-				</p>
-				<p>
-					<label for="confirm_password"><?php echo esc_html__( 'Confirm New Password', 'doctor2go-connect' ); ?></label>
-					<input type="password" name="confirm_password" id="confirm_password" required>
-				</p>
-				<p>
-					<input type="submit" value="<?php echo esc_attr__( 'Reset Password', 'doctor2go-connect' ); ?>">
-				</p>
+
+				<div class="mb-3">
+					<label for="new_password" class="form-label">
+						<?php echo esc_html__( 'New Password', 'doctor2go-connect' ); ?>
+					</label>
+					<input type="password" name="new_password" id="new_password" class="form-control" required>
+				</div>
+
+				<div class="mb-3">
+					<label for="confirm_password" class="form-label">
+						<?php echo esc_html__( 'Confirm New Password', 'doctor2go-connect' ); ?>
+					</label>
+					<input type="password" name="confirm_password" id="confirm_password" class="form-control" required>
+				</div>
+
+				<div class="d-grid">
+					<input type="submit" value="<?php echo esc_attr__( 'Reset Password', 'doctor2go-connect' ); ?>" class="btn btn-primary">
+				</div>
 			</form>
 		</div>
+
 		<?php
 		return ob_get_clean();
 	}
@@ -1913,32 +1949,41 @@ class D2gConnect_Shortcodes {
 
 		ob_start();
 		?>
-		<div class="d2g_form_wrapper">
-			<?php // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash?>
-			<form id="custom-registration-form" method="post" action="?create_account=1<?php echo ( isset( $_GET['redirect_to'] ) ) ? '&redirect_to=' . urlencode( wp_unslash( $_GET['redirect_to'] ) ) : ''; ?>">
-				<?php wp_nonce_field( 'd2g_registration_action', 'd2g_reg_nonce' ); ?>
-				<div id="error" class="error"></div>
+		<div class="d2g_form_wrapper  py-5">
+			<form id="custom-registration-form" method="post"
+				action="?create_account=1<?php echo ( isset( $_GET['redirect_to'] ) ) ? '&redirect_to=' . urlencode( wp_unslash( $_GET['redirect_to'] ) ) : ''; ?>"
+				class="w-100 w-md-75 w-lg-50 mx-auto border rounded-3 p-4 bg-light shadow-sm needs-validation" novalidate>
 
-				<p>
-					<label for="first_name"><?php echo esc_html__( 'First name', 'doctor2go-connect' ); ?>*</label>
-					<input class="myrequired" type="text" name="meta[first_name]" id="first_name" required>
-				</p>
-				<p>
-					<label for="last_name"><?php echo esc_html__( 'Last name', 'doctor2go-connect' ); ?>*</label>
-					<input class="myrequired" type="text" name="meta[last_name]" id="last_name" required>
-				</p>
-				<p>
-					<label for="email"><?php echo esc_html__( 'Email', 'doctor2go-connect' ); ?>*</label>
-					<input class="myrequired" type="email" name="email" id="patient_email" required>
-				</p>
-				<p>
-					<label for="p_tel"><?php echo esc_html__( 'Phone', 'doctor2go-connect' ); ?>*</label>
-					<input class="myrequired" type="text" name="meta[p_tel]" id="p_tel" required>
-				</p>
-				<p id="time_zone_wrapper">
-					<label><?php echo esc_html__( 'Timezone (Your browser detects time zones automatically, but you can set a different one here if needed.)', 'doctor2go-connect' ); ?></label>
-					<select name="meta[p_timezone]">
-						<option value="0"><?php echo esc_html__( 'make a selection', 'doctor2go-connect' ); ?></option>
+				<?php wp_nonce_field( 'd2g_registration_action', 'd2g_reg_nonce' ); ?>
+
+				<div id="error" class="alert alert-danger d-none"></div>
+
+				<div class="mb-3">
+					<label for="first_name" class="form-label"><?php echo esc_html__( 'First name', 'doctor2go-connect' ); ?>*</label>
+					<input class="form-control myrequired" type="text" name="meta[first_name]" id="first_name" required>
+				</div>
+
+				<div class="mb-3">
+					<label for="last_name" class="form-label"><?php echo esc_html__( 'Last name', 'doctor2go-connect' ); ?>*</label>
+					<input class="form-control myrequired" type="text" name="meta[last_name]" id="last_name" required>
+				</div>
+
+				<div class="mb-3">
+					<label for="patient_email" class="form-label"><?php echo esc_html__( 'Email', 'doctor2go-connect' ); ?>*</label>
+					<input class="form-control myrequired" type="email" name="email" id="patient_email" required>
+				</div>
+
+				<div class="mb-3">
+					<label for="p_tel" class="form-label"><?php echo esc_html__( 'Phone', 'doctor2go-connect' ); ?>*</label>
+					<input class="form-control myrequired" type="text" name="meta[p_tel]" id="p_tel" required>
+				</div>
+
+				<div class="mb-3">
+					<label for="p_timezone" class="form-label">
+						<?php echo esc_html__( 'Timezone (Your browser detects time zones automatically, but you can set a different one here if needed.)', 'doctor2go-connect' ); ?>
+					</label>
+					<select name="meta[p_timezone]" id="p_timezone" class="form-select">
+						<option value="0"><?php echo esc_html__( 'Make a selection', 'doctor2go-connect' ); ?></option>
 						<?php foreach ( $timezones as $group => $zones ) { ?>
 							<optgroup label="<?php echo esc_html( $group ); ?>">
 								<?php foreach ( $zones as $key => $name ) { ?>
@@ -1947,36 +1992,49 @@ class D2gConnect_Shortcodes {
 							</optgroup>
 						<?php } ?>
 					</select>
-				</p>
-				<p>
-					<label><?php echo esc_html__( 'Password (your password needs to be minimum 8 characters long and it must contain minimum one special character.)', 'doctor2go-connect' ); ?>*</label>
-					<input class="myrequired" type="password" name="password" id="pass1" required>
-				</p>
-				<div class="info error" id="result" style="width:100%!important;display:none;"></div>
-				<p>
-					<label><?php echo esc_html__( 'Confirm Password', 'doctor2go-connect' ); ?>*</label>
-					<input class="myrequired" type="password" name="confirm_password" id="pass2" required>
-				</p>
+				</div>
+
+				<div class="mb-3">
+					<label for="pass1" class="form-label">
+						<?php echo esc_html__( 'Password (your password needs to be minimum 8 characters long and it must contain minimum one special character.)', 'doctor2go-connect' ); ?>*
+					</label>
+					<input class="form-control myrequired" type="password" name="password" id="pass1" required>
+				</div>
+
+				<div id="result" class="info alert alert-danger d-none" style="width:100%!important;"></div>
+
+				<div class="mb-3">
+					<label for="pass2" class="form-label"><?php echo esc_html__( 'Confirm Password', 'doctor2go-connect' ); ?>*</label>
+					<input class="form-control myrequired" type="password" name="confirm_password" id="pass2" required>
+				</div>
 
 				<?php if ( get_option( 'd2g_recaptcha_site_key' ) ) { ?>
-					<p>
+					<div class="mb-3">
 						<div class="g-recaptcha" data-sitekey="<?php echo esc_attr( $recaptcha_site_key ); ?>"></div>
-						<div id="captcha_registration"></div>
-					</p>
+						<div id="captcha_registration" class="form-text text-danger"></div>
+					</div>
 				<?php } ?>
 
 				<?php if ( shortcode_exists( 'altcha' ) ) : ?>
-					<?php echo do_shortcode( '[altcha]' ); ?>
+					<div class="mb-3">
+						<?php echo do_shortcode( '[altcha]' ); ?>
+					</div>
 				<?php endif; ?>
 
-				<?php d2g_confirmation_checkboxes(); ?>
+				<div class="mb-3">
+					<?php d2g_confirmation_checkboxes(); ?>
+				</div>
 
-				<p>
-					<input type="hidden" name="custom_registration" value="1">
-					<input id="submit_registration" type="submit" value="<?php echo esc_html__( 'Register', 'doctor2go-connect' ); ?>">
-				</p>
+				<input type="hidden" name="custom_registration" value="1">
+
+				<div class="d-grid">
+					<input id="submit_registration" type="submit"
+						value="<?php echo esc_html__( 'Register', 'doctor2go-connect' ); ?>"
+						class="btn btn-primary">
+				</div>
 			</form>
 		</div>
+
 		<?php
 		wp_localize_script(
 			'd2g-public',
@@ -2397,7 +2455,7 @@ class D2gConnect_Shortcodes {
 
 		// Check if the query returns posts
 		if ( $query->have_posts() ) {
-			echo '<div class="outer_wrapper"><div class="d2g-doctor-grid row">'; // Wrapper div for styling
+			echo '<div id="doctor_wrapper" class="outer_wrapper"><div class="d2g-doctor-grid row">'; // Wrapper div for styling
 			while ( $query->have_posts() ) {
 				$query->the_post();
 				include d2g_locate_template( 'content-doctor-grid.php' );

@@ -113,7 +113,7 @@
                             }
 
                             if( response.data.tariffs !== '' ){
-                                var tariffs = '<li class="icon-cc-mastercard col-sm-6">' + response.data.tariffs + '</li>';
+                                var tariffs = '<li class="icon-cc-mastercard col-sm-6 list-group-item"> ' + response.data.tariffs + '</li>';
                                 $('#icon_list_' + docId).append(tariffs);
                                 $('.fillup_' + docId).each(function(){
                                     $(this).html(response.data.tariffs);
@@ -126,7 +126,7 @@
                             }
 
                             if( response.data.first_availibility !== '' ){
-                                var first_availability = '<li class="icon-clock col-sm-6">' + response.data.first_availibility + '</li>';
+                                var first_availability = '<li class="icon-clock col-sm-6 list-group-item"> ' + response.data.first_availibility + '</li>';
                                 $('#icon_list_' + docId).append(first_availability);
                                 $('.calendar_button').removeClass('simple_hide');
                             } else {
@@ -152,7 +152,7 @@
                             }
 
                             if( response.data.first_availibility !== '' ){
-                                var first_availability_tab = '<li class="icon-clock col-sm-6">' + response.data.first_availibility + '</li>';
+                                var first_availability_tab = '<li class="list-group-item icon-clock col-sm-6"> ' + response.data.first_availibility + '</li>';
                                 $('#icon_list_' + docId).append(first_availability_tab);
                                 $('.calendar_button').removeClass('simple_hide');
                             } else {
