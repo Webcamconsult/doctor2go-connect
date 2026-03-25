@@ -27,7 +27,7 @@ class D2gConnect_Worker {
         } 
 
         $timecode = time();
-        update_post_meta( $doctor_id, 'd2g_availibility_check', 1 );
+        update_post_meta( $doctor_id, 'd2g_availability_check', 1 );
 		update_post_meta( $doctor_id, 'd2g_last_synced', date('Y-m-d H:i:s') );
         update_post_meta( $doctor_id, 'd2g_timecode', $timecode );
 

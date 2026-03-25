@@ -894,10 +894,10 @@ class D2gConnect_Shortcodes {
 			);
 		}
 
-		// video consult: d2g_availibility_check = 1
+		// video consult: d2g_availability_check = 1
 		if ( 'video' === $consult_type ) {
 			$args['meta_query'][] = array(
-				'key'     => 'd2g_availibility_check',
+				'key'     => 'd2g_availability_check',
 				'value'   => '1',
 				'compare' => '=',
 			);
@@ -1126,10 +1126,10 @@ class D2gConnect_Shortcodes {
 			);
 		}
 
-		// video consult: d2g_availibility_check = 1
+		// video consult: d2g_availability_check = 1
 		if ( 'video' === $consult_type ) {
 			$args['meta_query'][] = array(
-				'key'     => 'd2g_availibility_check',
+				'key'     => 'd2g_availability_check',
 				'value'   => '1',
 				'compare' => '=',
 			);

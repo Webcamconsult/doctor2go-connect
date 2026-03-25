@@ -2088,10 +2088,10 @@ function d2g_load_availability_data() {
 
 	if ( isset( $availabilityDataObj->availabilities ) || isset( $availabilityDataObj->user_has_inloop ) ) {
 		if ( ! isset( $availabilityDataObj->availabilities->message ) && count( $availabilityDataObj->availabilities ) > 0 ) {
-			update_post_meta( $doc_id, 'd2g_availibility_check', 1 );
+			update_post_meta( $doc_id, 'd2g_availability_check', 1 );
 			$docSlotsArray     = $availabilityDataObj->availabilities;
 			$firstAvailibility = $profileClass->get_first_avialibility( $docSlotsArray );
-			update_post_meta( $doc_id, 'd2g_first_availibility', $firstAvailibility );
+			update_post_meta( $doc_id, 'd2g_first_availability', $firstAvailibility );
 			$tariffs           = $profileClass->get_tariffs( $docSlotsArray );
 			$tariffStr         = d2g_get_tariff_string( $tariffs );
 			update_post_meta( $doc_id, 'd2g_tariffs', $tariffStr );
@@ -2107,8 +2107,8 @@ function d2g_load_availability_data() {
 		update_post_meta( $doc_id, 'd2g_last_synced', date('Y-m-d H:i:s') );
 		update_post_meta( $doc_id, 'd2g_timecode', time() );
 	} else {
-		update_post_meta( $doc_id, 'd2g_availibility_check', 0 );
-		update_post_meta( $doc_id, 'd2g_first_availibility', 0 );
+		update_post_meta( $doc_id, 'd2g_availability_check', 0 );
+		update_post_meta( $doc_id, 'd2g_first_availability', 0 );
 		update_post_meta( $doc_id, 'd2g_walk_in', 0 ); 
 		update_post_meta( $doc_id, 'd2g_tariffs', 0 );
 		update_post_meta( $doc_id, 'd2g_last_synced', 0 );	
