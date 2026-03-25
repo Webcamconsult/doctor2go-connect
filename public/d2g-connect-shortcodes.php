@@ -2203,7 +2203,7 @@ class D2gConnect_Shortcodes {
 									$questionnaireURLSimple = get_option( 'waiting_room_url' ) . 'answer_set/' . $appointment->answer_set_id . '?client_auth=' . $client_token;
 								}
 
-								$d2g_single_appointment = d2g_single_appointment($appointment, $docObj, $client_token, $timezone, $currLang, $d2gAdmin, true);
+								$d2g_single_appointment = d2g_single_appointment($appointment, $docObj, $client_token, $timezone, $currLang, $d2gAdmin, true, $doc_email);
 
 								$structuredAppointments += $d2g_single_appointment;
 							}
@@ -2222,7 +2222,7 @@ class D2gConnect_Shortcodes {
 				</div>
 			</div>
 		<?php } 
-
+		d2g_cancelation_request_form( $currUser, $user_meta );
 		$sc = ob_get_contents();
 		ob_end_clean();
 		return $sc;
@@ -2267,8 +2267,8 @@ class D2gConnect_Shortcodes {
 						<?php } else { ?>
 							<?php foreach ( $appointments as $appointment ) {
 								$docObj = $this->d2g_get_doctor_by_wcc_id( $appointment->user_id )[0];
-								
-								$d2g_single_appointment = d2g_single_appointment($appointment, $docObj, $client_token, $timezone, $currLang, $d2gAdmin, false);
+								$doc_email    = get_post_meta( $docObj->ID, 'd2g_main_email', true );
+								$d2g_single_appointment = d2g_single_appointment($appointment, $docObj, $client_token, $timezone, $currLang, $d2gAdmin, false, $doc_email);
 								$structuredAppointments += $d2g_single_appointment;
 
 								if ( isset( $appointment->answer_set_id ) ) {
@@ -2301,7 +2301,7 @@ class D2gConnect_Shortcodes {
 				</div>
 		<?php } ?>
 		<?php
-
+		d2g_cancelation_request_form('', '');
 		$sc = ob_get_contents();
 		ob_end_clean();
 		return $sc;

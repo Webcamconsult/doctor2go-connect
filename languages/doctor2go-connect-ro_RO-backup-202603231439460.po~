@@ -235,11 +235,11 @@ msgstr "Tokenul API nu poate fi gol."
 
 #: public/template-functions.php:1394
 msgid "Appointment date and time"
-msgstr "Data și ora programării"
+msgstr ""
 
 #: public/template-functions.php:1400
 msgid "Appointment link for doctor"
-msgstr "Link pentru programare la medic"
+msgstr ""
 
 #: admin/partials/d2g-connect-shortcode-help.php:91
 msgid "ASC (ascending) or DESC (descending)"
@@ -345,7 +345,7 @@ msgstr "Faceți clic pe butonul pentru ziua preferată pentru a alege o oră."
 
 #: public/template-functions.php:1408
 msgid "Comment (optional)"
-msgstr "Comentariu (opțional)"
+msgstr ""
 
 #: admin/partials/metaboxes.php:143 admin/partials/metaboxes.php:169
 #: admin/partials/metaboxes.php:193
@@ -370,7 +370,7 @@ msgstr "Tipuri de consultații"
 
 #: public/template-functions.php:1361
 msgid "Contact:"
-msgstr "Contact:"
+msgstr ""
 
 #: public/template-functions.php:1034
 msgid "continue and pay"
@@ -514,11 +514,11 @@ msgstr "Doctor"
 
 #: public/template-functions.php:1388
 msgid "Doctor email"
-msgstr "Email doctor"
+msgstr ""
 
 #: public/template-functions.php:1382
 msgid "Doctor name"
-msgstr "Nume doctor"
+msgstr ""
 
 #. Name of the plugin
 msgid "Doctor2Go Connect"
@@ -652,11 +652,11 @@ msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:79
 msgid "Full width (no sidebar, consultation tabs)"
-msgstr "Lățime completă (fără bară laterală, file de consultare)"
+msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:78
 msgid "Full width (no sidebar, hidden forms in fancybox)"
-msgstr "Lățime completă (fără bară laterală, formulare ascunse în fancybox)"
+msgstr ""
 
 #: public/template-functions.php:837 public/template-functions.php:992
 msgid "Gender"
@@ -828,7 +828,7 @@ msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:60
 msgid "load extra custom styles (light)"
-msgstr "încarcă stiluri personalizate suplimentare (luminos)"
+msgstr ""
 
 #: public/template-functions.php:617
 msgid "Location"
@@ -848,11 +848,11 @@ msgstr "logo utilizat în e-mail"
 
 #: public/class-d2g-connect-public.php:281
 msgid "Mail to doctor has successfully been send."
-msgstr "E-mailul către medic a fost trimis cu succes."
+msgstr ""
 
 #: public/class-d2g-connect-public.php:279
 msgid "Mail to patient has successfully been send."
-msgstr "E-mailul către pacient a fost trimis cu succes."
+msgstr ""
 
 #: public/template-functions.php:839 public/template-functions.php:994
 msgid "make a choice"
@@ -891,7 +891,7 @@ msgstr "fără disponibilități"
 
 #: admin/partials/d2g-connect-admin-display.php:61
 msgid "no extra styling"
-msgstr "fără stil suplimentar"
+msgstr ""
 
 #: endpoints/doctor.php:132
 msgid "No user ID has been sent"
@@ -1041,9 +1041,6 @@ msgid ""
 "conditions page. When the cancellation is deactivated you can still contact "
 "the doctor via the contact doctor button."
 msgstr ""
-"Vă rugăm să consultați politica noastră de anulare și rambursare în pagina "
-"noastră de termeni și condiții. Când anularea este dezactivată, puteți "
-"contacta în continuare medicul prin butonul de contactare a medicului."
 
 #: public/class-d2g-connect-public.php:183
 msgid "Please fill in all marked fields. "
@@ -1065,11 +1062,6 @@ msgid ""
 "\t\tKindly note that medical questions or requests for medical advice cannot "
 "be submitted through this form."
 msgstr ""
-"Vă rugăm să utilizați acest formular numai pentru solicitări legate de "
-"programări (de exemplu, dacă programarea dumneavoastră a fost deja plătită, "
-"dar doriți să o anulați sau să o reprogramați).\n"
-"Vă rugăm să rețineți că întrebările medicale sau solicitările de sfaturi "
-"medicale nu pot fi trimise prin acest formular."
 
 #: public/class-d2g-connect-public.php:276
 msgid "Please verify that you are not a robot."
@@ -1169,7 +1161,7 @@ msgstr "Verificarea de securitate a eșuat."
 
 #: public/template-functions.php:1414
 msgid "send"
-msgstr "trimite"
+msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:101
 #: admin/partials/d2g-connect-admin-display.php:102
@@ -1641,7 +1633,7 @@ msgstr "Vizualizați medicul"
 
 #: public/template-functions.php:1282
 msgid "View terms & conditions."
-msgstr "Vizualizați termenii și condițiile."
+msgstr ""
 
 #: public/template-functions.php:722
 msgid "view the disclaimer"
@@ -1721,7 +1713,7 @@ msgstr "Nume site:"
 
 #: admin/partials/d2g-connect-admin-display.php:77
 msgid "With sidebar (anchor links, hidden forms in fancybox)"
-msgstr "Cu bară laterală (linkuri ancoră, formulare ascunse în fancybox)"
+msgstr ""
 
 #. Description of the plugin
 msgid ""
@@ -1751,8 +1743,6 @@ msgid ""
 "You can Choose to load the custom doctor styling or not, it is an extension "
 "to the bootstarp 5 styles."
 msgstr ""
-"Puteți alege să încărcați stilizarea personalizată a medicului sau nu, este "
-"o extensie a stilurilor Bootstrap 5."
 
 #: admin/partials/d2g-connect-admin-display.php:63
 msgid ""
@@ -1819,7 +1809,7 @@ msgstr "Programarea dumneavoastră a fost anulată."
 
 #: public/template-functions.php:1301
 msgid "Your appointment has been paid."
-msgstr "Programarea dumneavoastră a fost plătită."
+msgstr ""
 
 #: public/template-functions.php:1006
 msgid "Your complaint"

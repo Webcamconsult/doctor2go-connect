@@ -143,14 +143,8 @@ jQuery(document).ready(function ($) {
     // Scroll to anchor links
     $('.scroll_to').click(function () {
         var goal = $(this).attr('href');
-        var offset = $('.navbar-wrapper-fixed').hasClass('fixed_nav') ? -50 : -200;
 
-        if ($.fn.scrollTo) {
-            $('body').scrollTo(goal, { duration: 'slow', offset: offset });
-        } else {
-            var el = document.querySelector(goal);
-            if (el) window.scrollTo({ top: el.offsetTop + offset, behavior: 'smooth' });
-        }
+        $('body').scrollTo(goal, { duration: 'fast'});
 
         return false;
     });
@@ -168,12 +162,7 @@ jQuery(document).ready(function ($) {
 
         if (scroll_to) {
             setTimeout(function () {
-                if ($.fn.scrollTo) {
-                    $('body').scrollTo('#' + scroll_to, { duration: 'slow', offset: -120 });
-                } else {
-                    var el = document.getElementById(scroll_to);
-                    if (el) window.scrollTo({ top: el.offsetTop - 120, behavior: 'smooth' });
-                }
+                $('body').scrollTo('#' + scroll_to, { duration: 'fast', offset: -50 });
             }, 800);
         }
     }
@@ -186,7 +175,7 @@ jQuery(document).ready(function ($) {
         ($('body').hasClass('d2g-doctor-overview') || $('body').hasClass('single-d2g_doctor'))
     ) {
         var $window = $(window),
-            $mainMenuBarAnchor = $('#doctor_wrapper');
+            $mainMenuBarAnchor = $('#doctor_wrapper_v1');
 
         $window.scroll(function () {
             if (!$mainMenuBarAnchor.length) return;
@@ -199,7 +188,7 @@ jQuery(document).ready(function ($) {
             if (window_top > div_top) {
                 $('body').addClass('fixed_state');
 
-                var width = document.getElementById('doctor_wrapper').offsetWidth;
+                var width = document.getElementById('doctor_wrapper_v1').offsetWidth;
                 var widthSidebar = width * 0.25;
 
                 $('#content_wrapper').css('margin-left', '25%');
@@ -577,10 +566,10 @@ jQuery(document).ready(function ($) {
         $(document).on('click', '.del_app', function (e) {
             e.preventDefault();
 
-            var $btn        = $(this);
+            
             var app_id      = $(this).data('app-id');
             var wcc_user_id = $(this).data('user-id');
-
+            var $btn        = $(this);
             // Turn on loader in this button
             $btn.addClass('btn-loading').addClass('disabled').attr('aria-disabled', 'true');
 
@@ -605,30 +594,33 @@ jQuery(document).ready(function ($) {
         });
     }
 
-    // Show cancellation form prefilled
-    $(document).on('click', '.prep_cancellation_email', function (e) {
+    $('.prep_cancellation_email').click(function(e){
         e.preventDefault();
 
-        $('#cancellation_form_wrapper').removeClass('simple_hide');
-
+        
+        $('body').scrollTo('#cancellation_form_wrapper', { duration: 'slow', offset: -120 });
         $('#app_date').val($(this).data('app-date'));
         $('#doc_name').val($(this).data('doc-name'));
+        $('#doc_name_visible').html($(this).data('doc-name'));
         $('#doc_email').val($(this).data('doc-email'));
         $('#app_link').val($(this).data('app-link'));
     });
 
+
     // Send cancellation mails (patient + doctor)
-    $(document).on('click', '#request_cancellation', function (e) {
+    $('#request_cancellation').click(function (e) {
         e.preventDefault();
 
-        loader();
+        var $btn        = $(this);
+        // Turn on loader in this button
+        $btn.addClass('btn-loading').addClass('disabled').attr('aria-disabled', 'true');
+
+        
 
         var baseData = {
             action: 'send_ajax_d2g_email',
             app_date: $('#app_date').val(),
             app_link: $('#app_link').val(),
-            bic: $('#bic').val(),
-            iban: $('#iban').val(),
             comment: $('#comment').val(),
             nonce: d.ajax.mail_nonce
         };
@@ -642,12 +634,12 @@ jQuery(document).ready(function ($) {
             to_email: $('#client_email').val(),
             title: d.mail.sender_name + ': ' + d.msg.cancel_title + ' (' + $('#doc_name').val() + ')'
         }), function (res) {
-
-            $('#return1')
-                .show()
-                .html(res.message === 'mail_send_cancellation_patient'
-                    ? d.msg.mail_patient_ok
-                    : d.msg.mail_patient_err);
+            $('#return1').show().html(res.message === 'mail_send_cancellation_patient'? d.msg.mail_patient_ok: d.msg.mail_patient_err);
+            if(d.msg.mail_patient_ok){
+                $('#return1').addClass('alert alert-success');
+            } else {
+                $('#return1').addClass('alert alert-danger');
+            }
         });
 
         // Mail to doctor
@@ -659,17 +651,19 @@ jQuery(document).ready(function ($) {
             from_email: $('#client_email').val(),
             title: d.mail.sender_name + ': ' + d.msg.cancel_title + ' (' + $('#client_name').val() + ')'
         }), function (res) {
-
-            loader();
-
-            $('#return2')
-                .show()
-                .html(res.message === 'mail_send_cancellation_doctor'
-                    ? d.msg.mail_doc_ok
-                    : d.msg.mail_doc_err);
+            $('#return2').show().html(res.message === 'mail_send_cancellation_doctor'? d.msg.mail_doc_ok: d.msg.mail_doc_err);
+            if(d.msg.mail_doc_ok){
+                $('#return2').addClass('alert alert-success');
+            }else {
+                $('#return2').addClass('alert alert-danger');
+            }
+            $btn.removeClass('disabled').removeAttr('aria-disabled');
+            $btn.find('.del-label').css('opacity', 1);
+            $btn.find('.del-spinner').hide();
+            $('#cancellation_form').addClass('simple_hide');
         });
 
-        $('#cancellation_form_wrapper').addClass('simple_hide');
+        
     });
 
     /* =========================================
@@ -806,11 +800,11 @@ jQuery(document).ready(function ($) {
             }
 
             if (checker === false) {
-                $("#written_consult").toggleClass('loading');
 
                 var myformData = new FormData($("#written_con_form")[0]);
                 myformData.append('action', 'd2g_create_wcc_written_cosnsult');
 
+            
                $.ajax({
                 type: "POST",
                 data: myformData,
@@ -822,10 +816,9 @@ jQuery(document).ready(function ($) {
                 },
                 success: function (response) {
                     console.log(response);
-                    $("#written_consult").toggleClass('loading');
 
                     if (response && response.data && response.data.redirect_url) {
-                        window.location.href = response.data.redirect_url;
+                       //window.location.href = response.data.redirect_url;
                     }
                 },
                 error: function (xhr, textStatus, errorThrown) {

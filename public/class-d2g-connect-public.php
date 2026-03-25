@@ -102,11 +102,9 @@ class D2gConnect_Public {
 		wp_enqueue_style( $this->plugin_name . '-flaticon-derma', plugin_dir_url( __FILE__ ) . 'fonts/wcc-flaticon2/font/flaticon_derma2go.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name . '-cal', plugin_dir_url( __FILE__ ) . 'css/cal-main.min.css', array(), $this->version, 'all' );
 
-		if ( get_option( 'd2g_bootstrap_css' ) != 'no-style' ) {
-			if ( get_option( 'd2g_bootstrap_css' ) == 'light' || get_option( 'd2g_bootstrap_css' ) == '' ) {
+		if ( get_option( 'd2g_theme_css' ) != 'no-style' ) {
+			if ( get_option( 'd2g_theme_css' ) == 'light' || get_option( 'd2g_theme_css' ) == '' ) {
 				wp_enqueue_style( $this->plugin_name . '-d2g-light', plugin_dir_url( __FILE__ ) . 'css/d2g-light.css', array(), $this->version, 'all' );
-			} elseif ( get_option( 'd2g_bootstrap_css' ) == 'dark' ) {
-				wp_enqueue_style( $this->plugin_name . '-dark', plugin_dir_url( __FILE__ ) . 'css/d2g-dark.css', array(), $this->version, 'all' );
 			}
 		}
 	}
@@ -276,9 +274,9 @@ class D2gConnect_Public {
 					'robot'           => esc_html__( 'Please verify that you are not a robot.', 'doctor2go-connect' ),
 
 					'cancel_title'    => esc_html__( 'Cancellation request for appointment.', 'doctor2go-connect' ),
-					'mail_patient_ok' => esc_html__( 'Confirmation mail to patient has successfully been send.', 'doctor2go-connect' ),
+					'mail_patient_ok' => esc_html__( 'Mail to patient has successfully been send.', 'doctor2go-connect' ),
 					'mail_patient_err'=> esc_html__( 'There has been a problem sending the mail to the patient.', 'doctor2go-connect' ),
-					'mail_doc_ok'     => esc_html__( 'Cancellation request mail to doctor has successfully been send.', 'doctor2go-connect' ),
+					'mail_doc_ok'     => esc_html__( 'Mail to doctor has successfully been send.', 'doctor2go-connect' ),
 					'mail_doc_err'    => esc_html__( 'There has been a problem sending the mail to the doctor.', 'doctor2go-connect' ),
 
 					// written consultation
@@ -636,8 +634,10 @@ class D2gConnect_Public {
 		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
 		if ( ! wp_verify_nonce( $nonce, 'send_ajax_d2g_email' ) ) {
 			wp_send_json_error( esc_html__( 'Security check failed.', 'doctor2go-connect' ) );
+			
 		}
-		$type       = isset( $_POST['e-mail'] ) ? sanitize_email( wp_unslash( $_POST['e-mail'] ) ) : '';
+		
+		$type       = isset( $_POST['e-mail'] ) ? sanitize_text_field( wp_unslash( $_POST['e-mail'] ) ) : '';
 		$from_email = isset( $_POST['from_email'] ) ? sanitize_email( wp_unslash( $_POST['from_email'] ) ) : '';
 		$from_name  = isset( $_POST['from_name'] ) ? sanitize_text_field( wp_unslash( $_POST['from_name'] ) ) : '';
 		$to_email   = isset( $_POST['to_email'] ) ? sanitize_email( wp_unslash( $_POST['to_email'] ) ) : '';
@@ -660,6 +660,7 @@ class D2gConnect_Public {
 		);
 		$emailData = get_posts( $args );
 
+
 		$content = str_replace( '%to_name%', $to_name, $emailData[0]->post_content );
 		$content = str_replace( '%from_name%', $from_name, $content );
 		$content = str_replace( '%link%', $link, $content );
@@ -673,6 +674,8 @@ class D2gConnect_Public {
 		$content = wpautop( $content );
 
 		$msg = d2g_html_email( $content );
+
+	
 
 		// set header for email and send mail
 		$headers = 'From: ' . $from_name . ' <' . $from_email . '>' . "\r\n";

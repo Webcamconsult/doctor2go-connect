@@ -434,6 +434,9 @@ class D2G_booking_wcc_user {
 	// if success user gets redirected to the doctor waiting room
 	public static function d2g_create_wcc_written_cosnsult() {
 
+		nice_dump($_POST);
+		die();
+
 		if ( ! isset( $_POST['email_advice_form_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['email_advice_form_nonce'] ) ), 'email_advice_form_action' ) ) {
 			return false; // stop processing immediately
 		}

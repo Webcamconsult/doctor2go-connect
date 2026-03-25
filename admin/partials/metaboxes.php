@@ -399,11 +399,7 @@ function d2g_meta_box_page_type_cb( $post ) {
 		'Liked doctors',
 		'Questionnaires',
 		'Disclaimer',
-		'Secure patient portal',
-		'Email consultation',
-		'Public patient portal',
 		'Appointment confirmation',
-		'Intake questionnaire',
 		'Email advice confirmation',
 
 	);

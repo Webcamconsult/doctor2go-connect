@@ -28,8 +28,7 @@ $post_ID		 = $d2g_profile_data->doctor_profile_ID;
 
 ?>
 
-<article id="doctor_wrapper_v3" class="doctor_detail_v3 type-d2g_doctor">
-	
+<article id="doctor_wrapper_v3" class="doctor_detail_v3 type-d2g_doctor  doc_details">
 	<div id="content_wrapper">
 		<div class="top mb-<?php echo (wpmd_is_notphone()) ? '4' : '2'; ?>">
 			<div id="top_content" class="site-content <?= esc_attr(apply_filters('bootscore/class/container', 'container', 'single')); ?> <?= esc_attr(apply_filters('bootscore/class/content/spacer', 'pt-3 pb-3', 'single')); ?>">

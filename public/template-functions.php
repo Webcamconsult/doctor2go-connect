@@ -328,34 +328,34 @@ function cb_d2g_single_sidebar( $d2g_profile_data = '' ) {
 		$doc_pic = $d2g_profile_data->feat_pic_square;
 	}
 	?>
-	<div class="col-sm-3 sidebar">
+	<div class="col-sm-3 sidebar not_mobile">
 		<div class="sidebar_inner">
 			
 			<?php if ( $d2g_profile_data->walk_in_check == true ) { ?>
 				<span class="css_shape_doctor"></span>
 			<?php } ?>
-			<figure>
-				<img style="width:100%" src="<?php echo esc_html( $doc_pic ); ?>" alt="<?php echo esc_html( get_the_title() ); ?>">
+			<figure class="card p-5 mb-3">
+				<img style="width:100%; border-radius:100%;" src="<?php echo esc_html( $doc_pic ); ?>" alt="<?php echo esc_html( get_the_title() ); ?>">
 				<?php do_action( 'd2g_like_button', $post_id ); ?>
 			</figure>
 			<?php do_action( 'd2g_consult_buttons', 'detail', 'small' ); ?>
-			<ul class="margin-bottom-standard anchor_links">
-				<li class=" icon-right-open"><a class="scroll_to" href="#info"><?php echo esc_html__( 'Short info', 'doctor2go-connect' ); ?></a></li>
-				<li class=" icon-right-open"><a class="scroll_to" href="#bio"><?php echo esc_html__( 'About', 'doctor2go-connect' ); ?></a></li>
+			<ul class="margin-bottom-standard anchor_links list-group">
+				<li class="list-group-item icon-right-open"><a class="scroll_to" href="#info"><?php echo esc_html__( 'Short info', 'doctor2go-connect' ); ?></a></li>
+				<li class="list-group-item icon-right-open"><a class="scroll_to" href="#bio"><?php echo esc_html__( 'About', 'doctor2go-connect' ); ?></a></li>
 				<?php if ( $d2g_profile_data->locations ) { ?>
-					<li class=" icon-right-open"><a class="scroll_to" href="#location_wrapper"><?php echo esc_html__( 'Location(s)', 'doctor2go-connect' ); ?></a></li>
+					<li class="list-group-item icon-right-open"><a class="scroll_to" href="#location_wrapper"><?php echo esc_html__( 'Location(s)', 'doctor2go-connect' ); ?></a></li>
 				<?php } ?>
 				<?php if ( $d2g_profile_data->exps ) { ?>
-					<li class=" icon-right-open"><a class="scroll_to" href="#exp"><?php echo esc_html__( 'Experience', 'doctor2go-connect' ); ?></a></li>
+					<li class="list-group-item icon-right-open"><a class="scroll_to" href="#exp"><?php echo esc_html__( 'Experience', 'doctor2go-connect' ); ?></a></li>
 				<?php } ?>                
 				<?php if ( $d2g_profile_data->edus ) { ?>
-					<li class=" icon-right-open"><a class="scroll_to" href="#edu"><?php echo esc_html__( 'Education', 'doctor2go-connect' ); ?></a></li>
+					<li class="list-group-item icon-right-open"><a class="scroll_to" href="#edu"><?php echo esc_html__( 'Education', 'doctor2go-connect' ); ?></a></li>
 				<?php } ?>
 				<?php if ( $d2g_profile_data->pubs ) { ?>
-					<li class=" icon-right-open"><a class="scroll_to" href="#pub"><?php echo esc_html__( 'Publications', 'doctor2go-connect' ); ?></a></li>
+					<li class="list-group-item icon-right-open"><a class="scroll_to" href="#pub"><?php echo esc_html__( 'Publications', 'doctor2go-connect' ); ?></a></li>
 				<?php } ?>
 				<?php if ( $d2g_profile_data->walk_in_check == true ) { ?>
-					<li class=" icon-right-open"><a class="highlight scroll_to" href="#inloop"><?php echo esc_html__( 'Walk in now', 'doctor2go-connect' ); ?></a></li>
+					<li class="list-group-item icon-right-open"><a class="highlight scroll_to" href="#inloop"><?php echo esc_html__( 'Walk in now', 'doctor2go-connect' ); ?></a></li>
 				<?php } ?>
 			</ul>
 		</div>
@@ -569,10 +569,12 @@ function d2g_show_booking_calendar( $post = '', $only_cal = false, $in_tabs = fa
 	?>
 	<!--booking calendar-->
 	<div class="row">
+			
 		<div id="calendar_wrapper" class="calendar section mb-5 col-sm-6">
-			<div class="alert alert-light" role="alert" id="booking_intro">
-				<h3><?php echo esc_html__('Booking instructions', 'doctor2go-connect')?></h3>
-				<ol class="list-group list-group-numbered">
+			<h3 class="section_title"><?php echo esc_html__('Booking calendar', 'doctor2go-connect')?></h3>
+			<div class="mb-5"  id="booking_intro">
+				<h4 class="opener"><?php echo esc_html__('Need help? Click here for the booking instructions.', 'doctor2go-connect')?> <span class="icon-angle-down"></span></h4>
+				<ol class="list-group list-group-numbered simple_hide">
 					<li class="list-group-item">
 						<?php echo esc_html__( 'In the calendar, select a day that has available appointments. The available days are marked with a button showing the number of free slots (for example, "3 slots").', 'doctor2go-connect' ); ?>
 					</li>
@@ -582,12 +584,16 @@ function d2g_show_booking_calendar( $post = '', $only_cal = false, $in_tabs = fa
 					<li class="list-group-item">
 						<?php echo esc_html__( 'After selecting your time, fill in the booking form with your details and submit it to complete your reservation.', 'doctor2go-connect' ); ?>
 					</li>
+					<li class="list-group-item">
+						<?php echo esc_html__( 'You will than receive an email with futher instructions.', 'doctor2go-connect' ); ?>
+					</li>
 				</ol>
 			</div>
 			<div id="calendar"></div>
 		</div>
 		<!--booking form-->
-		<div class="col-sm-6">
+		<div class="col-sm-6 cal_form_wrapper">
+			
 			<div  class=" p-4 border rounded bg-light simple_hide" id="booking_form_wrapper">
 				<div id="error" class="alert alert-danger simple_hide"></div>
 				<p id="app_msg_success" class="alert alert-success simple_hide"></p>
@@ -960,6 +966,9 @@ function d2g_show_written_con_form() {
 						</div>	
 					</div>
 				</div>
+				<legend class="fs-5 mb-3">
+					<strong><?php echo esc_html__('Personal information', 'doctor2go-connect')?></strong>
+				</legend>
 				<div class="row mb-3">
 					<div class="col-sm-4">
 						<div>
@@ -1002,24 +1011,87 @@ function d2g_show_written_con_form() {
 						
 					</div>  
 				</div>
-				<div class="mb-3">
-					<label for="complaint_description" class="form-label"><?php echo esc_html__( 'Your complaint', 'doctor2go-connect' ); ?>*</label>
-					<textarea class="required_wc form-control w-100" name="complaint_description" rows="3" id="complaint_description"></textarea>
-				</div>
-				<div class="row mb-3">
-					<div class="col-md-4">
-						<label for="image_1" class="form-label"><?php echo esc_html__( 'Upload image 1', 'doctor2go-connect' ); ?></label>
-						<input class="form-control" type="file" name="image_1" id="image_1" accept="image/*">
+				<!-- Over de huidaandoening -->
+                <fieldset class="mb-4">
+                    <legend class="fs-5 mb-3">
+                        <strong><?php echo esc_html__('About the skin condition', 'doctor2go-connect')?></strong>
+                    </legend>
+					<div class="row mb-3">
+						<div class="col-md-4">
+							<label for="image_1" class="form-label"><?php echo esc_html__( 'Upload image 1', 'doctor2go-connect' ); ?></label>
+							<input class="form-control" type="file" name="image_1" id="image_1" accept="image/*">
+						</div>
+						<div class="col-md-4">
+							<label for="image_2" class="form-label"><?php echo esc_html__( 'Upload image 2', 'doctor2go-connect' ); ?></label>
+							<input class="form-control" type="file" name="image_2" id="image_2" accept="image/*">
+						</div>
+						<div class="col-md-4">
+							<label for="image_3" class="form-label"><?php echo esc_html__( 'Upload image 3', 'doctor2go-connect' ); ?></label>
+							<input class="form-control" type="file" name="image_3" id="image_3" accept="image/*">
+						</div>
 					</div>
-					<div class="col-md-4">
-						<label for="image_2" class="form-label"><?php echo esc_html__( 'Upload image 2', 'doctor2go-connect' ); ?></label>
-						<input class="form-control" type="file" name="image_2" id="image_2" accept="image/*">
-					</div>
-					<div class="col-md-4">
-						<label for="image_3" class="form-label"><?php echo esc_html__( 'Upload image 3', 'doctor2go-connect' ); ?></label>
-						<input class="form-control" type="file" name="image_3" id="image_3" accept="image/*">
-					</div>
-				</div>
+                    <!-- Beschrijving / eerste opgemerkt -->
+                    <div class="mb-3">
+                        <label for="beschrijf_de_klacht" class="form-label">
+                            <?php echo esc_html__('Describe the complaint', 'doctor2go-connect')?> *
+                        </label>
+                        <textarea id="beschrijf_de_klacht" name="complaint_description" class="form-control required_wc" rows="3" placeholder="<?php echo esc_attr__('For example: itchy red spots or bumps...', 'doctor2go-connect')?>"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="opgemerkt" class="form-label">
+                            <?php echo esc_html__('When did you first notice this spot?', 'doctor2go-connect')?> *
+                        </label>
+                        <textarea id="opgemerkt" name="first_noticed" class="form-control required_wc" rows="2" placeholder="<?php echo esc_attr__('For example: 2 weeks ago...', 'doctor2go-connect')?>"></textarea>
+                    </div>
+
+                    <!-- Locatie / veranderd -->
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="locatie" class="form-label">
+                                <?php echo esc_html__('Location on the body', 'doctor2go-connect')?> *
+                            </label>
+                            <input type="text" id="locatie" name="location" class="form-control required_wc" placeholder="<?php echo esc_attr__('For example: left forearm', 'doctor2go-connect')?>">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="veranderd" class="form-label">
+                                <?php echo esc_html__('Has the spot changed?', 'doctor2go-connect')?>
+                            </label>
+                            <select id="veranderd" name="has_changed" class="form-select">
+                                <option value="nee"><?php echo esc_html__('No', 'doctor2go-connect')?></option>
+                                <option value="grootte"><?php echo esc_html__('Yes, in size', 'doctor2go-connect')?></option>
+                                <option value="kleur"><?php echo esc_html__('Yes, in color', 'doctor2go-connect')?></option>
+                                <option value="vorm"><?php echo esc_html__('Yes, in shape', 'doctor2go-connect')?></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Symptomen switches -->
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="jeuk" name="symptoms[]" value="jeuk" role="switch">
+                                <label class="form-check-label" for="jeuk">
+                                    <?php echo esc_html__('Does the skin condition itch?', 'doctor2go-connect')?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="bloed" name="symptoms[]" value="bloed" role="switch">
+                                <label class="form-check-label" for="bloed">
+                                    <?php echo esc_html__('Does the skin condition bleed?', 'doctor2go-connect')?>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+					<div class="mb-3">
+                        <label for="history" class="form-label">
+                            <?php echo esc_html__('Medical history (skin cancer)', 'ai-derma-plugin')?>
+                        </label>
+                        <textarea id="history" name="medical_history" class="form-control" rows="3" placeholder="<?php echo esc_attr__('If applicable...', 'ai-derma-plugin')?>"></textarea>
+                    </div>
+                </fieldset>
 				<div class="mb-3">
 					<!-- reCAPTCHA Widget -->
 					<?php if ( get_option( 'd2g_recaptcha_site_key' ) ) { ?>
@@ -1130,20 +1202,7 @@ function d2g_show_consult_buttons( $template = '', $size = '' ) {
 	}
 
 	$consult_buttons = array(
-		'show_doc'     => array(
-			'image'       => ( $size == 'small' ) ? 'view-doctor-small.png' : 'view-doctor.png',
-			'name'        => __( 'View doctor', 'doctor2go-connect' ),
-			'show'        => ( $template == 'detail' ) ? false : true,
-			'li_class'    => '',
-			'a_class'     => '',
-			'a_class_out' => '',
-			'link'        => $detail_link,
-			'price'       => '',
-			'currency'    => '',
-			'link_login'  => '',
-			'link_regis'  => '',
-			'price_class' => '',
-		),
+		
 		'walk_in'      => array(
 			'image'       => ( $size == 'small' ) ? 'walk-in-small.png' : 'walk-in.png',
 			'name'        => __( 'Walk-in Consult', 'doctor2go-connect' ),
@@ -1160,7 +1219,7 @@ function d2g_show_consult_buttons( $template = '', $size = '' ) {
 		),
 		'written_con'  => array(
 			'image'       => ( $size == 'small' ) ? 'written-consult-small.png' : 'written-consult.png',
-			'name'        => __( 'Written Consult', 'doctor2go-connect' ),
+			'name'        => __( 'E-mail advice', 'doctor2go-connect' ),
 			'show'        => ( $d2g_profile_data->doctor_meta['written_con_price'][0] != '' && $holiday == false ) ? true : false,
 			'li_class'    => '',
 			'a_class'     => ( $template == 'detail' ) ? 'fancybox' : '',
@@ -1172,6 +1231,7 @@ function d2g_show_consult_buttons( $template = '', $size = '' ) {
 			'link_regis'  => $pageRegis['url'] . '?redirect_to=' . urlencode( $detail_link . '?open=written_con_link' ),
 			'price_class' => '',
 		),
+		
 		'physical_con' => array(
 			'image'       => ( $size == 'small' ) ? 'physical-consult-small.png' : 'physical-consult.png',
 			'name'        => __( 'Physical Consult', 'doctor2go-connect' ),
@@ -1245,9 +1305,14 @@ function d2g_show_consult_buttons( $template = '', $size = '' ) {
 }
 
 
-function d2g_single_appointment($appointment, $docObj, $client_token, $timezone, $currLang, $d2gAdmin, $show_intake){
+function d2g_single_appointment($appointment, $docObj, $client_token, $timezone, $currLang, $d2gAdmin, $show_intake, $doc_email = ''){
 	// doctor image
-	$feat_pic = wp_get_attachment_image_src( get_post_thumbnail_id( $docObj->ID ), 'thumbnail' )[0];
+	if(get_option('d2g_use_imgix') == 1){
+		$feat_pic = wp_get_attachment_image_src( get_post_thumbnail_id( $docObj->ID ), 'full' )[0].'&w=200&h=200&fit=crop&crop=faces';
+	} else {
+		$feat_pic = wp_get_attachment_image_src( get_post_thumbnail_id( $docObj->ID ), 'thumbnail' )[0];
+	}
+	
 	if ( $feat_pic == '' ) {
 		if ( get_option( 'd2g_placeholder' ) != '' ) {
 			$feat_pic = wp_get_attachment_image_src( get_option( 'd2g_placeholder' ), 'thumbnail' )[0];
@@ -1276,36 +1341,42 @@ function d2g_single_appointment($appointment, $docObj, $client_token, $timezone,
 	// create the links
 	$delBtn             = '';
 	$payment_link		= '';
+	$payment_info		= '';
 	$pageAppConf 		= $d2gAdmin::d2g_page_url( $currLang, 'appointment_confirmation', false );
-	$faqPage 			= $d2gAdmin::d2g_page_url( $currLang, 'd2g_policies', false );
-	$faqLink			= '<a href="'.$faqPage.'">'. esc_html__( 'paid', 'doctor2go-connect' ) . '</a>';
+	$termsPageURL 		= $d2gAdmin::d2g_page_url( $currLang, 'd2g_policies', false );
+	$termsLink			= '<a href=\"'.$termsPageURL.'\">'. esc_html__( 'View terms & conditions.', 'doctor2go-connect' ) . '</a>';
 	if ( isset( $appointment->answer_set_id ) && $show_intake == true ) {
-		$questionnaireLink = '<a class="btn btn-outline-primary payment_btn w-100" target="_blank" href="'.$pageAppConf.'?app='.$appointment->_id.'&client_token='.$client_token.'"><span class="flaticon-medical-information"></span> '.esc_html__( 'intake quesionnaire', 'doctor2go-connect' ).'</a>';
+		$questionnaireLink = '<a class="btn btn-outline-primary payment_btn w-100 mb-2" target="_blank" href="'.$pageAppConf.'?app='.$appointment->_id.'&client_token='.$client_token.'"><span class="flaticon-medical-information"></span> '.esc_html__( 'intake quesionnaire', 'doctor2go-connect' ).'</a>';
 	}
 	$consultLink 		= '<a class="button btn-primary btn invert mb-2 w-100" target="_blank" href="' . get_option( 'waiting_room_url' ) . 'wachtkamer/' . $appointment->token . '?locale=' . explode( '_', get_locale() )[0] . '"><span class=" icon-videocam-outline"></span> ' . esc_html__( 'go to consultation', 'doctor2go-connect' ) . '</a>';
-	$cancelBtn      	= '<a class="prep_cancellation_email btn-danger btn scroll_to" href="#cancellation_form_wrapper" data-app-date="'.$date->format("d/m/Y").' '. esc_html__(' at ', 'd2g-connect').' ' .$date->format("H:i").'  ('.$timezone.')" data-app-link="'.get_option('waiting_room_url').'admin/appointments/'.$appointment->_id.'" data-doc-email="'.$doc_email.'" data-doc-name="'.$docObj->post_title.'"><span class=" icon-cancel-circled"></span> '. esc_html__('request cancellation', 'd2g-connect').'</a>';
+	$contactBtn      	= '<a class="prep_cancellation_email btn-outline-secondary btn scroll_to w-100 fancybox_spec " href="#cancellation_form_wrapper" data-app-date="'.$date->format("d/m/Y").' '. esc_html__(' at ', 'd2g-connect').' ' .$date->format("H:i").'  ('.$timezone.')" data-app-link="'.get_option('waiting_room_url').'admin/appointments/'.$appointment->_id.'" data-doc-email="'.$doc_email.'" data-doc-name="'.$docObj->post_title.'"><span class=" icon-mail"></span> '. esc_html__('contact doctor', 'd2g-connect').'</a>';
 	
 	if ( $diffInSeconds <= 0 || $diffInSeconds > 86400 ) {
 		$delBtn 		= '<a class="del_app button btn-danger btn w-100 mb-2" href="#" data-app-id="' . $appointment->_id . '" data-user-id="' . $appointment->user_id . '"><span class=" icon-cancel-circled"></span> ' . esc_html__( 'cancel appointment', 'doctor2go-connect' ) . '<span class="btn-spinner spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span></a>';
 	} else {
-		$delBtn 		= '<div class="icon-info-outline alert alert-danger w-100 mb-2 p-btn" 
+		$delBtn 		= '<div class="icon-info-outline alert alert-danger w-100 mb-2 p-btn text-center" 
 		data-bs-toggle="tooltip" 
 		data-bs-custom-class="custom-tooltip" 
 		data-bs-placement="top" 
-		data-bs-title="' . esc_attr__( 'Please check our cancellation and refund policy in our FAQ', 'doctor2go-connect' ) . $faqLink. '">
-		' . esc_html__( 'cancellation not possible', 'doctor2go-connect' ) . '</div>'.$cancelBtn;
+		data-bs-title="' . esc_attr__( 'Cancellations are generally permitted up to 24 hours before the scheduled appointment. Please review our cancellation and refund policy on the Terms and Conditions page.
+		If the cancellation option is no longer available, you may still contact the doctor using the Contact Doctor button.', 'doctor2go-connect' ) . '">
+		' . esc_html__( 'cancellation deactivated', 'doctor2go-connect' ) . '<br>' .$termsLink . '</div>';
 	}
 
 	if ( $appointment->payment_has_paid == true ) {
-		$payment_info 	= '<div class="paid"><strong>' . esc_html__( 'paid', 'doctor2go-connect' ) . '</strong></div>';
-		$delBtn			= $cancelBtn;
+		$payment_info 	= '<div class="alert alert-success m-3 mb-0 icon-info-outline"><strong>' . esc_html__( 'Your appointment has been paid.', 'doctor2go-connect' ) . '</strong></div>';
+		$delBtn 		= '<div class="icon-info-outline alert alert-danger w-100 mb-2 p-btn text-center" 
+		data-bs-toggle="tooltip" 
+		data-bs-custom-class="custom-tooltip" 
+		data-bs-placement="top" 
+		data-bs-title="' . esc_attr__( 'Your appointment has already been paid for; therefore, the cancellation option has been deactivated. Please refer to our Terms and Conditions page for details.
+		If cancellation is deactivated, you can still contact the doctor using the Contact Doctor button to request a cancellation and refund.', 'doctor2go-connect' ) . '">
+		' . esc_html__( 'cancellation deactivated', 'doctor2go-connect' ) . '<br>' . $termsLink . '</div>';
 	} else {
 		
 		$redirectURL 	= '&redirect_url=' . urlencode( $pageAppConf . '?app=' . $appointment->_id . '&client_token=' . $client_token ) ;
-
 		$payment_info 	= '<p class="payment_needed alert alert-warning m-3 mb-0 icon-info-outline" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-placement="top" data-bs-title="' . esc_attr__( 'Payment may be made in advance or upon arrival at your appointment. Please note that appointments paid upfront cannot be cancelled.', 'doctor2go-connect' ) . '"><strong>' . esc_html__( 'A payment is required for this appointment.', 'doctor2go-connect' ) . '</strong></p>';
-
-		$payment_link 	= '<a class="btn btn-secondary payment_btn w-100 mb-2" target="_blank" href="' . get_option( 'waiting_room_url' ) . 'payment/' . $appointment->_id . '?locale=' . explode( '_', get_locale() )[0] . $redirectURL . '">' . esc_html__( 'pay now', 'doctor2go-connect' ) . '</a>';
+		$payment_link 	= '<a class="icon-cc-mastercard btn btn-secondary payment_btn w-100 mb-2" target="_blank" href="' . get_option( 'waiting_room_url' ) . 'payment/' . $appointment->_id . '?locale=' . explode( '_', get_locale() )[0] . $redirectURL . '"> ' . esc_html__( 'pay now', 'doctor2go-connect' ) . '</a>';
 	}
 
 	// create the appointment rows and save in array to sort them later
@@ -1320,7 +1391,7 @@ function d2g_single_appointment($appointment, $docObj, $client_token, $timezone,
 					<p class="address">' . $appointment->location_to_go->location_name . ': ' . $appointment->location_to_go->location_full_adress_url . '</p>
 				</div> 
 			</div>
-			<div class="btn_wrap p-3">'. $payment_link . $delBtn . $questionnaireLink . '</div>
+			<div class="btn_wrap p-3">'. $payment_link . $delBtn . $questionnaireLink . $contactBtn . '</div>
 			</div></div>';
 	} else {
 		$structuredAppointments[ $appointment->date ] = '<div class="outer_app_wrapper card mb-5">'.$payment_info.'<div id="app-' . $appointment->_id . '" class="app_row align-items-center d-flex justify-content-between">
@@ -1332,7 +1403,7 @@ function d2g_single_appointment($appointment, $docObj, $client_token, $timezone,
 					<a href="' . get_the_permalink( $docObj->ID ) . '"><h4>' . $docObj->post_title . '</h4></a>
 				</div> 	
 			</div>
-			<div class="btn_wrap p-3">'. $payment_link  . $consultLink  . $delBtn . $questionnaireLink . '</div>
+			<div class="btn_wrap p-3">'. $payment_link  . $consultLink  . $delBtn . $questionnaireLink . $contactBtn .'</div>
 			</div></div>';
 	}
 
@@ -1342,63 +1413,82 @@ function d2g_single_appointment($appointment, $docObj, $client_token, $timezone,
 }
 
 
-function d2g_cancelation_request_form($currUser, $user_meta){ ?>
-	<div id="return1" class="simple_hide mb-m center"></div>
+
+function d2g_cancelation_request_form( $currUser, $user_meta ) {
+
+    $first_name = isset( $user_meta['first_name'][0] ) && $user_meta['first_name'][0] !== '' ? $user_meta['first_name'][0] : '';
+    $last_name  = isset( $user_meta['last_name'][0] ) && $user_meta['last_name'][0] !== '' ? $user_meta['last_name'][0] : '';
+    $full_name  = trim( $first_name . ' ' . $last_name );
+    $user_email = isset( $currUser->data->user_email ) && $currUser->data->user_email !== '' ? $currUser->data->user_email : '';
+
+    ?>
+
+<div id="cancellation_form_wrapper" class="simple_hide list_app walkin_form_wrapper mb-xl" style="max-width:500px">
+	<div class="inner_wrapper">
+		<h2 class="mb-3"><?php echo esc_html__( 'Contact:', 'doctor2go-connect' ); ?> <span id="doc_name_visible"></span></h2>
+		<p class="alert alert-warning"><?php echo esc_html__( 'Please use this form only for appointment-related requests (for example, if your appointment has already been paid for but you wish to cancel or reschedule it).
+		Kindly note that medical questions or requests for medical advice cannot be submitted through this form.', 'doctor2go-connect' ); ?></p>
+		<div id="return1" class="simple_hide mb-m center"></div>
 		<div id="return2" class="simple_hide mb-m center"></div>
-		<div id="cancellation_form_wrapper" class="simple_hide list_app walkin_form_wrapper mb-xl">
-			<h2><?php echo esc_html__('Cancellation request', 'd2g-connect')?></h2>
-			
-			<form id="cancellation_form" method="post" action="">
-				<div class="row mb-m">
-                    <div class="col-sm-6">
-                        <div>
-                            <label for="client_name"><?php echo esc_html__('Patient name', 'd2g-connect')?> *</label>
-                            <input class="required" type="text" value="<?php echo esc_html($user_meta['first_name'][0])?> <?php echo esc_html($user_meta['last_name'][0])?>" name="client_name" id="client_name">
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div>
-                            <label for="client_email"><?php echo esc_html__('Patient email', 'd2g-connect')?> *</label>
-                            <input class="required" type="text" value="<?php echo esc_html($currUser->data->user_email)?>" name="client_email" id="client_email">
-                        </div>
-                    </div>
-					<div class="col-sm-6">
-                        <div>
-                            <label for="doc_name"><?php echo esc_html__('Doctor name', 'd2g-connect')?> *</label>
-                            <input readonly class="required" type="text" value="" name="doc_name" id="doc_name">
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div>
-                            <label for="doc_email"><?php echo esc_html__('Doctor email', 'd2g-connect')?> *</label>
-                            <input readonly class="required" type="text" value="" name="client_email" id="doc_email">
-                        </div>
-                    </div>
-					<div class="col-sm-12">
-                        <div>
-                            <label for="app_date"><?php echo esc_html__('Appointment date and time', 'd2g-connect')?> *</label>
-                            <input readonly class="required" type="text" value="" name="doc_name" id="app_date">
-                        </div>
-                    </div>
-					<div class="col-sm-12 simple_hide">
-                        <div>
-                            <label for="app_link"><?php echo esc_html__('Appointment link for doctor', 'd2g-connect')?> *</label>
-                            <input readonly class="required" type="text" value="" name="doc_name" id="app_link">
-                        </div>
-                    </div>
+		<form id="cancellation_form" method="post" action="">
+			<div class="row mb-m">
+				<div class="col-sm-6 mb-2">
+					<div>
+						<label for="client_name" class="form-label"><?php echo esc_html__( 'Patient name', 'doctor2go-connect' ); ?> *</label>
+						<input class="form-control required" type="text" value="<?php echo esc_attr( $full_name ); ?>" name="client_name" id="client_name">
+					</div>
 				</div>
-				<div class="row mb-m">
-                    <div class="col-sm-12">
-                        <div>
-						<label for="app_date"><?php echo esc_html__('Comment (optional)', 'd2g-connect')?></label>
-                            <textarea id="comment" name="comment"></textarea>
-                        </div>
-                    </div>
-                </div>
-				<a href="#" class="btn btn-default wp-block-button__link request_cancellation button" id="request_cancellation"><?php esc_html_e('send', 'd2g-connect')?></a>
-			</form>
-		</div>
-<?php }
+				<div class="col-sm-6 mb-2">
+					<div>
+						<label for="client_email" class="form-label"><?php echo esc_html__( 'Patient email', 'doctor2go-connect' ); ?> *</label>
+						<input class="form-control required" type="email" value="<?php echo esc_attr( sanitize_email( $user_email ) ); ?>" name="client_email" id="client_email">
+					</div>
+				</div>
+				<div class="col-sm-6 simple_hide">
+					<div>
+						<label for="doc_name" class="form-label"><?php echo esc_html__( 'Doctor name', 'doctor2go-connect' ); ?> *</label>
+						<input readonly class="form-control required" type="text" value="" name="doc_name" id="doc_name">
+					</div>
+				</div>
+				<div class="col-sm-6  simple_hide">
+					<div>
+						<label for="doc_email" class="form-label"><?php echo esc_html__( 'Doctor email', 'doctor2go-connect' ); ?> *</label>
+						<input readonly class="form-control required" type="email" value="" name="doc_email" id="doc_email">
+					</div>
+				</div>
+				<div class="col-sm-12 mb-2">
+					<div>
+						<label for="app_date" class="form-label"><?php echo esc_html__( 'Appointment date and time', 'doctor2go-connect' ); ?> *</label>
+						<input readonly class="form-control required" type="text" value="" name="app_date" id="app_date">
+					</div>
+				</div>
+				<div class="col-sm-12 simple_hide">
+					<div>
+						<label for="app_link" class="form-label"><?php echo esc_html__( 'Appointment link for doctor', 'doctor2go-connect' ); ?> *</label>
+						<input readonly class="form-control required" type="text" value="" name="app_link" id="app_link">
+					</div>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-sm-12">
+					<div>
+						<label for="comment" class="form-label"><?php echo esc_html__( 'Comment (optional)', 'doctor2go-connect' ); ?></label>
+						<textarea class="form-control" id="comment" name="comment"></textarea>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-primary wp-block-button__link request_cancellation button" id="request_cancellation">
+				<?php esc_html_e( 'send', 'doctor2go-connect' ); ?>
+				<span class="btn-spinner spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>
+			</button>
+		</form>
+	</div>
+</div>
+<?php
+}
+
+
+
 
 function d2g_footer_html() {
 	?>

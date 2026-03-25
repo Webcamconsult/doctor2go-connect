@@ -239,7 +239,7 @@
 
                 $('#booking_form_wrapper').removeClass('simple_hide');
                 setTimeout(function(){
-                    $('body').scrollTo('#booking_form_wrapper',{duration:'slow', offset : -160});
+                    $('body').scrollTo('#booking_form_wrapper',{duration:'fast', offset : -50});
                 }, 200);
             },
             eventContent: function(info){
