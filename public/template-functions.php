@@ -325,7 +325,7 @@ function cb_d2g_info_box( $temp_file, $version, $post = '' ) {
 				$video = false;
 			}
 			?>
-			<li class="flaticon-wcc flaticon-meeting-schedule list-group-item d-flex justify-content-between align-items-center <?php echo esc_html( $liClass ); ?>">
+			<li class="<?php echo ($video == true)?esc_html__('available', 'doctor2go-connect'):esc_html__('not_available', 'doctor2go-connect')  ?> flaticon-wcc flaticon-meeting-schedule list-group-item d-flex justify-content-between align-items-center <?php echo esc_html( $liClass ); ?>">
 				<div class="ms-2 me-auto">
 					<div class="fw-bold"><?php echo esc_html__('Video consult on appointment', 'doctor-2go-connect')?> <?php echo ($video == true)?wp_kses_post($success_code):wp_kses_post($error_code)?></div>
 						<?php echo  ($video == true)?esc_html__('first availability: ', 'doctor-2go-connect').wp_kses_post( $firstAvailibility ):esc_html__('not available', 'doctor2go-connect')?>
@@ -342,7 +342,7 @@ function cb_d2g_info_box( $temp_file, $version, $post = '' ) {
 				$email = false;
 			}
 			?>
-			<li class="icon-mail-1 list-group-item d-flex justify-content-between align-items-center <?php echo esc_html( $liClass ); ?>">
+			<li class="<?php echo ($email == true)?esc_html__('available', 'doctor2go-connect'):esc_html__('not_available', 'doctor2go-connect')  ?> icon-mail-1 list-group-item d-flex justify-content-between align-items-center <?php echo esc_html( $liClass ); ?>">
 				<div class="ms-2 me-auto">
 					<div class="fw-bold"><?php echo esc_html__('E-mail advice', 'doctor-2go-connect')?> <?php echo ($email == true)?wp_kses_post($success_code):wp_kses_post($error_code)?></div>
 					<?php echo ($email == true)?esc_html__('available at any time', 'doctor2go-connect'):esc_html__('not available', 'doctor2go-connect')  ?>
@@ -358,7 +358,7 @@ function cb_d2g_info_box( $temp_file, $version, $post = '' ) {
 				$walkin = false;
 			}
 			?>
-			<li class="flaticon-online-meeting flaticon-wcc list-group-item d-flex justify-content-between align-items-center <?php echo esc_html( $liClass ); ?>">
+			<li class="<?php echo ($walkin == true)?esc_html__('available', 'doctor2go-connect'):esc_html__('not_available', 'doctor2go-connect')  ?> flaticon-online-meeting flaticon-wcc list-group-item d-flex justify-content-between align-items-center <?php echo esc_html( $liClass ); ?>">
 				<div class="ms-2 me-auto">
 					<div class="fw-bold"><?php echo esc_html__('Walkin video consult', 'doctor-2go-connect')?> <?php echo ($walkin == true)?wp_kses_post($success_code):wp_kses_post($error_code)?></div>
 					<?php echo ($walkin == true)?esc_html__('now available', 'doctor2go-connect'):esc_html__('not available', 'doctor2go-connect')  ?>
