@@ -226,10 +226,8 @@ class D2G_doc_user_profile {
 	 * Update a doctor profile post.
 	 */
 	public static function d2g_update_doc() {
-		// Verify nonce
-		if (!isset($_POST['_wpnonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), 'doc-update')) {
-			wp_die('Invalid nonce');
-		}
+		$nonce = isset($_POST['_wpnonce']) ? sanitize_text_field(wp_unslash($_POST['_wpnonce'])) : ''; if (!$nonce || !wp_verify_nonce($nonce, 'doc-update')) { wp_die('Invalid nonce'); }
+		
 		global $success;
 		$post_data = wp_unslash($_POST);
 		$update_id = isset($post_data['update_id']) ? absint($post_data['update_id']) : 0;
@@ -308,7 +306,7 @@ class D2G_doc_user_profile {
 		if (!empty($doc_tax)) self::updateDocTerms($doc_tax, $update_id);
 
 		// Handle File Uploads
-		if (!empty($_FILES)) self::d2g_set_doc_images($update_id);
+		if (!empty($_FILES)) self::d2g_set_doc_images($update_id, $nonce);
 
 		$success = true;
 		do_action('breeze_clear_all_cache');
@@ -326,11 +324,13 @@ class D2G_doc_user_profile {
 	 * Securely handle doctor image uploads.
 	 *
 	 * @param int $post_id
+	 * @param string $nonce
 	 */
-	private static function d2g_set_doc_images( $post_id ) {
+	private static function d2g_set_doc_images( $post_id, $nonce ) {
 
-		// Internal function called only by d2g_update_doc() which is nonce-protected
-        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if (!isset($nonce) || !wp_verify_nonce(sanitize_text_field(wp_unslash($nonce)), 'doc-update')) {
+			wp_die('Invalid nonce');
+		}
 
 		if ( ! current_user_can( 'edit_post', $post_id ) || empty( $_FILES ) || ! is_array( $_FILES ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 			return;

@@ -430,17 +430,23 @@ class D2G_booking_wcc_user {
 
 
 
-	// this retrieves a URL for the walk-in appointment
-	// if success user gets redirected to the doctor waiting room
+	// this creates a written consult in the D2G software and sends an email to the doctor with the details of the consult
 	public static function d2g_create_wcc_written_cosnsult() {
 
-		if ( ! isset( $_POST['email_advice_form_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['email_advice_form_nonce'] ) ), 'email_advice_form_action' ) ) {
+		// Verify nonce early and bail on failure.
+		if (
+			! isset( $_POST['email_advice_form_nonce'] )
+			|| ! wp_verify_nonce(
+				sanitize_text_field( wp_unslash( $_POST['email_advice_form_nonce'] ) ),
+				'email_advice_form_action'
+			)
+		) {
 			return false; // stop processing immediately
 		}
 
-		// Validate CAPTCHA
+		// Validate CAPTCHA.
 		$secret_key = get_option( 'd2g_recaptcha_secret_key' );
-		if ( $secret_key !== '' ) {
+		if ( '' !== $secret_key ) {
 			$recaptcha_response = isset( $_POST['g-recaptcha-response'] )
 				? sanitize_text_field( wp_unslash( $_POST['g-recaptcha-response'] ) )
 				: '';
@@ -467,45 +473,56 @@ class D2G_booking_wcc_user {
 
 			$recaptcha_result = json_decode( wp_remote_retrieve_body( $recaptcha_verify ) );
 
-			if ( empty( $recaptcha_result ) || ! $recaptcha_result->success ) {
+			if ( empty( $recaptcha_result ) || empty( $recaptcha_result->success ) ) {
 				return false;
 			}
 		}
 
-		$wpDocID      		= isset( $_POST['wp_doc_id'] ) ? absint( wp_unslash( $_POST['wp_doc_id'] ) ) : 0;
-		$first_name   		= isset( $_POST['first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['first_name'] ) ) : '';
-		$last_name    		= isset( $_POST['last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['last_name'] ) ) : '';
-		$client_email 		= isset( $_POST['client_email'] ) ? sanitize_email( wp_unslash( $_POST['client_email'] ) ) : '';
-		$client_gender  	= isset( $_POST['client_gender'] ) ? sanitize_text_field( wp_unslash( $_POST['client_gender'] ) ) : '';
-		$complaint			= isset( $_POST['complaint_description'] ) ? sanitize_text_field( wp_unslash( $_POST['complaint_description'] ) ) : '';
-		$client_bday 		= isset($_POST['option_bday']) ? sanitize_text_field(wp_unslash($_POST['option_bday'])) : '';
-		$itch_check 		= isset($_POST['itch_check']) ? sanitize_text_field(wp_unslash($_POST['itch_check'])) : '';
-		$blood_check 		= isset($_POST['blood_check']) ? sanitize_text_field(wp_unslash($_POST['blood_check'])) : '';
-		$medical_history 	= isset($_POST['medical_history']) ? sanitize_text_field(wp_unslash($_POST['medical_history'])) : '';
-		$first_noticed 		= isset($_POST['first_noticed']) ? sanitize_text_field(wp_unslash($_POST['first_noticed'])) : '';
-		$location 			= isset($_POST['location']) ? sanitize_text_field(wp_unslash($_POST['location'])) : '';
-		$has_changed		= isset($_POST['has_changed']) ? sanitize_text_field(wp_unslash($_POST['has_changed'])) : '';
-		
-		if ($client_bday && ($dt = DateTime::createFromFormat('d/m/Y', $client_bday))) $client_bday = $dt->format('Y-m-d'); else $client_bday = '';
+		// POST fields (nonce already verified).
+		$wpDocID         = isset( $_POST['wp_doc_id'] ) ? absint( wp_unslash( $_POST['wp_doc_id'] ) ) : 0;
+		$first_name      = isset( $_POST['first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['first_name'] ) ) : '';
+		$last_name       = isset( $_POST['last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['last_name'] ) ) : '';
+		$client_email    = isset( $_POST['client_email'] ) ? sanitize_email( wp_unslash( $_POST['client_email'] ) ) : '';
+		$client_gender   = isset( $_POST['optie_aanhef'] ) ? sanitize_text_field( wp_unslash( $_POST['optie_aanhef'] ) ) : '';
+		$complaint       = isset( $_POST['complaint_description'] ) ? sanitize_text_field( wp_unslash( $_POST['complaint_description'] ) ) : '';
+		$client_bday     = isset( $_POST['option_bday'] ) ? sanitize_text_field( wp_unslash( $_POST['option_bday'] ) ) : '';
+		$itch_check      = isset( $_POST['itch_check'] ) ? sanitize_text_field( wp_unslash( $_POST['itch_check'] ) ) : '';
+		$blood_check     = isset( $_POST['blood_check'] ) ? sanitize_text_field( wp_unslash( $_POST['blood_check'] ) ) : '';
+		$medical_history = isset( $_POST['medical_history'] ) ? sanitize_text_field( wp_unslash( $_POST['medical_history'] ) ) : '';
+		$first_noticed   = isset( $_POST['first_noticed'] ) ? sanitize_text_field( wp_unslash( $_POST['first_noticed'] ) ) : '';
+		$location        = isset( $_POST['location'] ) ? sanitize_text_field( wp_unslash( $_POST['location'] ) ) : '';
+		$has_changed     = isset( $_POST['has_changed'] ) ? sanitize_text_field( wp_unslash( $_POST['has_changed'] ) ) : '';
+		$type            = isset( $_POST['written_con_type'] ) ? sanitize_text_field( wp_unslash( $_POST['written_con_type'] ) ) : '';
 
-		//images
+		// Images.
 		$image_1 = $image_2 = $image_3 = '';
-		$allowed_mimes = ['image/jpeg','image/png','image/gif','image/webp'];
+		$allowed_mimes = array( 'image/jpeg', 'image/png', 'image/gif', 'image/webp' );
 
-		foreach (['image_1','image_2','image_3'] as $img) {
-			if (!empty($_FILES[$img]['tmp_name']) && $_FILES[$img]['error'] === UPLOAD_ERR_OK) {
-				$file_type = wp_check_filetype_and_ext($_FILES[$img]['tmp_name'], $_FILES[$img]['name']);
-				if (!empty($file_type['type']) && in_array($file_type['type'], $allowed_mimes, true)) {
-					$imgType = mime_content_type($_FILES[$img]['tmp_name']); // bv. image/png
-					${$img} = 'data:' . $imgType . ';base64,' . base64_encode(file_get_contents($_FILES[$img]['tmp_name']));
+		foreach ( array( 'image_1', 'image_2', 'image_3' ) as $img ) {
+			if (
+				isset( $_FILES[ $img ] )
+				&& isset( $_FILES[ $img ]['tmp_name'], $_FILES[ $img ]['name'], $_FILES[ $img ]['error'] )
+				&& UPLOAD_ERR_OK === (int) $_FILES[ $img ]['error']
+				&& ! empty( $_FILES[ $img ]['tmp_name'] )
+			) {
+				// Uploaded temporary file path; validated via UPLOAD_ERR_OK and wp_check_filetype_and_ext().
+				$tmp_name = $_FILES[ $img ]['tmp_name']; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- tmp_name is an internal upload path, not user-controlled text; we validate via upload error and allowed MIME types.
+				$orig_name = sanitize_file_name( wp_unslash( $_FILES[ $img ]['name'] ) );
+
+				$file_type = wp_check_filetype_and_ext( $tmp_name, $orig_name );
+
+				if ( ! empty( $file_type['type'] ) && in_array( $file_type['type'], $allowed_mimes, true ) ) {
+					$img_type = $file_type['type']; // e.g. image/png.
+
+					// Reading uploaded file contents to embed as base64 data URI.
+					// phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContents
+					$file_contents = file_get_contents( $tmp_name );
+					if ( false !== $file_contents ) {
+						${$img} = 'data:' . $img_type . ';base64,' . base64_encode( $file_contents );
+					}
 				}
 			}
 		}
-
-
-		/*maybe for later
-		$type         = isset( $_POST['type'] ) ? sanitize_text_field( wp_unslash( $_POST['type'] ) ) : '';
-		*/
 
 		$docKey    = get_post_meta( $wpDocID, 'user_key', true );
 		$docOrgKey = get_post_meta( $wpDocID, 'organisation_key', true );
@@ -519,35 +536,36 @@ class D2G_booking_wcc_user {
 		$superKey = get_option( 'wcc_token' );
 		$myHash   = hash( 'sha256', $unixTime . '_' . $docKey . '_' . $superKey );
 
-		$d2gAdmin     = new D2G_doc_user_profile();
-		$currLang     = explode( '_', get_locale() )[0];
+		$d2gAdmin         = new D2G_doc_user_profile();
+		$currLang         = explode( '_', get_locale() )[0];
 		$confirmation_url = $d2gAdmin::d2g_page_url( $currLang, 'email_advice_confirmation', false );
 
 		$currUser        = wp_get_current_user();
 		$require_payment = (float) $price > 0;
 
 		$payload = array(
-			'consultant_id'      	=> (string) $docWCC_ID,
-			'requires_payment'   	=> (string) $require_payment,
-			'payment_price'      	=> (string) $price,
-			'payment_currency'   	=> (string) $currency,
-			'client_email'       	=> $client_email,
-			'optie_naam'         	=> $last_name,
-			'optie_first_name'   	=> $first_name,
-			'optie_aanhef'       	=> $client_gender,
-			'optie_geboortedatum'	=> $client_bday,
-			'language'           	=> $currLang,
-			'complaint_desc'        => $complaint,
-			'itch_check'        	=> $itch_check,
-			'blood_check'        	=> $blood_check,
-			'medical_history'		=> $medical_history,
-			'first_noticed'			=> $first_noticed ,
-			'has_changed'			=> $has_changed,
-			'location'				=> $location,
-			'image_1' 				=> $image_1,
-			'image_2' 				=> $image_2,
-			'image_3' 				=> $image_3,
-			'handshake'          => array(
+			'consultant_id'       => (string) $docWCC_ID,
+			'requires_payment'    => (string) $require_payment,
+			'payment_price'       => (string) $price,
+			'payment_currency'    => (string) $currency,
+			'type'                => $type,
+			'client_email'        => $client_email,
+			'optie_naam'          => $last_name,
+			'optie_first_name'    => $first_name,
+			'optie_aanhef'        => $client_gender,
+			'optie_geboortedatum' => $client_bday,
+			'language'            => $currLang,
+			'complaint_desc'      => $complaint,
+			'itch_check'          => $itch_check,
+			'blood_check'         => $blood_check,
+			'medical_history'     => $medical_history,
+			'first_noticed'       => $first_noticed,
+			'has_changed'         => $has_changed,
+			'location'            => $location,
+			'image_1'             => $image_1,
+			'image_2'             => $image_2,
+			'image_3'             => $image_3,
+			'handshake'           => array(
 				'time'  => (string) $unixTime,
 				'token' => $docKey,
 				'hash'  => $myHash,
@@ -589,8 +607,13 @@ class D2G_booking_wcc_user {
 
 		if ( isset( $response_body->url ) ) {
 			$questionnaire_url = 'https://' . $orgSlug . $baseUrl . $response_body->url;
-			$redirect_url = $questionnaire_url . '?redirect_url=' . urlencode($confirmation_url) . '&booked_consult=email&skip_cookie_wall=true';
-			wp_send_json_success( array( 'redirect_url' => $redirect_url ) );
+			$redirect_url      = $questionnaire_url . '?redirect_url=' . urlencode( $confirmation_url ) . '&booked_consult=email&skip_cookie_wall=true';
+
+			wp_send_json_success(
+				array(
+					'redirect_url' => $redirect_url,
+				)
+			);
 		}
 
 		wp_die( esc_html__( 'There has been an error.', 'doctor2go-connect' ) );

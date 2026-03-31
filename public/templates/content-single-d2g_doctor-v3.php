@@ -31,7 +31,7 @@ $post_ID		 = $d2g_profile_data->doctor_profile_ID;
 <article id="doctor_wrapper_v3" class="doctor_detail_v3 type-d2g_doctor  doc_details">
 	<div id="content_wrapper">
 		<div class="top mb-<?php echo (wpmd_is_notphone()) ? '4' : '2'; ?>">
-			<div id="top_content" class="site-content <?= esc_attr(apply_filters('bootscore/class/container', 'container', 'single')); ?> <?= esc_attr(apply_filters('bootscore/class/content/spacer', 'pt-3 pb-3', 'single')); ?>">
+			<div id="top_content" class="site-content <?php echo esc_attr(apply_filters('bootscore/class/container', 'container', 'single')); ?> <?php echo esc_attr(apply_filters('bootscore/class/content/spacer', 'pt-3 pb-3', 'single')); ?>">
 				<?php if(wpmd_is_phone()){ ?>
 					<header>
 						<h1 class="entry-title"><?php the_title(); ?></h1>
@@ -62,7 +62,7 @@ $post_ID		 = $d2g_profile_data->doctor_profile_ID;
 									<?php } ?>
 								</header>
 								<div id="bio">
-									<?php echo apply_filters('the_content',$d2g_profile_data->doctor_meta['bio_'.$locale][0]); ?>
+									<?php echo wp_kses_post(apply_filters('the_content',$d2g_profile_data->doctor_meta['bio_'.$locale][0])); ?>
 								</div>
 							<?php } ?>
 							<div id="short_info">
@@ -74,12 +74,12 @@ $post_ID		 = $d2g_profile_data->doctor_profile_ID;
 			</div>
 		</div>
 		<div class="entry-wrapper"> 
-			<div id="main_content" class="site-content <?= esc_attr(apply_filters('bootscore/class/container', 'container', 'single')); ?> <?= esc_attr(apply_filters('bootscore/class/content/spacer', 'pt-3 pb-5', 'single')); ?>">
+			<div id="main_content" class="site-content <?php echo esc_attr(apply_filters('bootscore/class/container', 'container', 'single')); ?> <?php echo esc_attr(apply_filters('bootscore/class/content/spacer', 'pt-3 pb-5', 'single')); ?>">
 				<!--ACTION HOOK CONSULTANCY TABS-->
 				<?php do_action( 'd2g_doctor_consultancy_tabs' ); ?>  
 			</div>
 			<div id="extra_content">
-				<div class="site-content <?= esc_attr(apply_filters('bootscore/class/container', 'container', 'single')); ?> <?= esc_attr(apply_filters('bootscore/class/content/spacer', 'pt-5 pb-5', 'single')); ?>">
+				<div class="site-content <?php echo esc_attr(apply_filters('bootscore/class/container', 'container', 'single')); ?> <?php echo esc_attr(apply_filters('bootscore/class/content/spacer', 'pt-5 pb-5', 'single')); ?>">
 					<!--ACTION HOOK LOCATIONS-->
 					<?php
 					if ( is_array( $location_check ) && count( $location_check ) > 0 ) {

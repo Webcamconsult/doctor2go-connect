@@ -39,6 +39,7 @@ class D2gConnect_Activator {
 			'Secure patient portal' => '[d2g_patient_portal]',
 
 		);
+		/*
 
 		foreach ( $protectedPages as $title => $content ) {
 			// Create post object
@@ -89,6 +90,7 @@ class D2gConnect_Activator {
 		}
 
 		flush_rewrite_rules();
+		*/
 
 		/*
 		* Schedule doctor availability sync

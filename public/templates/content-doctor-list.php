@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="col-sm-8 info_wrapper">
 				<div class="inner_wrapper">
 					<div class="mb-3"><?php do_action( 'd2g_info_box', 'overview', 'col-1' ); ?></div>
-					<a class="btn btn-primary w-100" href="<?php echo esc_html(get_the_permalink())?>"><?php esc_html_e('start a consult', 'wcc-doclisting')?></a>
+					<a class="btn btn-primary w-100" href="<?php echo esc_html(get_the_permalink())?>"><?php esc_html_e('start a consult', 'doctor2go-connect')?></a>
 				</div>
 			</div>
 		</div>

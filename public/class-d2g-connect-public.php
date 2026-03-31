@@ -229,8 +229,8 @@ class D2gConnect_Public {
 				/* page state */
 				'page' => array(
 					'edit_id'   => isset( $_GET['edit'] ) ? absint( wp_unslash( $_GET['edit'] ) ) : 0, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-					'open'      => isset( $_GET['open'] ) ? sanitize_key( wp_unslash( $_GET['open'] ) ) : '',
-					'scroll_to' => isset( $_GET['scroll_to'] ) ? sanitize_key( wp_unslash( $_GET['scroll_to'] ) ) : '',
+					'open'      => isset( $_GET['open'] ) ? sanitize_key( wp_unslash( $_GET['open'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					'scroll_to' => isset( $_GET['scroll_to'] ) ? sanitize_key( wp_unslash( $_GET['scroll_to'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				),
 
 				/* mail sender */
@@ -605,7 +605,7 @@ class D2gConnect_Public {
 
 	// this overwrites the reset password mail to return the url to the custom password reset form
 	public function d2g_retrieve_password_message( $retrieve_password_message, $key, $user_login, $user_data ) {
-		$wp_lang 	= sanitize_text_field( $_REQUEST['wp_lang'] ?? get_locale() );  // 'ro_RO' if passed
+		$wp_lang = isset( $_REQUEST['wp_lang'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wp_lang'] ) ) : get_locale(); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
     	$currLang 	= explode( '_', $wp_lang )[0];  // 'ro'
 
 		$d2gAdmin = new D2G_doc_user_profile();
@@ -786,9 +786,8 @@ class D2gConnect_Public {
 	// redirects are defined for when wp-login.php is triggered
 	public function d2g_login_redirect( $redirect_to, $requested_redirect_to, $user ) {
 
-		// 1) Bypass for wp-auth-check iframe (session expired popup)
-		if ( isset( $_REQUEST['interim-login'] ) || isset( $_REQUEST['wp-auth-check'] ) ) {
-			return $redirect_to; // let WP handle it normally
+		if ( isset( $_REQUEST['interim-login'] ) || isset( $_REQUEST['wp-auth-check'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- core WP read-only auth-check flags.
+			return $redirect_to;
 		}
 
 		$currLang = explode( '_', get_locale() )[0];

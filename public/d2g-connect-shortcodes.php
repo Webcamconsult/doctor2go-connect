@@ -325,7 +325,7 @@ class D2gConnect_Shortcodes {
 											$currencies = array( 'EUR', 'USD', 'GBP', 'ALL', 'MXN', 'AUD', 'INR', 'AZN', 'BYN', 'BGN', 'HRK', 'CZK', 'DKK', 'GEL', 'HUF', 'ISK', 'CHF', 'MKD', 'MDL', 'NOK', 'PLN', 'RON', 'RUB', 'RSD', 'SEK', 'CHF', 'TRY', 'UAH', 'CAD', 'NZD', 'BRL', 'ZAR' );
 											?>
 											<h3 class="mt-5">
-												<?php echo esc_html__( 'Payment settings', 'doctor2go-connect' ); ?>
+												<?php echo esc_html__( 'Payment & extra consult settings', 'doctor2go-connect' ); ?>
 											</h3>
 											<div class="form-table payment_settings mb-3">
 												<p class="alert alert-light">
@@ -353,7 +353,7 @@ class D2gConnect_Shortcodes {
 												</div>
 
 												<label class="form-label small mt-3">
-													<?php echo esc_html__( 'Written consult price & currency', 'doctor2go-connect' ); ?>*
+													<?php echo esc_html__( 'Email advice price & currency', 'doctor2go-connect' ); ?>*
 												</label>
 												<div class="row g-2 align-items-center">
 													<div class="col-8">
@@ -368,6 +368,17 @@ class D2gConnect_Shortcodes {
 															<?php } ?>
 														</select>
 													</div>
+												</div>
+
+												<div class="mt-3">
+													<label class="small"><?php echo esc_html__( 'E-mail consult questionnaire', 'doctor2go-connect' ); ?>*</label>
+													<select class="form-control" name="meta[written_con_type]" id="written_con_type">
+														<?php 
+														$types	  = array( 'short' => 'Short generic Email Advice', 'derma_email_advice' => 'Dermatology Email Advice' );
+														foreach ( $types as $type => $label ) { ?>
+															<option <?php echo ( $type == $doctor_meta['written_con_type'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $type ); ?>"><?php echo esc_html( $label ); ?></option>    
+														<?php } ?>
+													</select>
 												</div>
 
 												<p class="mt-3 mb-4 simple_hide">
@@ -878,7 +889,7 @@ class D2gConnect_Shortcodes {
 		$doctorLanguage = isset( $_GET['doctor-language'] ) ? sanitize_text_field( wp_unslash( $_GET['doctor-language'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
 		$country        = isset( $_GET['country-origin'] ) ? sanitize_text_field( wp_unslash( $_GET['country-origin'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
 		$intake         = isset( $_GET['intake'] ) ? sanitize_text_field( wp_unslash( $_GET['intake'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
-		$consult_type 	= isset( $_GET['consult_type'] ) ? sanitize_text_field( wp_unslash( $_GET['consult_type'] ) ) : '';
+		$consult_type 	= isset( $_GET['consult_type'] ) ? sanitize_text_field( wp_unslash( $_GET['consult_type'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
 
 		// prepare meta_query if you already have one
 		if ( empty( $args['meta_query'] ) ) {
@@ -1034,44 +1045,46 @@ class D2gConnect_Shortcodes {
 				'stand_alone'   => 'false',
 				'ul_class'      => '',
 				'wrapper_class' => '',
-
 			),
 			$atts
 		);
-		
+
 		$currLang = explode( '_', get_locale() )[0];
 		$d2gAdmin = new D2G_doc_user_profile();
 		$pageDoc  = $d2gAdmin::d2g_page_url( $currLang, 'doctors', false );
-		// cities
+
+		// Specialties.
 		$argsSpecialty = array(
-			'taxonomy' => 'doctor-specialty', // empty string(''), false, 0 don't work, and return empty array
-			// 'parent' => 0, //can be 0, '0', '' too
+			'taxonomy' => 'doctor-specialty',
 			'orderby'  => 'name',
 			'order'    => 'ASC',
 		);
-		if ( get_option( 'd2g_pseudo_translations' ) == 1 && $currLang != 'en' ) {
+
+		if ( get_option( 'd2g_pseudo_translations' ) == 1 && 'en' !== $currLang ) {
 			$argsSpecialty = array(
 				'taxonomy'   => 'doctor-specialty',
 				'hide_empty' => true,
 				'meta_key'   => 'rudr_text_' . $currLang,
 				'orderby'    => 'meta_value',
 				'order'      => 'ASC',
-				// 'parent' => 0, //can be 0, '0', '' too
 			);
 		}
+
 		$specialties = get_terms( $argsSpecialty );
 
+		$specialties_by_parent = array();
 		foreach ( $specialties as $term ) {
 			$specialties_by_parent[ $term->parent ][] = $term;
 		}
 
-		// venues
+		// Languages.
 		$argsLanguage = array(
-			'taxonomy' => 'doctor-language', // empty string(''), false, 0 don't work, and return empty array
+			'taxonomy' => 'doctor-language',
 			'orderby'  => 'name',
 			'order'    => 'ASC',
 		);
-		if ( get_option( 'd2g_pseudo_translations' ) == 1 && $currLang != 'en' ) {
+
+		if ( get_option( 'd2g_pseudo_translations' ) == 1 && 'en' !== $currLang ) {
 			$argsLanguage = array(
 				'taxonomy'   => 'doctor-language',
 				'hide_empty' => true,
@@ -1080,15 +1093,17 @@ class D2gConnect_Shortcodes {
 				'order'      => 'ASC',
 			);
 		}
+
 		$languages = get_terms( $argsLanguage );
 
-		// genres
+		// Countries.
 		$argsCountry = array(
-			'taxonomy' => 'country-origin', // empty string(''), false, 0 don't work, and return empty array
+			'taxonomy' => 'country-origin',
 			'orderby'  => 'name',
 			'order'    => 'ASC',
 		);
-		if ( get_option( 'd2g_pseudo_translations' ) == 1 && $currLang != 'en' ) {
+
+		if ( get_option( 'd2g_pseudo_translations' ) == 1 && 'en' !== $currLang ) {
 			$argsCountry = array(
 				'taxonomy'   => 'country-origin',
 				'hide_empty' => true,
@@ -1097,9 +1112,9 @@ class D2gConnect_Shortcodes {
 				'order'      => 'ASC',
 			);
 		}
+
 		$countries = get_terms( $argsCountry );
 
-		
 		$args = array(
 			'post_type'      => 'd2g_doctor',
 			'posts_per_page' => -1,
@@ -1112,18 +1127,19 @@ class D2gConnect_Shortcodes {
 			'post_status'    => 'publish',
 		);
 
-		$doctor_specialty      	= isset( $_GET['doctor-specialty'] ) ? sanitize_text_field( wp_unslash( $_GET['doctor-specialty'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
-		$doctor_language 		= isset( $_GET['doctor-language'] ) ? sanitize_text_field( wp_unslash( $_GET['doctor-language'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
-		$country_origin        	= isset( $_GET['country-origin'] ) ? sanitize_text_field( wp_unslash( $_GET['country-origin'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- URL filtering params, view-only.
-		$consult_type 			= isset( $_GET['consult_type'] ) ? sanitize_text_field( wp_unslash( $_GET['consult_type'] ) ) : '';
-		$post_id_filter   = isset( $_GET['post_id'] ) ? absint( wp_unslash( $_GET['post_id'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET filters only (view/search), no state change.
+		// View-only GET filters (no state changes).
+		$doctor_specialty = isset( $_GET['doctor-specialty'] )? sanitize_text_field( wp_unslash( $_GET['doctor-specialty'] ) ): '';// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- View-only GET filter, affects query args only.
+		$doctor_language = isset( $_GET['doctor-language'] )? sanitize_text_field( wp_unslash( $_GET['doctor-language'] ) ): '';// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- View-only GET filter.
+		$country_origin = isset( $_GET['country-origin'] )? sanitize_text_field( wp_unslash( $_GET['country-origin'] ) ): '';// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- View-only GET filter.
+		$consult_type = isset( $_GET['consult_type'] )? sanitize_text_field( wp_unslash( $_GET['consult_type'] ) ): '';// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- View-only GET filter.
+		$post_id_filter = isset( $_GET['post_id'] )? absint( wp_unslash( $_GET['post_id'] ) ): 0;// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- View-only GET filter for single post.
 
-		// prepare meta_query if you already have one
+		// Prepare meta_query if needed.
 		if ( empty( $args['meta_query'] ) ) {
 			$args['meta_query'] = array();
 		}
 
-		// email consult: written_con_price not empty
+		// Email consult: written_con_price not empty.
 		if ( 'email' === $consult_type ) {
 			$args['meta_query'][] = array(
 				'key'     => 'written_con_price',
@@ -1132,7 +1148,7 @@ class D2gConnect_Shortcodes {
 			);
 		}
 
-		// video consult: d2g_availability_check = 1
+		// Video consult: d2g_availability_check = 1.
 		if ( 'video' === $consult_type ) {
 			$args['meta_query'][] = array(
 				'key'     => 'd2g_availability_check',
@@ -1141,6 +1157,7 @@ class D2gConnect_Shortcodes {
 			);
 		}
 
+		// Walk-in consult: d2g_walk_in = 1.
 		if ( 'walkin' === $consult_type ) {
 			$args['meta_query'][] = array(
 				'key'     => 'd2g_walk_in',
@@ -1151,7 +1168,7 @@ class D2gConnect_Shortcodes {
 
 		$checker = 0;
 
-		if ( $doctor_specialty != '' && $doctor_specialty != '0' ) {
+		if ( '' !== $doctor_specialty && '0' !== $doctor_specialty ) {
 			$args['tax_query'][] = array(
 				'taxonomy' => 'doctor-specialty',
 				'field'    => 'term_id',
@@ -1160,7 +1177,7 @@ class D2gConnect_Shortcodes {
 			++$checker;
 		}
 
-		if ( $doctor_language != '' && $doctor_language != '0' ) {
+		if ( '' !== $doctor_language && '0' !== $doctor_language ) {
 			$args['tax_query'][] = array(
 				'taxonomy' => 'doctor-language',
 				'field'    => 'term_id',
@@ -1169,7 +1186,7 @@ class D2gConnect_Shortcodes {
 			++$checker;
 		}
 
-		if ( $country_origin != '' && $country_origin != '0' ) {
+		if ( '' !== $country_origin && '0' !== $country_origin ) {
 			$args['tax_query'][] = array(
 				'taxonomy' => 'country-origin',
 				'field'    => 'term_id',
@@ -1182,36 +1199,41 @@ class D2gConnect_Shortcodes {
 			$args['tax_query']['relation'] = 'AND';
 		}
 
+		$post_id = isset( $_GET['post_id'] )? absint( wp_unslash( $_GET['post_id'] ) ): 0;// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- View-only GET filter for single post.
 
-		$post_id = isset( $_GET['post_id'] ) ? absint( wp_unslash( $_GET['post_id'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Single post view by ID.
-		if ( $post_id && $post_id != 0 ) {
+		if ( $post_id && 0 !== $post_id ) {
 			$args = array(
 				'post_type' => 'd2g_doctor',
-				'p'         => $post_id,  // Sanitized ID
+				'p'         => $post_id,
 			);
 		}
-
 
 		$doctor_query  = new WP_Query( $args );
 		$doctor_query2 = new WP_Query( $args2 );
 		$count         = $doctor_query->found_posts;
 
 		ob_start();
-		?>
-		<?php if ( $a['wrapper_class'] != '' ) { ?>
-			<div class="<?php echo esc_html( $a['wrapper_class'] ); ?>">
-		<?php } ?>
-		<?php
-		// Sanitized filter params (view-only GET filters).
-		$doctor_specialty = isset( $_GET['doctor-specialty'] ) ? absint( wp_unslash( $_GET['doctor-specialty'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET filters only (view/search), no state change.
-		$country_origin   = isset( $_GET['country-origin'] ) ? absint( wp_unslash( $_GET['country-origin'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET filters only (view/search), no state change.
-		$doctor_language  = isset( $_GET['doctor-language'] ) ? absint( wp_unslash( $_GET['doctor-language'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET filters only (view/search), no state change.
-		$post_id_filter   = isset( $_GET['post_id'] ) ? absint( wp_unslash( $_GET['post_id'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET filters only (view/search), no state change.
-	
+
+		if ( '' !== $a['wrapper_class'] ) {
+			?>
+			<div class="<?php echo esc_attr( $a['wrapper_class'] ); ?>">
+			<?php
+		}
+
+		// Sanitized filter params for form defaults (view-only GET filters).
+		$doctor_specialty = isset( $_GET['doctor-specialty'] )? absint( wp_unslash( $_GET['doctor-specialty'] ) ): 0;// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- View-only GET filter.
+		$country_origin = isset( $_GET['country-origin'] )? absint( wp_unslash( $_GET['country-origin'] ) ): 0;// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- View-only GET filter.
+		$doctor_language = isset( $_GET['doctor-language'] )? absint( wp_unslash( $_GET['doctor-language'] ) ): 0;// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- View-only GET filter.
+		$post_id_filter = isset( $_GET['post_id'] )? absint( wp_unslash( $_GET['post_id'] ) ): 0;// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- View-only GET filter.
+		$consult_type_raw = isset( $_GET['consult_type'] )? sanitize_text_field( wp_unslash( $_GET['consult_type'] ) ): '';// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- View-only GET filter.
+
 		?>
 
 		<form method="GET" action="<?php echo esc_url( $pageDoc ); ?>">
-			<h3 class="opener special">Filters <span class="icon-angle-down"></span></h3>
+			<h3 class="opener special">
+				<?php echo esc_html__( 'Filters', 'doctor2go-connect' ); ?>
+				<span class="icon-angle-down"></span>
+			</h3>
 			<div class="doctor_filters_outer">
 				<ul id="doctor_filters" class="<?php echo esc_attr( $a['ul_class'] ); ?>">
 					<li class="filter_wrap flex-fill">
@@ -1221,7 +1243,7 @@ class D2gConnect_Shortcodes {
 								<option <?php selected( $doctor_specialty, $specialty->term_id ); ?> value="<?php echo esc_attr( $specialty->term_id ); ?>">
 									<?php
 									if ( get_option( 'd2g_pseudo_translations' ) == 1 ) {
-										echo ( $currLang == 'en' )
+										echo ( 'en' === $currLang )
 											? esc_html( $specialty->name )
 											: esc_html( get_term_meta( $specialty->term_id, 'rudr_text_' . $currLang, true ) );
 									} else {
@@ -1232,6 +1254,7 @@ class D2gConnect_Shortcodes {
 							<?php } ?>
 						</select>
 					</li>
+
 					<li class="filter_wrap flex-fill">
 						<select name="country-origin" id="country_filter" class="doctor_filter">
 							<option value="0"><?php echo esc_html__( 'all countries', 'doctor2go-connect' ); ?></option>
@@ -1239,7 +1262,7 @@ class D2gConnect_Shortcodes {
 								<option <?php selected( $country_origin, $country->term_id ); ?> value="<?php echo esc_attr( $country->term_id ); ?>">
 									<?php
 									if ( get_option( 'd2g_pseudo_translations' ) == 1 ) {
-										echo ( $currLang == 'en' )
+										echo ( 'en' === $currLang )
 											? esc_html( $country->name )
 											: esc_html( get_term_meta( $country->term_id, 'rudr_text_' . $currLang, true ) );
 									} else {
@@ -1250,6 +1273,7 @@ class D2gConnect_Shortcodes {
 							<?php } ?>
 						</select>
 					</li>
+
 					<li class="filter_wrap flex-fill">
 						<select name="doctor-language" id="language_filter" class="doctor_filter">
 							<option value="0"><?php echo esc_html__( 'all languages', 'doctor2go-connect' ); ?></option>
@@ -1257,7 +1281,7 @@ class D2gConnect_Shortcodes {
 								<option <?php selected( $doctor_language, $language->term_id ); ?> value="<?php echo esc_attr( $language->term_id ); ?>">
 									<?php
 									if ( get_option( 'd2g_pseudo_translations' ) == 1 ) {
-										echo ( $currLang == 'en' )
+										echo ( 'en' === $currLang )
 											? esc_html( $language->name )
 											: esc_html( get_term_meta( $language->term_id, 'rudr_text_' . $currLang, true ) );
 									} else {
@@ -1272,34 +1296,17 @@ class D2gConnect_Shortcodes {
 					<li class="filter_wrap flex-fill">
 						<select name="consult_type" id="consult_type" class="doctor_filter">
 							<option value=""><?php echo esc_html__( 'all consult types', 'doctor2go-connect' ); ?></option>
-							<option value="email" <?php selected( isset( $_GET['consult_type'] ) ? $_GET['consult_type'] : '', 'email' ); ?>>
+							<option value="email" <?php selected( $consult_type_raw, 'email' ); ?>>
 								<?php echo esc_html__( 'email consult', 'doctor2go-connect' ); ?>
 							</option>
-							<option value="video" <?php selected( isset( $_GET['consult_type'] ) ? $_GET['consult_type'] : '', 'video' ); ?>>
+							<option value="video" <?php selected( $consult_type_raw, 'video' ); ?>>
 								<?php echo esc_html__( 'video consult', 'doctor2go-connect' ); ?>
 							</option>
-							<option value="walkin" <?php selected( isset( $_GET['consult_type'] ) ? $_GET['consult_type'] : '', 'walkin' ); ?>>
+							<option value="walkin" <?php selected( $consult_type_raw, 'walkin' ); ?>>
 								<?php echo esc_html__( 'walkin video consult', 'doctor2go-connect' ); ?>
 							</option>
 						</select>
 					</li>
-
-					<!--
-					//this is not sure if ever is gonna be used
-					<li id="hourly_price">
-						<p><label><?php echo esc_html__( 'hourly price', 'doctor2go-connect' ); ?></label></p>
-						<div class="range_slider_wrapper">
-							<div id="slider-range-price"></div>
-							<input type="hidden" value="1" id="amount1-price" name="price[min]">
-							<input type="hidden" value="500" id="amount2-price" name="price[max]">
-							<div class="stretch">
-								<p class="alignleft" id="amount_1-price"></p>
-								<p class="alignright" id="amount_2-price"></p>
-								<div class="clearfix"></div>
-							</div>
-						</div>
-					</li>
-					-->
 
 					<li class="filter_wrap flex-fill">
 						<select name="post_id" id="post_id" class="doctor_filter">
@@ -1314,51 +1321,57 @@ class D2gConnect_Shortcodes {
 							<?php } ?>
 						</select>
 					</li>
-					
-					
 
-
-					<?php if ( $a['stand_alone'] == 'false' ) { ?>
+					<?php if ( 'false' === $a['stand_alone'] ) { ?>
 						<li>
-							<a class="btn btn-primary" href="<?php echo esc_url( $pageDoc ); ?>"><?php esc_html_e( 'Reset search', 'doctor2go-connect' ); ?></a>
+							<a class="btn btn-primary" href="<?php echo esc_url( $pageDoc ); ?>">
+								<?php esc_html_e( 'Reset search', 'doctor2go-connect' ); ?>
+							</a>
 						</li>
 					<?php } ?>
 				</ul>
 
-				<p><?php echo esc_html__( 'Found doctors:', 'doctor2go-connect' ); ?> <span id="doc_count"><?php echo esc_html( $count ); ?></span></p>
+				<p>
+					<?php echo esc_html__( 'Found doctors:', 'doctor2go-connect' ); ?>
+					<span id="doc_count"><?php echo esc_html( $count ); ?></span>
+				</p>
 
-				<?php if ( $a['stand_alone'] == 'true' ) { ?>
+				<?php if ( 'true' === $a['stand_alone'] ) { ?>
 					<input id="search_submit" type="submit" class="search_submit" value="<?php echo esc_attr__( 'Search', 'doctor2go-connect' ); ?>">
 					<div class="alert alert-danger" id="search_error"></div>
 					<div class="loader simple_hide"></div>
 				<?php } ?>
+
+				<?php wp_nonce_field( 'doctor_filter_action', 'doctor_filter_nonce' ); ?>
 			</div>
 		</form>
 
-		<?php if ( $a['wrapper_class'] != '' ) { ?>
-		</div>
-		<?php } ?>
-	
 		<?php
-		wp_localize_script(
-				'd2g-load-doctors',
-				'myShortcodeDataFilters',
-				array(
-					'_wpnonce' 				=> wp_create_nonce( 'doc_call' ),
-					'ajax_url' 				=> admin_url( 'admin-ajax.php' ),
-					'posts_per_page' 		=> $a['posts_per_page'],
-					'standalone_checker' 	=> $a['stand_alone'],
-					'page_url'				=> $pageDoc,
-					'loading_checker' 		=> get_option( 'd2g_load_availability_info' ) == 1 ? 1 : 0,
-					'str_no_doctors_found'	=> esc_html__( 'We are sorry, but we could not find any doctors for your search criteria, please refine your search.', 'doctor2go-connect' )
-				)
-			);
+		if ( '' !== $a['wrapper_class'] ) {
+			?>
+			</div>
+			<?php
+		}
 
-		/* Restore original Post Data */
+		wp_localize_script(
+			'd2g-load-doctors',
+			'myShortcodeDataFilters',
+			array(
+				'_wpnonce'             => wp_create_nonce( 'doc_call' ),
+				'ajax_url'             => admin_url( 'admin-ajax.php' ),
+				'posts_per_page'       => $a['posts_per_page'],
+				'standalone_checker'   => $a['stand_alone'],
+				'page_url'             => $pageDoc,
+				'loading_checker'      => get_option( 'd2g_load_availability_info' ) == 1 ? 1 : 0,
+				'str_no_doctors_found' => esc_html__( 'We are sorry, but we could not find any doctors for your search criteria, please refine your search.', 'doctor2go-connect' ),
+			)
+		);
+
 		wp_reset_postdata();
 
 		$sc = ob_get_contents();
 		ob_end_clean();
+
 		return $sc;
 	}
 
@@ -1964,12 +1977,17 @@ class D2gConnect_Shortcodes {
 			}
 		}
 
+		$action_url = add_query_arg( 'create_account', '1', '' );
+
+		if ( isset( $_GET['redirect_to'] ) ) {
+			$redirect_to = esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
+			$action_url  = add_query_arg( 'redirect_to', $redirect_to, $action_url );
+		}
+
 		ob_start();
 		?>
 		<div class="d2g_form_wrapper  py-5">
-			<form id="custom-registration-form" method="post"
-				action="?create_account=1<?php echo ( isset( $_GET['redirect_to'] ) ) ? '&redirect_to=' . urlencode( wp_unslash( $_GET['redirect_to'] ) ) : ''; ?>"
-				class="w-100 w-md-75 w-lg-50 mx-auto border rounded-3 p-4 bg-light shadow-sm needs-validation" novalidate>
+			<form id="custom-registration-form" method="post" action="<?php echo esc_url( $action_url ); ?>" class="w-100 w-md-75 w-lg-50 mx-auto border rounded-3 p-4 bg-light shadow-sm needs-validation" novalidate>
 
 				<?php wp_nonce_field( 'd2g_registration_action', 'd2g_reg_nonce' ); ?>
 
@@ -1993,6 +2011,21 @@ class D2gConnect_Shortcodes {
 				<div class="mb-3">
 					<label for="p_tel" class="form-label"><?php echo esc_html__( 'Phone', 'doctor2go-connect' ); ?>*</label>
 					<input class="form-control myrequired" type="text" name="meta[p_tel]" id="p_tel" required>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" for="p_bday"><?php echo esc_html__( 'Date of Birth', 'doctor2go-connect' ); ?></label>
+					<input class="form-control" type="date" name="p_bday" id="p_bday">
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" for="p_gender"><?php echo esc_html__( 'Gender', 'doctor2go-connect' ); ?></label>
+					<select name="meta[p_gender]" id="p_gender" class="form-select">
+						<option value="0"><?php echo esc_html__( 'make a choice', 'doctor2go-connect' ); ?></option>
+						<option value="male"><?php echo esc_html__( 'male', 'doctor2go-connect' ); ?></option>
+						<option value="female"><?php echo esc_html__( 'female', 'doctor2go-connect' ); ?></option>
+						<option value="other"><?php echo esc_html__( 'other', 'doctor2go-connect' ); ?></option>
+					</select>
 				</div>
 
 				<div class="mb-3">
@@ -2293,7 +2326,7 @@ class D2gConnect_Shortcodes {
 									$questionnaireURLSimple = get_option( 'waiting_room_url' ) . 'answer_set/' . $appointment->answer_set_id . '?client_auth=' . $client_token;
 								}
 
-								$app_id = isset( $_GET['app'] ) ? sanitize_text_field( wp_unslash( $_GET['app'] ) ) : '';
+								$app_id = isset( $_GET['app'] ) ? sanitize_text_field( wp_unslash( $_GET['app'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query param, no state change.
 								
 								if ( $appointment->_id == $app_id ) {
 									if ( $questionnaireURLSimple != '' ) { ?>
@@ -2329,10 +2362,13 @@ class D2gConnect_Shortcodes {
 	public function d2g_account_settings() {
 
 		// Verify nonce
-		$nonce = isset( $_POST['d2g_account_nonce'] ) ? sanitize_key( wp_unslash( $_POST['d2g_account_nonce'] ) ) : '';
-		if ( isset($_POST) && count($_POST) > 0 && ! wp_verify_nonce( $nonce, 'd2g_account_action' ) ) {
-			echo '<p class="alert alert-danger">' . esc_html__( 'Security check failed. Please refresh the page and try again.', 'doctor2go-connect' ) . '</p>';
-			return;
+		if ( isset( $_POST['d2g_account_nonce'] ) ) {
+			$nonce = sanitize_key( wp_unslash( $_POST['d2g_account_nonce'] ) );
+
+			if ( ! wp_verify_nonce( $nonce, 'd2g_account_action' ) ) {
+				echo '<p class="alert alert-danger">' . esc_html__( 'Security check failed. Please refresh the page and try again.', 'doctor2go-connect' ) . '</p>';
+				return;
+			}
 		}
 
 		$current_user = wp_get_current_user();
@@ -2359,10 +2395,12 @@ class D2gConnect_Shortcodes {
 				wp_set_password( $password, $user_id );
 			}
 
+
 			// Update meta if exists
 			if ( isset( $_POST['meta'] ) && is_array( $_POST['meta'] ) ) {
 				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				$meta = wp_unslash( $_POST['meta'] );
+
 				foreach ( $meta as $key => $value ) {
 					update_user_meta(
 						$user_id,
@@ -2388,6 +2426,7 @@ class D2gConnect_Shortcodes {
 
 		// Display the form for the account settings
 		ob_start();
+		//nice_dump($user_meta);
 		?>
 		<div class="d2g_form_wrapper">
 			<form id="custom-registration-form" method="post">
@@ -2407,6 +2446,19 @@ class D2gConnect_Shortcodes {
 				<div class="mb-3">
 					<label for="p_tel" class="form-label"><?php echo esc_html__( 'Phone', 'doctor2go-connect' ); ?></label>
 					<input type="text" name="meta[p_tel]" id="p_tel" class="form-control" required value="<?php echo esc_html( $user_meta['p_tel'][0] ); ?>">
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="p_bday"><?php echo esc_html__( 'Date of Birth', 'doctor2go-connect' ); ?></label>
+					<input class="form-control" type="date" name="meta[p_bday]" id="p_bday" value="<?php echo esc_html( $user_meta['p_bday'][0] ); ?>">
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="p_gender"><?php echo esc_html__( 'Gender', 'doctor2go-connect' ); ?></label>
+					<select name="meta[p_gender]" id="p_gender" class="form-select">
+						<option <?php echo ( '0' == $user_meta['p_gender'][0] ) ? 'selected' : ''; ?> value="0"><?php echo esc_html__( 'make a choice', 'doctor2go-connect' ); ?></option>
+						<option <?php echo ( 'male' == $user_meta['p_gender'][0] ) ? 'selected' : ''; ?> value="male"><?php echo esc_html__( 'male', 'doctor2go-connect' ); ?></option>
+						<option <?php echo ( 'female' == $user_meta['p_gender'][0] ) ? 'selected' : ''; ?> value="female"><?php echo esc_html__( 'female', 'doctor2go-connect' ); ?></option>
+						<option <?php echo ( 'other' == $user_meta['p_gender'][0] ) ? 'selected' : ''; ?> value="other"><?php echo esc_html__( 'other', 'doctor2go-connect' ); ?></option>
+					</select>
 				</div>
 				<div class="mb-3" id="time_zone_wrapper">
 					<label for="p_timezone" class="form-label"><?php echo esc_html__( 'Timezone', 'doctor2go-connect' ); ?></label>
@@ -2722,5 +2774,3 @@ class D2gConnect_Shortcodes {
 		return $doctor;
 	}
 }
-
-

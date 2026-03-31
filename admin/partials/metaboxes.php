@@ -26,11 +26,11 @@ function d2g_meta_box_personal_cb( $post ) {
 		'd2g_main_email'   => esc_html__( 'E-mail', 'doctor2go-connect' ),
 		'd2g_organisation' => esc_html__( 'Organisation', 'doctor2go-connect' ),
 		'reg_nr'           => esc_html__( 'Registration number', 'doctor2go-connect' ),
-		'reg_country'      => esc_html__( 'Country of registration', 'doctor2go-connect' ),
-		'avg_price'        => esc_html__( 'Average price', 'doctor2go-connect' ),
+		'reg_country'      => esc_html__( 'Country of registration', 'doctor2go-connect' )
 
 	);
 	$currencies = array( 'EUR', 'USD', 'GBP', 'ALL', 'MXN', 'AUD', 'INR', 'AZN', 'BYN', 'BGN', 'HRK', 'CZK', 'DKK', 'GEL', 'HUF', 'ISK', 'CHF', 'MKD', 'MDL', 'NOK', 'PLN', 'RON', 'RUB', 'RSD', 'SEK', 'CHF', 'TRY', 'UAH', 'CAD', 'NZD', 'BRL', 'ZAR' );
+	$types	  = array( 'short' => 'Short generic Email Advice', 'derma_email_advice' => 'Dermatology Email Advice' );
 
 	wp_nonce_field( 'd2g_meta_box_nonce', 'meta_box_nonce' );
 	?>
@@ -47,17 +47,6 @@ function d2g_meta_box_personal_cb( $post ) {
 			<?php
 		}
 		?>
-		<div class="col-sm-4 no-flex">
-			<label class="small"><?php echo esc_html__( 'Average price currency', 'doctor2go-connect' ); ?></label>
-			<select class="form-control" name="meta[avg_price_currency]" id="avg_price_currency">
-				<?php foreach ( $currencies as $currency ) { ?>
-					<option <?php echo ( $currency == $values['avg_price_currency'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $currency ); ?>"><?php echo esc_html( $currency ); ?></option>    
-				<?php } ?>
-			</select>
-		</div>
-		<div class="col-sm-4">
-			<label><input name="meta[d2g_intake_call]" type="checkbox" value="1">&nbsp;<span><?php echo esc_html( 'I offer a free intake call', 'doctor2go-connect' ); ?></span></label>
-		</div>
 	</div>
 	<div class="row">
 		<div class="col-sm-4 no-flex">
@@ -89,8 +78,13 @@ function d2g_meta_box_personal_cb( $post ) {
 				<?php } ?>
 			</select>
 		</div>
-		<div class="col-sm-4">
-		   
+		<div class="col-sm-4 no-flex">
+			<label class="small"><?php echo esc_html__( 'E-mail consult questionnaire', 'doctor2go-connect' ); ?>*</label>
+			<select class="form-control" name="meta[written_con_type]" id="written_con_type">
+				<?php foreach ( $types as $type => $label ) { ?>
+					<option <?php echo ( $type == $values['written_con_type'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $type ); ?>"><?php echo esc_html( $label ); ?></option>    
+				<?php } ?>
+			</select>
 		</div>
 	</div>
 	<h3><?php echo esc_html__( 'Holiday settings', 'doctor2go-connect' ); ?></h3>
