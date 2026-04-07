@@ -983,7 +983,7 @@ class D2gConnect_Shortcodes {
 					<?php
 					while ( $the_query->have_posts() ) {
 						$the_query->the_post();
-						include d2g_locate_template( 'content-doctor-' . $a['template'] . '.php' );
+						include d2g_locate_template( 'content-doctor-grid.php' );
 					}
 					?>
 				</div>

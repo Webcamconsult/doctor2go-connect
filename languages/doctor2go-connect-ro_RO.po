@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Doctor2Go Connect\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-19 08:49+0000\n"
-"PO-Revision-Date: 2026-03-31 07:56+0000\n"
+"PO-Revision-Date: 2026-04-01 12:53+0000\n"
 "Last-Translator: Thomas Wiese\n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -20,8 +20,8 @@ msgstr ""
 msgid " - "
 msgstr "-"
 
-#: public/class-d2g-profile-data.php:191 public/template-functions.php:1457
-#: public/template-functions.php:1470
+#: public/class-d2g-profile-data.php:191 public/template-functions.php:1420
+#: public/template-functions.php:1457 public/template-functions.php:1470
 msgid " at "
 msgstr "la"
 
@@ -33,12 +33,11 @@ msgstr "Vă rugăm să verificați că nu sunteți un robot."
 msgid " You have entered an invalid e-mail. "
 msgstr "Ați introdus o adresă de e-mail nevalidă."
 
-#: admin/partials/d2g-connect-shortcode-help.php:101
-#: admin/partials/d2g-connect-shortcode-help.php:106
-#: admin/partials/d2g-connect-shortcode-help.php:111
-#: admin/partials/d2g-connect-shortcode-help.php:131
-#: admin/partials/d2g-connect-shortcode-help.php:160
-#: admin/partials/d2g-connect-shortcode-help.php:190
+#: admin/partials/d2g-connect-shortcode-help.php:104
+#: admin/partials/d2g-connect-shortcode-help.php:109
+#: admin/partials/d2g-connect-shortcode-help.php:114
+#: admin/partials/d2g-connect-shortcode-help.php:134
+#: admin/partials/d2g-connect-shortcode-help.php:163
 #: admin/partials/d2g-connect-shortcode-help.php:193
 #: admin/partials/d2g-connect-shortcode-help.php:196
 #: admin/partials/d2g-connect-shortcode-help.php:199
@@ -49,6 +48,7 @@ msgstr "Ați introdus o adresă de e-mail nevalidă."
 #: admin/partials/d2g-connect-shortcode-help.php:214
 #: admin/partials/d2g-connect-shortcode-help.php:217
 #: admin/partials/d2g-connect-shortcode-help.php:220
+#: admin/partials/d2g-connect-shortcode-help.php:223
 msgid "(PRO version only*)"
 msgstr "(Doar versiunea PRO*)"
 
@@ -187,7 +187,7 @@ msgstr ""
 msgid "All"
 msgstr "Toate"
 
-#: admin/partials/d2g-connect-shortcode-help.php:64
+#: admin/partials/d2g-connect-shortcode-help.php:67
 msgid "All doctors will be shown."
 msgstr "Toți medicii vor fi afișați."
 
@@ -199,11 +199,11 @@ msgstr ""
 "Toate paginile utilizate de pluginul D2G connect au nevoie de un tip de "
 "pagină! Altfel, linkurile din frontend ar putea fi întrerupte!"
 
-#: admin/partials/d2g-connect-shortcode-help.php:51
+#: admin/partials/d2g-connect-shortcode-help.php:54
 msgid "Amount of columns (only applicable with the grid template.)"
 msgstr "Număr de coloane (se aplică doar la șablonul grilă.)"
 
-#: admin/partials/d2g-connect-shortcode-help.php:60
+#: admin/partials/d2g-connect-shortcode-help.php:63
 msgid "Amount of doctors shown on a page."
 msgstr "Numărul de medici afișați pe o pagină."
 
@@ -223,13 +223,13 @@ msgstr ""
 msgid "An unknown error has occurred"
 msgstr "A apărut o eroare necunoscută"
 
-#: admin/partials/d2g-connect-shortcode-help.php:63
+#: admin/partials/d2g-connect-shortcode-help.php:66
 msgid "Any number larger than 0 (6 = default)"
 msgstr "Orice număr mai mare decât 0 (6 = implicit)"
 
-#: admin/partials/d2g-connect-shortcode-help.php:73
-#: admin/partials/d2g-connect-shortcode-help.php:156
-#: admin/partials/d2g-connect-shortcode-help.php:185
+#: admin/partials/d2g-connect-shortcode-help.php:76
+#: admin/partials/d2g-connect-shortcode-help.php:159
+#: admin/partials/d2g-connect-shortcode-help.php:188
 msgid "Any string"
 msgstr "Orice șir"
 
@@ -249,7 +249,7 @@ msgstr "Data și ora programării"
 msgid "Appointment link for doctor"
 msgstr "Link pentru programare la medic"
 
-#: admin/partials/d2g-connect-shortcode-help.php:91
+#: admin/partials/d2g-connect-shortcode-help.php:94
 msgid "ASC (ascending) or DESC (descending)"
 msgstr "ASC (crescător) sau DESC (descrescător)"
 
@@ -385,9 +385,17 @@ msgstr "consultare"
 msgid "Consultation fee:"
 msgstr "Taxă de consultanță:"
 
+#: public/template-functions.php:316
+msgid "Consultation offers"
+msgstr "Oferte de consultanță"
+
 #: public/template-functions.php:1564
 msgid "Consultation types"
 msgstr "Tipuri de consultații"
+
+#: public/template-functions.php:1420
+msgid "contact doctor"
+msgstr "contactează medicul"
 
 #: public/template-functions.php:1496
 msgid "Contact:"
@@ -426,9 +434,9 @@ msgstr "Creați utilizatorul și profilul de medic local"
 msgid "CSS & JS"
 msgstr "CSS și JS"
 
-#: admin/partials/d2g-connect-shortcode-help.php:70
-#: admin/partials/d2g-connect-shortcode-help.php:153
-#: admin/partials/d2g-connect-shortcode-help.php:182
+#: admin/partials/d2g-connect-shortcode-help.php:73
+#: admin/partials/d2g-connect-shortcode-help.php:156
+#: admin/partials/d2g-connect-shortcode-help.php:185
 msgid "css class used for the outer wrapper (optional)"
 msgstr "clasa css utilizată pentru învelișul exterior (opțional)"
 
@@ -476,12 +484,12 @@ msgstr "Dezactivați antetul și subsolul în single-d2g_doctor.php"
 msgid "Deactivate loading google recaptcha script"
 msgstr "Dezactivați încărcarea scriptului google recaptcha"
 
-#: admin/partials/d2g-connect-shortcode-help.php:45
-#: admin/partials/d2g-connect-shortcode-help.php:54
+#: admin/partials/d2g-connect-shortcode-help.php:48
+#: admin/partials/d2g-connect-shortcode-help.php:57
 msgid "default"
 msgstr "implicit"
 
-#: admin/partials/d2g-connect-shortcode-help.php:82
+#: admin/partials/d2g-connect-shortcode-help.php:85
 msgid ""
 "default orderby is \"title\", you can use any orderby as described in the "
 "WordPress codex, when you want use orderby for a meta field you have to use "
@@ -567,8 +575,9 @@ msgstr "Mâncă afecțiunea pielii?"
 msgid "E-mail"
 msgstr "E-mail"
 
-#: public/template-functions.php:1001 public/template-functions.php:1200
-#: public/template-functions.php:1290 public/template-functions.php:1571
+#: public/template-functions.php:347 public/template-functions.php:1001
+#: public/template-functions.php:1200 public/template-functions.php:1290
+#: public/template-functions.php:1571
 msgid "E-mail advice"
 msgstr "Sfaturi prin e-mail"
 
@@ -595,7 +604,7 @@ msgstr "Setări e-mail"
 msgid "Edit"
 msgstr "Editează"
 
-#: admin/class-d2g-doc-user-profile.php:305
+#: admin/class-d2g-doc-user-profile.php:303
 msgid "edit"
 msgstr "editează"
 
@@ -642,8 +651,13 @@ msgid "Extended Questionnaire – for complex or multiple skin concerns"
 msgstr "Chestionar Extins - pentru probleme complexe sau multiple ale pielii"
 
 #: public/template-functions.php:910 public/template-functions.php:1068
+#: public/template-functions.php:1068
 msgid "female"
 msgstr "femeie"
+
+#: public/template-functions.php:331
+msgid "first availability: "
+msgstr "prima disponibilitate:"
 
 #: public/class-d2g-profile-data.php:191
 msgid "First availibility"
@@ -658,12 +672,12 @@ msgstr "Prenume"
 msgid "Fist name"
 msgstr "Prenume"
 
-#: admin/partials/d2g-connect-shortcode-help.php:30
+#: admin/partials/d2g-connect-shortcode-help.php:33
 msgid "Following parameters can be used to change the view from the listing"
 msgstr ""
 "Următorii parametri pot fi utilizați pentru a schimba vizualizarea din listă"
 
-#: admin/partials/d2g-connect-shortcode-help.php:27
+#: admin/partials/d2g-connect-shortcode-help.php:30
 msgid ""
 "Following shortcodes are included in the free version and can be used in "
 "pages from your website."
@@ -671,7 +685,7 @@ msgstr ""
 "Următoarele shortcoduri sunt incluse în versiunea gratuită și pot fi "
 "utilizate în paginile site-ului dumneavoastră."
 
-#: admin/partials/d2g-connect-shortcode-help.php:103
+#: admin/partials/d2g-connect-shortcode-help.php:106
 msgid ""
 "Following shortcodes are included only included in the paid version and can "
 "be used in pages from your website. Click"
@@ -723,7 +737,7 @@ msgstr "S-a schimbat locul?"
 msgid "Header & footer"
 msgstr "Antet și subsol"
 
-#: admin/partials/d2g-connect-shortcode-help.php:103
+#: admin/partials/d2g-connect-shortcode-help.php:106
 msgid "here"
 msgstr "aici"
 
@@ -759,9 +773,9 @@ msgstr "Accept termenii și condițiile."
 msgid "I have installed \"Solid Security Basic\" and I have activated 2FA"
 msgstr "Am instalat „Solid Security Basic” și am activat 2FA"
 
-#: admin/partials/d2g-connect-shortcode-help.php:127
-#: admin/partials/d2g-connect-shortcode-help.php:147
-#: admin/partials/d2g-connect-shortcode-help.php:176
+#: admin/partials/d2g-connect-shortcode-help.php:130
+#: admin/partials/d2g-connect-shortcode-help.php:150
+#: admin/partials/d2g-connect-shortcode-help.php:179
 msgid ""
 "ID from doctor post, can be found in the backend overview from the doctors"
 msgstr ""
@@ -771,6 +785,10 @@ msgstr ""
 #: admin/class-d2g-connect-admin.php:509
 msgid "Identifier"
 msgstr "Identificator"
+
+#: public/template-functions.php:1156
+msgid "If applicable..."
+msgstr "Dacă este cazul..."
 
 #: public/class-d2g-connect-public.php:617
 msgid ""
@@ -907,8 +925,13 @@ msgid "make a selection"
 msgstr "face o selecție"
 
 #: public/template-functions.php:909 public/template-functions.php:1067
+#: public/template-functions.php:1067
 msgid "male"
 msgstr "masculin"
+
+#: public/template-functions.php:1154
+msgid "Medical history (skin cancer)"
+msgstr "Istoric medical (cancer de piele)"
 
 #: admin/class-d2g-connect-admin.php:727 admin/partials/metaboxes.php:25
 msgid "Mobile"
@@ -917,6 +940,11 @@ msgstr "Mobil"
 #: public/template-functions.php:1358
 msgid "More info about the consultation types"
 msgstr "Mai multe informații despre tipurile de consultații"
+
+#: public/template-functions.php:334 public/template-functions.php:351
+#: public/template-functions.php:367
+msgid "n/a"
+msgstr "n/a"
 
 #: public/template-functions.php:631
 msgid "Need help? Click here for the booking instructions."
@@ -979,12 +1007,12 @@ msgstr ""
 "Rezervările pentru consultații online sunt valabile timp de 24 de ore și "
 "necesită plată în acest interval. În caz contrar, acestea vor fi anulate."
 
-#: admin/partials/d2g-connect-shortcode-help.php:88
+#: admin/partials/d2g-connect-shortcode-help.php:91
 msgid "order (optional) this follows the general WordPress order rules"
 msgstr ""
 "comandă (opțional) aceasta urmează regulile generale de ordine WordPress"
 
-#: admin/partials/d2g-connect-shortcode-help.php:79
+#: admin/partials/d2g-connect-shortcode-help.php:82
 msgid "orderby (optional) this follows the general WordPress ordering rules"
 msgstr ""
 "ordonează după (opțional) aceasta urmează regulile generale de ordonare "
@@ -1008,6 +1036,7 @@ msgid "Organisation API"
 msgstr "API Organizație"
 
 #: public/template-functions.php:911 public/template-functions.php:1069
+#: public/template-functions.php:1069
 msgid "other"
 msgstr "altele"
 
@@ -1015,10 +1044,10 @@ msgstr "altele"
 msgid "Page ID"
 msgstr "ID pagină"
 
-#: admin/partials/d2g-connect-shortcode-help.php:34
-#: admin/partials/d2g-connect-shortcode-help.php:116
-#: admin/partials/d2g-connect-shortcode-help.php:136
-#: admin/partials/d2g-connect-shortcode-help.php:165
+#: admin/partials/d2g-connect-shortcode-help.php:37
+#: admin/partials/d2g-connect-shortcode-help.php:119
+#: admin/partials/d2g-connect-shortcode-help.php:139
+#: admin/partials/d2g-connect-shortcode-help.php:168
 msgid "Parameter"
 msgstr "Parametru"
 
@@ -1132,10 +1161,10 @@ msgstr "Poziție"
 msgid "position"
 msgstr "poziție"
 
-#: admin/partials/d2g-connect-shortcode-help.php:37
-#: admin/partials/d2g-connect-shortcode-help.php:119
-#: admin/partials/d2g-connect-shortcode-help.php:139
-#: admin/partials/d2g-connect-shortcode-help.php:168
+#: admin/partials/d2g-connect-shortcode-help.php:40
+#: admin/partials/d2g-connect-shortcode-help.php:122
+#: admin/partials/d2g-connect-shortcode-help.php:142
+#: admin/partials/d2g-connect-shortcode-help.php:171
 msgid "Possible values"
 msgstr "Valori posibile"
 
@@ -1264,6 +1293,11 @@ msgstr "Specialități"
 #: public/template-functions.php:670
 msgid "Start"
 msgstr "Pornire"
+
+#: public/templates/content-doctor-list.php:32
+#: public/templates/content-doctor-grid.php:35
+msgid "start a consult"
+msgstr "începe o consultație"
 
 #: admin/class-d2g-connect-admin.php:100
 #: public/class-d2g-connect-public.php:270 admin/partials/metaboxes.php:123
@@ -1396,8 +1430,8 @@ msgstr ""
 
 #: admin/class-d2g-booking-patient.php:399
 #: admin/class-d2g-booking-patient.php:427
-#: admin/class-d2g-booking-patient.php:569
-#: admin/class-d2g-booking-patient.php:595
+#: admin/class-d2g-booking-patient.php:588
+#: admin/class-d2g-booking-patient.php:619
 msgid "There has been an error."
 msgstr "A apărut o eroare."
 
@@ -1428,7 +1462,7 @@ msgstr "Titlu"
 msgid "title"
 msgstr "titlu"
 
-#: admin/partials/d2g-connect-shortcode-help.php:103
+#: admin/partials/d2g-connect-shortcode-help.php:106
 msgid "to get your paid license now."
 msgstr "pentru a obține licența plătită acum."
 
@@ -1508,7 +1542,7 @@ msgstr "Utiliza el procesamiento de imágenes de imgix"
 msgid "Use pseudo translations."
 msgstr "Folosește pseudo-traduceri."
 
-#: admin/partials/d2g-connect-shortcode-help.php:161
+#: admin/partials/d2g-connect-shortcode-help.php:164
 msgid ""
 "Use this shortcode to display a doctor's calendar, similar to the calendar "
 "section on the doctor detail page. Ideal for a front page or website sidebar."
@@ -1517,7 +1551,7 @@ msgstr ""
 "secțiunea de calendar de pe pagina de detalii a medicului. Ideal pentru o "
 "pagină principală sau o bară laterală a site-ului web."
 
-#: admin/partials/d2g-connect-shortcode-help.php:132
+#: admin/partials/d2g-connect-shortcode-help.php:135
 msgid ""
 "Use this shortcode to display a doctor's locations, similar to the locations "
 "section on the doctor detail page. Ideal for a contact page or website "
@@ -1527,7 +1561,7 @@ msgstr ""
 "secțiunea de locații de pe pagina de detalii a medicului. Ideal pentru o "
 "pagină de contact sau subsolul site-ului."
 
-#: admin/partials/d2g-connect-shortcode-help.php:29
+#: admin/partials/d2g-connect-shortcode-help.php:32
 msgid ""
 "Use this shortcode to display a list of doctors on a page. It includes a "
 "\"Load More Doctors\" button that loads additional doctors based on the "
@@ -1537,7 +1571,7 @@ msgstr ""
 "Acesta include un buton „Încarcă mai mulți medici” care încarcă medici "
 "suplimentari pe baza setării „posts_per_page”."
 
-#: admin/partials/d2g-connect-shortcode-help.php:203
+#: admin/partials/d2g-connect-shortcode-help.php:206
 msgid ""
 "Use this shortcode to display a menu form the patient pages. Ideal it is "
 "used with in combination with the following shortcodes: d2g_account_settings "
@@ -1549,7 +1583,7 @@ msgstr ""
 "d2g_account_settings / d2g_patient_appointments / d2g_liked_posts / "
 "d2g_patient_dashbaord. Nu sunt necesari parametri."
 
-#: admin/partials/d2g-connect-shortcode-help.php:112
+#: admin/partials/d2g-connect-shortcode-help.php:115
 msgid ""
 "Use this shortcode to display a single doctor in a compact format, similar "
 "to the grid overview on the front end. It can be placed anywhere on your "
@@ -1559,7 +1593,7 @@ msgstr ""
 "compact, similar cu prezentarea generală în grilă de pe partea frontală. "
 "Poate fi plasat oriunde pe site-ul dvs., cum ar fi bara laterală."
 
-#: admin/partials/d2g-connect-shortcode-help.php:212
+#: admin/partials/d2g-connect-shortcode-help.php:215
 msgid ""
 "Use this shortcode to display the account settings form, allowing patients "
 "to update their email, phone number, and password. No parameters are "
@@ -1569,7 +1603,7 @@ msgstr ""
 "permițând pacienților să își actualizeze adresa de e-mail, numărul de "
 "telefon și parola. Nu sunt necesari parametri."
 
-#: admin/partials/d2g-connect-shortcode-help.php:97
+#: admin/partials/d2g-connect-shortcode-help.php:100
 msgid ""
 "Use this shortcode to display the form doctors use to create or update their "
 "profiles. No parameters are required."
@@ -1578,7 +1612,7 @@ msgstr ""
 "folosesc pentru a-și crea sau actualiza profilurile. Nu sunt necesari "
 "parametri."
 
-#: admin/partials/d2g-connect-shortcode-help.php:215
+#: admin/partials/d2g-connect-shortcode-help.php:218
 msgid ""
 "Use this shortcode to display the liked doctor's from a patient. No "
 "parameters are required."
@@ -1586,14 +1620,14 @@ msgstr ""
 "Utilizați acest scurtcod pentru a afișa medicul preferat al unui pacient. Nu "
 "sunt necesari parametri."
 
-#: admin/partials/d2g-connect-shortcode-help.php:194
+#: admin/partials/d2g-connect-shortcode-help.php:197
 msgid ""
 "Use this shortcode to display the login form. No parameters are required."
 msgstr ""
 "Utilizați acest scurtcod pentru a afișa formularul de autentificare. Nu sunt "
 "necesari parametri."
 
-#: admin/partials/d2g-connect-shortcode-help.php:197
+#: admin/partials/d2g-connect-shortcode-help.php:200
 msgid ""
 "Use this shortcode to display the lost password form. No parameters are "
 "required."
@@ -1601,7 +1635,7 @@ msgstr ""
 "Utilizați acest scurtcod pentru a afișa formularul de parolă uitată. Nu sunt "
 "necesari parametri."
 
-#: admin/partials/d2g-connect-shortcode-help.php:206
+#: admin/partials/d2g-connect-shortcode-help.php:209
 msgid ""
 "Use this shortcode to display the patient dashboard, the page patients are "
 "redirected to after logging in. No parameters are required."
@@ -1610,7 +1644,7 @@ msgstr ""
 "către care pacienții sunt redirecționați după autentificare. Nu sunt "
 "necesari parametri."
 
-#: admin/partials/d2g-connect-shortcode-help.php:221
+#: admin/partials/d2g-connect-shortcode-help.php:224
 msgid ""
 "Use this shortcode to display the patient portal where the patient can chat "
 "with doctors and receive medical documents from, where he/she has a "
@@ -1620,7 +1654,7 @@ msgstr ""
 "poate discuta cu medicii și poate primi documente medicale de la aceștia, cu "
 "care are o conexiune. Nu sunt necesari parametri."
 
-#: admin/partials/d2g-connect-shortcode-help.php:218
+#: admin/partials/d2g-connect-shortcode-help.php:221
 msgid ""
 "Use this shortcode to display the questionnaires for an intake or from a "
 "written consultation. No parameters are required."
@@ -1628,7 +1662,7 @@ msgstr ""
 "Utilizați acest scurtcod pentru a afișa chestionarele pentru o înscriere sau "
 "de la o consultație scrisă. Nu sunt necesari parametri."
 
-#: admin/partials/d2g-connect-shortcode-help.php:191
+#: admin/partials/d2g-connect-shortcode-help.php:194
 msgid ""
 "Use this shortcode to display the registration form for patients. No "
 "parameters are required."
@@ -1636,7 +1670,7 @@ msgstr ""
 "Utilizați acest scurtcod pentru a afișa formularul de înregistrare pentru "
 "pacienți. Nu sunt necesari parametri."
 
-#: admin/partials/d2g-connect-shortcode-help.php:200
+#: admin/partials/d2g-connect-shortcode-help.php:203
 msgid ""
 "Use this shortcode to display the reset password form. No parameters are "
 "required."
@@ -1644,8 +1678,8 @@ msgstr ""
 "Utilizați acest scurtcod pentru a afișa formularul de resetare a parolei. Nu "
 "sunt necesari parametri."
 
-#: admin/partials/d2g-connect-shortcode-help.php:107
-#: admin/partials/d2g-connect-shortcode-help.php:209
+#: admin/partials/d2g-connect-shortcode-help.php:110
+#: admin/partials/d2g-connect-shortcode-help.php:212
 msgid ""
 "Use this shortcode to display the search form on the doctor overview page. "
 "It must be used with the listing shortcode. No parameters are required."
@@ -1677,6 +1711,10 @@ msgstr "Consultare Video"
 #: public/template-functions.php:1206
 msgid "Video consult"
 msgstr "Consultare video"
+
+#: public/template-functions.php:330
+msgid "Video consult on appointment"
+msgstr "Consultare video la programare"
 
 #: public/template-functions.php:1579
 msgid "Video Consultation"
@@ -1733,6 +1771,10 @@ msgstr "Preț la magazin"
 #: admin/partials/metaboxes.php:53
 msgid "Walk-in price"
 msgstr "Preț la magazin"
+
+#: public/template-functions.php:363
+msgid "Walkin video consult"
+msgstr "Consultare video fără programare"
 
 #: admin/partials/d2g-connect-admin-display.php:130
 msgid "We advise you following:"

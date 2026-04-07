@@ -1170,6 +1170,9 @@ function d2g_show_written_con_form() {
 				<?php } ?>
 				<div class="mb-4 d-flex align-items-center">
 					<input readonly type="hidden" name="written_con_type" value="<?php echo esc_attr( $type ); ?>">
+					<input readonly type="hidden" id="derma_pic_1" name="derma_pic_1" value="">
+					<input readonly type="hidden" id="derma_pic_2" name="derma_pic_2" value="">
+					<input readonly type="hidden" id="derma_pic_3" name="derma_pic_3" value="">
 					<button class="btn btn-primary wp-block-button__link start_written_con button" tabindex="6" id="save"><?php esc_html_e( 'continue and pay', 'doctor2go-connect' ); ?></button>
 					<div id="loader" class="spinner-border text-primary ms-2" role="status" style="display:none;">
 						<span class="visually-hidden">Loading...</span>

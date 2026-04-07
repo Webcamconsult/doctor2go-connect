@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Doctor2Go Connect\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-19 08:49+0000\n"
-"PO-Revision-Date: 2026-03-31 07:55+0000\n"
+"PO-Revision-Date: 2026-04-01 12:52+0000\n"
 "Last-Translator: Thomas Wiese\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -19,8 +19,8 @@ msgstr ""
 msgid " - "
 msgstr "-"
 
-#: public/class-d2g-profile-data.php:191 public/template-functions.php:1457
-#: public/template-functions.php:1470
+#: public/class-d2g-profile-data.php:191 public/template-functions.php:1420
+#: public/template-functions.php:1457 public/template-functions.php:1470
 msgid " at "
 msgstr "op"
 
@@ -32,12 +32,11 @@ msgstr "Gelieve te verifiëren dat u geen robot bent."
 msgid " You have entered an invalid e-mail. "
 msgstr "U heeft een ongeldig e-mailadres ingevoerd."
 
-#: admin/partials/d2g-connect-shortcode-help.php:101
-#: admin/partials/d2g-connect-shortcode-help.php:106
-#: admin/partials/d2g-connect-shortcode-help.php:111
-#: admin/partials/d2g-connect-shortcode-help.php:131
-#: admin/partials/d2g-connect-shortcode-help.php:160
-#: admin/partials/d2g-connect-shortcode-help.php:190
+#: admin/partials/d2g-connect-shortcode-help.php:104
+#: admin/partials/d2g-connect-shortcode-help.php:109
+#: admin/partials/d2g-connect-shortcode-help.php:114
+#: admin/partials/d2g-connect-shortcode-help.php:134
+#: admin/partials/d2g-connect-shortcode-help.php:163
 #: admin/partials/d2g-connect-shortcode-help.php:193
 #: admin/partials/d2g-connect-shortcode-help.php:196
 #: admin/partials/d2g-connect-shortcode-help.php:199
@@ -48,6 +47,7 @@ msgstr "U heeft een ongeldig e-mailadres ingevoerd."
 #: admin/partials/d2g-connect-shortcode-help.php:214
 #: admin/partials/d2g-connect-shortcode-help.php:217
 #: admin/partials/d2g-connect-shortcode-help.php:220
+#: admin/partials/d2g-connect-shortcode-help.php:223
 msgid "(PRO version only*)"
 msgstr "(ALLEEN PRO-versie*)"
 
@@ -186,7 +186,7 @@ msgstr ""
 msgid "All"
 msgstr "Alles"
 
-#: admin/partials/d2g-connect-shortcode-help.php:64
+#: admin/partials/d2g-connect-shortcode-help.php:67
 msgid "All doctors will be shown."
 msgstr "Alle artsen worden getoond."
 
@@ -198,11 +198,11 @@ msgstr ""
 "Alle pagina's die door de D2G connect-plugin worden gebruikt, hebben een "
 "paginatype nodig! Anders kunnen links op de frontend kapot zijn!"
 
-#: admin/partials/d2g-connect-shortcode-help.php:51
+#: admin/partials/d2g-connect-shortcode-help.php:54
 msgid "Amount of columns (only applicable with the grid template.)"
 msgstr "Aantal kolommen (alleen van toepassing bij het raster-sjabloon.)"
 
-#: admin/partials/d2g-connect-shortcode-help.php:60
+#: admin/partials/d2g-connect-shortcode-help.php:63
 msgid "Amount of doctors shown on a page."
 msgstr "Aantal artsen weergegeven op een pagina."
 
@@ -222,13 +222,13 @@ msgstr ""
 msgid "An unknown error has occurred"
 msgstr "Er is een onbekende fout opgetreden"
 
-#: admin/partials/d2g-connect-shortcode-help.php:63
+#: admin/partials/d2g-connect-shortcode-help.php:66
 msgid "Any number larger than 0 (6 = default)"
 msgstr "Elk getal groter dan 0 (6 = standaard)"
 
-#: admin/partials/d2g-connect-shortcode-help.php:73
-#: admin/partials/d2g-connect-shortcode-help.php:156
-#: admin/partials/d2g-connect-shortcode-help.php:185
+#: admin/partials/d2g-connect-shortcode-help.php:76
+#: admin/partials/d2g-connect-shortcode-help.php:159
+#: admin/partials/d2g-connect-shortcode-help.php:188
 msgid "Any string"
 msgstr "Elke tekenreeks"
 
@@ -248,7 +248,7 @@ msgstr "Afspraakdatum en -tijd"
 msgid "Appointment link for doctor"
 msgstr "Afspraaklink voor dokter"
 
-#: admin/partials/d2g-connect-shortcode-help.php:91
+#: admin/partials/d2g-connect-shortcode-help.php:94
 msgid "ASC (ascending) or DESC (descending)"
 msgstr "ASC (oplopend) of DESC (aflopend)"
 
@@ -383,9 +383,17 @@ msgstr "consultatie"
 msgid "Consultation fee:"
 msgstr "Consultatiekosten:"
 
+#: public/template-functions.php:316
+msgid "Consultation offers"
+msgstr "Consultatieaanbiedingen"
+
 #: public/template-functions.php:1564
 msgid "Consultation types"
 msgstr "Consultatietypes"
+
+#: public/template-functions.php:1420
+msgid "contact doctor"
+msgstr "arts contacteren"
 
 #: public/template-functions.php:1496
 msgid "Contact:"
@@ -424,9 +432,9 @@ msgstr "Maak lokaal een doktersgebruiker en profiel aan"
 msgid "CSS & JS"
 msgstr "CSS & JS"
 
-#: admin/partials/d2g-connect-shortcode-help.php:70
-#: admin/partials/d2g-connect-shortcode-help.php:153
-#: admin/partials/d2g-connect-shortcode-help.php:182
+#: admin/partials/d2g-connect-shortcode-help.php:73
+#: admin/partials/d2g-connect-shortcode-help.php:156
+#: admin/partials/d2g-connect-shortcode-help.php:185
 msgid "css class used for the outer wrapper (optional)"
 msgstr "css-klasse gebruikt voor de buitenste omhulling (optioneel)"
 
@@ -474,12 +482,12 @@ msgstr "Deactiveer header en footer in single-d2g_doctor.php"
 msgid "Deactivate loading google recaptcha script"
 msgstr "Google recaptcha-script laden deactiveren"
 
-#: admin/partials/d2g-connect-shortcode-help.php:45
-#: admin/partials/d2g-connect-shortcode-help.php:54
+#: admin/partials/d2g-connect-shortcode-help.php:48
+#: admin/partials/d2g-connect-shortcode-help.php:57
 msgid "default"
 msgstr "standaard"
 
-#: admin/partials/d2g-connect-shortcode-help.php:82
+#: admin/partials/d2g-connect-shortcode-help.php:85
 msgid ""
 "default orderby is \"title\", you can use any orderby as described in the "
 "WordPress codex, when you want use orderby for a meta field you have to use "
@@ -564,8 +572,9 @@ msgstr "Jeukt de huidaandoening?"
 msgid "E-mail"
 msgstr "E-mail"
 
-#: public/template-functions.php:1001 public/template-functions.php:1200
-#: public/template-functions.php:1290 public/template-functions.php:1571
+#: public/template-functions.php:347 public/template-functions.php:1001
+#: public/template-functions.php:1200 public/template-functions.php:1290
+#: public/template-functions.php:1571
 msgid "E-mail advice"
 msgstr "E-mailadvies"
 
@@ -592,7 +601,7 @@ msgstr "E-mailinstellingen"
 msgid "Edit"
 msgstr "Bewerken"
 
-#: admin/class-d2g-doc-user-profile.php:305
+#: admin/class-d2g-doc-user-profile.php:303
 msgid "edit"
 msgstr "bewerken"
 
@@ -638,8 +647,13 @@ msgid "Extended Questionnaire – for complex or multiple skin concerns"
 msgstr "Uitgebreide Vragenlijst - voor complexe of meerdere huidproblemen"
 
 #: public/template-functions.php:910 public/template-functions.php:1068
+#: public/template-functions.php:1068
 msgid "female"
 msgstr "vrouwelijk"
+
+#: public/template-functions.php:331
+msgid "first availability: "
+msgstr "eerste beschikbaarheid:"
 
 #: public/class-d2g-profile-data.php:191
 msgid "First availibility"
@@ -654,13 +668,13 @@ msgstr "Voornaam"
 msgid "Fist name"
 msgstr "Voornaam"
 
-#: admin/partials/d2g-connect-shortcode-help.php:30
+#: admin/partials/d2g-connect-shortcode-help.php:33
 msgid "Following parameters can be used to change the view from the listing"
 msgstr ""
 "De volgende parameters kunnen worden gebruikt om de weergave vanuit de lijst "
 "te wijzigen"
 
-#: admin/partials/d2g-connect-shortcode-help.php:27
+#: admin/partials/d2g-connect-shortcode-help.php:30
 msgid ""
 "Following shortcodes are included in the free version and can be used in "
 "pages from your website."
@@ -668,7 +682,7 @@ msgstr ""
 "De volgende shortcodes zijn inbegrepen in de gratis versie en kunnen worden "
 "gebruikt op pagina's van uw website."
 
-#: admin/partials/d2g-connect-shortcode-help.php:103
+#: admin/partials/d2g-connect-shortcode-help.php:106
 msgid ""
 "Following shortcodes are included only included in the paid version and can "
 "be used in pages from your website. Click"
@@ -720,7 +734,7 @@ msgstr "Is de plek veranderd?"
 msgid "Header & footer"
 msgstr "Koptekst en voettekst"
 
-#: admin/partials/d2g-connect-shortcode-help.php:103
+#: admin/partials/d2g-connect-shortcode-help.php:106
 msgid "here"
 msgstr "hier"
 
@@ -757,9 +771,9 @@ msgid "I have installed \"Solid Security Basic\" and I have activated 2FA"
 msgstr ""
 "Ik heb \"Solid Security Basic\" geïnstalleerd en ik heb 2FA geactiveerd"
 
-#: admin/partials/d2g-connect-shortcode-help.php:127
-#: admin/partials/d2g-connect-shortcode-help.php:147
-#: admin/partials/d2g-connect-shortcode-help.php:176
+#: admin/partials/d2g-connect-shortcode-help.php:130
+#: admin/partials/d2g-connect-shortcode-help.php:150
+#: admin/partials/d2g-connect-shortcode-help.php:179
 msgid ""
 "ID from doctor post, can be found in the backend overview from the doctors"
 msgstr ""
@@ -769,6 +783,10 @@ msgstr ""
 #: admin/class-d2g-connect-admin.php:509
 msgid "Identifier"
 msgstr "Identificatie"
+
+#: public/template-functions.php:1156
+msgid "If applicable..."
+msgstr "Indien van toepassing..."
 
 #: public/class-d2g-connect-public.php:617
 msgid ""
@@ -904,8 +922,13 @@ msgid "make a selection"
 msgstr "maak een selectie"
 
 #: public/template-functions.php:909 public/template-functions.php:1067
+#: public/template-functions.php:1067
 msgid "male"
 msgstr "mannelijk"
+
+#: public/template-functions.php:1154
+msgid "Medical history (skin cancer)"
+msgstr "Medische geschiedenis (huidkanker)"
 
 #: admin/class-d2g-connect-admin.php:727 admin/partials/metaboxes.php:25
 msgid "Mobile"
@@ -914,6 +937,11 @@ msgstr "Mobiel"
 #: public/template-functions.php:1358
 msgid "More info about the consultation types"
 msgstr "Meer info over de consultatietypes"
+
+#: public/template-functions.php:334 public/template-functions.php:351
+#: public/template-functions.php:367
+msgid "n/a"
+msgstr "n.v.t."
 
 #: public/template-functions.php:631
 msgid "Need help? Click here for the booking instructions."
@@ -977,11 +1005,11 @@ msgstr ""
 "Online consultatiereserveringen zijn 24 uur geldig en vereisen betaling "
 "binnen deze periode. Anders worden ze geannuleerd."
 
-#: admin/partials/d2g-connect-shortcode-help.php:88
+#: admin/partials/d2g-connect-shortcode-help.php:91
 msgid "order (optional) this follows the general WordPress order rules"
 msgstr "volgorde (optioneel) dit volgt de algemene WordPress-volgorderegels"
 
-#: admin/partials/d2g-connect-shortcode-help.php:79
+#: admin/partials/d2g-connect-shortcode-help.php:82
 msgid "orderby (optional) this follows the general WordPress ordering rules"
 msgstr "sorteren op (optioneel) dit volgt de algemene WordPress-sorteerregels"
 
@@ -1003,6 +1031,7 @@ msgid "Organisation API"
 msgstr "Organisatie API"
 
 #: public/template-functions.php:911 public/template-functions.php:1069
+#: public/template-functions.php:1069
 msgid "other"
 msgstr "andere"
 
@@ -1010,10 +1039,10 @@ msgstr "andere"
 msgid "Page ID"
 msgstr "Paginanummer"
 
-#: admin/partials/d2g-connect-shortcode-help.php:34
-#: admin/partials/d2g-connect-shortcode-help.php:116
-#: admin/partials/d2g-connect-shortcode-help.php:136
-#: admin/partials/d2g-connect-shortcode-help.php:165
+#: admin/partials/d2g-connect-shortcode-help.php:37
+#: admin/partials/d2g-connect-shortcode-help.php:119
+#: admin/partials/d2g-connect-shortcode-help.php:139
+#: admin/partials/d2g-connect-shortcode-help.php:168
 msgid "Parameter"
 msgstr "Parameter"
 
@@ -1127,10 +1156,10 @@ msgstr "Positie"
 msgid "position"
 msgstr "positie"
 
-#: admin/partials/d2g-connect-shortcode-help.php:37
-#: admin/partials/d2g-connect-shortcode-help.php:119
-#: admin/partials/d2g-connect-shortcode-help.php:139
-#: admin/partials/d2g-connect-shortcode-help.php:168
+#: admin/partials/d2g-connect-shortcode-help.php:40
+#: admin/partials/d2g-connect-shortcode-help.php:122
+#: admin/partials/d2g-connect-shortcode-help.php:142
+#: admin/partials/d2g-connect-shortcode-help.php:171
 msgid "Possible values"
 msgstr "Mogelijke waarden"
 
@@ -1259,6 +1288,11 @@ msgstr "Specialismen"
 #: public/template-functions.php:670
 msgid "Start"
 msgstr "Start"
+
+#: public/templates/content-doctor-list.php:32
+#: public/templates/content-doctor-grid.php:35
+msgid "start a consult"
+msgstr "start een consult"
 
 #: admin/class-d2g-connect-admin.php:100
 #: public/class-d2g-connect-public.php:270 admin/partials/metaboxes.php:123
@@ -1393,8 +1427,8 @@ msgstr ""
 
 #: admin/class-d2g-booking-patient.php:399
 #: admin/class-d2g-booking-patient.php:427
-#: admin/class-d2g-booking-patient.php:569
-#: admin/class-d2g-booking-patient.php:595
+#: admin/class-d2g-booking-patient.php:588
+#: admin/class-d2g-booking-patient.php:619
 msgid "There has been an error."
 msgstr "Er is een fout opgetreden."
 
@@ -1423,7 +1457,7 @@ msgstr "Titel"
 msgid "title"
 msgstr "titel"
 
-#: admin/partials/d2g-connect-shortcode-help.php:103
+#: admin/partials/d2g-connect-shortcode-help.php:106
 msgid "to get your paid license now."
 msgstr "om uw betaalde licentie nu te verkrijgen."
 
@@ -1503,7 +1537,7 @@ msgstr "Gebruik imgix beeldverwerking"
 msgid "Use pseudo translations."
 msgstr "Gebruik pseudo-vertalingen."
 
-#: admin/partials/d2g-connect-shortcode-help.php:161
+#: admin/partials/d2g-connect-shortcode-help.php:164
 msgid ""
 "Use this shortcode to display a doctor's calendar, similar to the calendar "
 "section on the doctor detail page. Ideal for a front page or website sidebar."
@@ -1512,7 +1546,7 @@ msgstr ""
 "vergelijkbaar met de agendasectie op de detailpagina van de arts. Ideaal "
 "voor een startpagina of de zijbalk van de website."
 
-#: admin/partials/d2g-connect-shortcode-help.php:132
+#: admin/partials/d2g-connect-shortcode-help.php:135
 msgid ""
 "Use this shortcode to display a doctor's locations, similar to the locations "
 "section on the doctor detail page. Ideal for a contact page or website "
@@ -1522,7 +1556,7 @@ msgstr ""
 "vergelijkbaar met de sectie locaties op de detailpagina van de arts. Ideaal "
 "voor een contactpagina of de voettekst van de website."
 
-#: admin/partials/d2g-connect-shortcode-help.php:29
+#: admin/partials/d2g-connect-shortcode-help.php:32
 msgid ""
 "Use this shortcode to display a list of doctors on a page. It includes a "
 "\"Load More Doctors\" button that loads additional doctors based on the "
@@ -1532,7 +1566,7 @@ msgstr ""
 "Het bevat een knop \"Meer artsen laden\" die aanvullende artsen laadt op "
 "basis van de instelling \"posts_per_page\"."
 
-#: admin/partials/d2g-connect-shortcode-help.php:203
+#: admin/partials/d2g-connect-shortcode-help.php:206
 msgid ""
 "Use this shortcode to display a menu form the patient pages. Ideal it is "
 "used with in combination with the following shortcodes: d2g_account_settings "
@@ -1544,7 +1578,7 @@ msgstr ""
 "d2g_account_settings / d2g_patient_appointments / d2g_liked_posts / "
 "d2g_patient_dashbaord. Er zijn geen parameters vereist."
 
-#: admin/partials/d2g-connect-shortcode-help.php:112
+#: admin/partials/d2g-connect-shortcode-help.php:115
 msgid ""
 "Use this shortcode to display a single doctor in a compact format, similar "
 "to the grid overview on the front end. It can be placed anywhere on your "
@@ -1554,7 +1588,7 @@ msgstr ""
 "vergelijkbaar met het rasteroverzicht op de voorkant. Deze kan overal op uw "
 "website worden geplaatst, zoals in de zijbalk."
 
-#: admin/partials/d2g-connect-shortcode-help.php:212
+#: admin/partials/d2g-connect-shortcode-help.php:215
 msgid ""
 "Use this shortcode to display the account settings form, allowing patients "
 "to update their email, phone number, and password. No parameters are "
@@ -1564,7 +1598,7 @@ msgstr ""
 "waarmee patiënten hun e-mailadres, telefoonnummer en wachtwoord kunnen "
 "bijwerken. Er zijn geen parameters vereist."
 
-#: admin/partials/d2g-connect-shortcode-help.php:97
+#: admin/partials/d2g-connect-shortcode-help.php:100
 msgid ""
 "Use this shortcode to display the form doctors use to create or update their "
 "profiles. No parameters are required."
@@ -1573,7 +1607,7 @@ msgstr ""
 "om hun profielen aan te maken of bij te werken. Er zijn geen parameters "
 "vereist."
 
-#: admin/partials/d2g-connect-shortcode-help.php:215
+#: admin/partials/d2g-connect-shortcode-help.php:218
 msgid ""
 "Use this shortcode to display the liked doctor's from a patient. No "
 "parameters are required."
@@ -1581,14 +1615,14 @@ msgstr ""
 "Gebruik deze shortcode om de gelikete artsen van een patiënt weer te geven. "
 "Er zijn geen parameters vereist."
 
-#: admin/partials/d2g-connect-shortcode-help.php:194
+#: admin/partials/d2g-connect-shortcode-help.php:197
 msgid ""
 "Use this shortcode to display the login form. No parameters are required."
 msgstr ""
 "Gebruik deze shortcode om het inlogformulier weer te geven. Er zijn geen "
 "parameters vereist."
 
-#: admin/partials/d2g-connect-shortcode-help.php:197
+#: admin/partials/d2g-connect-shortcode-help.php:200
 msgid ""
 "Use this shortcode to display the lost password form. No parameters are "
 "required."
@@ -1596,7 +1630,7 @@ msgstr ""
 "Gebruik deze shortcode om het formulier voor het opnieuw instellen van het "
 "wachtwoord weer te geven. Er zijn geen parameters vereist."
 
-#: admin/partials/d2g-connect-shortcode-help.php:206
+#: admin/partials/d2g-connect-shortcode-help.php:209
 msgid ""
 "Use this shortcode to display the patient dashboard, the page patients are "
 "redirected to after logging in. No parameters are required."
@@ -1605,7 +1639,7 @@ msgstr ""
 "waarnaar patiënten worden doorgestuurd na het inloggen. Er zijn geen "
 "parameters vereist."
 
-#: admin/partials/d2g-connect-shortcode-help.php:221
+#: admin/partials/d2g-connect-shortcode-help.php:224
 msgid ""
 "Use this shortcode to display the patient portal where the patient can chat "
 "with doctors and receive medical documents from, where he/she has a "
@@ -1615,7 +1649,7 @@ msgstr ""
 "met artsen kan chatten en medische documenten kan ontvangen van degenen met "
 "wie hij/zij een connectie heeft. Er zijn geen parameters vereist."
 
-#: admin/partials/d2g-connect-shortcode-help.php:218
+#: admin/partials/d2g-connect-shortcode-help.php:221
 msgid ""
 "Use this shortcode to display the questionnaires for an intake or from a "
 "written consultation. No parameters are required."
@@ -1623,7 +1657,7 @@ msgstr ""
 "Gebruik deze shortcode om de vragenlijsten voor een intake of van een "
 "schriftelijk consult weer te geven. Er zijn geen parameters vereist."
 
-#: admin/partials/d2g-connect-shortcode-help.php:191
+#: admin/partials/d2g-connect-shortcode-help.php:194
 msgid ""
 "Use this shortcode to display the registration form for patients. No "
 "parameters are required."
@@ -1631,7 +1665,7 @@ msgstr ""
 "Gebruik deze shortcode om het registratieformulier voor patiënten weer te "
 "geven. Er zijn geen parameters vereist."
 
-#: admin/partials/d2g-connect-shortcode-help.php:200
+#: admin/partials/d2g-connect-shortcode-help.php:203
 msgid ""
 "Use this shortcode to display the reset password form. No parameters are "
 "required."
@@ -1639,8 +1673,8 @@ msgstr ""
 "Gebruik deze shortcode om het wachtwoord opnieuw instellen formulier weer te "
 "geven. Er zijn geen parameters vereist."
 
-#: admin/partials/d2g-connect-shortcode-help.php:107
-#: admin/partials/d2g-connect-shortcode-help.php:209
+#: admin/partials/d2g-connect-shortcode-help.php:110
+#: admin/partials/d2g-connect-shortcode-help.php:212
 msgid ""
 "Use this shortcode to display the search form on the doctor overview page. "
 "It must be used with the listing shortcode. No parameters are required."
@@ -1672,6 +1706,10 @@ msgstr "Videoconsult"
 #: public/template-functions.php:1206
 msgid "Video consult"
 msgstr "Videoconsult"
+
+#: public/template-functions.php:330
+msgid "Video consult on appointment"
+msgstr "Video-consult op afspraak"
 
 #: public/template-functions.php:1579
 msgid "Video Consultation"
@@ -1728,6 +1766,10 @@ msgstr "Prijs bij afhalen"
 #: admin/partials/metaboxes.php:53
 msgid "Walk-in price"
 msgstr "Kassa prijs"
+
+#: public/template-functions.php:363
+msgid "Walkin video consult"
+msgstr "Wandelend videoconsult"
 
 #: admin/partials/d2g-connect-admin-display.php:130
 msgid "We advise you following:"

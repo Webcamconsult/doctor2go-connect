@@ -388,7 +388,7 @@ msgstr "Tarifa de consulta:"
 
 #: public/template-functions.php:316
 msgid "Consultation offers"
-msgstr "Ofertas de consulta"
+msgstr ""
 
 #: public/template-functions.php:1564
 msgid "Consultation types"
@@ -396,7 +396,7 @@ msgstr "Tipos de consulta"
 
 #: public/template-functions.php:1420
 msgid "contact doctor"
-msgstr "contactar al médico"
+msgstr ""
 
 #: public/template-functions.php:1496
 msgid "Contact:"
@@ -656,7 +656,7 @@ msgstr "femenino"
 
 #: public/template-functions.php:331
 msgid "first availability: "
-msgstr "primera disponibilidad:"
+msgstr ""
 
 #: public/class-d2g-profile-data.php:191
 msgid "First availibility"
@@ -788,7 +788,7 @@ msgstr "Identificador"
 
 #: public/template-functions.php:1156
 msgid "If applicable..."
-msgstr "Si aplica..."
+msgstr ""
 
 #: public/class-d2g-connect-public.php:617
 msgid ""
@@ -930,7 +930,7 @@ msgstr "hombre"
 
 #: public/template-functions.php:1154
 msgid "Medical history (skin cancer)"
-msgstr "Historial médico (cáncer de piel)"
+msgstr ""
 
 #: admin/class-d2g-connect-admin.php:727 admin/partials/metaboxes.php:25
 msgid "Mobile"
@@ -943,7 +943,7 @@ msgstr "Más información sobre los tipos de consulta"
 #: public/template-functions.php:334 public/template-functions.php:351
 #: public/template-functions.php:367
 msgid "n/a"
-msgstr "n/a"
+msgstr ""
 
 #: public/template-functions.php:631
 msgid "Need help? Click here for the booking instructions."
@@ -1296,7 +1296,7 @@ msgstr "Comenzar"
 #: public/templates/content-doctor-list.php:32
 #: public/templates/content-doctor-grid.php:35
 msgid "start a consult"
-msgstr "iniciar una consulta"
+msgstr ""
 
 #: admin/class-d2g-connect-admin.php:100
 #: public/class-d2g-connect-public.php:270 admin/partials/metaboxes.php:123
@@ -1711,7 +1711,7 @@ msgstr "Videoconsulta"
 
 #: public/template-functions.php:330
 msgid "Video consult on appointment"
-msgstr "Videoconsulta con cita previa"
+msgstr ""
 
 #: public/template-functions.php:1579
 msgid "Video Consultation"
@@ -1771,7 +1771,7 @@ msgstr "Precio en tienda"
 
 #: public/template-functions.php:363
 msgid "Walkin video consult"
-msgstr "Consulta de video sin cita previa"
+msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:130
 msgid "We advise you following:"
