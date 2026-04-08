@@ -29,8 +29,11 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'D2G_PLUGIN_DIR', untrailingslashit( __DIR__ ) );
-define( 'D2G_PLUGIN_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
+define( 'D2GC_PLUGIN_FILE', __FILE__ );
+define( 'D2GC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'D2GC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
+
 
 
 /**

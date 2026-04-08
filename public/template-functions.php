@@ -62,7 +62,7 @@ function d2g_redirect_single_template( $template ) {
 	global $post;
 
 	if ( $post->post_type == 'd2g_doctor' && ( 'single.php' == basename( $template ) || 'template-canvas.php' == basename( $template ) ) ) {
-		$template = WP_PLUGIN_DIR . '/doctor2go-connect/public/templates/single-d2g_doctor.php';
+		$template = D2GC_PLUGIN_DIR . 'public/templates/single-d2g_doctor.php';
 	}
 
 	return $template;
@@ -1831,7 +1831,7 @@ function d2g_save_user_timezone() {
 
 
 function d2g_enqueue_timezone_script() {
-	wp_enqueue_script( 'timezone-script', D2G_PLUGIN_URL . '/public/js/timezone.js', array(), null, true );
+	wp_enqueue_script( 'timezone-script', D2GC_PLUGIN_URL . '/public/js/timezone.js', array(), null, true );
 
 	// Pass the AJAX URL to the script
 	wp_localize_script( 'timezone-script', 'ajaxurl', array( admin_url( 'admin-ajax.php' ) ) );

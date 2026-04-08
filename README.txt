@@ -1,12 +1,14 @@
+Here is your updated readme with Bootstrap 5 added to the “External Services” section:
+
 === Doctor2Go Connect ===
-Contributors: Webcamconsult
+Contributors: doctor2go (Webcamconsult BV), playfield-media (BV Playfield-Media)
 Tags: online practice, medical websites, doctors, bookings
 Requires at least: 5.6
 Tested up to: 6.9
 Requires PHP: 7.3
 Stable tag: 1.0.0
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
 
 Online practice: Doctor2Go Connect links your WordPress site to doctor2go.online, giving patients a dashboard to book and manage appointments.
 
@@ -62,43 +64,55 @@ Activate the plugin in the Plugin dashboard
 == External Services ==
 This plugin relies on some third-party/external services and libraries for certain functionality. Users should be aware of what data is sent and why.
 
+All third-party JavaScript and CSS libraries (such as Bootstrap, FullCalendar, Moment.js, Moment Timezone, Datejs, Fancybox, Select2, and related 
+locale/extension files) are included as downloaded vendor files from their official sources, without any custom build process or transpilation. 
+The plugin uses these libraries in their distributed form (no bundlers or build tools like webpack, Babel, or npm are used).
+
+
+
 === Google reCAPTCHA ===
 - Service: Google reCAPTCHA v2 / v3
 - Purpose: Prevents spam and automated bots on forms (e.g., doctor registration or booking forms).
 - Data sent: User's reCAPTCHA token and metadata (such as IP address) are sent to Google when a form is submitted.
-- Terms of Service: https://policies.google.com/terms
-- Privacy Policy: https://policies.google.com/privacy
+- Terms of Service: [https://policies.google.com/terms](https://policies.google.com/terms)
+- Privacy Policy: [https://policies.google.com/privacy](https://policies.google.com/privacy)
 
 === FullCalendar ===
 - Service: FullCalendar JavaScript library
 - Purpose: Provides a dynamic calendar UI for displaying doctor availability and appointments.
 - Data sent: None directly; only used to render calendar events within the plugin.
-- License & Documentation: https://fullcalendar.io/docs and https://fullcalendar.io/license
+- License & Documentation: [https://fullcalendar.io/docs](https://fullcalendar.io/docs) and [https://fullcalendar.io/license](https://fullcalendar.io/license)
 
 === Google Calendar API (optional) ===
 - Service: Google Calendar API v3
 - Purpose: If calendar sync is enabled, retrieves doctor appointments from Google Calendar.
 - Data sent: Calendar IDs and event metadata may be sent to Google servers.
-- Terms of Service: https://developers.google.com/terms
-- Privacy Policy: https://policies.google.com/privacy
+- Terms of Service: [https://developers.google.com/terms](https://developers.google.com/terms)
+- Privacy Policy: [https://policies.google.com/privacy](https://policies.google.com/privacy)
 
 === Fancybox JS ===
 - Service: Fancybox JavaScript library
 - Purpose: Used to display modal popups/lightboxes for images and other content in the plugin.
 - Data sent: None; purely client-side library.
-- License & Documentation: https://fancyapps.com/docs/ui/fancybox/
+- License & Documentation: [https://fancyapps.com/docs/ui/fancybox/](https://fancyapps.com/docs/ui/fancybox/)
 
 === jQuery ScrollTo JS ===
 - Service: jQuery ScrollTo library
 - Purpose: Smooth scrolling to anchors or elements in the plugin UI.
 - Data sent: None; purely client-side library.
-- License & Documentation: https://github.com/flesler/jquery.scrollTo
+- License & Documentation: [https://github.com/flesler/jquery.scrollTo](https://github.com/flesler/jquery.scrollTo)
 
 === Select2 JS ===
 - Service: Select2 JavaScript library
 - Purpose: Enhances select boxes with search and better UX for dropdowns in plugin forms.
 - Data sent: None; purely client-side library.
-- License & Documentation: https://select2.org/
+- License & Documentation: [https://select2.org/](https://select2.org/)
+
+=== Bootstrap 5 ===
+- Service: Bootstrap 5 CSS and JavaScript framework
+- Purpose: Provides responsive layout, grid system, and UI components used in the plugin’s frontend output.
+- Data sent: None by itself; Bootstrap is a front-end CSS/JS framework and does not send data to external servers.
+- License & Documentation: [https://getbootstrap.com/docs/5.3/getting-started/introduction/](https://getbootstrap.com/docs/5.3/getting-started/introduction/) and [https://github.com/twbs/bootstrap/blob/main/LICENSE](https://github.com/twbs/bootstrap/blob/main/LICENSE)
 
 == Frequently Asked Questions ==
 
