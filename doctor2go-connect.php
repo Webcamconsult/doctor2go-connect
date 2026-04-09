@@ -41,7 +41,7 @@ define( 'D2GC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
  * This action is documented in includes/class-d2gConnect-activator.php
  */
 function activate_d2gConnect() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-d2g-connect-activator.php';
+	require_once D2GC_PLUGIN_DIR. 'includes/class-d2g-connect-activator.php';
 	D2gConnect_Activator::activate();
 }
 register_activation_hook( __FILE__, 'activate_d2gConnect' );
@@ -51,7 +51,7 @@ register_activation_hook( __FILE__, 'activate_d2gConnect' );
  * This action is documented in includes/class-d2g-connect-deactivator.php
  */
 function deactivate_d2gConnect() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-d2g-connect-deactivator.php';
+	require_once D2GC_PLUGIN_DIR. 'includes/class-d2g-connect-deactivator.php';
 	D2gConnect_Deactivator::deactivate();
 }
 register_deactivation_hook( __FILE__, 'deactivate_d2gConnect' );

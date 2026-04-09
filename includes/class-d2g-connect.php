@@ -97,25 +97,25 @@ class D2gConnect {
 	private function load_dependencies() {
 
 		// The class responsible for orchestrating the actions and filters of the core plugin.
-		require_once plugin_dir_path( __DIR__ ) . 'includes/class-d2g-connect-loader.php';
+		require_once D2GC_PLUGIN_DIR . 'includes/class-d2g-connect-loader.php';
 
 		// The class responsible for defining all actions that occur in the admin area.
-		require_once plugin_dir_path( __DIR__ ) . 'admin/class-d2g-connect-admin.php';
+		require_once D2GC_PLUGIN_DIR . 'admin/class-d2g-connect-admin.php';
 
 		// booking functions & patient functions
-		require_once plugin_dir_path( __DIR__ ) . 'admin/class-d2g-booking-patient.php';
+		require_once D2GC_PLUGIN_DIR . 'admin/class-d2g-booking-patient.php';
 
 		// create update doc user and doc profile functions
-		require_once plugin_dir_path( __DIR__ ) . 'admin/class-d2g-doc-user-profile.php';
+		require_once D2GC_PLUGIN_DIR . 'admin/class-d2g-doc-user-profile.php';
 
 		// The class responsible for defining all actions that occur in the public-facing side of the site.
-		require_once plugin_dir_path( __DIR__ ) . 'public/class-d2g-connect-public.php';
+		require_once D2GC_PLUGIN_DIR . 'public/class-d2g-connect-public.php';
 
 		// functions needed for the view
-		require_once plugin_dir_path( __DIR__ ) . 'public/template-functions.php';
+		require_once D2GC_PLUGIN_DIR . 'public/template-functions.php';
 
 		// creates a full doctor profile data obj.
-		require_once plugin_dir_path( __DIR__ ) . 'public/class-d2g-profile-data.php';
+		require_once D2GC_PLUGIN_DIR . 'public/class-d2g-profile-data.php';
 
 		// this is the class responsible for handling the cron functions of the plugin
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-d2g-connect-cron.php';

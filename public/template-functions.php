@@ -1918,6 +1918,10 @@ add_shortcode( 'd2g_user_name', 'd2g_user_name_shortcode' );
 
 // ajax callback funcrtion for loading the availability data in the calendar on the detail page
 function d2g_load_availability_data() {
+	if ( ! isset( $_POST['load_data_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['load_data_nonce'] ) ), 'load_data_nonce' ) ) {
+		wp_send_json_error( array( 'message' => __( 'Invalid security token.', 'doctor2go-connect' ) ), 403 );
+	}
+
 	// Get doctor ID safely, suppress nonce warning
 	$doc_id = isset( $_POST['doc_id'] ) ? absint( wp_unslash( $_POST['doc_id'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 

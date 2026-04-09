@@ -100,7 +100,8 @@
                     type: 'POST',
                     data: {
                         action : 'd2g_load_availability_data',
-                        doc_id : docId
+                        doc_id : docId,
+                        load_data_nonce : d2gBookingVars.load_data_nonce
                     },
                     success: function(response){
                         console.log(response);

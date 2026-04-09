@@ -16,7 +16,7 @@ if ( ! function_exists( 'get_option' ) ) {
 	wp_die( esc_html( 'WordPress not loaded.' ) );
 }
 
-require_once plugin_dir_path( __DIR__ ) . 'admin/class-d2g-doc-user-profile.php';
+require_once D2GC_PLUGIN_DIR . 'admin/class-d2g-doc-user-profile.php';
 $d2gAdmin = new D2G_doc_user_profile();
 
 $error     = '';

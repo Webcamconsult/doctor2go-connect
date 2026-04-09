@@ -78,7 +78,7 @@ class D2gConnect_Public {
 	 */
 	private function load_dependencies() {
 
-		require_once plugin_dir_path( __DIR__ ) . 'public/d2g-connect-shortcodes.php';
+		require_once D2GC_PLUGIN_DIR . 'public/d2g-connect-shortcodes.php';
 
 		$this->shortcode_loader = new \D2gConnect_Shortcodes( $this->plugin_name, $this->version );
 	}
@@ -160,20 +160,21 @@ class D2gConnect_Public {
 		$currentDate  = new DateTime();
 
 		$booking_vars = array(
-			'ajax_url'             => admin_url( 'admin-ajax.php' ),
-			'current_date'         => $currentDate->format( 'Y-m-d' ),
-			'locale'               => $currLang,
-			'only_cal'             => (bool) $only_cal,
-			'in_tabs'              => (bool) $in_tabs,
-			'waiting_room_url'     => get_option( 'waiting_room_url' ),
-			'recaptcha_site_key'   => (string) $site_key,
-			'd2g_timezone'         => ! empty( $patient_meta['p_timezone'][0] ) ? $patient_meta['p_timezone'][0] : '',
-			'is_user_logged_in'    => is_user_logged_in(),
-			'appointments_url'     => $d2gAdmin::d2g_page_url( $currLang, 'appointments', true )['url'],
-			'appointment_conf_url' => $d2gAdmin::d2g_page_url( $currLang, 'appointment_confirmation', true )['url'],
-			'start_holiday'        => ( $d2g_profile_data && ! empty( $d2g_profile_data->doctor_meta['start_holiday'][0] ) ) ? $d2g_profile_data->doctor_meta['start_holiday'][0] : '',
-			'end_holiday'          => ( $d2g_profile_data && ! empty( $d2g_profile_data->doctor_meta['end_holiday'][0] ) ) ? $d2g_profile_data->doctor_meta['end_holiday'][0] : '',
-			'i18n'                 => array(
+			'ajax_url'             	=> admin_url( 'admin-ajax.php' ),
+			'load_data_nonce' 		=> wp_create_nonce( 'load_data_nonce' ),
+			'current_date'         	=> $currentDate->format( 'Y-m-d' ),
+			'locale'               	=> $currLang,
+			'only_cal'             	=> (bool) $only_cal,
+			'in_tabs'              	=> (bool) $in_tabs,
+			'waiting_room_url'     	=> get_option( 'waiting_room_url' ),
+			'recaptcha_site_key'   	=> (string) $site_key,
+			'd2g_timezone'         	=> ! empty( $patient_meta['p_timezone'][0] ) ? $patient_meta['p_timezone'][0] : '',
+			'is_user_logged_in'    	=> is_user_logged_in(),
+			'appointments_url'     	=> $d2gAdmin::d2g_page_url( $currLang, 'appointments', true )['url'],
+			'appointment_conf_url' 	=> $d2gAdmin::d2g_page_url( $currLang, 'appointment_confirmation', true )['url'],
+			'start_holiday'        	=> ( $d2g_profile_data && ! empty( $d2g_profile_data->doctor_meta['start_holiday'][0] ) ) ? $d2g_profile_data->doctor_meta['start_holiday'][0] : '',
+			'end_holiday'          	=> ( $d2g_profile_data && ! empty( $d2g_profile_data->doctor_meta['end_holiday'][0] ) ) ? $d2g_profile_data->doctor_meta['end_holiday'][0] : '',
+			'i18n'                 	=> array(
 				'walk_in_consult'          => esc_html__( 'walk-in consult', 'doctor2go-connect' ),
 				'not_available'            => esc_html__( 'not available', 'doctor2go-connect' ),
 				'at'                       => esc_html__( 'at', 'doctor2go-connect' ),
