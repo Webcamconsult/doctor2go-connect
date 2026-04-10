@@ -35,9 +35,29 @@ With Doctor2Go Connect you get:
 * Patient area: Registration, login, lost password, appointments listing, liked doctors, questionnaires (intake forms), and access to the secure patient portal from doctor2go.online with chat and EMR.
 * Shortcodes: Flexible shortcodes to configure your pages.
 
+=== User Management ===
+The plugin provides several tools for users and to createn the correct connections between your WordPress site with the Doctor2Go software.  
+
+Some features are optional and must be enabled manually in the settings page, while others are core functionalities that are always active.
+
+=== Optional User Tools (require activation in settings) ===
+- **Custom registration, login, and password reset forms:** These forms can be embedded anywhere using shortcodes. They support Google reCAPTCHA v2 and [Altcha CAPTCHA](https://altcha.org/), and include mandatory GDPR consent checkboxes linked to automatically generated legal pages (Terms & Conditions, Privacy Policy, and Disclaimer).  
+  Alternatively, you can use the standard WordPress registration and login forms. Just make sure that registration is activated and the **New User Default Role** (in *Settings → General*) is set to **Patient**, so newly registered users are properly assigned.
+  The custom login system also works seamlessly with Solid Security, which is recommended for medical and privacy-sensitive websites.
+
+- **Single Sign-On (SSO) for doctors:** Allows doctors to log in directly from the Doctor2Go software by clicking “Go to D2GConnect” on their profile page, securely authenticating them with your WordPress site.
+
+=== Core User Tools (always active) ===
+- **Patient dashboard:** Provides pages for appointments, liked doctors, and secure access to the patient portal for electronic medical records and doctor chat.  
+- **Doctor management endpoint:** Automatically creates and manages doctor users and public profiles via the Doctor2Go software. This ensures all required API keys are configured correctly. Manual copying of credentials is possible but not recommended except for advanced users.  
+- **Front-end public profile editor:** Allows doctors to edit their public information directly from the front end. This editor can also be embedded into any page using a shortcode.
+
 === Integrations ===
 
 * Yoast SEO: Enhance website SEO with seamless integration.
+* Google recaptcha v2
+* Altcha captcha 
+* Solid security
 * Polylang: Translate your website into multiple languages for a global audience.
 
 == Installation ==

@@ -331,7 +331,7 @@ jQuery(document).ready(function ($) {
         $(".d2g_doctor-form").toggleClass('loading');
 
         var myformData = new FormData($("#doctor_post")[0]);
-        myformData.append('action', 'd2g_update_doc');
+        myformData.append('action', 'd2gc_update_doc');
 
         $.ajax({
             type: "POST",
@@ -362,7 +362,7 @@ jQuery(document).ready(function ($) {
         $(".d2g_doctor-form").toggleClass('loading');
 
         var myformData = new FormData($("#doctor_post")[0]);
-        myformData.append('action', 'd2g_update_doc');
+        myformData.append('action', 'd2gc_update_doc');
 
         $.ajax({
             type: "POST",
@@ -389,7 +389,7 @@ jQuery(document).ready(function ($) {
         $(".d2g_doctor-form").toggleClass('loading');
 
         var data = {
-            action: 'd2g_delete_profile_pic',
+            action: 'd2gc_delete_profile_pic',
             _wpnonce: d.ajax.delete_pic,
             doc_id: $(this).attr('data-doc-id'),
             image: $(this).attr('data-image-id')
@@ -415,7 +415,7 @@ jQuery(document).ready(function ($) {
         $('#post_status').val('draft');
 
         var myformData = new FormData($("#doctor_post")[0]);
-        myformData.append('action', 'd2g_update_doc');
+        myformData.append('action', 'd2gc_update_doc');
 
         $.ajax({
             type: "POST",
@@ -466,7 +466,7 @@ jQuery(document).ready(function ($) {
 
         if (checker === false) {
             var myformData = new FormData($("#doctor_post")[0]);
-            myformData.append('action', 'd2g_update_doc');
+            myformData.append('action', 'd2gc_update_doc');
 
             $.ajax({
                 type: "POST",
@@ -625,7 +625,7 @@ jQuery(document).ready(function ($) {
             $btn.addClass('btn-loading').addClass('disabled').attr('aria-disabled', 'true');
 
             $.post(d.ajax.url, {
-                action: 'd2g_delete_wcc_appointment',
+                action: 'd2gc_delete_wcc_appointment',
                 app_id: app_id,
                 wcc_user_id: wcc_user_id,
                 security: d.ajax.delete_nonce
@@ -669,7 +669,7 @@ jQuery(document).ready(function ($) {
         
 
         var baseData = {
-            action: 'send_ajax_d2g_email',
+            action: 'd2gc_send_ajax_d2g_email',
             app_date: $('#app_date').val(),
             app_link: $('#app_link').val(),
             comment: $('#comment').val(),
@@ -771,7 +771,7 @@ jQuery(document).ready(function ($) {
             $("#inloop").toggleClass('loading');
 
             var formData = new FormData($('#walkin_form')[0]);
-            formData.append('action', 'd2g_create_wcc_walkin');
+            formData.append('action', 'd2gc_create_wcc_walkin');
 
             $.ajax({
                 type: 'POST',
@@ -872,7 +872,7 @@ jQuery(document).ready(function ($) {
                 Promise.all(promises).then(compressedFiles => {
                     // Create FormData
                     var myformData = new FormData($("#written_con_form")[0]);
-                    myformData.append('action', 'd2g_create_wcc_written_cosnsult');
+                    myformData.append('action', 'd2gc_create_wcc_written_cosnsult');
                     
                     // Replace original images with compressed ones
                     imageInputs.forEach((id, index) => {

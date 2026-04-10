@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package    doctor2go-connect
  * @subpackage doctor2go-connect/admin/partials
  */
-function d2g_meta_box_personal_cb( $post ) {
+function d2gc_meta_box_personal_cb( $post ) {
 	$values = get_post_meta( $post->ID );
 
 	$personalFields = array(
@@ -105,7 +105,7 @@ function d2g_meta_box_personal_cb( $post ) {
 }
 
 
-function d2g_meta_box_work_cb( $post ) {
+function d2gc_meta_box_work_cb( $post ) {
 	$doctor_meta = get_post_meta( $post->ID );
 
 	if ( isset( $doctor_meta['exps'] ) ) {
@@ -194,7 +194,7 @@ function d2g_meta_box_work_cb( $post ) {
 	<?php
 }
 
-function d2g_meta_box_education_cb( $post ) {
+function d2gc_meta_box_education_cb( $post ) {
 	$doctor_meta = get_post_meta( $post->ID );
 
 	if ( isset( $doctor_meta['edus'] ) ) {
@@ -283,7 +283,7 @@ function d2g_meta_box_education_cb( $post ) {
 	<?php
 }
 
-function d2g_meta_box_publications_cb( $post ) {
+function d2gc_meta_box_publications_cb( $post ) {
 	$doctor_meta = get_post_meta( $post->ID );
 
 	if ( isset( $doctor_meta['pubs'] ) ) {
@@ -372,7 +372,7 @@ function d2g_meta_box_publications_cb( $post ) {
 
 
 
-function d2g_meta_box_page_type_cb( $post ) {
+function d2gc_meta_box_page_type_cb( $post ) {
 
 	$page_meta = get_post_meta( $post->ID );
 
@@ -414,7 +414,7 @@ function d2g_meta_box_page_type_cb( $post ) {
 
 
 
-function d2g_meta_box_email_type_cb( $post ) {
+function d2gc_meta_box_email_type_cb( $post ) {
 
 	$page_meta = get_post_meta( $post->ID );
 

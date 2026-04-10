@@ -39,7 +39,7 @@ class D2G_ProfileData {
 			// get all meta data
 			$this->doctor_meta = get_post_meta( $this->doctor->ID );
 			// set meta data locations
-			$this->locations = $this->get_locations( $this->doctor_meta );
+			$this->locations = $this->d2gc_get_locations( $this->doctor_meta );
 			// get terms data
 			$this->specialties = get_the_terms( $this->doctor_profile_ID, 'doctor-specialty' );
 			$this->languages   = get_the_terms( $this->doctor_profile_ID, 'doctor-language' );
@@ -59,9 +59,9 @@ class D2G_ProfileData {
 			}
 
 			// sets work experiences / educations / puublications as array in the profile data object
-			$this->exps = $this->d2g_unserialzer_checker( $this->doctor_meta['exps'] );
-			$this->edus = $this->d2g_unserialzer_checker( $this->doctor_meta['edus'] );
-			$this->pubs = $this->d2g_unserialzer_checker( $this->doctor_meta['pubs'] );
+			$this->exps = $this->d2gc_unserialzer_checker( $this->doctor_meta['exps'] );
+			$this->edus = $this->d2gc_unserialzer_checker( $this->doctor_meta['edus'] );
+			$this->pubs = $this->d2gc_unserialzer_checker( $this->doctor_meta['pubs'] );
 		} else {
 			if ( get_option( 'd2g_debug' ) == 1 ) {
 				error_log( 'Warning: $this->doctor is not an object: ' . print_r( $this->doctor, true ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log,WordPress.PHP.DevelopmentFunctions.error_log_print_r -- Debug logging.
@@ -74,14 +74,14 @@ class D2G_ProfileData {
 
 
 
-	private function get_locations( $doctor_meta ) {
+	private function d2gc_get_locations( $doctor_meta ) {
 		if ( isset( $doctor_meta['locations_to_go'] ) ) {
 			$this->locations = unserialize( $doctor_meta['locations_to_go'][0] );
 		}
 		return $this->locations;
 	}
 
-	private function d2g_unserialzer_checker( $meta_field = '' ) {
+	private function d2gc_unserialzer_checker( $meta_field = '' ) {
 		if ( empty( $meta_field ) || ! isset( $meta_field[0] ) ) {
 			return false;
 		}
@@ -109,7 +109,7 @@ class D2G_ProfileData {
 	 * @param $docKey
 	 * @return mixed
 	 */
-	public function d2g_get_availability_data( $docKey ) {
+	public function d2gc_get_availability_data( $docKey ) {
 		$myTime   = new DateTime();
 		$unixTime = $myTime->format( 'U' );
 		$superKey = get_option( 'd2gc_wcc_token' );
@@ -160,7 +160,7 @@ class D2G_ProfileData {
 	}
 
 
-	public function get_first_avialibility( $docSlots, $return = '' ) {
+	public function d2gc_get_first_avialibility( $docSlots, $return = '' ) {
 		if ( $docSlots ) {
 			$currUser  = wp_get_current_user();
 			$user_meta = get_user_meta( $currUser->data->ID );
@@ -179,7 +179,7 @@ class D2G_ProfileData {
 			}
 
 			$datetimeObj = DateTime::createFromFormat( 'Y-m-d\TH:i:s+', $docSlotsArray[0]->start );
-			$timezone    = ( get_user_timezone() != '' ) ? get_user_timezone() : 'Europe/Amsterdam';
+			$timezone    = ( d2gc_get_user_timezone() != '' ) ? d2gc_get_user_timezone() : 'Europe/Amsterdam';
 
 			if ( $user_meta['p_timezone'][0] ) {
 				$timezone = $user_meta['p_timezone'][0];
@@ -195,7 +195,7 @@ class D2G_ProfileData {
 	}
 
 
-	public function get_tariffs( $docSlots ) {
+	public function d2gc_get_tariffs( $docSlots ) {
 		if ( $docSlots ) {
 			$docSlotsArray = $docSlots;
 			foreach ( $docSlotsArray as $row ) {

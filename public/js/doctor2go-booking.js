@@ -99,7 +99,7 @@
                     url: ajax_url,
                     type: 'POST',
                     data: {
-                        action : 'd2g_load_availability_data',
+                        action : 'd2gc_load_availability_data',
                         doc_id : docId,
                         load_data_nonce : d2gBookingVars.load_data_nonce
                     },
@@ -303,7 +303,7 @@
             });
 
             var data = {
-                action                : 'd2g_create_wcc_appointment',
+                action                : 'd2gc_create_wcc_appointment',
                 start                 : $('#start_str').val(),
                 end                   : $('#end_str').val(),
                 vat                   : $('#vat').val(),

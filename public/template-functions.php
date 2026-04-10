@@ -8,57 +8,57 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package d2g-connect
  */
 // Register AJAX callback + script for saving timezone
-add_action( 'wp_ajax_d2g_save_user_timezone', 'd2g_save_user_timezone' );
-add_action( 'wp_ajax_nopriv_d2g_save_user_timezone', 'd2g_save_user_timezone' );
-add_action( 'wp_enqueue_scripts', 'd2g_enqueue_timezone_script' );
+add_action( 'wp_ajax_d2gc_save_user_timezone', 'd2gc_save_user_timezone' );
+add_action( 'wp_ajax_nopriv_d2gc_save_user_timezone', 'd2gc_save_user_timezone' );
+add_action( 'wp_enqueue_scripts', 'd2gc_enqueue_timezone_script' );
 
-add_action( 'after_setup_theme', 'd2g_load_single_d2g_doctor_hooks' );
+add_action( 'after_setup_theme', 'd2gc_load_single_d2g_doctor_hooks' );
 
-add_filter( 'body_class', 'd2g_body_class', 100, 2 );
+add_filter( 'body_class', 'd2gc_body_class', 100, 2 );
 
 if ( ! is_admin() || wp_doing_ajax() ) {
-	add_action( 'the_post', 'd2g_setup_profile_data' );
+	add_action( 'the_post', 'd2gc_setup_profile_data' );
 }
 
 // Register AJAX handler for loading availibility data in query loop for mulitple doctors
-add_action( 'wp_ajax_d2g_load_availability_data', 'd2g_load_availability_data' );
-add_action( 'wp_ajax_nopriv_d2g_load_availability_data', 'd2g_load_availability_data' );
+add_action( 'wp_ajax_d2gc_load_availability_data', 'd2gc_load_availability_data' );
+add_action( 'wp_ajax_nopriv_d2gc_load_availability_data', 'd2gc_load_availability_data' );
 
-add_action( 'd2g_info_box', 'cb_d2g_info_box', 10, 3 );
+add_action( 'd2g_info_box', 'd2gc_cb_d2g_info_box', 10, 3 );
 
-add_action( 'd2g_like_button', 'cb_d2g_like_button', 10, 1 );
+add_action( 'd2g_like_button', 'd2gc_cb_d2g_like_button', 10, 1 );
 
-add_action( 'd2g_consult_buttons', 'd2g_show_consult_buttons', 10, 2 );
+add_action( 'd2g_consult_buttons', 'd2gc_show_consult_buttons', 10, 2 );
 
 // hooks for single page
-add_action( 'd2g_single_d2g_doctor_main_content', 'd2g_single_d2g_doctor_content' );
+add_action( 'd2g_single_d2g_doctor_main_content', 'd2gc_single_d2g_doctor_content' );
 
 // this sets the path to the single template file for doctors
-add_filter( 'single_template', 'd2g_redirect_single_template' );
+add_filter( 'single_template', 'd2gc_redirect_single_template' );
 
 /**
  * Load single dooctor hooks (to extend later with layout options)
  *
  * @since v1.0.0
  */
-function d2g_load_single_d2g_doctor_hooks() {
+function d2gc_load_single_d2g_doctor_hooks() {
     // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 	if ( get_option( 'd2gc_detail_page_view' ) != 'single-v2' && ! isset( $_GET['view'] ) ) {
-		add_action( 'd2g_single_sidebar', 'cb_d2g_single_sidebar', 10, 1 );
+		add_action( 'd2g_single_sidebar', 'd2gc_cb_d2g_single_sidebar', 10, 1 );
 	}
-	add_action( 'd2g_doctor_locations', 'd2g_show_doctor_locations_by_id', 10, 1 );
-	add_action( 'd2g_doctor_extended_info', 'd2g_show_doctor_extended_info' );
-	add_action( 'd2g_booking_calendar', 'd2g_show_booking_calendar', 10, 1 );
-	add_action( 'd2g_doctor_walkin_form', 'd2g_show_walkin_form' );
-	add_action( 'd2g_doctor_written_con_form', 'd2g_show_written_con_form' );
+	add_action( 'd2g_doctor_locations', 'd2gc_show_doctor_locations_by_id', 10, 1 );
+	add_action( 'd2g_doctor_extended_info', 'd2gc_show_doctor_extended_info' );
+	add_action( 'd2g_booking_calendar', 'd2gc_show_booking_calendar', 10, 1 );
+	add_action( 'd2g_doctor_walkin_form', 'd2gc_show_walkin_form' );
+	add_action( 'd2g_doctor_written_con_form', 'd2gc_show_written_con_form' );
 	add_action( 'd2g_doctor_generic_written_con_form', 'd2g_show_generic_written_con_form' );
-	add_action( 'd2g_doctor_consultancy_tabs', 'd2g_show_consultancy_tabs' );
-	add_action( 'd2g_back_to_overview', 'd2g_show_back_btn' );
+	add_action( 'd2g_doctor_consultancy_tabs', 'd2gc_show_consultancy_tabs' );
+	add_action( 'd2g_back_to_overview', 'd2gc_show_back_btn' );
 }
 /*
 * sets the path to the corre3ct template file for the view from a single doctor
 */
-function d2g_redirect_single_template( $template ) {
+function d2gc_redirect_single_template( $template ) {
 	global $post;
 
 	if ( $post->post_type == 'd2g_doctor' && ( 'single.php' == basename( $template ) || 'template-canvas.php' == basename( $template ) ) ) {
@@ -73,15 +73,15 @@ function d2g_redirect_single_template( $template ) {
  *
  * @return void
  */
-function d2g_single_d2g_doctor_content() {
+function d2gc_single_d2g_doctor_content() {
     // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 	$view = isset( $_GET['view'] ) ? sanitize_text_field( wp_unslash( $_GET['view'] ) ) : '';
 	if ( get_option( 'd2gc_detail_page_view' ) !== 'single-v2' && get_option( 'd2gc_detail_page_view' ) !== 'single-v3' && ! $view ) {
-		include d2g_locate_template( 'content-single-d2g_doctor.php' );
+		include d2gc_locate_template( 'content-single-d2g_doctor.php' );
 	} elseif ( get_option( 'd2gc_detail_page_view' ) == 'single-v2' || $view == 'v2' ) {
-		include d2g_locate_template( 'content-single-d2g_doctor-v2.php' );
+		include d2gc_locate_template( 'content-single-d2g_doctor-v2.php' );
 	} elseif ( get_option( 'd2gc_detail_page_view' ) == 'single-v3' || $view == 'v3' ) {
-		include d2g_locate_template( 'content-single-d2g_doctor-v3.php' );
+		include d2gc_locate_template( 'content-single-d2g_doctor-v3.php' );
 	}
 }
 
@@ -92,7 +92,7 @@ function d2g_single_d2g_doctor_content() {
  * @param mixed $post Post object or post id.
  * @return global $d2g_profile_data
  */
-function d2g_setup_profile_data( $post ) {
+function d2gc_setup_profile_data( $post ) {
 	global $wp_query;
 
 	if ( $post->post_type == 'd2g_doctor' ) {
@@ -105,7 +105,7 @@ function d2g_setup_profile_data( $post ) {
 /*
 *retrives the template file
 */
-function d2g_locate_template( $template_name, $folder = 'templates', $debugMode = false ) {
+function d2gc_locate_template( $template_name, $folder = 'templates', $debugMode = false ) {
 
 	static $loadedFiles;
 
@@ -154,7 +154,7 @@ function d2g_locate_template( $template_name, $folder = 'templates', $debugMode 
 *article (post) css classmanipulation
 */
 
-function d2g_getArticleClass( $class = null, $post_id = null ) {
+function d2gc_getArticleClass( $class = null, $post_id = null ) {
 	return join( ' ', get_post_class( $class, $post_id ) );
 }
 
@@ -162,7 +162,7 @@ function d2g_getArticleClass( $class = null, $post_id = null ) {
 /*
 *creates custom excerpt with possibility to show full content with HTML
 */
-function d2g_ttruncat( $text, $numb ) {
+function d2gc_ttruncat( $text, $numb ) {
 
 	if ( $numb != 'full' ) {
 		$text = wp_strip_all_tags( $text );
@@ -186,7 +186,7 @@ function d2g_ttruncat( $text, $numb ) {
  * @param  String $class   [description].
  * @return array
  */
-function d2g_body_class( $classes, $class ) {
+function d2gc_body_class( $classes, $class ) {
 	global $post;
 	$currMeta = get_post_meta( $post->ID );
 	if ( is_singular( 'd2g_doctor' ) ) {
@@ -226,10 +226,10 @@ function nice_dump( $dump ) {
 
 
 // like button
-function cb_d2g_like_button( $post_id ) {
+function d2gc_cb_d2g_like_button( $post_id ) {
 	?>
 	<?php
-		$liked_posts = d2g_get_liked_posts();
+		$liked_posts = d2gc_get_liked_posts();
 		$is_liked    = in_array( $post_id, $liked_posts );
 	?>
 	<button class="like-button <?php echo $is_liked ? 'icon-heart-filled' : 'icon-heart'; ?>" data-post-id="<?php echo esc_html( $post_id ); ?>">
@@ -242,7 +242,7 @@ function cb_d2g_like_button( $post_id ) {
 /*
 *displays the info box from a doctor profile
 */
-function cb_d2g_info_box( $temp_file, $version, $post = '' ) {
+function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '' ) {
 	if ( $post == '' ) {
 		global $d2g_profile_data;
 	} else {
@@ -295,7 +295,7 @@ function cb_d2g_info_box( $temp_file, $version, $post = '' ) {
 	if($temp_file != 'detail'){
 		if($d2g_profile_data->doctor_meta['d2g_first_availability'][0] != '' && $d2g_profile_data->doctor_meta['d2g_first_availability'][0] != 0){
 			$datetimeObj = DateTime::createFromFormat( 'Y-m-d\TH:i:s+', $d2g_profile_data->doctor_meta['d2g_first_availability'][0] );
-			$timezone    = ( get_user_timezone() != '' ) ? get_user_timezone() : 'Europe/Amsterdam';
+			$timezone    = ( d2gc_get_user_timezone() != '' ) ? d2gc_get_user_timezone() : 'Europe/Amsterdam';
 
 			if ( $user_meta['p_timezone'][0] ) {
 				$timezone = $user_meta['p_timezone'][0];
@@ -372,7 +372,7 @@ function cb_d2g_info_box( $temp_file, $version, $post = '' ) {
 }
 
 
-function cb_d2g_single_sidebar( $d2g_profile_data = '' ) {
+function d2gc_cb_d2g_single_sidebar( $d2g_profile_data = '' ) {
 	if ( $d2g_profile_data == '' ) {
 		global $d2g_profile_data;
 	}
@@ -419,7 +419,7 @@ function cb_d2g_single_sidebar( $d2g_profile_data = '' ) {
 }
 
 
-function d2g_show_doctor_locations_by_id( $docID = '', $show_title = true ) {
+function d2gc_show_doctor_locations_by_id( $docID = '', $show_title = true ) {
 	if ( $docID == '' ) {
 		global $d2g_profile_data;
 		$locations = $d2g_profile_data->locations;
@@ -482,7 +482,7 @@ function d2g_show_doctor_locations_by_id( $docID = '', $show_title = true ) {
 }
 
 
-function d2g_show_doctor_extended_info() {
+function d2gc_show_doctor_extended_info() {
 	global $d2g_profile_data;
 	?>
 	<?php if ( $d2g_profile_data->exps ) { ?>
@@ -603,7 +603,7 @@ function d2g_show_doctor_extended_info() {
 }
 
 
-function d2g_show_booking_calendar( $post = '', $only_cal = false, $in_tabs = false ) {
+function d2gc_show_booking_calendar( $post = '', $only_cal = false, $in_tabs = false ) {
 
 	if ( $post == '' ) {
 		global $d2g_profile_data;
@@ -619,8 +619,8 @@ function d2g_show_booking_calendar( $post = '', $only_cal = false, $in_tabs = fa
 
 	$d2gAdmin  = new D2G_doc_user_profile();
 	$currLang  = explode( '_', get_locale() )[0];
-	$pageLogin = $d2gAdmin::d2g_page_url( $currLang, 'login', true )['url'] . '?redirect_to=' . urlencode( $redirectURL );
-	$pageRegis = $d2gAdmin::d2g_page_url( $currLang, 'patient_registration', true )['url'] . '?redirect_to=' . urlencode( $redirectURL );
+	$pageLogin = $d2gAdmin::d2gc_page_url( $currLang, 'login', true )['url'] . '?redirect_to=' . urlencode( $redirectURL );
+	$pageRegis = $d2gAdmin::d2gc_page_url( $currLang, 'patient_registration', true )['url'] . '?redirect_to=' . urlencode( $redirectURL );
 	?>
 	<!--booking calendar-->
 	<div class="row">
@@ -762,12 +762,12 @@ function d2g_show_booking_calendar( $post = '', $only_cal = false, $in_tabs = fa
 <?php }
 
 // show confirmation boxes on register page + booking page
-function d2g_confirmation_checkboxes( $form = '' ) {
+function d2gc_confirmation_checkboxes( $form = '' ) {
 	$currLang      = explode( '_', get_locale() )[0];
 	$d2gAdmin      = new D2G_doc_user_profile();
-	$pageDataPriv  = $d2gAdmin::d2g_page_url( $currLang, 'privacy_policy', true );
-	$pageDataTerms = $d2gAdmin::d2g_page_url( $currLang, 'terms_and_conditions', true );
-	$pageDataDiscl = $d2gAdmin::d2g_page_url( $currLang, 'disclaimer', true );
+	$pageDataPriv  = $d2gAdmin::d2gc_page_url( $currLang, 'privacy_policy', true );
+	$pageDataTerms = $d2gAdmin::d2gc_page_url( $currLang, 'terms_and_conditions', true );
+	$pageDataDiscl = $d2gAdmin::d2gc_page_url( $currLang, 'disclaimer', true );
 	?>
 	<div id="conf_boxes">
 	<p>
@@ -787,10 +787,10 @@ function d2g_confirmation_checkboxes( $form = '' ) {
 }
 
 // this creates the back to overview button for on the doctor detail pages
-function d2g_show_back_btn() {
+function d2gc_show_back_btn() {
 	$currLang   = explode( '_', get_locale() )[0];
 	$d2gAdmin   = new D2G_doc_user_profile();
-	$doctorsURL = $d2gAdmin::d2g_page_url( $currLang, 'doctors', false );
+	$doctorsURL = $d2gAdmin::d2gc_page_url( $currLang, 'doctors', false );
 	?>
 	<div class="btn_wrapper center mb-l mt-l">    
 		<a id="backLink" class="btn btn-secondary wp-block-button__link" href="<?php echo esc_url( $doctorsURL ); ?>"><?php echo esc_html__( 'back to overview', 'doctor2go-connect' ); ?></a>
@@ -803,7 +803,7 @@ function d2g_show_back_btn() {
  * @param $objects
  * @return array from taxonmy objects in only key value pairs
  */
-function prepMyArray( $objects ) {
+function d2gc_prepMyArray( $objects ) {
 	$prepArray = array();
 	foreach ( $objects as $object ) {
 		$prepArray[ $object->slug ] = $object->name;
@@ -812,7 +812,7 @@ function prepMyArray( $objects ) {
 }
 
 // this will create the walkin form
-function d2g_show_walkin_form() {
+function d2gc_show_walkin_form() {
 	global $d2g_profile_data;
 	$currLang  = explode( '_', get_locale() )[0];
 	// countries
@@ -833,7 +833,7 @@ function d2g_show_walkin_form() {
 		);
 	}
 	$allCountries = get_terms( $argsCountry );
-	$allCountriesArray = ( $allCountries !== false ) ? prepMyArray( $allCountries ) : '';
+	$allCountriesArray = ( $allCountries !== false ) ? d2gc_prepMyArray( $allCountries ) : '';
 
 	$site_key = get_option( 'd2gc_recaptcha_site_key' );
 	if ( is_user_logged_in() ) {
@@ -845,8 +845,8 @@ function d2g_show_walkin_form() {
 		$detail_link    = get_the_permalink();
 		$d2gAdmin       = new D2G_doc_user_profile();
 		$currLang       = explode( '_', get_locale() )[0];
-		$pageLogin      = $d2gAdmin::d2g_page_url( $currLang, 'login', true );
-		$pageRegis      = $d2gAdmin::d2g_page_url( $currLang, 'patient_registration', true );
+		$pageLogin      = $d2gAdmin::d2gc_page_url( $currLang, 'login', true );
+		$pageRegis      = $d2gAdmin::d2gc_page_url( $currLang, 'patient_registration', true );
 		$action_buttons = array(
 			'link_login' => $pageLogin['url'] . '?redirect_to=' . urlencode( $detail_link . '?open=walk_in_link' ),
 			'link_regis' => $pageRegis['url'] . '?redirect_to=' . urlencode( $detail_link . '?open=walk_in_link' ),
@@ -950,7 +950,7 @@ function d2g_show_walkin_form() {
 				</div>
 				<div class="mb-3">
 					<?php if ( ! is_user_logged_in() ) { ?>
-						<?php d2g_confirmation_checkboxes( '_wf' ); ?>
+						<?php d2gc_confirmation_checkboxes( '_wf' ); ?>
 					<?php } ?>
 					<!-- reCAPTCHA Widget -->
 					<?php if ( get_option( 'd2gc_recaptcha_site_key' ) ) { ?>
@@ -968,7 +968,7 @@ function d2g_show_walkin_form() {
 
 
 // this will create the walkin form
-function d2g_show_written_con_form() {
+function d2gc_show_written_con_form() {
 	global $d2g_profile_data;
 
 	if ( get_option( 'd2gc_use_imgix' ) == 1 ) {
@@ -988,8 +988,8 @@ function d2g_show_written_con_form() {
 		$detail_link    = get_the_permalink();
 		$d2gAdmin       = new D2G_doc_user_profile();
 		$currLang       = explode( '_', get_locale() )[0];
-		$pageLogin      = $d2gAdmin::d2g_page_url( $currLang, 'login', true );
-		$pageRegis      = $d2gAdmin::d2g_page_url( $currLang, 'patient_registration', true );
+		$pageLogin      = $d2gAdmin::d2gc_page_url( $currLang, 'login', true );
+		$pageRegis      = $d2gAdmin::d2gc_page_url( $currLang, 'patient_registration', true );
 		$action_buttons = array(
 			'link_login' => $pageLogin['url'] . '?redirect_to=' . urlencode( $detail_link . '?open=written_con_link' ),
 			'link_regis' => $pageRegis['url'] . '?redirect_to=' . urlencode( $detail_link . '?open=written_con_link' ),
@@ -1166,7 +1166,7 @@ function d2g_show_written_con_form() {
 					<?php } ?>
 				</div>
 				<?php if ( ! is_user_logged_in() ) { ?>
-					<?php d2g_confirmation_checkboxes( '_ea' ); ?>
+					<?php d2gc_confirmation_checkboxes( '_ea' ); ?>
 				<?php } ?>
 				<div class="mb-4 d-flex align-items-center">
 					<input readonly type="hidden" name="written_con_type" value="<?php echo esc_attr( $type ); ?>">
@@ -1186,7 +1186,7 @@ function d2g_show_written_con_form() {
 
 
 
-function d2g_show_consultancy_tabs($post = '', $stand_alone = false){ 
+function d2gc_show_consultancy_tabs($post = '', $stand_alone = false){ 
 	if ( $post == '' ) {
 		global $d2g_profile_data;
 	} else {
@@ -1227,7 +1227,7 @@ function d2g_show_consultancy_tabs($post = '', $stand_alone = false){
 		<?php } ?>
 		<div class="tab-pane fade" id="calendar-tab-pane" role="tabpanel" aria-labelledby="calendar-tab" tabindex="0">
 			<?php if($stand_alone === true){
-				d2g_show_booking_calendar( $post, true, true );
+				d2gc_show_booking_calendar( $post, true, true );
 			} else {
 				do_action( 'd2g_booking_calendar' );
 			} ?>
@@ -1242,14 +1242,14 @@ function d2g_show_consultancy_tabs($post = '', $stand_alone = false){
 
 
 // this will create the buttons on the doctor detail page and hide them when they are not needed
-function d2g_show_consult_buttons( $template = '', $size = '' ) {
+function d2gc_show_consult_buttons( $template = '', $size = '' ) {
 	global $d2g_profile_data;
 	$detail_link    = get_the_permalink();
 	$post_id        = get_the_ID();
 	$d2gAdmin       = new D2G_doc_user_profile();
 	$currLang       = explode( '_', get_locale() )[0];
-	$pageLogin      = $d2gAdmin::d2g_page_url( $currLang, 'login', true );
-	$pageRegis      = $d2gAdmin::d2g_page_url( $currLang, 'patient_registration', true );
+	$pageLogin      = $d2gAdmin::d2gc_page_url( $currLang, 'login', true );
+	$pageRegis      = $d2gAdmin::d2gc_page_url( $currLang, 'patient_registration', true );
 	$location_check = array();
 	$holiday        = false;
 
@@ -1376,7 +1376,7 @@ function d2g_show_consult_buttons( $template = '', $size = '' ) {
 }
 
 
-function d2g_single_appointment($appointment, $docObj, $client_token, $timezone, $currLang, $d2gAdmin, $show_intake, $doc_email = ''){
+function d2gc_single_appointment($appointment, $docObj, $client_token, $timezone, $currLang, $d2gAdmin, $show_intake, $doc_email = ''){
 	// doctor image
 	if(get_option('d2gc_use_imgix') == 1){
 		$feat_pic = wp_get_attachment_image_src( get_post_thumbnail_id( $docObj->ID ), 'full' )[0].'&w=200&h=200&fit=crop&crop=faces';
@@ -1413,8 +1413,8 @@ function d2g_single_appointment($appointment, $docObj, $client_token, $timezone,
 	$delBtn             = '';
 	$payment_link		= '';
 	$payment_info		= '';
-	$pageAppConf 		= $d2gAdmin::d2g_page_url( $currLang, 'appointment_confirmation', false );
-	$termsPageURL 		= $d2gAdmin::d2g_page_url( $currLang, 'd2g_policies', false );
+	$pageAppConf 		= $d2gAdmin::d2gc_page_url( $currLang, 'appointment_confirmation', false );
+	$termsPageURL 		= $d2gAdmin::d2gc_page_url( $currLang, 'd2g_policies', false );
 	$termsLink			= '<a href=\"'.$termsPageURL.'\">'. esc_html__( 'View terms & conditions.', 'doctor2go-connect' ) . '</a>';
 	if ( isset( $appointment->answer_set_id ) && $show_intake == true ) {
 		$questionnaireLink = '<a class="btn btn-outline-primary payment_btn w-100 mb-2" target="_blank" href="'.$pageAppConf.'?app='.$appointment->_id.'&client_token='.$client_token.'"><span class="flaticon-medical-information"></span> '.esc_html__( 'intake quesionnaire', 'doctor2go-connect' ).'</a>';
@@ -1485,7 +1485,7 @@ function d2g_single_appointment($appointment, $docObj, $client_token, $timezone,
 
 
 
-function d2g_cancelation_request_form( $currUser, $user_meta ) {
+function d2gc_cancelation_request_form( $currUser, $user_meta ) {
 
     $first_name = isset( $user_meta['first_name'][0] ) && $user_meta['first_name'][0] !== '' ? $user_meta['first_name'][0] : '';
     $last_name  = isset( $user_meta['last_name'][0] ) && $user_meta['last_name'][0] !== '' ? $user_meta['last_name'][0] : '';
@@ -1561,7 +1561,7 @@ function d2g_cancelation_request_form( $currUser, $user_meta ) {
 
 
 
-function d2g_footer_html() {
+function d2gc_footer_html() {
 	?>
 	<div class="simple_hide" id="info_content" style="max-width: 800px;">
 		<h2><?php echo esc_html__( 'Consultation types', 'doctor2go-connect' ); ?></h2>
@@ -1586,7 +1586,7 @@ function d2g_footer_html() {
 	</div>
 	<?php
 }
-add_action( 'wp_footer', 'd2g_footer_html' );
+add_action( 'wp_footer', 'd2gc_footer_html' );
 
 /**
  * @param $type
@@ -1598,7 +1598,7 @@ add_action( 'wp_footer', 'd2g_footer_html' );
  * @param array  $extraData
  * @return string
  */
-function d2g_user_email( $type, $user_email, $user_name ) {
+function d2gc_user_email( $type, $user_email, $user_name ) {
 	$args      = array(
 		'post_type'  => 'd2g_emails',
 		'meta_query' => array(
@@ -1615,7 +1615,7 @@ function d2g_user_email( $type, $user_email, $user_name ) {
 	$content = str_replace( '%to_name%', $user_name, $emailData[0]->post_content );
 	$content = str_replace( '%email%', $user_email, $content );
 
-	$msg = d2g_html_email( $content );
+	$msg = d2gc_html_email( $content );
 
 	// set header for confirmation mail (visitor / patient) and send mail
 	$headers = 'From: ' . get_option( 'd2gc_sender_name' ) . ' <' . get_option( 'd2gc_sender_address' ) . '>' . "\r\n";
@@ -1628,7 +1628,7 @@ function d2g_user_email( $type, $user_email, $user_name ) {
 	return 'mail send';
 }
 
-function d2g_html_email( $content ) {
+function d2gc_html_email( $content ) {
 	$feat_pic = wp_get_attachment_image_src( get_option( 'd2gc_logo' ), 'full' )[0];
 	$msg      = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
         <html>
@@ -1693,17 +1693,17 @@ function d2g_html_email( $content ) {
  * @param string $username
  * @return bool True if the login was successful; false if it wasn't
  */
-function d2g_programmatic_login( $username ) {
+function d2gc_programmatic_login( $username ) {
 
 	if ( is_user_logged_in() ) {
 		wp_logout();
 	}
 
-	add_filter( 'authenticate', 'd2g_allow_programmatic_login', 1, 3 );    // hook in earlier than other callbacks to short-circuit them
+	add_filter( 'authenticate', 'd2gc_allow_programmatic_login', 1, 3 );    // hook in earlier than other callbacks to short-circuit them
 	add_filter( 'wordfence_ls_require_captcha', '__return_false' );
 	$user = wp_signon( array( 'user_login' => $username ) );
 
-	remove_filter( 'authenticate', 'd2g_allow_programmatic_login', 1, 3 );
+	remove_filter( 'authenticate', 'd2gc_allow_programmatic_login', 1, 3 );
 
 	if ( is_a( $user, 'WP_User' ) ) {
 		wp_set_current_user( $user->ID, $user->user_login );
@@ -1777,7 +1777,7 @@ if ( get_option( 'd2gc_recaptcha_site_key' ) ) {
  * @param string  $password
  * @return bool|WP_User a WP_User object if the username matched an existing user, or false if it didn't
  */
-function d2g_allow_programmatic_login( $user, $username, $password ) {
+function d2gc_allow_programmatic_login( $user, $username, $password ) {
 	return get_user_by( 'login', $username );
 }
 
@@ -1788,11 +1788,11 @@ function d2g_allow_programmatic_login( $user, $username, $password ) {
  * @param Array   $cats     taxonomy term objects to sort
  * @param integer $parentId the current parent ID to put them in
  */
-function d2g_sort_terms_hierarchicaly( array $cats, $parentId = 0 ) {
+function d2gc_sort_terms_hierarchicaly( array $cats, $parentId = 0 ) {
 	$into = array();
 	foreach ( $cats as $i => $cat ) {
 		if ( $cat->parent == $parentId ) {
-			$cat->children         = d2g_sort_terms_hierarchicaly( $cats, $cat->term_id );
+			$cat->children         = d2gc_sort_terms_hierarchicaly( $cats, $cat->term_id );
 			$into[ $cat->term_id ] = $cat;
 		}
 	}
@@ -1800,7 +1800,7 @@ function d2g_sort_terms_hierarchicaly( array $cats, $parentId = 0 ) {
 }
 
 
-function d2g_save_user_timezone() {
+function d2gc_save_user_timezone() {
 
     // phpcs:ignore WordPress.Security.NonceVerification.Missing
 	$timezone = isset( $_POST['timezone'] )
@@ -1830,7 +1830,7 @@ function d2g_save_user_timezone() {
 }
 
 
-function d2g_enqueue_timezone_script() {
+function d2gc_enqueue_timezone_script() {
 	wp_enqueue_script( 'timezone-script', D2GC_PLUGIN_URL . '/public/js/timezone.js', array(), null, true );
 
 	// Pass the AJAX URL to the script
@@ -1839,7 +1839,7 @@ function d2g_enqueue_timezone_script() {
 
 
 // retrive user timezone in php
-function get_user_timezone() {
+function d2gc_get_user_timezone() {
 	if ( isset( $_COOKIE['d2g_user_timezone'] ) ) {
 		return sanitize_text_field( wp_unslash( $_COOKIE['d2g_user_timezone'] ) );
 	}
@@ -1848,7 +1848,7 @@ function get_user_timezone() {
 }
 
 // creates an array for timezones
-function d2g_timezones() {
+function d2gc_timezones() {
 	// time zones list from PHP
 	$cont                 = '';
 	$timezone_identifiers = ( $cont == null ) ? DateTimeZone::listIdentifiers() : DateTimeZone::listIdentifiers();
@@ -1885,7 +1885,7 @@ function d2g_timezones() {
 }
 
 // Function to show liked posts for logged-in users
-function d2g_get_liked_posts() {
+function d2gc_get_liked_posts() {
 	if ( is_user_logged_in() ) {
 		$user_id     = get_current_user_id();
 		$liked_posts = get_user_meta( $user_id, 'liked_posts', true );
@@ -1903,7 +1903,7 @@ function d2g_run_shortcodes_in_menu( $items, $args ) {
 }
 
 // shortcode for user name
-function d2g_user_name_shortcode() {
+function d2gc_user_name_shortcode() {
 	if ( is_user_logged_in() ) {
 		$current_user = wp_get_current_user();
 		// get user meta or other data as needed
@@ -1913,11 +1913,11 @@ function d2g_user_name_shortcode() {
 		return '';
 	}
 }
-add_shortcode( 'd2g_user_name', 'd2g_user_name_shortcode' );
+add_shortcode( 'd2g_user_name', 'd2gc_user_name_shortcode' );
 
 
 // ajax callback funcrtion for loading the availability data in the calendar on the detail page
-function d2g_load_availability_data() {
+function d2gc_load_availability_data() {
 	if ( ! isset( $_POST['load_data_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['load_data_nonce'] ) ), 'load_data_nonce' ) ) {
 		wp_send_json_error( array( 'message' => __( 'Invalid security token.', 'doctor2go-connect' ) ), 403 );
 	}
@@ -1932,7 +1932,7 @@ function d2g_load_availability_data() {
 
 	$profileClass         = new D2G_ProfileData( $doc_id );
 	$doctor_meta          = get_post_meta( $doc_id );
-	$availabilityDataJson = $profileClass->d2g_get_availability_data( $doctor_meta['user_key'][0] );
+	$availabilityDataJson = $profileClass->d2gc_get_availability_data( $doctor_meta['user_key'][0] );
 	$availabilityDataObj  = json_decode( $availabilityDataJson );
 
 	$walk_in_check     = '';
@@ -1944,11 +1944,11 @@ function d2g_load_availability_data() {
 		if ( ! isset( $availabilityDataObj->availabilities->message ) && count( $availabilityDataObj->availabilities ) > 0 ) {
 			update_post_meta( $doc_id, 'd2g_availability_check', 1 );
 			$docSlotsArray     		= $availabilityDataObj->availabilities;
-			$firstAvailibilityStr 	= $profileClass->get_first_avialibility( $docSlotsArray );
-			$firstAvailibility 		= $profileClass->get_first_avialibility( $docSlotsArray, 'date' );
+			$firstAvailibilityStr 	= $profileClass->d2gc_get_first_avialibility( $docSlotsArray );
+			$firstAvailibility 		= $profileClass->d2gc_get_first_avialibility( $docSlotsArray, 'date' );
 			update_post_meta( $doc_id, 'd2g_first_availability', $firstAvailibility );
-			$tariffs           		= $profileClass->get_tariffs( $docSlotsArray );
-			$tariffStr         		= d2g_get_tariff_string( $tariffs );
+			$tariffs           		= $profileClass->d2gc_get_tariffs( $docSlotsArray );
+			$tariffStr         		= d2gc_get_tariff_string( $tariffs );
 			update_post_meta( $doc_id, 'd2g_tariffs', $tariffStr );
 			
 		}
@@ -1982,7 +1982,7 @@ function d2g_load_availability_data() {
 
 
 // Function to generate tariff string
-function d2g_get_tariff_string( $tariffs ) {
+function d2gc_get_tariff_string( $tariffs ) {
 
 	$tariffStr = '';
 	foreach ( $tariffs as $tariff => $currency ) {
@@ -1999,7 +1999,7 @@ function d2g_get_tariff_string( $tariffs ) {
  * @param string $key POST field name.
  * @return string
  */
-function d2g_get_post_text( $key ) {
+function d2gc_get_post_text( $key ) {
     return isset( $_POST[ $key ] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce is verified in the calling AJAX handler before this helper is used.
         ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- See note above.
         : '';

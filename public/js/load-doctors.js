@@ -164,7 +164,7 @@ jQuery(document).ready(function($){
 
         data.posts_per_page 	= -1;
         data.resp 				= 'only_count';
-        data.action				= 'd2g_doctor_count_call';
+        data.action				= 'd2gc_doctor_count_call';
         
         
         jQuery.post(ajax_url, data, function(response) {

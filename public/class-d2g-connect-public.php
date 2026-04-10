@@ -90,7 +90,7 @@ class D2gConnect_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function d2gc_enqueue_styles() {
 		if ( get_option( 'd2gc_bootstrap_css' ) != '1' ) {
 			wp_enqueue_style( $this->plugin_name . '-bootstrap', plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css', array(), $this->version, 'all' );
 		}
@@ -114,7 +114,7 @@ class D2gConnect_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function d2gc_enqueue_scripts() {
 		if ( get_option( 'd2gc_bootstrap_js' ) != '1' ) {
 			wp_enqueue_script( $this->plugin_name . '-bootstrap', plugin_dir_url( __FILE__ ) . 'js/bootstrap.bundle.min.js', array( 'jquery' ), $this->version, true );
 		}
@@ -170,8 +170,8 @@ class D2gConnect_Public {
 			'recaptcha_site_key'   	=> (string) $site_key,
 			'd2g_timezone'         	=> ! empty( $patient_meta['p_timezone'][0] ) ? $patient_meta['p_timezone'][0] : '',
 			'is_user_logged_in'    	=> is_user_logged_in(),
-			'appointments_url'     	=> $d2gAdmin::d2g_page_url( $currLang, 'appointments', true )['url'],
-			'appointment_conf_url' 	=> $d2gAdmin::d2g_page_url( $currLang, 'appointment_confirmation', true )['url'],
+			'appointments_url'     	=> $d2gAdmin::d2gc_page_url( $currLang, 'appointments', true )['url'],
+			'appointment_conf_url' 	=> $d2gAdmin::d2gc_page_url( $currLang, 'appointment_confirmation', true )['url'],
 			'start_holiday'        	=> ( $d2g_profile_data && ! empty( $d2g_profile_data->doctor_meta['start_holiday'][0] ) ) ? $d2g_profile_data->doctor_meta['start_holiday'][0] : '',
 			'end_holiday'          	=> ( $d2g_profile_data && ! empty( $d2g_profile_data->doctor_meta['end_holiday'][0] ) ) ? $d2g_profile_data->doctor_meta['end_holiday'][0] : '',
 			'i18n'                 	=> array(
@@ -216,8 +216,8 @@ class D2gConnect_Public {
 				/* AJAX + security */
 				'ajax' => array(
 					'url'          => admin_url( 'admin-ajax.php' ),
-					'delete_nonce' => wp_create_nonce( 'd2g_delete_wcc_appointment_nonce' ),
-					'mail_nonce'   => wp_create_nonce( 'send_ajax_d2g_email' ),
+					'delete_nonce' => wp_create_nonce( 'd2gc_delete_wcc_appointment_nonce' ),
+					'mail_nonce'   => wp_create_nonce( 'd2gc_send_ajax_d2g_email' ),
 					'delete_pic'   => wp_create_nonce( 'd2g_delete_pic' ),
 				),
 
@@ -301,7 +301,7 @@ class D2gConnect_Public {
 	/*
 	* in this hook all shortcodes are declared
 	*/
-	public function d2g_register_shortcodes() {
+	public function d2gc_register_shortcodes() {
 		add_shortcode( 'd2gc_profile_edit', array( $this->shortcode_loader, 'd2gc_profile_edit' ) );
 		add_shortcode( 'd2gc_doctors_listing', array( $this->shortcode_loader, 'd2gc_doctors_listing' ) );
 		add_shortcode( 'd2gc_single_doctor_info', array( $this->shortcode_loader, 'd2gc_single_doctor_info' ) );
@@ -456,7 +456,7 @@ class D2gConnect_Public {
 			while ( $doctor_query->have_posts() ) {
 				$doctor_query->the_post();
 				if ( $template ) {
-					include d2g_locate_template( "content-doctor-{$template}.php" );
+					include d2gc_locate_template( "content-doctor-{$template}.php" );
 				}
 			}
 		} else {
@@ -472,7 +472,7 @@ class D2gConnect_Public {
 	/*
 	* this function gets the count from doctors
 	*/
-	public function d2g_doctor_count_call() {
+	public function d2gc_doctor_count_call() {
 
 		// Verify nonce first
 		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['_wpnonce'] ) ), 'doc_call' ) ) {
@@ -596,23 +596,23 @@ class D2gConnect_Public {
 
 
 	// deprecated
-	public function d2g_wp_mail_from( $original_email_address ) {
+	public function d2gc_wp_mail_from( $original_email_address ) {
 		return 'no-reply@dermatology2go.online'; // Replace with your desired email
 	}
 
 	// deprecated
-	public function d2g_wp_mail_from_name( $original_email_from ) {
+	public function d2gc_wp_mail_from_name( $original_email_from ) {
 		return 'Dermatology2Go'; // Replace with desired sender name
 	}
 
 
 	// this overwrites the reset password mail to return the url to the custom password reset form
-	public function d2g_retrieve_password_message( $retrieve_password_message, $key, $user_login, $user_data ) {
+	public function d2gc_retrieve_password_message( $retrieve_password_message, $key, $user_login, $user_data ) {
 		$wp_lang  = determine_locale();
 		$currLang = explode( '_', $wp_lang )[0];
 
 		$d2gAdmin = new D2G_doc_user_profile();
-		$pageData = $d2gAdmin::d2g_page_url( $currLang, 'reset_password', true );
+		$pageData = $d2gAdmin::d2gc_page_url( $currLang, 'reset_password', true );
 
 		$content  = esc_html__( 'Someone has requested a password reset.', 'doctor2go-connect' ) . "\n\n";
 		$content .= esc_html__( 'Website name: ', 'doctor2go-connect' ) . get_option( 'blogname' ) . "\n";
@@ -630,16 +630,16 @@ class D2gConnect_Public {
 		);
 		$content = wpautop( $content );
 
-		return d2g_html_email( $content );
+		return d2gc_html_email( $content );
 	}
 
 
 
 	// function for all custom e-mails
-	public function send_ajax_d2g_email() {
+	public function d2gc_send_ajax_d2g_email() {
 
 		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
-		if ( ! wp_verify_nonce( $nonce, 'send_ajax_d2g_email' ) ) {
+		if ( ! wp_verify_nonce( $nonce, 'd2gc_send_ajax_d2g_email' ) ) {
 			wp_send_json_error( esc_html__( 'Security check failed.', 'doctor2go-connect' ) );
 			
 		}
@@ -680,7 +680,7 @@ class D2gConnect_Public {
 
 		$content = wpautop( $content );
 
-		$msg = d2g_html_email( $content );
+		$msg = d2gc_html_email( $content );
 
 	
 
@@ -699,7 +699,7 @@ class D2gConnect_Public {
 
 	//
 	// single sign on login (this is called when user clicks link in WCC software)
-	public function d2g_sso() {
+	public function d2gc_sso() {
 		if ( ! is_admin() ) {
 			setcookie( 'wp_lang', get_locale(), time() + 3600, '/' );
 		}
@@ -739,12 +739,12 @@ class D2gConnect_Public {
 			);
 
 			if ( ! empty( $my_user[0] ) ) {
-				$response = d2g_programmatic_login( $my_user[0]->user_login );
+				$response = d2gc_programmatic_login( $my_user[0]->user_login );
 
 				if ( true === $response ) {
 					$currLang = explode( '_', get_locale() )[0];
 					$d2gAdmin = new D2G_doc_user_profile();
-					$pageData = $d2gAdmin::d2g_page_url( $currLang, 'my_profile', true );
+					$pageData = $d2gAdmin::d2gc_page_url( $currLang, 'my_profile', true );
 					wp_safe_redirect( $pageData['url'] );
 					exit;
 				}
@@ -759,11 +759,11 @@ class D2gConnect_Public {
 			}
 
 			$d2gAdmin  = new D2G_doc_user_profile();
-			$pageData  = $d2gAdmin::d2g_page_url( $lang, 'login', true );
-			$pageData2 = $d2gAdmin::d2g_page_url( $lang, $redirect_to, true );
+			$pageData  = $d2gAdmin::d2gc_page_url( $lang, 'login', true );
+			$pageData2 = $d2gAdmin::d2gc_page_url( $lang, $redirect_to, true );
 
 			if ( $redirect_url === 'appointment_confirmation' ) {
-				$url = $d2gAdmin::d2g_page_url( $lang, $redirect_url, false );
+				$url = $d2gAdmin::d2gc_page_url( $lang, $redirect_url, false );
 				$url = add_query_arg(
 					array(
 						'app'          => $app_id,
@@ -793,7 +793,7 @@ class D2gConnect_Public {
 		if ( isset( $post_meta['d2g_page_accessebility'][0] ) && 'protected' === $post_meta['d2g_page_accessebility'][0] && ! is_user_logged_in() ) {
 			$currLang = explode( '_', get_locale() )[0];
 			$d2gAdmin = new D2G_doc_user_profile();
-			$pageData = $d2gAdmin::d2g_page_url( $currLang, 'login', true );
+			$pageData = $d2gAdmin::d2gc_page_url( $currLang, 'login', true );
 			wp_safe_redirect( $pageData['url'] );
 			exit;
 		}
@@ -805,7 +805,7 @@ class D2gConnect_Public {
 	}
 
 	// redirects are defined for when wp-login.php is triggered
-	public function d2g_login_redirect( $redirect_to, $requested_redirect_to, $user ) {
+	public function d2gc_login_redirect( $redirect_to, $requested_redirect_to, $user ) {
 	
 
 		if ( isset( $_REQUEST['interim-login'] ) || isset( $_REQUEST['wp-auth-check'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- core WP read-only auth-check flags.
@@ -840,7 +840,7 @@ class D2gConnect_Public {
 
 		} else {
 
-			$pageData = $d2gAdmin::d2g_page_url( $currLang, 'login', true );
+			$pageData = $d2gAdmin::d2gc_page_url( $currLang, 'login', true );
 
 			$redirect_to = isset( $_GET['redirect_to'] )// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 				? wp_validate_redirect( wp_unslash( $_GET['redirect_to'] ), '' )// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.InputNotValidated
@@ -854,7 +854,7 @@ class D2gConnect_Public {
 
 			if ( in_array( 'patient', $user->roles, true ) ) {
 
-				$pageData = $d2gAdmin::d2g_page_url( $currLang, 'patient_dashboard', true );
+				$pageData = $d2gAdmin::d2gc_page_url( $currLang, 'patient_dashboard', true );
 
 				wp_safe_redirect( $pageData['url'] );
 				exit;
@@ -866,7 +866,7 @@ class D2gConnect_Public {
 
 			} else {
 
-				$pageData = $d2gAdmin::d2g_page_url( $currLang, 'login', true );
+				$pageData = $d2gAdmin::d2gc_page_url( $currLang, 'login', true );
 
 				wp_safe_redirect( $pageData['url'] );
 				exit;
@@ -875,7 +875,7 @@ class D2gConnect_Public {
 	}
 
 	// ajax function for handeling liked posts
-	function d2g_handle_like() {
+	function d2gc_handle_like() {
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$nonce = isset( $_POST['nonce'] ) ? sanitize_key( wp_unslash( $_POST['nonce'] ) ) : '';
 

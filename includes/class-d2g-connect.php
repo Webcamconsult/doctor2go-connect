@@ -149,39 +149,39 @@ class D2gConnect {
 		$plugin_admin = new \D2gConnect_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		// functions to add scripts
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'd2gc_enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'd2gc_enqueue_scripts' );
 
 		// adds the admin settings pages menu item & register settings function
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_menu' );
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_d2g_settings' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'd2gc_register_menu' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'd2gc_register_d2g_settings' );
 
 		// adds custom post type + custom taxonmies
-		$this->loader->add_action( 'init', $plugin_admin, 'activate_myplugin_cpt' );
-		$this->loader->add_action( 'init', $plugin_admin, 'activate_myplugin_tax' );
+		$this->loader->add_action( 'init', $plugin_admin, 'd2gc_activate_myplugin_cpt' );
+		$this->loader->add_action( 'init', $plugin_admin, 'd2gc_activate_myplugin_tax' );
 
 		// adds image sizes
-		$this->loader->add_action( 'init', $plugin_admin, 'd2g_image_sizes' );
-		$this->loader->add_action( 'init', $plugin_admin, 'd2g_hide_admin_bar' );
+		$this->loader->add_action( 'init', $plugin_admin, 'd2gc_d2g_image_sizes' );
+		$this->loader->add_action( 'init', $plugin_admin, 'd2gc_hide_admin_bar' );
 
 		// this changes the admin columns for doctors
-		$this->loader->add_filter( 'manage_d2g_doctor_posts_columns', $plugin_admin, 'd2g_filter_posts_columns' );
-		$this->loader->add_filter( 'manage_pages_columns', $plugin_admin, 'd2g_filter_page_columns' );
-		$this->loader->add_filter( 'manage_d2g_emails_posts_columns', $plugin_admin, 'd2g_filter_email_columns' );
-		$this->loader->add_action( 'manage_d2g_doctor_posts_custom_column', $plugin_admin, 'd2g_doctor_column', 10, 2 );
-		$this->loader->add_action( 'manage_pages_custom_column', $plugin_admin, 'd2g_page_column', 10, 2 );
-		$this->loader->add_action( 'manage_d2g_emails_posts_custom_column', $plugin_admin, 'd2g_email_column', 10, 2 );
+		$this->loader->add_filter( 'manage_d2g_doctor_posts_columns', $plugin_admin, 'd2gc_filter_posts_columns' );
+		$this->loader->add_filter( 'manage_pages_columns', $plugin_admin, 'd2gc_filter_page_columns' );
+		$this->loader->add_filter( 'manage_d2g_emails_posts_columns', $plugin_admin, 'd2gc_filter_email_columns' );
+		$this->loader->add_action( 'manage_d2g_doctor_posts_custom_column', $plugin_admin, 'd2gc_doctor_column', 10, 2 );
+		$this->loader->add_action( 'manage_pages_custom_column', $plugin_admin, 'd2gc_page_column', 10, 2 );
+		$this->loader->add_action( 'manage_d2g_emails_posts_custom_column', $plugin_admin, 'd2gc_email_column', 10, 2 );
 
-		$this->loader->add_filter( 'manage_edit-d2g_doctor_sortable_columns', $plugin_admin, 'd2g_doctor_sortable_columns' );
-		$this->loader->add_action( 'pre_get_posts', $plugin_admin, 'd2g_posts_orderby' );
+		$this->loader->add_filter( 'manage_edit-d2gc_doctor_sortable_columns', $plugin_admin, 'd2gc_doctor_sortable_columns' );
+		$this->loader->add_action( 'pre_get_posts', $plugin_admin, 'd2gc_posts_orderby' );
 
 		// this changes the admin columns for users
-		$this->loader->add_filter( 'manage_users_columns', $plugin_admin, 'd2g_modify_user_table' );
-		$this->loader->add_filter( 'manage_users_custom_column', $plugin_admin, 'new_modify_user_table_row', 10, 3 );
+		$this->loader->add_filter( 'manage_users_columns', $plugin_admin, 'd2gc_modify_user_table' );
+		$this->loader->add_filter( 'manage_users_custom_column', $plugin_admin, 'd2gc_new_modify_user_table_row', 10, 3 );
 
 		// metaboxes
-		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'd2g_meta_box_add' );
-		$this->loader->add_action( 'save_post', $plugin_admin, 'd2g_meta_box_save' );
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'd2gc_meta_box_add' );
+		$this->loader->add_action( 'save_post', $plugin_admin, 'd2gc_meta_box_save' );
 
 		add_action(
 			'admin_enqueue_scripts',
@@ -209,42 +209,42 @@ class D2gConnect {
 
 		$plugin_public = new \D2gConnect_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'd2gc_enqueue_styles' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'd2gc_enqueue_scripts' );
 
-		$this->loader->add_action( 'init', $plugin_public, 'd2g_register_shortcodes' );
+		$this->loader->add_action( 'init', $plugin_public, 'd2gc_register_shortcodes' );
 
 		// load more doctors
 		$this->loader->add_action( 'wp_ajax_d2gc_doctor_call', $plugin_public, 'd2gc_doctor_call' );
 		$this->loader->add_action( 'wp_ajax_nopriv_d2gc_doctor_call', $plugin_public, 'd2gc_doctor_call' );
-		$this->loader->add_action( 'wp_ajax_d2g_doctor_count_call', $plugin_public, 'd2g_doctor_count_call' );
-		$this->loader->add_action( 'wp_ajax_nopriv_d2g_doctor_count_call', $plugin_public, 'd2g_doctor_count_call' );
+		$this->loader->add_action( 'wp_ajax_d2gc_doctor_count_call', $plugin_public, 'd2gc_doctor_count_call' );
+		$this->loader->add_action( 'wp_ajax_nopriv_d2gc_doctor_count_call', $plugin_public, 'd2gc_doctor_count_call' );
 
 		if(get_option('d2gc_activate_sso', 0) == 1) {
 			// single sign on hook for doctors coming from the D2G software
-			$this->loader->add_action( 'template_redirect', $plugin_public, 'd2g_sso' );
+			$this->loader->add_action( 'template_redirect', $plugin_public, 'd2gc_sso' );
 		}
 
 		if(get_option('d2gc_activate_custom_password_mail', 0) == 1) {
 			// function to override the standard lost password mail
-			$this->loader->add_filter( 'retrieve_password_message', $plugin_public, 'd2g_retrieve_password_message', 10, 4 );
-			$this->loader->add_filter( 'wp_mail_from', $plugin_public, 'd2g_wp_mail_from', 10, 1 );
-			$this->loader->add_filter( 'wp_mail_from_name', $plugin_public, 'd2g_wp_mail_from_name', 10, 1 );
+			$this->loader->add_filter( 'retrieve_password_message', $plugin_public, 'd2gc_retrieve_password_message', 10, 4 );
+			$this->loader->add_filter( 'wp_mail_from', $plugin_public, 'd2gc_wp_mail_from', 10, 1 );
+			$this->loader->add_filter( 'wp_mail_from_name', $plugin_public, 'd2gc_wp_mail_from_name', 10, 1 );
 		}
 
 		if(get_option('d2gc_activate_custom_login_registration', 0) == 1) {
 			// redirect users after login
-			$this->loader->add_filter( 'login_redirect', $plugin_public, 'd2g_login_redirect', 10, 3 );
+			$this->loader->add_filter( 'login_redirect', $plugin_public, 'd2gc_login_redirect', 10, 3 );
 		}
 		
 
 		// ajax function for handling liked posts
-		$this->loader->add_action( 'wp_ajax_handle_like', $plugin_public, 'd2g_handle_like' );
-		$this->loader->add_action( 'wp_ajax_nopriv_handle_like', $plugin_public, 'd2g_handle_like' );
+		$this->loader->add_action( 'wp_ajax_handle_like', $plugin_public, 'd2gc_handle_like' );
+		$this->loader->add_action( 'wp_ajax_nopriv_handle_like', $plugin_public, 'd2gc_handle_like' );
 
 		// send d2gc email
-		$this->loader->add_action( 'wp_ajax_send_ajax_d2g_email', $plugin_public, 'send_ajax_d2g_email' );
-		$this->loader->add_action( 'wp_ajax_nopriv_send_ajax_d2g_email', $plugin_public, 'send_ajax_d2g_email' );
+		$this->loader->add_action( 'wp_ajax_d2gc_send_ajax_d2g_email', $plugin_public, 'd2gc_send_ajax_d2g_email' );
+		$this->loader->add_action( 'wp_ajax_nopriv_d2gc_send_ajax_d2g_email', $plugin_public, 'd2gc_send_ajax_d2g_email' );
 	}
 
 

@@ -8,7 +8,7 @@
     $content            = get_the_content();
     $post_id            = get_the_ID();
 ?>
-<article data-dockey="<?php echo esc_html($d2g_profile_data->doctor_meta['user_key'][0]) ?>" data-postid="<?php echo esc_html($post_id)?>" data-template='grid' class="d2g_doctor grid <?php echo esc_html(d2g_getArticleClass())?> <?php echo esc_html($cssClass)?> loading" id="doc_<?php echo esc_html($post_id)?>">
+<article data-dockey="<?php echo esc_html($d2g_profile_data->doctor_meta['user_key'][0]) ?>" data-postid="<?php echo esc_html($post_id)?>" data-template='grid' class="d2g_doctor grid <?php echo esc_html(d2gc_getArticleClass())?> <?php echo esc_html($cssClass)?> loading" id="doc_<?php echo esc_html($post_id)?>">
     <div class="inner_wrapper card border-0 shadow pt-5 my-5 position-relative">
         <div class="card-body p4">
             <figure class="member-profile position-absolute w-100 text-center">

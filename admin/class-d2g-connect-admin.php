@@ -59,7 +59,7 @@ class D2gConnect_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function d2gc_enqueue_styles() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -82,7 +82,7 @@ class D2gConnect_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function d2gc_enqueue_scripts() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -118,7 +118,7 @@ class D2gConnect_Admin {
 	/**
 	 * Add menu options to the WordPress admin
 	 */
-	public function register_menu() {
+	public function d2gc_register_menu() {
 		add_menu_page(
 			'Doctor2Go Connect',
 			'Doctor2Go Connect',
@@ -162,7 +162,7 @@ class D2gConnect_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function activate_myplugin_cpt() {
+	public function d2gc_activate_myplugin_cpt() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -228,11 +228,11 @@ class D2gConnect_Admin {
 	/*
 	* adds custom taxonomies
 	*/
-	public function activate_myplugin_tax() {
-		$taxonomies = $this->get_d2g_taxonomies();
+	public function d2gc_activate_myplugin_tax() {
+		$taxonomies = $this->d2gc_get_d2g_taxonomies();
 
 		foreach ( $taxonomies as $taxonomy ) {
-			$labels = $this->get_tax_label( $taxonomy );
+			$labels = $this->d2gc_get_tax_label( $taxonomy );
 			$args   = array(
 				'hierarchical'          => true,
 				'labels'                => $labels,
@@ -257,7 +257,7 @@ class D2gConnect_Admin {
 	/**
 	 * custom taxonimies for the website are declared here
 	 */
-	public function get_d2g_taxonomies() {
+	public function d2gc_get_d2g_taxonomies() {
 		return array(
 			// 'country-operation',
 			'country-origin',
@@ -269,7 +269,7 @@ class D2gConnect_Admin {
 		);
 	}
 
-	private function get_tax_label( $taxonomy ) {
+	private function d2gc_get_tax_label( $taxonomy ) {
 		/***************doctor taxonomies*/
 
 		$labels['country-operation'] = array(
@@ -377,7 +377,7 @@ class D2gConnect_Admin {
 	/*
 	* here the custom image sizes are declared
 	*/
-	public function d2g_image_sizes() {
+	public function d2gc_d2g_image_sizes() {
 		add_image_size( 'd2g-doc-pic', 400, 500, true );
 		add_image_size( 'd2g-doc-pic-square', 300, 300, true );
 	}
@@ -385,7 +385,7 @@ class D2gConnect_Admin {
 	/*
 	* admin columns doctors are created
 	*/
-	public function d2g_filter_posts_columns( $columns ) {
+	public function d2gc_filter_posts_columns( $columns ) {
 
 		$columns = array(
 			'cb'                        => $columns['cb'],
@@ -416,7 +416,7 @@ class D2gConnect_Admin {
 	/*
 	* admin columns doctors values are retrived
 	*/
-	public function d2g_doctor_column( $column, $post_id ) {
+	public function d2gc_doctor_column( $column, $post_id ) {
 
 		if ( 'id' === $column ) {
 			echo esc_html( $post_id );
@@ -469,7 +469,7 @@ class D2gConnect_Admin {
 	/*
 	* what admin columns doctors are sortable
 	*/
-	public function d2g_doctor_sortable_columns( $columns ) {
+	public function d2gc_doctor_sortable_columns( $columns ) {
 		$columns['d2g_first_name'] = 'd2g_first_name';
 		$columns['d2g_last_name']  = 'd2g_last_name';
 		return $columns;
@@ -478,7 +478,7 @@ class D2gConnect_Admin {
 	/*
 	* create sort-query for sortabel custom columns
 	*/
-	public function d2g_posts_orderby( $query ) {
+	public function d2gc_posts_orderby( $query ) {
 		if ( ! is_admin() || ! $query->is_main_query() ) {
 			return;
 		}
@@ -499,7 +499,7 @@ class D2gConnect_Admin {
 	/*
 	* admin columns page are created
 	*/
-	public function d2g_filter_page_columns( $columns ) {
+	public function d2gc_filter_page_columns( $columns ) {
 
 		$columns = array(
 			'cb'                     => $columns['cb'],
@@ -516,7 +516,7 @@ class D2gConnect_Admin {
 	/*
 	* admin columns pages values are retrived
 	*/
-	public function d2g_page_column( $column, $post_id ) {
+	public function d2gc_page_column( $column, $post_id ) {
 		if ( 'id' === $column ) {
 			echo esc_html( $post_id );
 		}
@@ -531,7 +531,7 @@ class D2gConnect_Admin {
 	/*
 	* admin columns email are created
 	*/
-	public function d2g_filter_email_columns( $columns ) {
+	public function d2gc_filter_email_columns( $columns ) {
 
 		$columns = array(
 			'cb'                   => $columns['cb'],
@@ -547,7 +547,7 @@ class D2gConnect_Admin {
 	/*
 	* admin columns pages values are retrived
 	*/
-	public function d2g_email_column( $column, $post_id ) {
+	public function d2gc_email_column( $column, $post_id ) {
 		if ( 'd2g_email_identifier' === $column ) {
 			echo esc_html( get_post_meta( $post_id, 'd2g_email_identifier', true ) );
 		}
@@ -555,7 +555,7 @@ class D2gConnect_Admin {
 
 
 	// extendes the user tabel
-	public function d2g_modify_user_table( $column ) {
+	public function d2gc_modify_user_table( $column ) {
 		$column['wcc_user_id']      = 'D2G user id';
 		$column['user_key']         = 'D2G user key';
 		$column['organisation_key'] = 'D2G org. key';
@@ -565,7 +565,7 @@ class D2gConnect_Admin {
 	/*
 	* what admin columns doctors are sortable
 	*/
-	public function new_modify_user_table_row( $val, $column_name, $user_id ) {
+	public function d2gc_new_modify_user_table_row( $val, $column_name, $user_id ) {
 
 		$user_meta = get_user_meta( $user_id );
 
@@ -585,20 +585,20 @@ class D2gConnect_Admin {
 	/*
 	* register options for the D2G settings
 	*/
-	public function register_d2g_settings() {
+	public function d2gc_register_d2g_settings() {
 		$settings_with_callbacks = array(
-			'd2gc_detail_page_view'          		=> array( $this, 'sanitize_detail_page_view' ),
-			'd2gc_theme_css'                 		=> array( $this, 'sanitize_theme_css' ),
+			'd2gc_detail_page_view'          		=> array( $this, 'd2gc_sanitize_detail_page_view' ),
+			'd2gc_theme_css'                 		=> array( $this, 'd2gc_sanitize_theme_css' ),
 			'd2gc_bootstrap_css'                  	=> 'absint',
-			'd2gc_wcc_token'                     	=> array( $this, 'd2g_sanitize_token' ),
+			'd2gc_wcc_token'                     	=> array( $this, 'd2gc_sanitize_token' ),
 			'd2gc_api_url_short'                 	=> 'esc_url_raw',
 			'd2gc_waiting_room_url'              	=> 'esc_url_raw',
 			'd2gc_wcc_base_url'                  	=> 'sanitize_text_field',
 			'd2gc_admin_mail'                    		=> 'sanitize_email',
 			'd2gc_local_user'                		=> 'absint',
 			'd2gc_placeholder'               		=> 'absint',
-			'd2gc_recaptcha_site_key'        		=> array( $this, 'd2g_sanitize_token' ),
-			'd2gc_recaptcha_secret_key'      		=> array( $this, 'd2g_sanitize_token' ),
+			'd2gc_recaptcha_site_key'        		=> array( $this, 'd2gc_sanitize_token' ),
+			'd2gc_recaptcha_secret_key'      		=> array( $this, 'd2gc_sanitize_token' ),
 			'd2gc_admin_access'              		=> 'absint',
 			'd2gc_single_header_footer'      		=> 'absint',
 			'd2gc_deactivate_recapctha_script'   		=> 'absint',
@@ -629,7 +629,7 @@ class D2gConnect_Admin {
 		}
 	}
 
-	public function d2g_sanitize_token( $value ) {
+	public function d2gc_sanitize_token( $value ) {
 		$value = trim( wp_unslash( $value ) ); // remove slashes + spaces
 		if ( '' === $value ) {
 			add_settings_error(
@@ -646,7 +646,7 @@ class D2gConnect_Admin {
 	/**
 	 * Sanitize theme CSS dropdown value.
 	 */
-	public function sanitize_theme_css( $value ) {
+	public function d2gc_sanitize_theme_css( $value ) {
 
 		$allowed = array(
 			'light',
@@ -665,7 +665,7 @@ class D2gConnect_Admin {
 	/**
 	 * Sanitize detail page template dropdown.
 	 */
-	public function sanitize_detail_page_view( $value ) {
+	public function d2gc_sanitize_detail_page_view( $value ) {
 
 		$allowed = array(
 			'single-v1',
@@ -682,18 +682,18 @@ class D2gConnect_Admin {
 	}
 
 	// function adds metaboxes with callback function where the html is defined
-	public function d2g_meta_box_add() {
+	public function d2gc_meta_box_add() {
 		require_once 'partials/metaboxes.php';
-		add_meta_box( 'personal-info', 'Personal information', 'd2g_meta_box_personal_cb', 'd2g_doctor', 'normal', 'high' );
-		add_meta_box( 'education', 'Education', 'd2g_meta_box_education_cb', 'd2g_doctor', 'normal', 'high' );
-		add_meta_box( 'work', 'Work experience', 'd2g_meta_box_work_cb', 'd2g_doctor', 'normal', 'high' );
-		add_meta_box( 'publication', 'Publications', 'd2g_meta_box_publications_cb', 'd2g_doctor', 'normal', 'high' );
-		add_meta_box( 'page_type', 'Page type', 'd2g_meta_box_page_type_cb', 'page', 'normal', 'high' );
-		add_meta_box( 'email_type', 'E-mail', 'd2g_meta_box_email_type_cb', 'd2g_emails', 'normal', 'high' );
+		add_meta_box( 'personal-info', 'Personal information', 'd2gc_meta_box_personal_cb', 'd2g_doctor', 'normal', 'high' );
+		add_meta_box( 'education', 'Education', 'd2gc_meta_box_education_cb', 'd2g_doctor', 'normal', 'high' );
+		add_meta_box( 'work', 'Work experience', 'd2gc_meta_box_work_cb', 'd2g_doctor', 'normal', 'high' );
+		add_meta_box( 'publication', 'Publications', 'd2gc_meta_box_publications_cb', 'd2g_doctor', 'normal', 'high' );
+		add_meta_box( 'page_type', 'Page type', 'd2gc_meta_box_page_type_cb', 'page', 'normal', 'high' );
+		add_meta_box( 'email_type', 'E-mail', 'd2gc_meta_box_email_type_cb', 'd2g_emails', 'normal', 'high' );
 	}
 
 	// function saves the metaboxes
-	public function d2g_meta_box_save( $post_id ) {
+	public function d2gc_meta_box_save( $post_id ) {
 
 		// Bail if we're doing an auto save
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
@@ -706,7 +706,7 @@ class D2gConnect_Admin {
 
 			$currLang = get_locale();
 			$d2gAdmin = new \D2G_doc_user_profile();
-			$new_url  = $d2gAdmin::d2g_page_url();
+			$new_url  = $d2gAdmin::d2gc_page_url();
 
 			update_post_meta( $post_id, 'd2g_edit_url', '<a target="_blank" href="' . $new_url . '?edit=' . $post_id . '">edit</a>' );
 
@@ -738,7 +738,7 @@ class D2gConnect_Admin {
 
 			// Update personal fields (fixes lines 632 & 653).
 			foreach ( $personalFields as $key => $name ) {
-				$value = d2g_get_post_text( $key );
+				$value = d2gc_get_post_text( $key );
 				if ( ! empty( $value ) ) {
 					update_post_meta( $post_id, $key, $value );
 				}
@@ -753,7 +753,7 @@ class D2gConnect_Admin {
 	}
 
 
-	public function d2g_hide_admin_bar() {
+	public function d2gc_hide_admin_bar() {
 		/*@ Get current logged-in user data */
 		$user = wp_get_current_user();
 		/*@ Fetch only roles */

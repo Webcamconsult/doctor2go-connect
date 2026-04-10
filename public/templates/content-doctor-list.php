@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	$content = get_the_content();
 	$post_id = get_the_ID();
 ?>
-<article data-dockey="<?php echo esc_html( $d2g_profile_data->doctor_meta['user_key'][0] ); ?>" data-postid="<?php echo esc_html( $post_id ); ?>" data-template="list" class="d2g_doctor  <?php echo esc_html( d2g_getArticleClass() ); ?> list col-sm-12" id="doc_<?php echo esc_html( $post_id ); ?>">
+<article data-dockey="<?php echo esc_html( $d2g_profile_data->doctor_meta['user_key'][0] ); ?>" data-postid="<?php echo esc_html( $post_id ); ?>" data-template="list" class="d2g_doctor  <?php echo esc_html( d2gc_getArticleClass() ); ?> list col-sm-12" id="doc_<?php echo esc_html( $post_id ); ?>">
 	<div class="inner_wrapper card p-3 mb-5">
 		<div class="row align-items-center">
 			<div class="col-sm-4 text-center">

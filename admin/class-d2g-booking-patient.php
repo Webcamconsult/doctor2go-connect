@@ -11,26 +11,26 @@ class D2G_booking_wcc_user {
 	public static function init() {
 
 		// create appointment
-		add_action( 'wp_ajax_d2g_create_wcc_appointment', array( __CLASS__, 'd2g_create_wcc_appointment' ) );
-		add_action( 'wp_ajax_nopriv_d2g_create_wcc_appointment', array( __CLASS__, 'd2g_create_wcc_appointment' ) );
+		add_action( 'wp_ajax_d2gc_create_wcc_appointment', array( __CLASS__, 'd2gc_create_wcc_appointment' ) );
+		add_action( 'wp_ajax_nopriv_d2gc_create_wcc_appointment', array( __CLASS__, 'd2gc_create_wcc_appointment' ) );
 
 		// delete appointment
-		add_action( 'wp_ajax_d2g_delete_wcc_appointment', array( __CLASS__, 'd2g_delete_wcc_appointment' ) );
-		add_action( 'wp_ajax_nopriv_d2g_delete_wcc_appointment', array( __CLASS__, 'd2g_delete_wcc_appointment' ) );
+		add_action( 'wp_ajax_d2gc_delete_wcc_appointment', array( __CLASS__, 'd2gc_delete_wcc_appointment' ) );
+		add_action( 'wp_ajax_nopriv_d2gc_delete_wcc_appointment', array( __CLASS__, 'd2gc_delete_wcc_appointment' ) );
 
 		// walk in appointment
-		add_action( 'wp_ajax_d2g_create_wcc_walkin', array( __CLASS__, 'd2g_create_wcc_walkin' ) );
-		add_action( 'wp_ajax_nopriv_d2g_create_wcc_walkin', array( __CLASS__, 'd2g_create_wcc_walkin' ) );
+		add_action( 'wp_ajax_d2gc_create_wcc_walkin', array( __CLASS__, 'd2gc_create_wcc_walkin' ) );
+		add_action( 'wp_ajax_nopriv_d2gc_create_wcc_walkin', array( __CLASS__, 'd2gc_create_wcc_walkin' ) );
 
 		// written consult
-		add_action( 'wp_ajax_d2g_create_wcc_written_cosnsult', array( __CLASS__, 'd2g_create_wcc_written_cosnsult' ) );
-		add_action( 'wp_ajax_nopriv_d2g_create_wcc_written_cosnsult', array( __CLASS__, 'd2g_create_wcc_written_cosnsult' ) );
+		add_action( 'wp_ajax_d2gc_create_wcc_written_cosnsult', array( __CLASS__, 'd2gc_create_wcc_written_cosnsult' ) );
+		add_action( 'wp_ajax_nopriv_d2gc_create_wcc_written_cosnsult', array( __CLASS__, 'd2gc_create_wcc_written_cosnsult' ) );
 	}
 
 	/*
 	* this function creates an appointment in the D2G-application
 	*/
-	public static function d2g_create_wcc_appointment() {
+	public static function d2gc_create_wcc_appointment() {
 
 		$nonce = isset( $_POST['_wpnonce'] )
 			? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) )
@@ -81,18 +81,18 @@ class D2G_booking_wcc_user {
 		$docWCC_ID = get_post_meta( $wpDocID, 'wcc_user_id', true );
 
 		// Text fields.
-		$message          = d2g_get_post_text( 'comment' );
-		$appointment_date = d2g_get_post_text( 'start' );
-		$endDate          = d2g_get_post_text( 'end' );
-		$patientEmail     = d2g_get_post_text( 'email' );
-		$patientTel       = d2g_get_post_text( 'p_tel' );
-		$patient_fname    = d2g_get_post_text( 'patient_fname' );
-		$patient_lname    = d2g_get_post_text( 'patient_lname' );
-		$location_id      = d2g_get_post_text( 'location_id' );
-		$docPrice         = d2g_get_post_text( 'docPrice' );
-		$currency         = d2g_get_post_text( 'currency' );
-		$vat              = d2g_get_post_text( 'vat' );
-		$questionnaire_id = d2g_get_post_text( 'questionnaire_id' );
+		$message          = d2gc_get_post_text( 'comment' );
+		$appointment_date = d2gc_get_post_text( 'start' );
+		$endDate          = d2gc_get_post_text( 'end' );
+		$patientEmail     = d2gc_get_post_text( 'email' );
+		$patientTel       = d2gc_get_post_text( 'p_tel' );
+		$patient_fname    = d2gc_get_post_text( 'patient_fname' );
+		$patient_lname    = d2gc_get_post_text( 'patient_lname' );
+		$location_id      = d2gc_get_post_text( 'location_id' );
+		$docPrice         = d2gc_get_post_text( 'docPrice' );
+		$currency         = d2gc_get_post_text( 'currency' );
+		$vat              = d2gc_get_post_text( 'vat' );
+		$questionnaire_id = d2gc_get_post_text( 'questionnaire_id' );
 
 		// Language from locale (not from user input).
 		$language = sanitize_text_field( wp_unslash( explode( '_', get_locale() )[0] ) );
@@ -250,10 +250,10 @@ class D2G_booking_wcc_user {
 	/*
 	* this function is used to delete an appointment in the D2G software
 	*/
-	public static function d2g_delete_wcc_appointment() {
+	public static function d2gc_delete_wcc_appointment() {
 
 		// Nonce check
-		check_ajax_referer( 'd2g_delete_wcc_appointment_nonce', 'security' );
+		check_ajax_referer( 'd2gc_delete_wcc_appointment_nonce', 'security' );
 
 		if ( ! isset( $_POST['wcc_user_id'], $_POST['app_id'] ) ) {
 			return;
@@ -262,7 +262,7 @@ class D2G_booking_wcc_user {
 		$wcc_user_id = sanitize_text_field( wp_unslash( $_POST['wcc_user_id'] ) );
 		$app_id      = sanitize_text_field( wp_unslash( $_POST['app_id'] ) );
 
-		$docObj = self::d2g_get_doctor_by_wcc_id( $wcc_user_id )[0];
+		$docObj = self::d2gc_get_doctor_by_wcc_id( $wcc_user_id )[0];
 
 		$orgKey = get_post_meta( $docObj->ID, 'organisation_key', true );
 
@@ -298,7 +298,7 @@ class D2G_booking_wcc_user {
 
 	// this retrieves a URL for the walk-in appointment
 	// if success user gets redirected to the doctor waiting room
-	public static function d2g_create_wcc_written_cosnsult() {
+	public static function d2gc_create_wcc_written_cosnsult() {
 
         // Verify nonce early and bail on failure.
         if (
@@ -424,7 +424,7 @@ class D2G_booking_wcc_user {
 
         $d2gAdmin         = new D2G_doc_user_profile();
         $currLang         = explode( '_', get_locale() )[0];
-        $confirmation_url = $d2gAdmin::d2g_page_url( $currLang, 'email_advice_confirmation', false );
+        $confirmation_url = $d2gAdmin::d2gc_page_url( $currLang, 'email_advice_confirmation', false );
 
         $currUser        = wp_get_current_user();
         $require_payment = (float) $price > 0;
@@ -529,7 +529,7 @@ class D2G_booking_wcc_user {
 
 		$timeZone = ! empty( $userMeta['p_timezone'][0] )
 			? $userMeta['p_timezone'][0]
-			: get_user_timezone();
+			: d2gc_get_user_timezone();
 
 		$language = explode( '_', get_locale() )[0];
 
@@ -654,7 +654,7 @@ class D2G_booking_wcc_user {
 	 * @param $string
 	 * @return mixed
 	 */
-	protected static function d2g_clean_name( $string ) {
+	protected static function d2gc_clean_name( $string ) {
 		$string = str_replace( ' ', '', $string ); // Replaces all spaces with hyphens.
 		$string = preg_replace( '/[^A-Za-z0-9\-]/', '', $string ); // Removes special chars.
 		$string = strtolower( $string );
@@ -667,7 +667,7 @@ class D2G_booking_wcc_user {
 	 * @param $wcc_user_id
 	 * @return int[]|WP_Post[]
 	 */
-	public static function d2g_get_doctor_by_wcc_id( $wcc_user_id ) {
+	public static function d2gc_get_doctor_by_wcc_id( $wcc_user_id ) {
 		$args   = array(
 			'post_type'  => 'd2g_doctor',
 			'meta_query' => array(

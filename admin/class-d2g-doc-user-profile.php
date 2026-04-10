@@ -13,27 +13,27 @@ class D2G_doc_user_profile {
 		//
 		// ajax functions
 		// update doctor profile post
-		add_action( 'wp_ajax_d2g_update_doc', array( __CLASS__, 'd2g_update_doc' ) );
-		add_action( 'wp_ajax_nopriv_d2g_update_doc', array( __CLASS__, 'd2g_update_doc' ) );
+		add_action( 'wp_ajax_d2gc_update_doc', array( __CLASS__, 'd2gc_update_doc' ) );
+		add_action( 'wp_ajax_nopriv_d2gc_update_doc', array( __CLASS__, 'd2gc_update_doc' ) );
 
-		add_action( 'wp_ajax_d2g_delete_profile_pic', array( __CLASS__, 'd2g_delete_profile_pic' ) );
-		add_action( 'wp_ajax_nopriv_d2g_delete_profile_pic', array( __CLASS__, 'd2g_delete_profile_pic' ) );
+		add_action( 'wp_ajax_d2gc_delete_profile_pic', array( __CLASS__, 'd2gc_delete_profile_pic' ) );
+		add_action( 'wp_ajax_nopriv_d2gc_delete_profile_pic', array( __CLASS__, 'd2gc_delete_profile_pic' ) );
 
 		// adds a doctor profile post when creating a user with a doctor role if the option is checked
 		if ( get_option( 'd2gc_local_user' ) == 1 ) {
-			add_action( 'user_register', array( __CLASS__, 'd2g_create_doc_profile_locally' ), 10, 2 );
+			add_action( 'user_register', array( __CLASS__, 'd2gc_create_doc_profile_locally' ), 10, 2 );
 		}
 
 		// this redirects the user with a doctor role to his profile edit page
-		add_action( 'wp_login', array( __CLASS__, 'd2g_redirect_doctor' ), 10 );
+		add_action( 'wp_login', array( __CLASS__, 'd2gc_redirect_doctor' ), 10 );
 
 		// this resticts the admin access so that (this needs to become optional)
-		add_action( 'admin_init', array( __CLASS__, 'd2g_restict_admin' ), 12 );
+		add_action( 'admin_init', array( __CLASS__, 'd2gc_restict_admin' ), 12 );
 
 		// adapt edit URL when polylang is used
 		/*
 		if(is_plugin_active('polylang/polylang.php')){
-			self::loader->add_filter( 'pll_translate_post_meta', $plugin_admin, 'd2g_translate_post_meta', 10, 3 );
+			self::loader->add_filter( 'pll_translate_post_meta', $plugin_admin, 'd2gc_translate_post_meta', 10, 3 );
 		}
 
 		if(is_plugin_active('sitepress-multilingual-cms/sitepress.php')){
@@ -47,7 +47,7 @@ class D2G_doc_user_profile {
 	 * @param $currUserID
 	 * @return int[]|WP_Post[]
 	 */
-	public static function d2g_get_pub_profile( $currUserID ) {
+	public static function d2gc_get_pub_profile( $currUserID ) {
 		$args       = array(
 			'post_type'   => 'd2g_doctor',
 			'post_status' => 'any',
@@ -65,7 +65,7 @@ class D2G_doc_user_profile {
 	/*
 	*retrieve the URL from the doc profile edit page in the front-end
 	*/
-	public static function d2g_page_url( $lang = '', $d2g_page_identifier = '', $title = false ) {
+	public static function d2gc_page_url( $lang = '', $d2g_page_identifier = '', $title = false ) {
 		$args = array(
 			'post_type'  => 'page',
 			'meta_query' => array(
@@ -93,7 +93,7 @@ class D2G_doc_user_profile {
 	* This function is called when setting is checked that profile is created locally when user is created localy, this function is not really used and my be removed in future
 	* There for no nonce check, because this is an internal function and not called via ajax
 	*/
-	public static function d2g_create_doc_profile_locally( $user_id, $userdata ) {
+	public static function d2gc_create_doc_profile_locally( $user_id, $userdata ) {
 
 		if ( isset( $_POST['role'] ) && $_POST['role'] == 'doctor' ) {// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce not required for this internal action.
 			// get user object
@@ -121,9 +121,9 @@ class D2G_doc_user_profile {
 	/*
 	* create user via API from WCC
 	*/
-	public static function d2g_create_doc_user( $user_data ) {
+	public static function d2gc_create_doc_user( $user_data ) {
 
-		$user_login = self::d2g_clean_name( $user_data['user_title'] . $user_data['user_initials'] . $user_data['user_last_name'] . time() );
+		$user_login = self::d2gc_clean_name( $user_data['user_title'] . $user_data['user_initials'] . $user_data['user_last_name'] . time() );
 
 		$user_input = array(
 			'user_login'   => $user_login,
@@ -144,7 +144,7 @@ class D2G_doc_user_profile {
 	 * @param $string
 	 * @return mixed
 	 */
-	protected static function d2g_clean_name( $string ) {
+	protected static function d2gc_clean_name( $string ) {
 		$string = str_replace( ' ', '', $string ); // Replaces all spaces with hyphens.
 		$string = preg_replace( '/[^A-Za-z0-9\-]/', '', $string ); // Removes special chars.
 		$string = strtolower( $string );
@@ -162,7 +162,7 @@ class D2G_doc_user_profile {
 	 * @return int
 	 * this function crates a doc profile and is called via the WCC api
 	 */
-	public static function d2g_create_doc_profile( $doc_data = array(), $doc_data_meta = array(), $user_id ) {
+	public static function d2gc_create_doc_profile( $doc_data = array(), $doc_data_meta = array(), $user_id ) {
 
 		$doc_id      = '';
 		$error_check = false;
@@ -185,7 +185,7 @@ class D2G_doc_user_profile {
 				}
 			}
 
-			$new_url = self::d2g_page_url();
+			$new_url = self::d2gc_page_url();
 			update_post_meta( $doc_id, 'd2g_edit_url', '<a target="_blank" href="' . $new_url . '?edit=' . $doc_id . '">edit</a>' );
 
 			do_action( 'breeze_clear_all_cache' );
@@ -202,7 +202,7 @@ class D2G_doc_user_profile {
 	 * @param $user_data
 	 * @return array
 	 */
-	public static function d2g_set_doc_meta( $user_id, $user_data ) {
+	public static function d2gc_set_doc_meta( $user_id, $user_data ) {
 		$doc_meta = array(
 			'd2g_user_id'            => (string) $user_id,
 			'tariffs'                => $user_data['tariffs'],
@@ -225,7 +225,7 @@ class D2G_doc_user_profile {
 	/**
 	 * Update a doctor profile post.
 	 */
-	public static function d2g_update_doc() {
+	public static function d2gc_update_doc() {
 		$nonce = isset($_POST['_wpnonce']) ? sanitize_text_field(wp_unslash($_POST['_wpnonce'])) : ''; if (!$nonce || !wp_verify_nonce($nonce, 'doc-update')) { wp_die('Invalid nonce'); }
 		
 		global $success;
@@ -300,13 +300,13 @@ class D2G_doc_user_profile {
 		foreach ($doc_data_meta as $meta_key => $meta_value) update_post_meta($update_id, $meta_key, $meta_value);
 
 		// Update Edit URL
-		update_post_meta($update_id,'d2g_edit_url',sprintf('<a target="_blank" href="%s?edit=%d">%s</a>',esc_url(self::d2g_page_url($currLang)),absint($update_id),esc_html__('edit','doctor2go-connect')));
+		update_post_meta($update_id,'d2g_edit_url',sprintf('<a target="_blank" href="%s?edit=%d">%s</a>',esc_url(self::d2gc_page_url($currLang)),absint($update_id),esc_html__('edit','doctor2go-connect')));
 
 		// Update Taxonomies
-		if (!empty($doc_tax)) self::updateDocTerms($doc_tax, $update_id);
+		if (!empty($doc_tax)) self::d2gc_updateDocTerms($doc_tax, $update_id);
 
 		// Handle File Uploads
-		if (!empty($_FILES)) self::d2g_set_doc_images($update_id, $nonce);
+		if (!empty($_FILES)) self::d2gc_set_doc_images($update_id, $nonce);
 
 		$success = true;
 		do_action('breeze_clear_all_cache');
@@ -316,7 +316,7 @@ class D2G_doc_user_profile {
 	/**
 	 * Update object terms for the post.
 	 */
-	public static function updateDocTerms($taxonomies,$post_id) {
+	public static function d2gc_updateDocTerms($taxonomies,$post_id) {
 		foreach ($taxonomies as $taxonomy => $value) wp_set_object_terms($post_id,is_array($value) ? $value : [$value],$taxonomy);
 	}
 
@@ -326,58 +326,71 @@ class D2G_doc_user_profile {
 	 * @param int $post_id
 	 * @param string $nonce
 	 */
-	private static function d2g_set_doc_images( $post_id, $nonce ) {
+	private static function d2gc_set_doc_images( $post_id, $nonce ) {
 
-		if (!isset($nonce) || !wp_verify_nonce(sanitize_text_field(wp_unslash($nonce)), 'doc-update')) {
-			wp_die('Invalid nonce');
+		if ( ! isset( $nonce ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $nonce ) ), 'doc-update' ) ) {
+			wp_die( 'Invalid nonce' );
 		}
 
 		if ( ! current_user_can( 'edit_post', $post_id ) || empty( $_FILES ) || ! is_array( $_FILES ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 			return;
 		}
 
-		require_once ABSPATH . 'wp-admin/includes/file.php';
-		require_once ABSPATH . 'wp-admin/includes/media.php';
-		require_once ABSPATH . 'wp-admin/includes/image.php';
+		if ( ! function_exists( 'wp_handle_upload' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+
+		if ( ! function_exists( 'media_handle_upload' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/media.php';
+		}
+
+		if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/image.php';
+		}
 
 		foreach ( $_FILES as $field_name => $file_data ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 
-			// Handle multiple uploads
+			if ( ! is_array( $file_data ) || ! isset( $file_data['name'], $file_data['type'], $file_data['tmp_name'], $file_data['error'], $file_data['size'] ) ) {
+				continue;
+			}
+
 			if ( is_array( $file_data['name'] ) ) {
+
+				if ( ! is_array( $file_data['type'] ) || ! is_array( $file_data['tmp_name'] ) || ! is_array( $file_data['error'] ) || ! is_array( $file_data['size'] ) ) {
+					continue;
+				}
 
 				foreach ( $file_data['name'] as $index => $name ) {
 
-					if ( empty( $name ) || $file_data['error'][ $index ] !== UPLOAD_ERR_OK ) {
+					if ( empty( $name ) || ! isset( $file_data['error'][ $index ], $file_data['type'][ $index ], $file_data['tmp_name'][ $index ], $file_data['size'][ $index ] ) || UPLOAD_ERR_OK !== (int) $file_data['error'][ $index ] ) {
 						continue;
 					}
 
 					$single_file = array(
-						'name'     => sanitize_file_name( $file_data['name'][ $index ] ),
-						'type'     => $file_data['type'][ $index ],
-						'tmp_name' => $file_data['tmp_name'][ $index ],
-						'error'    => $file_data['error'][ $index ],
-						'size'     => $file_data['size'][ $index ],
+						'name'     => sanitize_file_name( $name ),
+						'type'     => sanitize_text_field( wp_unslash( $file_data['type'][ $index ] ) ),
+						'tmp_name' => sanitize_text_field( wp_unslash( $file_data['tmp_name'][ $index ] ) ),
+						'error'    => (int) $file_data['error'][ $index ],
+						'size'     => (int) $file_data['size'][ $index ],
 					);
 
-					self::handle_single_upload( $single_file, $post_id, $field_name );
-
+					self::d2gc_handle_single_upload( $single_file, $post_id, $field_name );
 				}
 			} else {
 
-				if ( empty( $file_data['name'] ) || $file_data['error'] !== UPLOAD_ERR_OK ) {
+				if ( empty( $file_data['name'] ) || ! isset( $file_data['error'], $file_data['type'], $file_data['tmp_name'], $file_data['size'] ) || UPLOAD_ERR_OK !== (int) $file_data['error'] ) {
 					continue;
 				}
 
 				$single_file = array(
 					'name'     => sanitize_file_name( $file_data['name'] ),
-					'type'     => $file_data['type'],
-					'tmp_name' => $file_data['tmp_name'],
-					'error'    => $file_data['error'],
-					'size'     => $file_data['size'],
+					'type'     => sanitize_text_field( wp_unslash( $file_data['type'] ) ),
+					'tmp_name' => sanitize_text_field( wp_unslash( $file_data['tmp_name'] ) ),
+					'error'    => (int) $file_data['error'],
+					'size'     => (int) $file_data['size'],
 				);
 
-				self::handle_single_upload( $single_file, $post_id, $field_name );
-
+				self::d2gc_handle_single_upload( $single_file, $post_id, $field_name );
 			}
 		}
 	}
@@ -390,7 +403,7 @@ class D2G_doc_user_profile {
 	 * @param int    $post_id
 	 * @param string $field_name
 	 */
-	private static function handle_single_upload( $file, $post_id, $field_name ) {
+	private static function d2gc_handle_single_upload( $file, $post_id, $field_name ) {
 		// Restrict to images only
 		$allowed_mimes = array(
 			'jpg|jpeg|jpe' => 'image/jpeg',
@@ -420,7 +433,7 @@ class D2G_doc_user_profile {
 	}
 
 
-	public static function d2g_delete_profile_pic() {
+	public static function d2gc_delete_profile_pic() {
 		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['_wpnonce'] ) ), 'd2g_delete_pic' ) ) {
 			wp_die( 'Security failed' );
 		}
@@ -440,11 +453,11 @@ class D2G_doc_user_profile {
 	/*
 	* autotranslate function for edit link from doctors with polylang
 	*/
-	public static function d2g_translate_post_meta( $value, $key, $lang ) {
+	public static function d2gc_translate_post_meta( $value, $key, $lang ) {
 
 		if ( 'd2g_edit_url' === $key ) {
 
-			$new_url = self::d2g_page_url( $lang );
+			$new_url = self::d2gc_page_url( $lang );
 			$part2   = explode( '?edit=', $value )[1];
 			$value   = '<a target="_blank" href="' . $new_url . '?edit=' . $part2;
 		}
@@ -455,24 +468,19 @@ class D2G_doc_user_profile {
 	/*
 	* redirect doctor when logging in
 	*/
-	public static function d2g_redirect_doctor() {
-
+	public static function d2gc_redirect_doctor() {
 		$currUser = wp_get_current_user();
 
-		if ( in_array( 'doctor', $currUser->roles ) ) {
-
-			$new_url = self::d2g_page_url();
-			header( 'Location:' . $new_url );
+		if ( in_array( 'doctor', $currUser->roles, true ) ) {
+			wp_safe_redirect( self::d2gc_page_url() );
 			exit;
-		} else {
-			return;
 		}
 	}
 
 	// this needs to become optional
-	public static function d2g_restict_admin() {
+	public static function d2gc_restict_admin() {
 
-		$new_url = self::d2g_page_url();
+		$new_url = self::d2gc_page_url();
 
 		if ( wp_doing_ajax() || current_user_can( 'delete_pages' ) || current_user_can( 'delete_others_posts' ) ) {
 			return;
@@ -484,7 +492,7 @@ class D2G_doc_user_profile {
 				if ( get_option( 'd2gc_admin_access' ) == 1 ) {
 					return;
 				}
-				$new_url = self::d2g_page_url();
+				$new_url = self::d2gc_page_url();
 			} else {
 				$new_url = home_url();
 			}
