@@ -806,10 +806,8 @@ jQuery(document).ready(function ($) {
         $(document).on('click', '.start_written_con', function (event) {
             event.preventDefault();
 
-
             var checker_message = '';
             var checker = false;
-
 
             // Required fields for written consultation
             $('.required_wc').each(function () {
@@ -820,14 +818,12 @@ jQuery(document).ready(function ($) {
                 }
             });
 
-
             // Email format check
             if (isEmail($('#client_email_ec').val()) === 'notOK') {
                 $('#client_email_ec').css('border-color', '#ff5000');
                 checker = true;
-                checker_message = checker_message + d.msg.invalid_email  + '<br>';
+                checker_message = checker_message + d.msg.invalid_email + '<br>';
             }
-
 
             // reCAPTCHA check (same pattern as walk-in)
             if (d.recaptcha.enabled && (typeof window.captchaCodeEmail === 'undefined' || window.captchaCodeEmail.length === 0)) {
@@ -835,29 +831,24 @@ jQuery(document).ready(function ($) {
                 checker_message += d.msg.robot;
             }
 
-
             // Extra checks for guests
             if (!d.user || !d.user.is_logged_in) {
 
-
                 if (!$('#conf_privacy_ea').is(':checked')) {
                     checker = true;
-                    checker_message +=  d.msg.privacy + '<br>';
+                    checker_message += d.msg.privacy + '<br>';
                 }
-
 
                 if (!$('#conf_terms_ea').is(':checked')) {
                     checker = true;
                     checker_message += d.msg.terms + '<br>';
                 }
 
-
                 if (!$('#conf_disclaimer_ea').is(':checked')) {
                     checker = true;
                     checker_message += d.msg.disclaimer + '<br>';
                 }
             }
-
 
             if (checker === false) {
                 // Compress images asynchronously
@@ -868,12 +859,21 @@ jQuery(document).ready(function ($) {
                     return compressImage(file);
                 });
 
-
                 Promise.all(promises).then(compressedFiles => {
                     // Create FormData
                     var myformData = new FormData($("#written_con_form")[0]);
                     myformData.append('action', 'd2gc_create_wcc_written_cosnsult');
-                    
+
+                    // Handle multi-select #veranderd as ; separated string
+                    const veranderdSelect = document.getElementById('veranderd');
+                    if (veranderdSelect) {
+                        const selectedValues = Array.from(veranderdSelect.selectedOptions)
+                            .map(option => option.value.trim())
+                            .filter(Boolean)
+                            .join('; ');
+                        myformData.set('has_changed', selectedValues);
+                    }
+
                     // Replace original images with compressed ones
                     imageInputs.forEach((id, index) => {
                         const compressed = compressedFiles[index];
@@ -885,7 +885,7 @@ jQuery(document).ready(function ($) {
                             myformData.set(id, hiddenValue);
                         }
                     });
-                    
+
                     // Your existing AJAX (show loader already handled in beforeSend)
                     $.ajax({
                         type: "POST",
@@ -918,8 +918,6 @@ jQuery(document).ready(function ($) {
                 $('#written_con_error').html(checker_message).toggleClass('simple_hide');
                 return false;
             }
-
-
 
             return false;
         });

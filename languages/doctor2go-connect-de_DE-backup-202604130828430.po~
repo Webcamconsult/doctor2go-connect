@@ -141,15 +141,15 @@ msgstr "Aktion"
 
 #: admin/partials/d2g-connect-admin-display.php:128
 msgid "Activate custom login and registration for patients"
-msgstr "Patienten-Login und -Registrierung aktivieren"
+msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:129
 msgid "Activate custom password reset email"
-msgstr "Benutzerdefiniertes Passwort-Zurücksetzungs-E-Mail aktivieren"
+msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:127
 msgid "Activate Single Sign On Login for doctors"
-msgstr "Single Sign-On für Ärzte aktivieren"
+msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:151
 msgid "Activate under construction"
@@ -747,7 +747,6 @@ msgstr "Zur Beratung gehen"
 #: public/template-functions.php:1121
 msgid "Has the spot changed? Choose one or more options."
 msgstr ""
-"Hat sich der Standort geändert? Wählen Sie eine oder mehrere Optionen aus."
 
 #: admin/partials/d2g-connect-admin-display.php:77
 msgid "Header & footer"
@@ -867,7 +866,7 @@ msgstr "Aufnahmefragebogen"
 
 #: public/class-d2g-connect-public.php:758 public/template-functions.php:1929
 msgid "Invalid security token."
-msgstr "Ungültiges Sicherheitstoken."
+msgstr ""
 
 #: admin/class-d2g-connect-admin.php:110
 #: public/class-d2g-connect-public.php:281 admin/partials/metaboxes.php:305
@@ -925,7 +924,7 @@ msgstr "Anmelden"
 
 #: public/class-d2g-connect-public.php:753
 msgid "Login failed"
-msgstr "Anmeldung fehlgeschlagen"
+msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:109
 msgid "logo used in e-mail"
@@ -1856,7 +1855,7 @@ msgstr "WP Benutzer-ID"
 
 #: public/template-functions.php:1144 public/template-functions.php:1152
 msgid "Yes"
-msgstr "Ja"
+msgstr ""
 
 #: public/template-functions.php:1131
 msgid "Yes, in color"
@@ -1864,7 +1863,7 @@ msgstr "Ja, in Farbe"
 
 #: public/template-functions.php:1130
 msgid "yes, in color"
-msgstr "ja, in Farbe"
+msgstr ""
 
 #: public/template-functions.php:1134
 msgid "Yes, in shape"
@@ -1872,7 +1871,7 @@ msgstr "Ja, in Form"
 
 #: public/template-functions.php:1133
 msgid "yes, in shape"
-msgstr "ja, in Form"
+msgstr ""
 
 #: public/template-functions.php:1128
 msgid "Yes, in size"

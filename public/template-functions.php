@@ -997,7 +997,7 @@ function d2gc_show_written_con_form() {
 	}
 	?>
 	
-	<div id="written_consult" class="walkin_form_wrapper">
+	<div id="written_consult" class="walkin_form_wrapper d2g_wrapper">
 		<h3 class="section_title"><?php echo esc_html__( 'E-mail advice', 'doctor2go-connect' ); ?></h3>
 		<span class="price_wrapper">
 			<p style="margin-bottom: 2px;"><?php echo esc_html__( 'Consultation fee:', 'doctor2go-connect' ); ?></p>
@@ -1023,9 +1023,8 @@ function d2gc_show_written_con_form() {
 					</div>
 					<div class="col-sm-12">
 						<div>
-<input id="type_default" class="required_wc form-control" type="radio"  value="default" name="type">
-						<label class="form-label" for="type_default"><?php echo esc_html__( 'Extended Questionnaire – for complex or multiple skin concerns', 'doctor2go-connect' ); ?></label>
-							
+							<input id="type_default" class="required_wc form-control" type="radio"  value="default" name="type">
+							<label class="form-label" for="type_default"><?php echo esc_html__( 'Extended Questionnaire – for complex or multiple skin concerns', 'doctor2go-connect' ); ?></label>	
 						</div>	
 					</div>
 				</div>
@@ -1119,13 +1118,21 @@ function d2gc_show_written_con_form() {
 							</div>
 							<div class="col-md-6">
 								<label for="veranderd" class="form-label">
-									<?php echo esc_html__('Has the spot changed?', 'doctor2go-connect')?>
+									<?php echo esc_html__('Has the spot changed? Choose one or more options.', 'doctor2go-connect')?>
 								</label>
-								<select id="veranderd" name="has_changed" class="form-select">
-									<option value="<?php echo esc_html__('no', 'doctor2go-connect')?>"><?php echo esc_html__('No', 'doctor2go-connect')?></option>
-									<option value="<?php echo esc_html__('yes, in size', 'doctor2go-connect')?>"><?php echo esc_html__('Yes, in size', 'doctor2go-connect')?></option>
-									<option value="<?php echo esc_html__('Yes, in color', 'doctor2go-connect')?>"><?php echo esc_html__('Yes, in color', 'doctor2go-connect')?></option>
-									<option value="<?php echo esc_html__('Yes, in shape', 'doctor2go-connect')?>"><?php echo esc_html__('Yes, in shape', 'doctor2go-connect')?></option>
+								<select id="veranderd" name="has_changed[]" class="form-select" multiple>
+									<option value="<?php echo esc_attr__('no', 'doctor2go-connect'); ?>">
+										<?php echo esc_html__('No', 'doctor2go-connect'); ?>
+									</option>
+									<option value="<?php echo esc_attr__('yes, in size', 'doctor2go-connect'); ?>">
+										<?php echo esc_html__('Yes, in size', 'doctor2go-connect'); ?>
+									</option>
+									<option value="<?php echo esc_attr__('yes, in color', 'doctor2go-connect'); ?>">
+										<?php echo esc_html__('Yes, in color', 'doctor2go-connect'); ?>
+									</option>
+									<option value="<?php echo esc_attr__('yes, in shape', 'doctor2go-connect'); ?>">
+										<?php echo esc_html__('Yes, in shape', 'doctor2go-connect'); ?>
+									</option>
 								</select>
 							</div>
 						</div>
@@ -1134,7 +1141,7 @@ function d2gc_show_written_con_form() {
 						<div class="row g-3 mb-3">
 							<div class="col-md-6">
 								<div class="form-check form-switch">
-									<input class="form-check-input" type="checkbox" id="jeuk" name="itch_check" value="1" role="switch">
+									<input class="form-check-input" type="checkbox" id="jeuk" name="itch_check" value="<?php echo esc_html__('Yes', 'doctor2go-connect'); ?>" role="switch">
 									<label class="form-check-label" for="jeuk">
 										<?php echo esc_html__('Does the skin condition itch?', 'doctor2go-connect')?>
 									</label>
@@ -1142,7 +1149,7 @@ function d2gc_show_written_con_form() {
 							</div>
 							<div class="col-md-6">
 								<div class="form-check form-switch">
-									<input class="form-check-input" type="checkbox" id="bloed" name="blood_check" value="1" role="switch">
+									<input class="form-check-input" type="checkbox" id="bloed" name="blood_check" value="<?php echo esc_html__('Yes', 'doctor2go-connect'); ?>" role="switch">
 									<label class="form-check-label" for="bloed">
 										<?php echo esc_html__('Does the skin condition bleed?', 'doctor2go-connect')?>
 									</label>

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doctor2Go Connect\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 12:52+0000\n"
+"POT-Creation-Date: 2026-04-13 08:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -20,16 +20,16 @@ msgstr ""
 msgid " - "
 msgstr ""
 
-#: public/class-d2g-profile-data.php:191 public/template-functions.php:1420
-#: public/template-functions.php:1457 public/template-functions.php:1470
+#: public/class-d2g-profile-data.php:191 public/template-functions.php:1430
+#: public/template-functions.php:1467 public/template-functions.php:1480
 msgid " at "
 msgstr ""
 
-#: public/class-d2g-connect-public.php:183
+#: public/class-d2g-connect-public.php:184
 msgid " Please verify that you are not a robot. "
 msgstr ""
 
-#: public/class-d2g-connect-public.php:182
+#: public/class-d2g-connect-public.php:183
 msgid " You have entered an invalid e-mail. "
 msgstr ""
 
@@ -52,7 +52,7 @@ msgstr ""
 msgid "(PRO version only*)"
 msgstr ""
 
-#: public/template-functions.php:965 public/template-functions.php:1180
+#: public/template-functions.php:965 public/template-functions.php:1190
 msgid "* required fields."
 msgstr ""
 
@@ -60,7 +60,7 @@ msgstr ""
 msgid "* These are mandatory fields"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:131
+#: admin/partials/d2g-connect-admin-display.php:135
 msgid ""
 "1. Install the \"Solid Security Basic\" plugin and configure two-factor "
 "authentication (2FA) for all individuals with access to the user accounts. "
@@ -68,25 +68,25 @@ msgid ""
 "patient data."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:133
+#: admin/partials/d2g-connect-admin-display.php:137
 msgid ""
 "2. Create a Google reCAPTCHA account specifically for your website and enter "
 "the generated keys into the appropriate settings within your site’s "
 "configuration."
 msgstr ""
 
-#: public/template-functions.php:1446
+#: public/template-functions.php:1456
 msgid "A payment is required for this appointment."
 msgstr ""
 
-#: public/template-functions.php:1576
+#: public/template-functions.php:1586
 msgid ""
 "A physical consultation involves an in-person visit to the doctor's clinic "
 "or designated location. You will have the opportunity to discuss your skin "
 "concerns face-to-face and receive a thorough examination and treatment plan."
 msgstr ""
 
-#: public/template-functions.php:1580
+#: public/template-functions.php:1590
 msgid ""
 "A video consultation enables you to have a remote appointment with the "
 "doctor via a secure video platform. This option provides convenience and "
@@ -94,14 +94,14 @@ msgid ""
 "your own home."
 msgstr ""
 
-#: public/template-functions.php:1568
+#: public/template-functions.php:1578
 msgid ""
 "A walk-in consultation allows you to have a real-time video consultation "
 "with the doctor without a prior appointment. You will enter a virtual "
 "waiting room and the doctor will attend to you as soon as they are available."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:740
+#: public/class-d2g-connect-public.php:730
 msgid "A wrong login hash has been sent"
 msgstr ""
 
@@ -110,7 +110,7 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: public/template-functions.php:1080
+#: public/template-functions.php:1079
 msgid "About your complaint"
 msgstr ""
 
@@ -122,7 +122,19 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:147
+#: admin/partials/d2g-connect-admin-display.php:128
+msgid "Activate custom login and registration for patients"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:129
+msgid "Activate custom password reset email"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:127
+msgid "Activate Single Sign On Login for doctors"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:151
 msgid "Activate under construction"
 msgstr ""
 
@@ -137,7 +149,7 @@ msgstr ""
 msgid "Add New"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:723 public/template-functions.php:460
+#: admin/class-d2g-connect-admin.php:726 public/template-functions.php:460
 #: admin/partials/metaboxes.php:21
 msgid "Address"
 msgstr ""
@@ -183,7 +195,7 @@ msgstr ""
 msgid "Amount of doctors shown on a page."
 msgstr ""
 
-#: public/template-functions.php:1572
+#: public/template-functions.php:1582
 msgid ""
 "An email advice allows you to receive a professional assessment from a "
 "certified dermatologist via email within two working days. You will complete "
@@ -191,7 +203,7 @@ msgid ""
 "their evaluation and recommendations in writing."
 msgstr ""
 
-#: endpoints/doctor.php:66
+#: endpoints/doctor.php:77
 msgid "An unknown error has occurred"
 msgstr ""
 
@@ -205,19 +217,19 @@ msgstr ""
 msgid "Any string"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:32
+#: admin/partials/d2g-connect-admin-display.php:33
 msgid "API connection"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:635
+#: admin/class-d2g-connect-admin.php:638
 msgid "API token cannot be empty."
 msgstr ""
 
-#: public/template-functions.php:1529
+#: public/template-functions.php:1539
 msgid "Appointment date and time"
 msgstr ""
 
-#: public/template-functions.php:1535
+#: public/template-functions.php:1545
 msgid "Appointment link for doctor"
 msgstr ""
 
@@ -225,11 +237,11 @@ msgstr ""
 msgid "ASC (ascending) or DESC (descending)"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:179
+#: public/class-d2g-connect-public.php:180
 msgid "at"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:189
+#: public/class-d2g-connect-public.php:190
 msgid "Attention: I am unavailable in the following periode."
 msgstr ""
 
@@ -238,7 +250,7 @@ msgid "Author"
 msgstr ""
 
 #: admin/class-d2g-connect-admin.php:112
-#: public/class-d2g-connect-public.php:282 admin/partials/metaboxes.php:311
+#: public/class-d2g-connect-public.php:283 admin/partials/metaboxes.php:311
 #: admin/partials/metaboxes.php:336 admin/partials/metaboxes.php:359
 msgid "author"
 msgstr ""
@@ -252,7 +264,7 @@ msgstr ""
 msgid "available at any time"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:732
+#: admin/class-d2g-connect-admin.php:735
 msgid "Average price"
 msgstr ""
 
@@ -260,11 +272,11 @@ msgstr ""
 msgid "back to overview"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:47
+#: admin/partials/d2g-connect-admin-display.php:48
 msgid "Base URL from the Doctor2go software"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:148
+#: admin/partials/d2g-connect-admin-display.php:152
 msgid ""
 "Block all pages for not logged in users and redirect to the under "
 "construction page"
@@ -282,11 +294,11 @@ msgstr ""
 msgid "Booking details"
 msgstr ""
 
-#: public/template-functions.php:1423
+#: public/template-functions.php:1433
 msgid "cancel appointment"
 msgstr ""
 
-#: public/template-functions.php:1431 public/template-functions.php:1442
+#: public/template-functions.php:1441 public/template-functions.php:1452
 msgid "cancellation deactivated"
 msgstr ""
 
@@ -298,11 +310,11 @@ msgstr ""
 msgid "Cancellation for patient"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:258
+#: public/class-d2g-connect-public.php:259
 msgid "Cancellation request for appointment."
 msgstr ""
 
-#: public/template-functions.php:1429
+#: public/template-functions.php:1439
 msgid ""
 "Cancellations are generally permitted up to 24 hours before the scheduled "
 "appointment. Please review our cancellation and refund policy on the Terms "
@@ -315,7 +327,7 @@ msgstr ""
 msgid "CAPTCHA verification failed. Please try again."
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:725 admin/partials/metaboxes.php:23
+#: admin/class-d2g-connect-admin.php:728 admin/partials/metaboxes.php:23
 msgid "city"
 msgstr ""
 
@@ -327,7 +339,7 @@ msgstr ""
 msgid "Click the button for your preferred day to choose a time."
 msgstr ""
 
-#: public/template-functions.php:1543
+#: public/template-functions.php:1553
 msgid "Comment (optional)"
 msgstr ""
 
@@ -352,19 +364,19 @@ msgstr ""
 msgid "Consultation offers"
 msgstr ""
 
-#: public/template-functions.php:1564
+#: public/template-functions.php:1574
 msgid "Consultation types"
 msgstr ""
 
-#: public/template-functions.php:1420
+#: public/template-functions.php:1430
 msgid "contact doctor"
 msgstr ""
 
-#: public/template-functions.php:1496
+#: public/template-functions.php:1506
 msgid "Contact:"
 msgstr ""
 
-#: public/template-functions.php:1173
+#: public/template-functions.php:1183
 msgid "continue and pay"
 msgstr ""
 
@@ -381,7 +393,7 @@ msgstr ""
 msgid "Country of origin"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:731 admin/partials/metaboxes.php:29
+#: admin/class-d2g-connect-admin.php:734 admin/partials/metaboxes.php:29
 msgid "Country of registration"
 msgstr ""
 
@@ -389,11 +401,11 @@ msgstr ""
 msgid "Counytry of operations"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:123
+#: admin/partials/d2g-connect-admin-display.php:124
 msgid "Create doctor user and profile locally"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:56
+#: admin/partials/d2g-connect-admin-display.php:57
 msgid "CSS & JS"
 msgstr ""
 
@@ -427,23 +439,23 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: public/template-functions.php:900 public/template-functions.php:1058
+#: public/template-functions.php:900 public/template-functions.php:1057
 msgid "Date of Birth: day/month/year  "
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:64
+#: admin/partials/d2g-connect-admin-display.php:65
 msgid "Deactivate bootstrap css"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:66
+#: admin/partials/d2g-connect-admin-display.php:67
 msgid "Deactivate bootstrap JS"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:78
+#: admin/partials/d2g-connect-admin-display.php:79
 msgid "Deactivate header and footer in single-d2g_doctor.php"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:143
+#: admin/partials/d2g-connect-admin-display.php:147
 msgid "Deactivate loading google recaptcha script"
 msgstr ""
 
@@ -469,7 +481,7 @@ msgid "Degree"
 msgstr ""
 
 #: admin/class-d2g-connect-admin.php:103
-#: public/class-d2g-connect-public.php:273 admin/partials/metaboxes.php:223
+#: public/class-d2g-connect-public.php:274 admin/partials/metaboxes.php:223
 #: admin/partials/metaboxes.php:249 admin/partials/metaboxes.php:273
 msgid "degree"
 msgstr ""
@@ -478,11 +490,11 @@ msgstr ""
 msgid "Degrees"
 msgstr ""
 
-#: public/template-functions.php:1100
+#: public/template-functions.php:1099
 msgid "Describe the complaint"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:68
+#: admin/partials/d2g-connect-admin-display.php:69
 msgid "Detail page settings"
 msgstr ""
 
@@ -495,11 +507,11 @@ msgstr ""
 msgid "Doctor"
 msgstr ""
 
-#: public/template-functions.php:1523
+#: public/template-functions.php:1533
 msgid "Doctor email"
 msgstr ""
 
-#: public/template-functions.php:1517
+#: public/template-functions.php:1527
 msgid "Doctor name"
 msgstr ""
 
@@ -511,29 +523,29 @@ msgstr ""
 msgid "Doctors"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:152
+#: admin/partials/d2g-connect-admin-display.php:156
 msgid ""
 "Doctors will be translated via meta values in the post and in the meta "
 "values in the connected taxonomies."
 msgstr ""
 
-#: public/template-functions.php:1147
+#: public/template-functions.php:1154
 msgid "Does the skin condition bleed?"
 msgstr ""
 
-#: public/template-functions.php:1139
+#: public/template-functions.php:1146
 msgid "Does the skin condition itch?"
 msgstr ""
 
 #: admin/class-d2g-connect-admin.php:398 admin/class-d2g-connect-admin.php:539
-#: admin/class-d2g-connect-admin.php:728 public/template-functions.php:716
-#: public/template-functions.php:1050 admin/partials/metaboxes.php:26
+#: admin/class-d2g-connect-admin.php:731 public/template-functions.php:716
+#: public/template-functions.php:1049 admin/partials/metaboxes.php:26
 msgid "E-mail"
 msgstr ""
 
 #: public/template-functions.php:347 public/template-functions.php:1001
-#: public/template-functions.php:1200 public/template-functions.php:1290
-#: public/template-functions.php:1571
+#: public/template-functions.php:1210 public/template-functions.php:1300
+#: public/template-functions.php:1581
 msgid "E-mail advice"
 msgstr ""
 
@@ -549,7 +561,7 @@ msgstr ""
 msgid "E-mail consult questionnaire"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:93
+#: admin/partials/d2g-connect-admin-display.php:94
 msgid "E-mail settings"
 msgstr ""
 
@@ -573,7 +585,7 @@ msgid "End"
 msgstr ""
 
 #: admin/class-d2g-connect-admin.php:101
-#: public/class-d2g-connect-public.php:271 admin/partials/metaboxes.php:126
+#: public/class-d2g-connect-public.php:272 admin/partials/metaboxes.php:126
 #: admin/partials/metaboxes.php:152 admin/partials/metaboxes.php:176
 #: admin/partials/metaboxes.php:215 admin/partials/metaboxes.php:241
 #: admin/partials/metaboxes.php:265
@@ -593,7 +605,7 @@ msgid "Expertise"
 msgstr ""
 
 #: admin/class-d2g-connect-admin.php:105
-#: public/class-d2g-connect-public.php:275 admin/partials/metaboxes.php:131
+#: public/class-d2g-connect-public.php:276 admin/partials/metaboxes.php:131
 msgid "expertise"
 msgstr ""
 
@@ -605,8 +617,8 @@ msgstr ""
 msgid "Extended Questionnaire – for complex or multiple skin concerns"
 msgstr ""
 
-#: public/template-functions.php:910 public/template-functions.php:1068
-#: public/template-functions.php:1068
+#: public/template-functions.php:910 public/template-functions.php:1067
+#: public/template-functions.php:1067
 msgid "female"
 msgstr ""
 
@@ -618,8 +630,8 @@ msgstr ""
 msgid "First availibility"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:720 public/template-functions.php:706
-#: public/template-functions.php:1038 admin/partials/metaboxes.php:18
+#: admin/class-d2g-connect-admin.php:723 public/template-functions.php:706
+#: public/template-functions.php:1037 admin/partials/metaboxes.php:18
 msgid "First name"
 msgstr ""
 
@@ -643,45 +655,45 @@ msgid ""
 "be used in pages from your website. Click"
 msgstr ""
 
-#: public/template-functions.php:1109
+#: public/template-functions.php:1108
 msgid "For example: 2 weeks ago..."
 msgstr ""
 
-#: public/template-functions.php:1102
+#: public/template-functions.php:1101
 msgid "For example: itchy red spots or bumps..."
 msgstr ""
 
-#: public/template-functions.php:1118
+#: public/template-functions.php:1117
 msgid "For example: left forearm"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:74
+#: admin/partials/d2g-connect-admin-display.php:75
 msgid ""
 "Full width (no sidebar, consultation tabs, for this template you will need "
 "to install WP Mobile Detect)"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:73
+#: admin/partials/d2g-connect-admin-display.php:74
 msgid "Full width (no sidebar, hidden forms in fancybox)"
 msgstr ""
 
-#: public/template-functions.php:906 public/template-functions.php:1064
+#: public/template-functions.php:906 public/template-functions.php:1063
 msgid "Gender"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:125
+#: admin/partials/d2g-connect-admin-display.php:126
 msgid "Give doctor access to wp-admin"
 msgstr ""
 
-#: public/template-functions.php:1419
+#: public/template-functions.php:1429
 msgid "go to consultation"
 msgstr ""
 
-#: public/template-functions.php:1122
-msgid "Has the spot changed?"
+#: public/template-functions.php:1121
+msgid "Has the spot changed? Choose one or more options."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:76
+#: admin/partials/d2g-connect-admin-display.php:77
 msgid "Header & footer"
 msgstr ""
 
@@ -717,7 +729,7 @@ msgstr ""
 msgid "I accept the terms and conditions."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:132
+#: admin/partials/d2g-connect-admin-display.php:136
 msgid "I have installed \"Solid Security Basic\" and I have activated 2FA"
 msgstr ""
 
@@ -732,29 +744,29 @@ msgstr ""
 msgid "Identifier"
 msgstr ""
 
-#: public/template-functions.php:1156
+#: public/template-functions.php:1163
 msgid "If applicable..."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:617
+#: public/class-d2g-connect-public.php:620
 msgid ""
 "If this was not intended, simply ignore this e-mail. Nothing will happen. "
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:77
+#: admin/partials/d2g-connect-admin-display.php:78
 msgid ""
 "If you are using a base file in your theme, where you load the footer and "
 "header, than you can deactivate loading those in youre single-d2g_doctor.php "
 "file."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:124
+#: admin/partials/d2g-connect-admin-display.php:125
 msgid ""
 "If you create the user account and profile locally you will not need to set "
 "the API connection"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:186
+#: public/class-d2g-connect-public.php:187
 msgid ""
 "If you were not redirected automatically than please click on the button."
 msgstr ""
@@ -775,17 +787,21 @@ msgid "Institution"
 msgstr ""
 
 #: admin/class-d2g-connect-admin.php:104
-#: public/class-d2g-connect-public.php:274 admin/partials/metaboxes.php:226
+#: public/class-d2g-connect-public.php:275 admin/partials/metaboxes.php:226
 #: admin/partials/metaboxes.php:252 admin/partials/metaboxes.php:276
 msgid "institution"
 msgstr ""
 
-#: public/template-functions.php:1417
+#: public/template-functions.php:1427
 msgid "intake quesionnaire"
 msgstr ""
 
+#: public/class-d2g-connect-public.php:758 public/template-functions.php:1929
+msgid "Invalid security token."
+msgstr ""
+
 #: admin/class-d2g-connect-admin.php:110
-#: public/class-d2g-connect-public.php:280 admin/partials/metaboxes.php:305
+#: public/class-d2g-connect-public.php:281 admin/partials/metaboxes.php:305
 #: admin/partials/metaboxes.php:330 admin/partials/metaboxes.php:353
 msgid "journal"
 msgstr ""
@@ -794,7 +810,7 @@ msgstr ""
 msgid "journal / website"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:249
+#: public/class-d2g-connect-public.php:250
 msgid ""
 "Kindly review all fields, as some required information is still missing."
 msgstr ""
@@ -807,17 +823,17 @@ msgstr ""
 msgid "Languages"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:397 admin/class-d2g-connect-admin.php:721
-#: public/template-functions.php:711 public/template-functions.php:1044
+#: admin/class-d2g-connect-admin.php:397 admin/class-d2g-connect-admin.php:724
+#: public/template-functions.php:711 public/template-functions.php:1043
 #: admin/partials/metaboxes.php:19
 msgid "Last name"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:70
+#: admin/partials/d2g-connect-admin-display.php:71
 msgid "Layout"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:60
+#: admin/partials/d2g-connect-admin-display.php:61
 msgid "load extra custom styles (light)"
 msgstr ""
 
@@ -825,7 +841,7 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
-#: public/template-functions.php:1116
+#: public/template-functions.php:1115
 msgid "Location on the body"
 msgstr ""
 
@@ -833,23 +849,27 @@ msgstr ""
 msgid "Location(s)"
 msgstr ""
 
-#: public/template-functions.php:758 public/template-functions.php:1366
+#: public/template-functions.php:758 public/template-functions.php:1376
 msgid "login"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:108
+#: public/class-d2g-connect-public.php:753
+msgid "Login failed"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:109
 msgid "logo used in e-mail"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:261
+#: public/class-d2g-connect-public.php:262
 msgid "Mail to doctor has successfully been send."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:259
+#: public/class-d2g-connect-public.php:260
 msgid "Mail to patient has successfully been send."
 msgstr ""
 
-#: public/template-functions.php:908 public/template-functions.php:1066
+#: public/template-functions.php:908 public/template-functions.php:1065
 msgid "make a choice"
 msgstr ""
 
@@ -857,20 +877,20 @@ msgstr ""
 msgid "make a selection"
 msgstr ""
 
-#: public/template-functions.php:909 public/template-functions.php:1067
-#: public/template-functions.php:1067
+#: public/template-functions.php:909 public/template-functions.php:1066
+#: public/template-functions.php:1066
 msgid "male"
 msgstr ""
 
-#: public/template-functions.php:1154
+#: public/template-functions.php:1161
 msgid "Medical history (skin cancer)"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:727 admin/partials/metaboxes.php:25
+#: admin/class-d2g-connect-admin.php:730 admin/partials/metaboxes.php:25
 msgid "Mobile"
 msgstr ""
 
-#: public/template-functions.php:1358
+#: public/template-functions.php:1368
 msgid "More info about the consultation types"
 msgstr ""
 
@@ -894,19 +914,19 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: public/template-functions.php:1125
+#: public/template-functions.php:1124
 msgid "no"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:61
+#: admin/partials/d2g-connect-admin-display.php:62
 msgid "no extra styling"
 msgstr ""
 
-#: endpoints/doctor.php:132
+#: endpoints/doctor.php:143
 msgid "No user ID has been sent"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:178 public/template-functions.php:331
+#: public/class-d2g-connect-public.php:179 public/template-functions.php:331
 #: public/template-functions.php:348 public/template-functions.php:364
 msgid "not available"
 msgstr ""
@@ -926,11 +946,11 @@ msgid ""
 "within two working days through a straightforward three-step process."
 msgstr ""
 
-#: public/template-functions.php:1469
+#: public/template-functions.php:1479
 msgid "Online consultation"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:185
+#: public/class-d2g-connect-public.php:186
 msgid ""
 "Online consultation reservations are valid for 24 hours and require payment "
 "within this period. Otherwise, they will be canceled."
@@ -944,12 +964,12 @@ msgstr ""
 msgid "orderby (optional) this follows the general WordPress ordering rules"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:729 admin/partials/metaboxes.php:27
+#: admin/class-d2g-connect-admin.php:732 admin/partials/metaboxes.php:27
 msgid "Organisation"
 msgstr ""
 
 #: admin/class-d2g-connect-admin.php:107
-#: public/class-d2g-connect-public.php:277
+#: public/class-d2g-connect-public.php:278
 msgid "organisation / company"
 msgstr ""
 
@@ -957,12 +977,12 @@ msgstr ""
 msgid "Organisation / Hospital"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:35
+#: admin/partials/d2g-connect-admin-display.php:36
 msgid "Organisation API"
 msgstr ""
 
-#: public/template-functions.php:911 public/template-functions.php:1069
-#: public/template-functions.php:1069
+#: public/template-functions.php:911 public/template-functions.php:1068
+#: public/template-functions.php:1068
 msgid "other"
 msgstr ""
 
@@ -995,11 +1015,11 @@ msgstr ""
 msgid "Patient"
 msgstr ""
 
-#: public/template-functions.php:886 public/template-functions.php:1511
+#: public/template-functions.php:886 public/template-functions.php:1521
 msgid "Patient email"
 msgstr ""
 
-#: public/template-functions.php:880 public/template-functions.php:1505
+#: public/template-functions.php:880 public/template-functions.php:1515
 msgid "Patient name"
 msgstr ""
 
@@ -1011,53 +1031,53 @@ msgstr ""
 msgid "pay and continue"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:187 public/template-functions.php:1447
+#: public/class-d2g-connect-public.php:188 public/template-functions.php:1457
 msgid "pay now"
 msgstr ""
 
-#: public/template-functions.php:1446
+#: public/template-functions.php:1456
 msgid ""
 "Payment may be made in advance or upon arrival at your appointment. Please "
 "note that appointments paid upfront cannot be cancelled."
 msgstr ""
 
-#: public/template-functions.php:1033
+#: public/template-functions.php:1032
 msgid "Personal information"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:726 admin/partials/metaboxes.php:24
+#: admin/class-d2g-connect-admin.php:729 admin/partials/metaboxes.php:24
 msgid "Phone"
 msgstr ""
 
-#: public/template-functions.php:1305
+#: public/template-functions.php:1315
 msgid "Physical Consult"
 msgstr ""
 
-#: public/template-functions.php:1575
+#: public/template-functions.php:1585
 msgid "Physical Consultation"
 msgstr ""
 
-#: public/template-functions.php:1456
+#: public/template-functions.php:1466
 msgid "Physical consultation"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:81
+#: admin/partials/d2g-connect-admin-display.php:82
 msgid "Placeholder image for doctors"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:181
+#: public/class-d2g-connect-public.php:182
 msgid "Please fill in all marked fields. "
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:150
+#: admin/partials/d2g-connect-admin-display.php:154
 msgid "Please find more info's about imigix on their website."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:251
+#: public/class-d2g-connect-public.php:252
 msgid "Please make sure to fill in all required fields."
 msgstr ""
 
-#: public/template-functions.php:1497
+#: public/template-functions.php:1507
 msgid ""
 "Please use this form only for appointment-related requests (for example, if "
 "your appointment has already been paid for but you wish to cancel or "
@@ -1066,7 +1086,7 @@ msgid ""
 "be submitted through this form."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:256
+#: public/class-d2g-connect-public.php:257
 msgid "Please verify that you are not a robot."
 msgstr ""
 
@@ -1075,7 +1095,7 @@ msgid "Position"
 msgstr ""
 
 #: admin/class-d2g-connect-admin.php:106
-#: public/class-d2g-connect-public.php:276 admin/partials/metaboxes.php:134
+#: public/class-d2g-connect-public.php:277 admin/partials/metaboxes.php:134
 #: admin/partials/metaboxes.php:160
 msgid "position"
 msgstr ""
@@ -1101,7 +1121,7 @@ msgid "publication Date"
 msgstr ""
 
 #: admin/class-d2g-connect-admin.php:113
-#: public/class-d2g-connect-public.php:283 admin/partials/metaboxes.php:339
+#: public/class-d2g-connect-public.php:284 admin/partials/metaboxes.php:339
 msgid "publication date"
 msgstr ""
 
@@ -1117,12 +1137,12 @@ msgstr ""
 msgid "Reason for consult"
 msgstr ""
 
-#: public/template-functions.php:1753
+#: public/template-functions.php:1763
 msgid "reCAPTCHA verification failed. Please try again."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:100
 #: admin/partials/d2g-connect-admin-display.php:101
+#: admin/partials/d2g-connect-admin-display.php:102
 msgid "recipient address"
 msgstr ""
 
@@ -1134,11 +1154,11 @@ msgstr ""
 msgid "Reg. Nr."
 msgstr ""
 
-#: public/template-functions.php:759 public/template-functions.php:1367
+#: public/template-functions.php:759 public/template-functions.php:1377
 msgid "register"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:730 admin/partials/metaboxes.php:28
+#: admin/class-d2g-connect-admin.php:733 admin/partials/metaboxes.php:28
 msgid "Registration number"
 msgstr ""
 
@@ -1149,30 +1169,30 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:139
-#: admin/partials/d2g-connect-admin-display.php:140
+#: admin/partials/d2g-connect-admin-display.php:143
+#: admin/partials/d2g-connect-admin-display.php:144
 msgid "secret key"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:127
+#: admin/partials/d2g-connect-admin-display.php:131
 msgid "Security (Google Recaptcha V2 / Solid Security Basic) "
 msgstr ""
 
-#: public/class-d2g-connect-public.php:634
+#: public/class-d2g-connect-public.php:643
 msgid "Security check failed."
 msgstr ""
 
-#: public/template-functions.php:1549
+#: public/template-functions.php:1559
 msgid "send"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:96
 #: admin/partials/d2g-connect-admin-display.php:97
+#: admin/partials/d2g-connect-admin-display.php:98
 msgid "sender address"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:104
 #: admin/partials/d2g-connect-admin-display.php:105
+#: admin/partials/d2g-connect-admin-display.php:106
 msgid "sender name"
 msgstr ""
 
@@ -1184,20 +1204,20 @@ msgstr ""
 msgid "Short Questionnaire – for simple or minor skin issues"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:135
-#: admin/partials/d2g-connect-admin-display.php:136
+#: admin/partials/d2g-connect-admin-display.php:139
+#: admin/partials/d2g-connect-admin-display.php:140
 msgid "site key"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:190
+#: public/class-d2g-connect-public.php:191
 msgid "slots"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:614
+#: public/class-d2g-connect-public.php:617
 msgid "Someone has requested a password reset."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:145
+#: admin/partials/d2g-connect-admin-display.php:149
 msgid "Special settings"
 msgstr ""
 
@@ -1219,7 +1239,7 @@ msgid "start a consult"
 msgstr ""
 
 #: admin/class-d2g-connect-admin.php:100
-#: public/class-d2g-connect-public.php:270 admin/partials/metaboxes.php:123
+#: public/class-d2g-connect-public.php:271 admin/partials/metaboxes.php:123
 #: admin/partials/metaboxes.php:149 admin/partials/metaboxes.php:173
 #: admin/partials/metaboxes.php:212 admin/partials/metaboxes.php:238
 #: admin/partials/metaboxes.php:262
@@ -1231,7 +1251,7 @@ msgid "Study area"
 msgstr ""
 
 #: admin/class-d2g-connect-admin.php:102
-#: public/class-d2g-connect-public.php:272 admin/partials/metaboxes.php:220
+#: public/class-d2g-connect-public.php:273 admin/partials/metaboxes.php:220
 #: admin/partials/metaboxes.php:246 admin/partials/metaboxes.php:270
 msgid "study area"
 msgstr ""
@@ -1314,38 +1334,36 @@ msgstr ""
 msgid "Tel"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:743
+#: public/class-d2g-connect-public.php:724
 msgid "The link is not valid anymore"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:154
+#: admin/partials/d2g-connect-admin-display.php:158
 msgid ""
 "The questinonaire will be fetched in the WCC software based on langauge and "
 "on type default."
 msgstr ""
 
-#: endpoints/doctor.php:79
+#: endpoints/doctor.php:90
 msgid "The user + public profile have been created. User ID: "
 msgstr ""
 
-#: public/class-d2g-connect-public.php:262
+#: public/class-d2g-connect-public.php:263
 msgid "There has been a problem sending the mail to the doctor."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:260
+#: public/class-d2g-connect-public.php:261
 msgid "There has been a problem sending the mail to the patient."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:188
+#: public/class-d2g-connect-public.php:189
 msgid ""
 "There has been an error, please try an other slot or try later. In case of "
 "futher issues, please contact the support."
 msgstr ""
 
-#: admin/class-d2g-booking-patient.php:399
-#: admin/class-d2g-booking-patient.php:427
-#: admin/class-d2g-booking-patient.php:588
-#: admin/class-d2g-booking-patient.php:619
+#: admin/class-d2g-booking-patient.php:474
+#: admin/class-d2g-booking-patient.php:505
 msgid "There has been an error."
 msgstr ""
 
@@ -1358,13 +1376,13 @@ msgid ""
 msgstr ""
 
 #: admin/class-d2g-connect-admin.php:395 admin/class-d2g-connect-admin.php:507
-#: admin/class-d2g-connect-admin.php:538 admin/class-d2g-connect-admin.php:722
+#: admin/class-d2g-connect-admin.php:538 admin/class-d2g-connect-admin.php:725
 #: admin/partials/metaboxes.php:20
 msgid "Title"
 msgstr ""
 
 #: admin/class-d2g-connect-admin.php:108
-#: public/class-d2g-connect-public.php:278 public/template-functions.php:563
+#: public/class-d2g-connect-public.php:279 public/template-functions.php:563
 #: admin/partials/metaboxes.php:184 admin/partials/metaboxes.php:299
 #: admin/partials/metaboxes.php:324 admin/partials/metaboxes.php:347
 msgid "title"
@@ -1374,18 +1392,18 @@ msgstr ""
 msgid "to get your paid license now."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:618
+#: public/class-d2g-connect-public.php:621
 msgid "To reset your password, visit the following address: "
 msgstr ""
 
-#: public/template-functions.php:756 public/template-functions.php:1364
+#: public/template-functions.php:756 public/template-functions.php:1374
 msgid ""
 "To start your choosen consult, you first need to login or register an "
 "account."
 msgstr ""
 
 #: admin/class-d2g-connect-admin.php:111
-#: public/class-d2g-connect-public.php:281 public/template-functions.php:569
+#: public/class-d2g-connect-public.php:282 public/template-functions.php:569
 #: admin/partials/metaboxes.php:308 admin/partials/metaboxes.php:333
 #: admin/partials/metaboxes.php:356
 msgid "type of publication"
@@ -1398,52 +1416,52 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-#: endpoints/doctor.php:126
+#: endpoints/doctor.php:137
 msgid "Update was a success"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:91
-#: admin/partials/d2g-connect-admin-display.php:118
+#: admin/partials/d2g-connect-admin-display.php:92
+#: admin/partials/d2g-connect-admin-display.php:119
 msgid "Upload"
 msgstr ""
 
-#: public/template-functions.php:1084
+#: public/template-functions.php:1083
 msgid "Upload image 1"
 msgstr ""
 
-#: public/template-functions.php:1088
+#: public/template-functions.php:1087
 msgid "Upload image 2"
 msgstr ""
 
-#: public/template-functions.php:1092
+#: public/template-functions.php:1091
 msgid "Upload image 3"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:39
+#: admin/partials/d2g-connect-admin-display.php:40
 msgid "URL used for API"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:43
+#: admin/partials/d2g-connect-admin-display.php:44
 msgid "URL used for waiting room from the Doctor2go software"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:646
+#: public/class-d2g-connect-public.php:655
 msgid "use BIC from where the payment was done"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:153
+#: admin/partials/d2g-connect-admin-display.php:157
 msgid "Use default questionnaire as intake form for appointments."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:645
+#: public/class-d2g-connect-public.php:654
 msgid "use IBAN from where the payment was done"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:149
+#: admin/partials/d2g-connect-admin-display.php:153
 msgid "Use imgix image processing"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:151
+#: admin/partials/d2g-connect-admin-display.php:155
 msgid "Use pseudo translations."
 msgstr ""
 
@@ -1470,9 +1488,9 @@ msgstr ""
 #: admin/partials/d2g-connect-shortcode-help.php:206
 msgid ""
 "Use this shortcode to display a menu form the patient pages. Ideal it is "
-"used with in combination with the following shortcodes: d2gc_account_settings "
-"/ d2gc_patient_appointments / d2gc_liked_posts / d2gc_patient_dashbaord . No "
-"parameters are required."
+"used with in combination with the following shortcodes: "
+"d2gc_account_settings / d2gc_patient_appointments / d2gc_liked_posts / "
+"d2gc_patient_dashbaord . No parameters are required."
 msgstr ""
 
 #: admin/partials/d2g-connect-shortcode-help.php:115
@@ -1550,27 +1568,27 @@ msgid ""
 "It must be used with the listing shortcode. No parameters are required."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:121
+#: admin/partials/d2g-connect-admin-display.php:122
 msgid "User / profile settings for doctors"
 msgstr ""
 
-#: endpoints/doctor.php:129
+#: endpoints/doctor.php:140
 msgid "User does not exist"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:616
+#: public/class-d2g-connect-public.php:619
 msgid "User name: "
 msgstr ""
 
-#: public/class-d2g-connect-public.php:180
+#: public/class-d2g-connect-public.php:181
 msgid "Video"
 msgstr ""
 
-#: public/template-functions.php:1319
+#: public/template-functions.php:1329
 msgid "Video Consult"
 msgstr ""
 
-#: public/template-functions.php:1206
+#: public/template-functions.php:1216
 msgid "Video consult"
 msgstr ""
 
@@ -1578,11 +1596,11 @@ msgstr ""
 msgid "Video consult on appointment"
 msgstr ""
 
-#: public/template-functions.php:1579
+#: public/template-functions.php:1589
 msgid "Video Consultation"
 msgstr ""
 
-#: public/template-functions.php:1415
+#: public/template-functions.php:1425
 msgid "View terms & conditions."
 msgstr ""
 
@@ -1602,19 +1620,19 @@ msgstr ""
 msgid "Walk in now"
 msgstr ""
 
-#: public/template-functions.php:1213
+#: public/template-functions.php:1223
 msgid "Walk-in"
 msgstr ""
 
-#: public/template-functions.php:1276
+#: public/template-functions.php:1286
 msgid "Walk-in Consult"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:177
+#: public/class-d2g-connect-public.php:178
 msgid "walk-in consult"
 msgstr ""
 
-#: public/template-functions.php:1567
+#: public/template-functions.php:1577
 msgid "Walk-in Consultation"
 msgstr ""
 
@@ -1638,18 +1656,18 @@ msgstr ""
 msgid "Walkin video consult"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:130
+#: admin/partials/d2g-connect-admin-display.php:134
 msgid "We advise you following:"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:460
+#: public/class-d2g-connect-public.php:463
 msgid ""
 "We are very sorry but we could not find any doctors for your search query. "
 "Please try using less filters to find a suitable doctor."
 msgstr ""
 
 #: admin/class-d2g-connect-admin.php:109
-#: public/class-d2g-connect-public.php:279 admin/partials/metaboxes.php:302
+#: public/class-d2g-connect-public.php:280 admin/partials/metaboxes.php:302
 #: admin/partials/metaboxes.php:327 admin/partials/metaboxes.php:350
 msgid "web link"
 msgstr ""
@@ -1658,15 +1676,15 @@ msgstr ""
 msgid "Webcamconsult"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:615
+#: public/class-d2g-connect-public.php:618
 msgid "Website name: "
 msgstr ""
 
-#: public/template-functions.php:1107
+#: public/template-functions.php:1106
 msgid "When did you first notice this spot?"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:72
+#: admin/partials/d2g-connect-admin-display.php:73
 msgid "With sidebar (anchor links, hidden forms in fancybox)"
 msgstr ""
 
@@ -1685,63 +1703,75 @@ msgstr ""
 msgid "WP user ID"
 msgstr ""
 
-#: public/template-functions.php:1127
+#: public/template-functions.php:1144 public/template-functions.php:1152
+msgid "Yes"
+msgstr ""
+
+#: public/template-functions.php:1131
 msgid "Yes, in color"
 msgstr ""
 
-#: public/template-functions.php:1128
+#: public/template-functions.php:1130
+msgid "yes, in color"
+msgstr ""
+
+#: public/template-functions.php:1134
 msgid "Yes, in shape"
 msgstr ""
 
-#: public/template-functions.php:1126
+#: public/template-functions.php:1133
+msgid "yes, in shape"
+msgstr ""
+
+#: public/template-functions.php:1128
 msgid "Yes, in size"
 msgstr ""
 
-#: public/template-functions.php:1126
+#: public/template-functions.php:1127
 msgid "yes, in size"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:58
+#: admin/partials/d2g-connect-admin-display.php:59
 msgid ""
 "You can Choose to load the custom doctor styling or not, it is an extension "
 "to the bootstarp 5 styles."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:63
+#: admin/partials/d2g-connect-admin-display.php:64
 msgid ""
 "You can deactivate the following css file if your theme already contains a "
 "bootstrap css."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:65
+#: admin/partials/d2g-connect-admin-display.php:66
 msgid ""
 "You can deactivate the following JS file if your theme already contains a "
 "bootstrap5 JS file."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:142
+#: admin/partials/d2g-connect-admin-display.php:146
 msgid ""
 "You can deactivate the loading from the Google recaptcha script  if "
 "necessary, particularly if it is already being loaded from another source."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:265
+#: public/class-d2g-connect-public.php:266
 msgid "You have entered an invalid e-mail."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:255
+#: public/class-d2g-connect-public.php:256
 msgid "You must accept the disclaimer."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:253
+#: public/class-d2g-connect-public.php:254
 msgid "You must accept the privacy rules."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:254
+#: public/class-d2g-connect-public.php:255
 msgid "You must accept the terms and conditions."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:250
+#: public/class-d2g-connect-public.php:251
 msgid ""
 "You need to provide us with information about the languages that you speak."
 msgstr ""
@@ -1760,7 +1790,7 @@ msgstr ""
 msgid "Your appointment cloud not be canceled. Please contact your doctor."
 msgstr ""
 
-#: public/template-functions.php:1440
+#: public/template-functions.php:1450
 msgid ""
 "Your appointment has already been paid for; therefore, the cancellation "
 "option has been deactivated. Please refer to our Terms and Conditions page "
@@ -1773,7 +1803,7 @@ msgstr ""
 msgid "Your appointment has been canceled."
 msgstr ""
 
-#: public/template-functions.php:1435
+#: public/template-functions.php:1445
 msgid "Your appointment has been paid."
 msgstr ""
 
@@ -1781,28 +1811,28 @@ msgstr ""
 msgid "Your info"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:290
+#: public/class-d2g-connect-public.php:291
 msgid "Your password is good!"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:291
+#: public/class-d2g-connect-public.php:292
 msgid "Your password is strong!"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:288
+#: public/class-d2g-connect-public.php:289
 msgid "Your password is too short!"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:289
+#: public/class-d2g-connect-public.php:290
 msgid "Your password is weak!"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:184
+#: public/class-d2g-connect-public.php:185
 msgid ""
 "Your reservation has been successfully. You will now be redirected to your "
 "appointment manager. You might need to fill in an intake questionnaire."
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:724 admin/partials/metaboxes.php:22
+#: admin/class-d2g-connect-admin.php:727 admin/partials/metaboxes.php:22
 msgid "Zip code"
 msgstr ""
