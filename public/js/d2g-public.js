@@ -850,26 +850,43 @@ jQuery(document).ready(function ($) {
                 }
             }
 
+            // File size check only for PDFs/files, not images
+            const MAX_FILE_SIZE = 1.5 * 1024 * 1024; // 1.5 MB
+            const pdfInputs = ['file_1', 'file_2', 'file_3'];
+
+            pdfInputs.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el || !el.files || !el.files[0]) return;
+
+                const file = el.files[0];
+                if (file.size > MAX_FILE_SIZE) {
+                    checker = true;
+                    $('#' + id).css('border-color', '#970808');
+                    checker_message += (file.name || id) + ' is larger than 1.5 MB.<br>';
+                }
+            });
+
             if (checker === false) {
                 // Compress images asynchronously
                 const imageInputs = ['image_1', 'image_2', 'image_3'];
                 const imagePromises = imageInputs.map(id => {
-                    const file = $('#' + id)[0].files[0];
+                    const input = $('#' + id)[0];
+                    const file = input && input.files ? input.files[0] : null;
                     if (!file || !file.type.startsWith('image/')) return Promise.resolve(null);
                     return compressImage(file);
                 });
 
-                // NEW: base64-encode PDFs asynchronously
-                const pdfInputs = ['file_1', 'file_2', 'file_3'];
+                // Base64-encode PDFs asynchronously
                 const pdfPromises = pdfInputs.map(id => {
                     const el = document.getElementById(id);
                     if (!el || !el.files || !el.files[0]) return Promise.resolve(null);
+
                     const file = el.files[0];
                     if (file.type !== 'application/pdf') return Promise.resolve(null);
 
                     return new Promise((resolve, reject) => {
                         const reader = new FileReader();
-                        reader.onload = () => resolve(reader.result); // data:application/pdf;base64,....
+                        reader.onload = () => resolve(reader.result);
                         reader.onerror = (err) => reject(err);
                         reader.readAsDataURL(file);
                     });
@@ -883,7 +900,6 @@ jQuery(document).ready(function ($) {
                         }));
                     })
                     .then(({ compressedFiles, pdfBase64s }) => {
-                        // Create FormData
                         var myformData = new FormData($("#written_con_form")[0]);
                         myformData.append('action', 'd2gc_create_wcc_written_cosnsult');
 
@@ -900,32 +916,32 @@ jQuery(document).ready(function ($) {
                         // Replace original images with compressed ones
                         imageInputs.forEach((id, index) => {
                             const compressed = compressedFiles[index];
+                            const input = $('#' + id)[0];
+                            const hasNewFile = input && input.files && input.files[0];
                             const hiddenValue = $('#derma_pic_' + (index + 1)).val();
 
                             if (compressed) {
                                 myformData.set(id, compressed);
-                            } else if (!$('#' + id)[0].files[0] && hiddenValue) {
+                            } else if (!hasNewFile && hiddenValue) {
                                 myformData.set(id, hiddenValue);
                             }
                         });
 
-                        // NEW: attach PDF base64 data (if any)
+                        // Attach PDF base64 data
                         pdfInputs.forEach((id, index) => {
                             const b64 = pdfBase64s[index];
                             if (b64) {
-                                // send as separate fields; name is up to you
                                 myformData.set(id + '_base64', b64);
                             }
                         });
 
-                        // Your existing AJAX (show loader already handled in beforeSend)
                         $.ajax({
                             type: "POST",
                             data: myformData,
                             url: d.ajax.url,
                             processData: false,
                             contentType: false,
-                            beforeSend: function() {
+                            beforeSend: function () {
                                 $("#loader").show();
                             },
                             success: function (response) {
@@ -938,7 +954,7 @@ jQuery(document).ready(function ($) {
                                 $("#written_consult").toggleClass('loading');
                                 console.log(errorThrown);
                             },
-                            complete: function() {
+                            complete: function () {
                                 $("#loader").hide();
                             }
                         });
@@ -949,8 +965,8 @@ jQuery(document).ready(function ($) {
                     });
 
             } else {
-                $('#written_con_error').html(checker_message).toggleClass('simple_hide');
-                $('body').scrollTo('#content_wrapper', { duration: 'fast'});
+                $('#written_con_error').html(checker_message).removeClass('simple_hide');
+                $('body').scrollTo('#content_wrapper', { duration: 'fast' });
                 return false;
             }
 

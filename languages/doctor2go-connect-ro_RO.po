@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Doctor2Go Connect\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-19 08:49+0000\n"
-"PO-Revision-Date: 2026-04-13 08:28+0000\n"
+"PO-Revision-Date: 2026-04-14 08:53+0000\n"
 "Last-Translator: Thomas Wiese\n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -20,8 +20,8 @@ msgstr ""
 msgid " - "
 msgstr "-"
 
-#: public/class-d2g-profile-data.php:191 public/template-functions.php:1430
-#: public/template-functions.php:1467 public/template-functions.php:1480
+#: public/class-d2g-profile-data.php:191 public/template-functions.php:1252
+#: public/template-functions.php:1289 public/template-functions.php:1302
 msgid " at "
 msgstr "la"
 
@@ -52,7 +52,9 @@ msgstr "Ați introdus o adresă de e-mail nevalidă."
 msgid "(PRO version only*)"
 msgstr "(Doar versiunea PRO*)"
 
-#: public/template-functions.php:965 public/template-functions.php:1190
+#: public/template-functions.php:967
+#: public/templates/generic-medofenic-email-form.php:150
+#: public/templates/standard-derma-email-adv-form.php:192
 msgid "* required fields."
 msgstr "* câmpuri obligatorii."
 
@@ -82,11 +84,11 @@ msgstr ""
 "introduceți cheile generate în setările corespunzătoare din configurația "
 "site-ului dvs."
 
-#: public/template-functions.php:1456
+#: public/template-functions.php:1278
 msgid "A payment is required for this appointment."
 msgstr "Este necesară o plată pentru această programare."
 
-#: public/template-functions.php:1586
+#: public/template-functions.php:1408
 msgid ""
 "A physical consultation involves an in-person visit to the doctor's clinic "
 "or designated location. You will have the opportunity to discuss your skin "
@@ -97,7 +99,7 @@ msgstr ""
 "dumneavoastră dermatologice față în față și de a primi un examen amănunțit "
 "și un plan de tratament."
 
-#: public/template-functions.php:1590
+#: public/template-functions.php:1412
 msgid ""
 "A video consultation enables you to have a remote appointment with the "
 "doctor via a secure video platform. This option provides convenience and "
@@ -109,7 +111,7 @@ msgstr ""
 "flexibilitate, permițându-vă să discutați problemele dumneavoastră "
 "dermatologice din confortul propriei locuințe."
 
-#: public/template-functions.php:1578
+#: public/template-functions.php:1400
 msgid ""
 "A walk-in consultation allows you to have a real-time video consultation "
 "with the doctor without a prior appointment. You will enter a virtual "
@@ -128,7 +130,8 @@ msgstr "O parolă de autentificare greșită a fost trimisă"
 msgid "About"
 msgstr "Despre"
 
-#: public/template-functions.php:1079
+#: public/templates/generic-medofenic-email-form.php:19
+#: public/templates/standard-derma-email-adv-form.php:81
 msgid "About your complaint"
 msgstr "Despre reclamația dumneavoastră"
 
@@ -173,7 +176,7 @@ msgstr "Adaugă Nou"
 msgid "Address"
 msgstr "Adresă"
 
-#: public/template-functions.php:1010
+#: public/templates/standard-derma-email-adv-form.php:12
 msgid "After payment, you will receive your assessment within 2 working days."
 msgstr "După plată, veți primi evaluarea în termen de 2 zile lucrătoare."
 
@@ -185,7 +188,7 @@ msgstr ""
 "După ce selectați ora, completați formularul de rezervare cu detaliile dvs. "
 "și trimiteți-l pentru a finaliza rezervarea."
 
-#: public/template-functions.php:962
+#: public/template-functions.php:964
 msgid ""
 "After your payment goes through, you’ll enter the waiting room. The doctor "
 "will begin the consultation shortly"
@@ -220,7 +223,7 @@ msgstr "Număr de coloane (se aplică doar la șablonul grilă.)"
 msgid "Amount of doctors shown on a page."
 msgstr "Numărul de medici afișați pe o pagină."
 
-#: public/template-functions.php:1582
+#: public/template-functions.php:1404
 msgid ""
 "An email advice allows you to receive a professional assessment from a "
 "certified dermatologist via email within two working days. You will complete "
@@ -254,11 +257,11 @@ msgstr "Conexiune API"
 msgid "API token cannot be empty."
 msgstr "Tokenul API nu poate fi gol."
 
-#: public/template-functions.php:1539
+#: public/template-functions.php:1361
 msgid "Appointment date and time"
 msgstr "Data și ora programării"
 
-#: public/template-functions.php:1545
+#: public/template-functions.php:1367
 msgid "Appointment link for doctor"
 msgstr "Link pentru programare la medic"
 
@@ -297,7 +300,7 @@ msgstr "disponibil la orice oră"
 msgid "Average price"
 msgstr "Preț mediu"
 
-#: public/template-functions.php:796
+#: public/template-functions.php:798
 msgid "back to overview"
 msgstr "înapoi la prezentare generală"
 
@@ -325,11 +328,11 @@ msgstr "Calendar de rezervări"
 msgid "Booking details"
 msgstr "Detalii rezervare"
 
-#: public/template-functions.php:1433
+#: public/template-functions.php:1255
 msgid "cancel appointment"
 msgstr "anulează programarea"
 
-#: public/template-functions.php:1441 public/template-functions.php:1452
+#: public/template-functions.php:1263 public/template-functions.php:1274
 msgid "cancellation deactivated"
 msgstr "anulare dezactivată"
 
@@ -345,7 +348,7 @@ msgstr "Anulare pentru pacient"
 msgid "Cancellation request for appointment."
 msgstr "Cerere de anulare a programării."
 
-#: public/template-functions.php:1439
+#: public/template-functions.php:1261
 msgid ""
 "Cancellations are generally permitted up to 24 hours before the scheduled "
 "appointment. Please review our cancellation and refund policy on the Terms "
@@ -367,7 +370,7 @@ msgstr "Verificarea CAPTCHA a eșuat. Vă rugăm să încercați din nou."
 msgid "city"
 msgstr "oraș"
 
-#: public/template-functions.php:1009
+#: public/templates/standard-derma-email-adv-form.php:11
 msgid "Click pay and continue, you will be redirected to the payment page."
 msgstr ""
 "Faceți clic pe plată și continuați, veți fi redirecționat către pagina de "
@@ -377,7 +380,7 @@ msgstr ""
 msgid "Click the button for your preferred day to choose a time."
 msgstr "Faceți clic pe butonul pentru ziua preferată pentru a alege o oră."
 
-#: public/template-functions.php:1553
+#: public/template-functions.php:1375
 msgid "Comment (optional)"
 msgstr "Comentariu (opțional)"
 
@@ -394,7 +397,9 @@ msgstr "Confirmare pentru înregistrarea pacientului"
 msgid "consultation"
 msgstr "consultare"
 
-#: public/template-functions.php:861 public/template-functions.php:1003
+#: public/template-functions.php:863
+#: public/templates/generic-medofenic-email-form.php:5
+#: public/templates/standard-derma-email-adv-form.php:5
 msgid "Consultation fee:"
 msgstr "Taxă de consultanță:"
 
@@ -402,19 +407,20 @@ msgstr "Taxă de consultanță:"
 msgid "Consultation offers"
 msgstr "Oferte de consultanță"
 
-#: public/template-functions.php:1574
+#: public/template-functions.php:1396
 msgid "Consultation types"
 msgstr "Tipuri de consultații"
 
-#: public/template-functions.php:1430
+#: public/template-functions.php:1252
 msgid "contact doctor"
 msgstr "contactează medicul"
 
-#: public/template-functions.php:1506
+#: public/template-functions.php:1328
 msgid "Contact:"
 msgstr "Contact:"
 
-#: public/template-functions.php:1183
+#: public/templates/generic-medofenic-email-form.php:143
+#: public/templates/standard-derma-email-adv-form.php:185
 msgid "continue and pay"
 msgstr "continuă și plătește"
 
@@ -422,8 +428,8 @@ msgstr "continuă și plătește"
 msgid "Costs"
 msgstr "Costuri"
 
-#: admin/class-d2g-connect-admin.php:399 public/template-functions.php:917
-#: public/template-functions.php:919
+#: admin/class-d2g-connect-admin.php:399 public/template-functions.php:919
+#: public/template-functions.php:921
 msgid "Country"
 msgstr "Țară"
 
@@ -477,7 +483,9 @@ msgstr "E-mail D2GC"
 msgid "Date"
 msgstr "Dată"
 
-#: public/template-functions.php:900 public/template-functions.php:1057
+#: public/template-functions.php:902
+#: public/templates/generic-medofenic-email-form.php:104
+#: public/templates/standard-derma-email-adv-form.php:59
 msgid "Date of Birth: day/month/year  "
 msgstr "Data nașterii: zi/lună/an"
 
@@ -533,7 +541,8 @@ msgstr "grad"
 msgid "Degrees"
 msgstr "Grade"
 
-#: public/template-functions.php:1099
+#: public/templates/generic-medofenic-email-form.php:23
+#: public/templates/standard-derma-email-adv-form.php:101
 msgid "Describe the complaint"
 msgstr "Descrieți reclamația"
 
@@ -550,11 +559,11 @@ msgstr "Boli"
 msgid "Doctor"
 msgstr "Doctor"
 
-#: public/template-functions.php:1533
+#: public/template-functions.php:1355
 msgid "Doctor email"
 msgstr "Email doctor"
 
-#: public/template-functions.php:1527
+#: public/template-functions.php:1349
 msgid "Doctor name"
 msgstr "Nume doctor"
 
@@ -574,23 +583,26 @@ msgstr ""
 "Medicii vor fi traduși prin valori meta în postare și în valorile meta din "
 "taxonomiile conectate."
 
-#: public/template-functions.php:1154
+#: public/templates/standard-derma-email-adv-form.php:156
 msgid "Does the skin condition bleed?"
 msgstr "Condiția pielii sângerează?"
 
-#: public/template-functions.php:1146
+#: public/templates/standard-derma-email-adv-form.php:148
 msgid "Does the skin condition itch?"
 msgstr "Mâncă afecțiunea pielii?"
 
 #: admin/class-d2g-connect-admin.php:398 admin/class-d2g-connect-admin.php:539
 #: admin/class-d2g-connect-admin.php:731 public/template-functions.php:716
-#: public/template-functions.php:1049 admin/partials/metaboxes.php:26
+#: admin/partials/metaboxes.php:26
+#: public/templates/generic-medofenic-email-form.php:96
+#: public/templates/standard-derma-email-adv-form.php:51
 msgid "E-mail"
 msgstr "E-mail"
 
-#: public/template-functions.php:347 public/template-functions.php:1001
-#: public/template-functions.php:1210 public/template-functions.php:1300
-#: public/template-functions.php:1581
+#: public/template-functions.php:347 public/template-functions.php:1032
+#: public/template-functions.php:1122 public/template-functions.php:1403
+#: public/templates/generic-medofenic-email-form.php:3
+#: public/templates/standard-derma-email-adv-form.php:3
 msgid "E-mail advice"
 msgstr "Sfaturi prin e-mail"
 
@@ -605,6 +617,19 @@ msgstr "Preț consult prin e-mail"
 #: admin/partials/metaboxes.php:82
 msgid "E-mail consult questionnaire"
 msgstr "Chestionar pentru consult prin e-mail"
+
+#: public/templates/generic-medofenic-email-form.php:9
+msgid ""
+"E-mail consultations are intended for non-urgent situations and may be used "
+"for medical guidance, interpretation of medical tests or documents, \n"
+"        and obtaining a medical opinion. For medical emergencies, please "
+"contact emergency services or seek direct medical care."
+msgstr ""
+"Consultațiile prin e-mail sunt destinate situațiilor non-urgente și pot fi "
+"utilizate pentru îndrumare medicală, interpretarea testelor sau documentelor "
+"medicale și obținerea unei opinii medicale. Pentru urgențe medicale, vă "
+"rugăm să contactați serviciile de urgență sau să solicitați îngrijiri "
+"medicale directe."
 
 #: admin/partials/d2g-connect-admin-display.php:94
 msgid "E-mail settings"
@@ -637,7 +662,7 @@ msgstr "Sfârșit"
 msgid "end date"
 msgstr "data de sfârșit"
 
-#: public/template-functions.php:1008
+#: public/templates/standard-derma-email-adv-form.php:10
 msgid "Enter your personal information and describe your complaint"
 msgstr ""
 "Introduceți informațiile dumneavoastră personale și descrieți reclamația"
@@ -659,12 +684,15 @@ msgstr "expertiză"
 msgid "exptertise"
 msgstr "expertiză"
 
-#: public/template-functions.php:1027
+#: public/templates/standard-derma-email-adv-form.php:29
 msgid "Extended Questionnaire – for complex or multiple skin concerns"
 msgstr "Chestionar Extins - pentru probleme complexe sau multiple ale pielii"
 
-#: public/template-functions.php:910 public/template-functions.php:1067
-#: public/template-functions.php:1067
+#: public/template-functions.php:912
+#: public/templates/generic-medofenic-email-form.php:114
+#: public/templates/generic-medofenic-email-form.php:114
+#: public/templates/standard-derma-email-adv-form.php:69
+#: public/templates/standard-derma-email-adv-form.php:69
 msgid "female"
 msgstr "femeie"
 
@@ -677,7 +705,9 @@ msgid "First availibility"
 msgstr "Prima disponibilitate"
 
 #: admin/class-d2g-connect-admin.php:723 public/template-functions.php:706
-#: public/template-functions.php:1037 admin/partials/metaboxes.php:18
+#: admin/partials/metaboxes.php:18
+#: public/templates/generic-medofenic-email-form.php:84
+#: public/templates/standard-derma-email-adv-form.php:39
 msgid "First name"
 msgstr "Prenume"
 
@@ -706,15 +736,24 @@ msgstr ""
 "Următoarele shortcoduri sunt incluse doar în versiunea plătită și pot fi "
 "utilizate în paginile de pe site-ul dvs. Faceți clic"
 
-#: public/template-functions.php:1108
+#: public/templates/standard-derma-email-adv-form.php:110
 msgid "For example: 2 weeks ago..."
 msgstr "De exemplu: acum 2 săptămâni..."
 
-#: public/template-functions.php:1101
+#: public/templates/generic-medofenic-email-form.php:75
+msgid ""
+"For example: diabetes, high blood pressure, thyroid disorders, anticoagulant "
+"treatment, or any other important ongoing treatments."
+msgstr ""
+"De exemplu: diabet, hipertensiune arterială, afecțiuni tiroidiene, tratament "
+"anticoagulant sau orice alte tratamente importante în curs."
+
+#: public/templates/generic-medofenic-email-form.php:25
+#: public/templates/standard-derma-email-adv-form.php:103
 msgid "For example: itchy red spots or bumps..."
 msgstr "De exemplu: pete sau umflături roșii care provoacă mâncărime..."
 
-#: public/template-functions.php:1117
+#: public/templates/standard-derma-email-adv-form.php:119
 msgid "For example: left forearm"
 msgstr "De exemplu: antebrațul stâng"
 
@@ -730,7 +769,9 @@ msgstr ""
 msgid "Full width (no sidebar, hidden forms in fancybox)"
 msgstr "Lățime completă (fără bară laterală, formulare ascunse în fancybox)"
 
-#: public/template-functions.php:906 public/template-functions.php:1063
+#: public/template-functions.php:908
+#: public/templates/generic-medofenic-email-form.php:110
+#: public/templates/standard-derma-email-adv-form.php:65
 msgid "Gender"
 msgstr "Gen"
 
@@ -738,11 +779,11 @@ msgstr "Gen"
 msgid "Give doctor access to wp-admin"
 msgstr "Oferă acces de doctor la wp-admin"
 
-#: public/template-functions.php:1429
+#: public/template-functions.php:1251
 msgid "go to consultation"
 msgstr "mergi la consultație"
 
-#: public/template-functions.php:1121
+#: public/templates/standard-derma-email-adv-form.php:123
 msgid "Has the spot changed? Choose one or more options."
 msgstr "S-a schimbat locația? Alege una sau mai multe opțiuni."
 
@@ -770,7 +811,7 @@ msgstr "https://demo-plugin.doctor2go.online/"
 msgid "https://www.webcamconsult.com"
 msgstr "https://www.webcamconsult.com"
 
-#: public/template-functions.php:782
+#: public/template-functions.php:783
 msgid "I accept the disclaimer."
 msgstr "Accept dezacordul."
 
@@ -781,6 +822,16 @@ msgstr "Accept regulile de confidențialitate."
 #: public/template-functions.php:774
 msgid "I accept the terms and conditions."
 msgstr "Accept termenii și condițiile."
+
+#: public/templates/generic-medofenic-email-form.php:135
+msgid ""
+"I confirm that my request is not a medical emergency and I understand that "
+"if my symptoms or rapid worsening, I must seek direct medical care or "
+"emergency services."
+msgstr ""
+"Confirm că solicitarea mea nu este o urgență medicală și înțeleg că, dacă "
+"simptomele mele se înrăutățesc rapid, trebuie să solicit asistență medicală "
+"directă sau servicii de urgență."
 
 #: admin/partials/d2g-connect-admin-display.php:136
 msgid "I have installed \"Solid Security Basic\" and I have activated 2FA"
@@ -799,7 +850,7 @@ msgstr ""
 msgid "Identifier"
 msgstr "Identificator"
 
-#: public/template-functions.php:1163
+#: public/templates/standard-derma-email-adv-form.php:165
 msgid "If applicable..."
 msgstr "Dacă este cazul..."
 
@@ -838,6 +889,11 @@ msgstr ""
 msgid "Image"
 msgstr "Imagine"
 
+#: public/templates/generic-medofenic-email-form.php:30
+msgid "Image uploads (optional), allowed files types: JPG, PNG, GIF "
+msgstr ""
+"Încărcări de imagini (opțional), tipuri de fișiere permise: JPG, PNG, GIF"
+
 #: public/template-functions.php:634
 msgid ""
 "In the calendar, select a day that has available appointments. The available "
@@ -858,11 +914,11 @@ msgstr "Instituție"
 msgid "institution"
 msgstr "instituție"
 
-#: public/template-functions.php:1427
+#: public/template-functions.php:1249
 msgid "intake quesionnaire"
 msgstr "chestionar de evaluare inițială"
 
-#: public/class-d2g-connect-public.php:758 public/template-functions.php:1929
+#: public/class-d2g-connect-public.php:758 public/template-functions.php:1751
 msgid "Invalid security token."
 msgstr "Token de securitate invalid."
 
@@ -883,6 +939,10 @@ msgstr ""
 "Vă rugăm să revizuiți toate câmpurile, deoarece lipsesc încă unele "
 "informații obligatorii."
 
+#: public/templates/generic-medofenic-email-form.php:69
+msgid "Known medical conditions and current treatments"
+msgstr "Afecțiuni medicale cunoscute și tratamente actuale"
+
 #: admin/class-d2g-connect-admin.php:400
 msgid "Language"
 msgstr "Limbă"
@@ -892,8 +952,9 @@ msgid "Languages"
 msgstr "Limbi"
 
 #: admin/class-d2g-connect-admin.php:397 admin/class-d2g-connect-admin.php:724
-#: public/template-functions.php:711 public/template-functions.php:1043
-#: admin/partials/metaboxes.php:19
+#: public/template-functions.php:711 admin/partials/metaboxes.php:19
+#: public/templates/generic-medofenic-email-form.php:90
+#: public/templates/standard-derma-email-adv-form.php:45
 msgid "Last name"
 msgstr "Nume de familie"
 
@@ -909,7 +970,7 @@ msgstr "încarcă stiluri personalizate suplimentare (luminos)"
 msgid "Location"
 msgstr "Locație"
 
-#: public/template-functions.php:1115
+#: public/templates/standard-derma-email-adv-form.php:117
 msgid "Location on the body"
 msgstr "Locație pe corp"
 
@@ -917,7 +978,7 @@ msgstr "Locație pe corp"
 msgid "Location(s)"
 msgstr "Locație(i)"
 
-#: public/template-functions.php:758 public/template-functions.php:1376
+#: public/template-functions.php:758 public/template-functions.php:1198
 msgid "login"
 msgstr "autentificare"
 
@@ -937,7 +998,9 @@ msgstr "E-mailul către medic a fost trimis cu succes."
 msgid "Mail to patient has successfully been send."
 msgstr "E-mailul către pacient a fost trimis cu succes."
 
-#: public/template-functions.php:908 public/template-functions.php:1065
+#: public/template-functions.php:910
+#: public/templates/generic-medofenic-email-form.php:112
+#: public/templates/standard-derma-email-adv-form.php:67
 msgid "make a choice"
 msgstr "fă o alegere"
 
@@ -945,12 +1008,15 @@ msgstr "fă o alegere"
 msgid "make a selection"
 msgstr "face o selecție"
 
-#: public/template-functions.php:909 public/template-functions.php:1066
-#: public/template-functions.php:1066
+#: public/template-functions.php:911
+#: public/templates/generic-medofenic-email-form.php:113
+#: public/templates/generic-medofenic-email-form.php:113
+#: public/templates/standard-derma-email-adv-form.php:68
+#: public/templates/standard-derma-email-adv-form.php:68
 msgid "male"
 msgstr "masculin"
 
-#: public/template-functions.php:1161
+#: public/templates/standard-derma-email-adv-form.php:163
 msgid "Medical history (skin cancer)"
 msgstr "Istoric medical (cancer de piele)"
 
@@ -958,7 +1024,7 @@ msgstr "Istoric medical (cancer de piele)"
 msgid "Mobile"
 msgstr "Mobil"
 
-#: public/template-functions.php:1368
+#: public/template-functions.php:1190
 msgid "More info about the consultation types"
 msgstr "Mai multe informații despre tipurile de consultații"
 
@@ -978,11 +1044,11 @@ msgstr "Nevoie de ajutor? Faceți clic aici pentru instrucțiunile de rezervare.
 msgid "New"
 msgstr "Nou"
 
-#: public/template-functions.php:1125
+#: public/templates/standard-derma-email-adv-form.php:127
 msgid "No"
 msgstr "Nu"
 
-#: public/template-functions.php:1124
+#: public/templates/standard-derma-email-adv-form.php:126
 msgid "no"
 msgstr "nu"
 
@@ -1008,7 +1074,7 @@ msgstr "indisponibil"
 msgid "now available"
 msgstr "disponibil acum"
 
-#: public/template-functions.php:1007
+#: public/templates/standard-derma-email-adv-form.php:9
 msgid ""
 "Obtain a professional assessment from a certified dermatologist by email "
 "within two working days through a straightforward three-step process."
@@ -1016,7 +1082,7 @@ msgstr ""
 "Obține o evaluare profesională de la un dermatolog certificat prin e-mail în "
 "termen de două zile lucrătoare printr-un proces simplu în trei pași."
 
-#: public/template-functions.php:1479
+#: public/template-functions.php:1301
 msgid "Online consultation"
 msgstr "Consulta online"
 
@@ -1056,8 +1122,11 @@ msgstr "Organizație / Spital"
 msgid "Organisation API"
 msgstr "API Organizație"
 
-#: public/template-functions.php:911 public/template-functions.php:1068
-#: public/template-functions.php:1068
+#: public/template-functions.php:913
+#: public/templates/generic-medofenic-email-form.php:115
+#: public/templates/generic-medofenic-email-form.php:115
+#: public/templates/standard-derma-email-adv-form.php:70
+#: public/templates/standard-derma-email-adv-form.php:70
 msgid "other"
 msgstr "altele"
 
@@ -1090,27 +1159,27 @@ msgstr "Părinte:"
 msgid "Patient"
 msgstr "Pacient"
 
-#: public/template-functions.php:886 public/template-functions.php:1521
+#: public/template-functions.php:888 public/template-functions.php:1343
 msgid "Patient email"
 msgstr "Email pacient"
 
-#: public/template-functions.php:880 public/template-functions.php:1515
+#: public/template-functions.php:882 public/template-functions.php:1337
 msgid "Patient name"
 msgstr "Nume pacient"
 
-#: public/template-functions.php:892
+#: public/template-functions.php:894
 msgid "Patient phone"
 msgstr "Telefon pacient"
 
-#: public/template-functions.php:961
+#: public/template-functions.php:963
 msgid "pay and continue"
 msgstr "plătește și continuă"
 
-#: public/class-d2g-connect-public.php:188 public/template-functions.php:1457
+#: public/class-d2g-connect-public.php:188 public/template-functions.php:1279
 msgid "pay now"
 msgstr "Plătește acum"
 
-#: public/template-functions.php:1456
+#: public/template-functions.php:1278
 msgid ""
 "Payment may be made in advance or upon arrival at your appointment. Please "
 "note that appointments paid upfront cannot be cancelled."
@@ -1118,7 +1187,12 @@ msgstr ""
 "Plata se poate efectua în avans sau la sosirea la programare. Vă rugăm să "
 "rețineți că programările plătite în avans nu pot fi anulate."
 
-#: public/template-functions.php:1032
+#: public/templates/generic-medofenic-email-form.php:50
+msgid "PDF file uploads, max 1.5mb / per file (optional)"
+msgstr "Încărcări de fișiere PDF, max. 1,5 MB / per fișier (opțional)"
+
+#: public/templates/generic-medofenic-email-form.php:79
+#: public/templates/standard-derma-email-adv-form.php:34
 msgid "Personal information"
 msgstr "Informații personale"
 
@@ -1126,15 +1200,15 @@ msgstr "Informații personale"
 msgid "Phone"
 msgstr "Telefon"
 
-#: public/template-functions.php:1315
+#: public/template-functions.php:1137
 msgid "Physical Consult"
 msgstr "Consulta Fizică"
 
-#: public/template-functions.php:1585
+#: public/template-functions.php:1407
 msgid "Physical Consultation"
 msgstr "Consulta Fizică"
 
-#: public/template-functions.php:1466
+#: public/template-functions.php:1288
 msgid "Physical consultation"
 msgstr "Consulta fizică"
 
@@ -1154,7 +1228,14 @@ msgstr "Vă rugăm să găsiți mai multe informații despre imigix pe site-ul l
 msgid "Please make sure to fill in all required fields."
 msgstr "Vă rugăm să vă asigurați că ați completat toate câmpurile obligatorii."
 
-#: public/template-functions.php:1507
+#: public/templates/generic-medofenic-email-form.php:73
+msgid ""
+"Please mention any important known medical conditions and current treatments."
+msgstr ""
+"Vă rugăm să menționați orice afecțiuni medicale cunoscute importante și "
+"tratamentele actuale."
+
+#: public/template-functions.php:1329
 msgid ""
 "Please use this form only for appointment-related requests (for example, if "
 "your appointment has already been paid for but you wish to cancel or "
@@ -1215,11 +1296,11 @@ msgstr "Publicații"
 msgid "read online"
 msgstr "citește online"
 
-#: public/template-functions.php:948
+#: public/template-functions.php:950
 msgid "Reason for consult"
 msgstr "Motiv pentru consult"
 
-#: public/template-functions.php:1763
+#: public/template-functions.php:1585
 msgid "reCAPTCHA verification failed. Please try again."
 msgstr "Verificarea reCAPTCHA a eșuat. Vă rugăm să încercați din nou."
 
@@ -1236,7 +1317,7 @@ msgstr "Țară de înreg."
 msgid "Reg. Nr."
 msgstr "Nr. înreg."
 
-#: public/template-functions.php:759 public/template-functions.php:1377
+#: public/template-functions.php:759 public/template-functions.php:1199
 msgid "register"
 msgstr "înregistrare"
 
@@ -1264,7 +1345,7 @@ msgstr "Securitate (Google Recaptcha V2 / Solid Security Basic)"
 msgid "Security check failed."
 msgstr "Verificarea de securitate a eșuat."
 
-#: public/template-functions.php:1559
+#: public/template-functions.php:1381
 msgid "send"
 msgstr "trimite"
 
@@ -1282,7 +1363,7 @@ msgstr "nume expeditor"
 msgid "Short info"
 msgstr "Informații scurte"
 
-#: public/template-functions.php:1021
+#: public/templates/standard-derma-email-adv-form.php:23
 msgid "Short Questionnaire – for simple or minor skin issues"
 msgstr "Chestionar Scurt - pentru probleme minore sau simple ale pielii"
 
@@ -1449,12 +1530,12 @@ msgstr ""
 "târziu. În cazul unor probleme suplimentare, vă rugăm să contactați "
 "asistența."
 
-#: admin/class-d2g-booking-patient.php:474
-#: admin/class-d2g-booking-patient.php:505
+#: admin/class-d2g-booking-patient.php:473
+#: admin/class-d2g-booking-patient.php:504
 msgid "There has been an error."
 msgstr "A apărut o eroare."
 
-#: public/template-functions.php:866
+#: public/template-functions.php:868
 msgid ""
 "This doctor is currently available for a walk-in consultation.\n"
 "\t\t\tPlease complete the form and click “Pay and Continue” to proceed.\n"
@@ -1489,7 +1570,7 @@ msgstr "pentru a obține licența plătită acum."
 msgid "To reset your password, visit the following address: "
 msgstr "Pentru a vă reseta parola, vizitați următoarea adresă:"
 
-#: public/template-functions.php:756 public/template-functions.php:1374
+#: public/template-functions.php:756 public/template-functions.php:1196
 msgid ""
 "To start your choosen consult, you first need to login or register an "
 "account."
@@ -1520,15 +1601,30 @@ msgstr "Actualizare a reușit"
 msgid "Upload"
 msgstr "Încarcă"
 
-#: public/template-functions.php:1083
+#: public/templates/generic-medofenic-email-form.php:54
+msgid "Upload file 1"
+msgstr "Încarcă fișierul 1"
+
+#: public/templates/generic-medofenic-email-form.php:58
+msgid "Upload file 2"
+msgstr "Încarcă fișierul 2"
+
+#: public/templates/generic-medofenic-email-form.php:62
+msgid "Upload file 3"
+msgstr "Încarcă fișierul 3"
+
+#: public/templates/generic-medofenic-email-form.php:34
+#: public/templates/standard-derma-email-adv-form.php:85
 msgid "Upload image 1"
 msgstr "Încarcă imaginea 1"
 
-#: public/template-functions.php:1087
+#: public/templates/generic-medofenic-email-form.php:38
+#: public/templates/standard-derma-email-adv-form.php:89
 msgid "Upload image 2"
 msgstr "Încarcă imaginea 2"
 
-#: public/template-functions.php:1091
+#: public/templates/generic-medofenic-email-form.php:42
+#: public/templates/standard-derma-email-adv-form.php:93
 msgid "Upload image 3"
 msgstr "Încarcă imaginea 3"
 
@@ -1723,11 +1819,11 @@ msgstr "Nume de utilizator:"
 msgid "Video"
 msgstr "Video"
 
-#: public/template-functions.php:1329
+#: public/template-functions.php:1151
 msgid "Video Consult"
 msgstr "Consultare Video"
 
-#: public/template-functions.php:1216
+#: public/template-functions.php:1038
 msgid "Video consult"
 msgstr "Consultare video"
 
@@ -1735,15 +1831,15 @@ msgstr "Consultare video"
 msgid "Video consult on appointment"
 msgstr "Consultare video la programare"
 
-#: public/template-functions.php:1589
+#: public/template-functions.php:1411
 msgid "Video Consultation"
 msgstr "Consultare Video"
 
-#: public/template-functions.php:1425
+#: public/template-functions.php:1247
 msgid "View terms & conditions."
 msgstr "Vizualizați termenii și condițiile."
 
-#: public/template-functions.php:783
+#: public/template-functions.php:784
 msgid "view the disclaimer"
 msgstr "vizualizați declinarea de răspundere"
 
@@ -1759,11 +1855,11 @@ msgstr "vizualizați termenii și condițiile"
 msgid "Walk in now"
 msgstr "Intră acum"
 
-#: public/template-functions.php:1223
+#: public/template-functions.php:1045
 msgid "Walk-in"
 msgstr "Vizită fără programare"
 
-#: public/template-functions.php:1286
+#: public/template-functions.php:1108
 msgid "Walk-in Consult"
 msgstr "Consulta fără programare"
 
@@ -1771,11 +1867,11 @@ msgstr "Consulta fără programare"
 msgid "walk-in consult"
 msgstr "consulta fără programare"
 
-#: public/template-functions.php:1577
+#: public/template-functions.php:1399
 msgid "Walk-in Consultation"
 msgstr "Consulta fără programare"
 
-#: public/template-functions.php:859
+#: public/template-functions.php:861
 msgid "Walk-in consultation"
 msgstr "Consulta fără programare"
 
@@ -1822,7 +1918,7 @@ msgstr "Consultare webcam"
 msgid "Website name: "
 msgstr "Nume site:"
 
-#: public/template-functions.php:1106
+#: public/templates/standard-derma-email-adv-form.php:108
 msgid "When did you first notice this spot?"
 msgstr "Când ați observat prima dată această pată?"
 
@@ -1849,31 +1945,32 @@ msgstr "Experiență de muncă"
 msgid "WP user ID"
 msgstr "ID utilizator WP"
 
-#: public/template-functions.php:1144 public/template-functions.php:1152
+#: public/templates/standard-derma-email-adv-form.php:146
+#: public/templates/standard-derma-email-adv-form.php:154
 msgid "Yes"
 msgstr "Da"
 
-#: public/template-functions.php:1131
+#: public/templates/standard-derma-email-adv-form.php:133
 msgid "Yes, in color"
 msgstr "Da, în culori"
 
-#: public/template-functions.php:1130
+#: public/templates/standard-derma-email-adv-form.php:132
 msgid "yes, in color"
 msgstr "da, în culoare"
 
-#: public/template-functions.php:1134
+#: public/templates/standard-derma-email-adv-form.php:136
 msgid "Yes, in shape"
 msgstr "Da, în formă"
 
-#: public/template-functions.php:1133
+#: public/templates/standard-derma-email-adv-form.php:135
 msgid "yes, in shape"
 msgstr "da, în formă"
 
-#: public/template-functions.php:1128
+#: public/templates/standard-derma-email-adv-form.php:130
 msgid "Yes, in size"
 msgstr "Da, la mărime"
 
-#: public/template-functions.php:1127
+#: public/templates/standard-derma-email-adv-form.php:129
 msgid "yes, in size"
 msgstr "da, la mărime"
 
@@ -1948,7 +2045,7 @@ msgstr ""
 "Programarea dumneavoastră nu a putut fi anulată. Vă rugăm să contactați "
 "medicul dumneavoastră."
 
-#: public/template-functions.php:1450
+#: public/template-functions.php:1272
 msgid ""
 "Your appointment has already been paid for; therefore, the cancellation "
 "option has been deactivated. Please refer to our Terms and Conditions page "
@@ -1966,7 +2063,7 @@ msgstr ""
 msgid "Your appointment has been canceled."
 msgstr "Programarea dumneavoastră a fost anulată."
 
-#: public/template-functions.php:1445
+#: public/template-functions.php:1267
 msgid "Your appointment has been paid."
 msgstr "Programarea dumneavoastră a fost plătită."
 

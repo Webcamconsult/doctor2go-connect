@@ -47,7 +47,7 @@
             <!-- files (pdf) -->
             <fieldset class="mb-4">
                 <legend class="fs-5 mb-3">
-                    <strong><?php echo esc_html__('PDF file uploads (optional)', 'doctor2go-connect')?></strong>
+                    <strong><?php echo esc_html__('PDF file uploads, max 1.5mb / per file (optional)', 'doctor2go-connect')?></strong>
                 </legend>
                 <div class="row mb-3">
                     <div class="col-md-4">
