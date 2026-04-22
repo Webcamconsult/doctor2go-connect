@@ -983,7 +983,7 @@ class D2gConnect_Shortcodes {
 					<?php
 					while ( $the_query->have_posts() ) {
 						$the_query->the_post();
-						include d2gc_locate_template( 'content-doctor-grid.php' );
+						include d2gc_locate_template( 'content-doctor-' . $a['template'] . '.php' );
 					}
 					?>
 				</div>
@@ -1593,59 +1593,55 @@ class D2gConnect_Shortcodes {
 		$recaptcha_site_key = get_option( 'd2gc_recaptcha_site_key' );
 		?>
 	<div class="d2g_form_wrapper  mt-4">
-		<div class="row justify-content-center">
-			<div class="col-md-6 col-lg-5 col-xl-4">
-				<form method="post" class="w-100 w-md-50 mx-auto border rounded-3 p-4 bg-light shadow-sm" action="<?php echo esc_url( wp_login_url( $redirect_to ) ); ?>" id="custom-loginform">
-					<?php
-					// Add nonce field to the form.
-					wp_nonce_field( 'd2g_login_action', 'd2g_login_nonce' );
-					?>
+		<form method="post" class="w-100 w-md-50 mx-auto border rounded-3 p-4 bg-light shadow-sm" action="<?php echo esc_url( wp_login_url( $redirect_to ) ); ?>" id="custom-loginform">
+			<?php
+			// Add nonce field to the form.
+			wp_nonce_field( 'd2g_login_action', 'd2g_login_nonce' );
+			?>
 
-					<div class="mb-3">
-						<label for="user_login" class="form-label"><?php esc_html_e( 'Email', 'doctor2go-connect' ); ?></label>
-						<input type="email" name="log" id="user_login" class="form-control" required>
-					</div>
+			<div class="mb-3">
+				<label for="user_login" class="form-label"><?php esc_html_e( 'Email', 'doctor2go-connect' ); ?></label>
+				<input type="email" name="log" id="user_login" class="form-control" required>
+			</div>
 
-					<div class="mb-3">
-						<label for="user_pass" class="form-label"><?php esc_html_e( 'Password', 'doctor2go-connect' ); ?></label>
-						<input type="password" name="pwd" id="user_pass" class="form-control" required>
-					</div>
+			<div class="mb-3">
+				<label for="user_pass" class="form-label"><?php esc_html_e( 'Password', 'doctor2go-connect' ); ?></label>
+				<input type="password" name="pwd" id="user_pass" class="form-control" required>
+			</div>
 
-					<!-- reCAPTCHA Widget -->
-					<?php if ( get_option( 'd2gc_recaptcha_site_key' ) ) { ?>
-						<div class="mb-3">
-							<div class="g-recaptcha" data-sitekey="<?php echo esc_attr( $recaptcha_site_key ); ?>"></div>
-							<div id="captcha_login"></div>
-						</div>
-					<?php } ?>
+			<!-- reCAPTCHA Widget -->
+			<?php if ( get_option( 'd2gc_recaptcha_site_key' ) ) { ?>
+				<div class="mb-3">
+					<div class="g-recaptcha" data-sitekey="<?php echo esc_attr( $recaptcha_site_key ); ?>"></div>
+					<div id="captcha_login"></div>
+				</div>
+			<?php } ?>
 
-					<!-- altacha Widget check if shortcode is active -->
-					<?php if ( shortcode_exists( 'altcha' ) ) : ?>
-						<div class="mb-3">
-							<?php echo do_shortcode( '[altcha]' ); ?>
-						</div>
-					<?php endif; ?>
+			<!-- altacha Widget check if shortcode is active -->
+			<?php if ( shortcode_exists( 'altcha' ) ) : ?>
+				<div class="mb-3">
+					<?php echo do_shortcode( '[altcha]' ); ?>
+				</div>
+			<?php endif; ?>
 
-					<div class="mb-4">
-						<div class="form-check">
-							<input type="checkbox" name="rememberme" value="forever" class="form-check-input" id="rememberme">
-							<label class="form-check-label" for="rememberme">
-								<?php esc_html_e( 'Remember Me', 'doctor2go-connect' ); ?>
-							</label>
-						</div>
-					</div>
-
-					<button type="submit" class="btn btn-primary w-100 mb-3"><?php echo esc_attr__( 'Login', 'doctor2go-connect' ); ?></button>
-				</form>
-
-				<div class="text-center">
-					<?php $pageData = $d2gAdmin::d2gc_page_url( $currLang, 'lost_password', true ); ?>
-					<a href="<?php echo esc_url( $pageData['url'] ); ?>" class="btn btn-link p-0"><?php esc_html_e( 'Lost password?', 'doctor2go-connect' ); ?></a>
-
-					<?php $pageData = $d2gAdmin::d2gc_page_url( $currLang, 'patient_registration', true ); ?>
-					<a href="<?php echo esc_url( $pageData['url'] ); ?>" class="btn btn-link p-0"><?php esc_html_e( 'Register as patient', 'doctor2go-connect' ); ?></a>
+			<div class="mb-4">
+				<div class="form-check">
+					<input type="checkbox" name="rememberme" value="forever" class="form-check-input" id="rememberme">
+					<label class="form-check-label" for="rememberme">
+						<?php esc_html_e( 'Remember Me', 'doctor2go-connect' ); ?>
+					</label>
 				</div>
 			</div>
+
+			<button type="submit" class="btn btn-primary w-100 mb-3"><?php echo esc_attr__( 'Login', 'doctor2go-connect' ); ?></button>
+		</form>
+
+		<div class="text-center">
+			<?php $pageData = $d2gAdmin::d2gc_page_url( $currLang, 'lost_password', true ); ?>
+			<a href="<?php echo esc_url( $pageData['url'] ); ?>" class="btn btn-link p-0"><?php esc_html_e( 'Lost password?', 'doctor2go-connect' ); ?></a>
+
+			<?php $pageData = $d2gAdmin::d2gc_page_url( $currLang, 'patient_registration', true ); ?>
+			<a href="<?php echo esc_url( $pageData['url'] ); ?>" class="btn btn-link p-0"><?php esc_html_e( 'Register as patient', 'doctor2go-connect' ); ?></a>
 		</div>
 	</div>
 

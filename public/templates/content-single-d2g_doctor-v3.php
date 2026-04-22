@@ -46,7 +46,7 @@ $post_ID		 = $d2g_profile_data->doctor_profile_ID;
 				<?php } ?>
 				<div class="<?php echo (wpmd_is_phone()) ? 'd-flex flex-row' : ''; ?><?php echo (wpmd_is_notphone()) ? 'row' : ''; ?>">
 					<div class="col-sm-3">
-						<figure><img class="profile_pic" src="<?php echo esc_html( $d2g_profile_data->feat_pic_full ); ?>&w=120&h=120&fit=crop&crop=faces" alt="<?php the_title(); ?>"></figure>
+						<figure><img class="profile_pic" src="<?php echo esc_html( $d2g_profile_data->feat_pic_full ); ?>" alt="<?php the_title(); ?>"></figure>
 					</div>
 					<div class="col-sm-9" id="intro">
 						<div class="inner_wrapper">
