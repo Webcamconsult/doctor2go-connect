@@ -109,6 +109,8 @@ function d2gc_locate_template( $template_name, $folder = 'templates', $debugMode
 
 	static $loadedFiles;
 
+    $loadedFiles = is_array( $loadedFiles ) ? $loadedFiles : array();
+
 	if ( ! $template_name ) {
 		return;
 	}
@@ -117,7 +119,7 @@ function d2gc_locate_template( $template_name, $folder = 'templates', $debugMode
 	$templatePath  = dirname( $template_name );
 	$template_name = basename( $template_name );
 
-	if ( isset( $loadedFilex[ $template_name ] ) ) {
+	if ( isset( $loadedFiles[ $template_name ] ) ) {
 		$located = $loadedFiles[ $template_name ];
 	} else {
 		$arrPath = array(
@@ -311,13 +313,14 @@ function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '' ) {
 		$error_code 	= '<span class="text-danger">&#10060;</span>';
 		$success_code 	= '<span class="text-success">&#10004;</span>';
 		?>
+        <h4 class="text-primary d-flex justify-content-between <?php echo esc_html( $liClass ); ?>">
+            <strong><?php echo esc_html__('Consultation offers');?></strong>
+            <a href="#info_content" class="fancybox info_link">
+                <span class="icon-info"></span>
+            </a>
+        </h4>
 		<ul class="icon_list specs consult_list <?php echo ($temp_file != 'detail')?'list-group':''?>  <?php echo esc_html( $rowClass ); ?>" id="icon_list_<?php echo esc_html( $d2g_profile_data->doctor_profile_ID ); ?>">
-			<li class="bg-light list-group-item d-flex justify-content-between <?php echo esc_html( $liClass ); ?>">
-				<strong><?php echo esc_html__('Consultation offers', 'doctor2go-connect');?></strong>
-				<a href="#info_content" class="fancybox info_link">
-					<span class="icon-info"></span>
-				</a>
-			</li>
+			
 			<?php 
 			if( $d2g_profile_data->doctor_meta['d2g_tariffs'][0] != '' && $d2g_profile_data->doctor_meta['d2g_tariffs'][0] != 0 ){
 				$video = true;
@@ -325,13 +328,13 @@ function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '' ) {
 				$video = false;
 			}
 			?>
-			<li class="<?php echo ($video == true)?esc_html__('available', 'doctor2go-connect'):esc_html__('not_available', 'doctor2go-connect')  ?> flaticon-wcc flaticon-meeting-schedule list-group-item d-flex justify-content-between align-items-center <?php echo esc_html( $liClass ); ?>">
+			<li class="<?php echo ($video == true)?esc_html('available'):esc_html__('not_available')  ?> flaticon-wcc flaticon-meeting-schedule list-group-item d-flex justify-content-between <?php echo esc_html( $liClass ); ?>">
 				<div class="ms-2 me-auto">
-					<div class="fw-bold"><?php echo esc_html__('Video consult on appointment', 'doctor2go-connect')?> <?php echo ($video == true)?wp_kses_post($success_code):wp_kses_post($error_code)?></div>
+					<div class="fw-bold"><?php echo esc_html__('Video consult on appointment', 'doctor2go-connect')?></div>
 						<?php echo  ($video == true)?esc_html__('first availability: ', 'doctor2go-connect').wp_kses_post( $firstAvailibility ):esc_html__('not available', 'doctor2go-connect')?>
 				</div>
 				<span class="badge text-bg-primary rounded-pill">
-					<?php echo ( $video == true) ? wp_kses_post( $d2g_profile_data->doctor_meta['d2g_tariffs'][0] ):esc_html__('n/a', 'doctor2go-connect')?>
+					<?php echo ( $video == true) ? wp_kses_post( $d2g_profile_data->doctor_meta['d2g_tariffs'][0] ):esc_html__('n/a')?>
 				</span>
 				
 			</li>
@@ -342,13 +345,13 @@ function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '' ) {
 				$email = false;
 			}
 			?>
-			<li class="<?php echo ($email == true)?esc_html__('available', 'doctor2go-connect'):esc_html__('not_available', 'doctor2go-connect')  ?> icon-mail-1 list-group-item d-flex justify-content-between align-items-center <?php echo esc_html( $liClass ); ?>">
+			<li class="<?php echo ($email == true)?esc_html('available'):esc_html__('not_available')  ?> icon-mail-1 list-group-item d-flex justify-content-between <?php echo esc_html( $liClass ); ?>">
 				<div class="ms-2 me-auto">
-					<div class="fw-bold"><?php echo esc_html__('E-mail advice', 'doctor2go-connect')?> <?php echo ($email == true)?wp_kses_post($success_code):wp_kses_post($error_code)?></div>
+					<div class="fw-bold"><?php echo esc_html__('E-mail advice', 'doctor2go-connect')?></div>
 					<?php echo ($email == true)?esc_html__('available at any time', 'doctor2go-connect'):esc_html__('not available', 'doctor2go-connect')  ?>
 				</div>
 				<span class="badge text-bg-primary rounded-pill">
-					<?php echo ($email == true) ? esc_html( $d2g_profile_data->doctor_meta['written_con_currency'][0] ).' '. esc_html( $d2g_profile_data->doctor_meta['written_con_price'][0] ):esc_html__('n/a', 'doctor2go-connect')?>
+					<?php echo ($email == true) ? esc_html( $d2g_profile_data->doctor_meta['written_con_currency'][0] ).' '. esc_html( $d2g_profile_data->doctor_meta['written_con_price'][0] ):esc_html__('n/a')?>
 				</span>
 			</li>
 			<?php 
@@ -358,13 +361,13 @@ function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '' ) {
 				$walkin = false;
 			}
 			?>
-			<li class="<?php echo ($walkin == true)?esc_html__('available', 'doctor2go-connect'):esc_html__('not_available', 'doctor2go-connect')  ?> flaticon-online-meeting flaticon-wcc list-group-item d-flex justify-content-between align-items-center <?php echo esc_html( $liClass ); ?>">
+			<li class="<?php echo ($walkin == true)?esc_html('available'):esc_html__('not_available')  ?> flaticon-online-meeting flaticon-wcc list-group-item d-flex justify-content-between <?php echo esc_html( $liClass ); ?>">
 				<div class="ms-2 me-auto">
-					<div class="fw-bold"><?php echo esc_html__('Walkin video consult', 'doctor2go-connect')?> <?php echo ($walkin == true)?wp_kses_post($success_code):wp_kses_post($error_code)?></div>
+					<div class="fw-bold"><?php echo esc_html__('Walkin video consult', 'doctor2go-connect')?></div>
 					<?php echo ($walkin == true)?esc_html__('now available', 'doctor2go-connect'):esc_html__('not available', 'doctor2go-connect')  ?>
 				</div>
 				<span class="badge text-bg-primary rounded-pill">
-					<?php echo ($walkin == true) ? esc_html( $d2g_profile_data->doctor_meta['walk_in_currency'][0] ).' '. esc_html( $d2g_profile_data->doctor_meta['walk_in_price'][0] ):esc_html__('n/a', 'doctor2go-connect')?>
+					<?php echo ($walkin == true) ? esc_html( $d2g_profile_data->doctor_meta['walk_in_currency'][0] ).' '. esc_html( $d2g_profile_data->doctor_meta['walk_in_price'][0] ):esc_html__('n/a')?>
 				</span>
 			</li>
 		</ul>
@@ -971,7 +974,7 @@ function d2gc_show_walkin_form() {
 
 // this will create the walkin form
 function d2gc_show_written_con_form() {
-	global $d2g_profile_data;
+	global $d2g_profile_data, $type;
 
 	if ( get_option( 'd2gc_use_imgix' ) == 1 ) {
 		$doc_pic = $d2g_profile_data->feat_pic_full . '&w=120&h=120&fit=crop&crop=faces&auto=format,compress';
@@ -997,6 +1000,8 @@ function d2gc_show_written_con_form() {
 			'link_regis' => $pageRegis['url'] . '?redirect_to=' . urlencode( $detail_link . '?open=written_con_link' ),
 		);
 	}
+
+
 
 	if($type == 'medofenic_advice'){
 		$template_path = D2GC_PLUGIN_DIR . 'public/templates/generic-medofenic-email-form.php';					
@@ -1028,21 +1033,22 @@ function d2gc_show_consultancy_tabs($post = '', $stand_alone = false){
 		<?php if ( $d2g_profile_data->doctor_meta['written_con_price'][0] != '' ) {?>
 			<li class="nav-item" role="presentation">
 				<button class="nav-link active" id="email-tab" data-bs-toggle="tab" data-bs-target="#email-tab-pane" type="button" role="tab" aria-controls="email-tab-pane" aria-selected="true">
-					<strong><?php echo esc_html( $d2g_profile_data->doctor_meta['written_con_currency'][0] . ' ' . $d2g_profile_data->doctor_meta['written_con_price'][0] ); ?></strong><br>
-					<?php echo esc_html__( 'E-mail advice', 'doctor2go-connect' ); ?>
+                    <span><?php echo esc_html__( 'E-mail advice', 'doctor2go-connect' ); ?></span>
+					<strong><?php echo esc_html( $d2g_profile_data->doctor_meta['written_con_currency'][0] . ' ' . $d2g_profile_data->doctor_meta['written_con_price'][0] ); ?></strong>
 				</button>
 			</li>
 		<?php } ?>
 		<li class="nav-item" role="presentation">
 			<button class="nav-link calendar_button simple_hide" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendar-tab-pane" type="button" role="tab" aria-controls="calendar-tab-pane" aria-selected="false">
-				<strong class="fillup_<?php echo esc_html( $post_ID ); ?>"><?php echo  wp_kses_post($d2g_profile_data->doctor_meta['d2g_tariffs'][0]) ; ?></strong><br><?php echo esc_html__( 'Video consult', 'doctor2go-connect' ); ?>
+                <span><?php echo esc_html__( 'Video consult', 'doctor2go-connect' ); ?></span>
+				<strong class="fillup_<?php echo esc_html( $post_ID ); ?>"><?php echo  wp_kses_post($d2g_profile_data->doctor_meta['d2g_tariffs'][0]) ; ?></strong>
 			</button>
 		</li>
 		<?php if ( $d2g_profile_data->doctor_meta['walk_in_price'][0] != '' ) { ?>
 			<li class="nav-item  walk_in_button simple_hide" role="presentation">
 				<button class="nav-link" id="walkin-tab" data-bs-toggle="tab" data-bs-target="#walkin-tab-pane" type="button" role="tab" aria-controls="walkin-tab-pane" aria-selected="false">
-					<strong><?php echo esc_html( $d2g_profile_data->doctor_meta['walk_in_currency'][0] . ' ' . $d2g_profile_data->doctor_meta['walk_in_price'][0] ); ?></strong><br>
-					<?php echo esc_html__( 'Walk-in', 'doctor2go-connect' ); ?>
+                    <span><?php echo esc_html__( 'Walk-in consult', 'doctor2go-connect' ); ?></span>
+					<strong><?php echo esc_html( $d2g_profile_data->doctor_meta['walk_in_currency'][0] . ' ' . $d2g_profile_data->doctor_meta['walk_in_price'][0] ); ?></strong>
 				</button>
 			</li>
 		<?php } ?>
@@ -1051,6 +1057,7 @@ function d2gc_show_consultancy_tabs($post = '', $stand_alone = false){
 	<div class="tab-content mb-5" id="myTabContent">
 		<?php if ( $d2g_profile_data->doctor_meta['written_con_price'][0] != '' ) {?>
 			<div class="tab-pane fade show active" id="email-tab-pane" role="tabpanel" aria-labelledby="email-tab" tabindex="0">
+                
 				<?php do_action( 'd2g_doctor_written_con_form' ); ?>
 			</div>
 		<?php } ?>

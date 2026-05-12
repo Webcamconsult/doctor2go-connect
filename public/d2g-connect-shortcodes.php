@@ -983,7 +983,13 @@ class D2gConnect_Shortcodes {
 					<?php
 					while ( $the_query->have_posts() ) {
 						$the_query->the_post();
-						include d2gc_locate_template( 'content-doctor-' . $a['template'] . '.php' );
+						$template_file = d2gc_locate_template( 'content-doctor-' . $a['template'] . '.php' );
+
+                        if ( $template_file && file_exists( $template_file ) ) {
+                            include $template_file;
+                        } else {
+                            $template_file = d2gc_locate_template( 'content-doctor-grid.php' );
+                        }
 					}
 					?>
 				</div>

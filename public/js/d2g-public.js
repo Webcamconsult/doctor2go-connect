@@ -188,7 +188,8 @@ jQuery(document).ready(function ($) {
     $('.opener').click(function () {
         $(this).next().slideToggle('slow');
         $(this).toggleClass('active');
-        $(this).find('span').toggleClass('icon-up-open icon-down-open');
+        $(this).find('span').toggleClass('icon-down-open');
+        $(this).find('span').toggleClass('icon-up-open');
     });
 
     // Scroll to anchor links
@@ -975,4 +976,19 @@ jQuery(document).ready(function ($) {
     }
 
 
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const updateBtn = document.querySelector('.update_info');
+  const complaintWrapper = document.getElementById('complaint_form_wrapper');
+
+  if (!updateBtn || !complaintWrapper) {
+    return;
+  }
+
+  updateBtn.addEventListener('click', function () {
+    complaintWrapper.classList.remove('simple_hide');
+    complaintWrapper.classList.add('show');
+  });
 });
