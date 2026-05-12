@@ -1038,8 +1038,8 @@ function d2gc_show_consultancy_tabs($post = '', $stand_alone = false){
 				</button>
 			</li>
 		<?php } ?>
-		<li class="nav-item" role="presentation">
-			<button class="nav-link calendar_button simple_hide" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendar-tab-pane" type="button" role="tab" aria-controls="calendar-tab-pane" aria-selected="false">
+		<li class="nav-item calendar_button simple_hide" role="presentation">
+			<button class="nav-link" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendar-tab-pane" type="button" role="tab" aria-controls="calendar-tab-pane" aria-selected="false">
                 <span><?php echo esc_html__( 'Video consult', 'doctor2go-connect' ); ?></span>
 				<strong class="fillup_<?php echo esc_html( $post_ID ); ?>"><?php echo  wp_kses_post($d2g_profile_data->doctor_meta['d2g_tariffs'][0]) ; ?></strong>
 			</button>
