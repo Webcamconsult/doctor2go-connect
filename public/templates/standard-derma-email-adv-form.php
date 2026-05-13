@@ -13,7 +13,7 @@ if ( is_user_logged_in() ) {
         <strong><?php echo esc_html( $d2g_profile_data->doctor_meta['written_con_currency'][0] . ' ' . $d2g_profile_data->doctor_meta['written_con_price'][0] ); ?></strong>
     </span>
     <?php if ( function_exists( 'd2gc_ai_summary' ) && $_GET['use_ai_info'] === '1' ) {?>
-        <div class="alert alert-light info_notes mb-3 ">
+        <div class="alert alert-light info_notes mb-5 ">
             <p><strong><?php echo esc_html__( 'Receive professional advice about your free derma AI inquiry from this certified dermatologist by email within two working days', 'doctor2go-connect' ); ?></strong></p>
             <ol class="mb-3">
                 <li><span><?php echo esc_html__( 'You only need to provide your personal details, the complaint description, and pictures will be used from the derma AI form. If you would like to update any information, please do so before proceeding. To do so click on the button update information.', 'doctor2go-connect' ); ?></span></li>
@@ -25,7 +25,7 @@ if ( is_user_logged_in() ) {
             </a>
         </div>
     <?php } else { ?>
-        <div class="alert alert-light info_notes mb-3 ">
+        <div class="alert alert-light info_notes mb-5 ">
             <p><strong><?php echo esc_html__( 'Obtain a professional assessment from a certified dermatologist by email within two working days through a straightforward three-step process.', 'doctor2go-connect' ); ?></strong></p>
             <ol>
                 <li><span><?php echo esc_html__( 'Enter your personal information and describe your complaint', 'doctor2go-connect' ); ?></span></li>
