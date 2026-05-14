@@ -983,13 +983,12 @@ class D2gConnect_Shortcodes {
 					<?php
 					while ( $the_query->have_posts() ) {
 						$the_query->the_post();
-						$template_file = d2gc_locate_template( 'content-doctor-' . $a['template'] . '.php' );
+						$template_file = d2gc_locate_template( 'overview-content/content-doctor-' . $a['template'] . '.php' );
 
-                        if ( $template_file && file_exists( $template_file ) ) {
-                            include $template_file;
-                        } else {
-                            $template_file = d2gc_locate_template( 'content-doctor-grid.php' );
+                        if ( !file_exists( $template_file ) ) {
+                            $template_file = d2gc_locate_template( 'overview-content/content-doctor-grid.php' );
                         }
+                        include $template_file;
 					}
 					?>
 				</div>

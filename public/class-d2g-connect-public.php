@@ -456,7 +456,7 @@ class D2gConnect_Public {
 			while ( $doctor_query->have_posts() ) {
 				$doctor_query->the_post();
 				if ( $template ) {
-					include d2gc_locate_template( "content-doctor-{$template}.php" );
+					include d2gc_locate_template( "overview-content/content-doctor-{$template}.php" );
 				}
 			}
 		} else {

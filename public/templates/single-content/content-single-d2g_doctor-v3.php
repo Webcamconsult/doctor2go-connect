@@ -62,7 +62,7 @@ $post_ID		 = $d2g_profile_data->doctor_profile_ID;
 									<?php } ?>
 								</header>
 								<div id="bio">
-									<?php echo wp_kses_post(apply_filters('the_content',$d2g_profile_data->doctor_meta['bio_'.$locale][0])); ?>
+									<?php the_content() ?>
 								</div>
 							<?php } ?>
 							<div id="short_info">

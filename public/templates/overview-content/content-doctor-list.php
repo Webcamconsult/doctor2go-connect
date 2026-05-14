@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</a>
 				<header>
 					<a href="<?php echo esc_html( get_the_permalink() ); ?>?>"><h3 class="entry_title"><?php the_title(); ?></h3></a>
-					<?php if ( $specialties !== false ) { ?>
+					<?php if ( $d2g_profile_data->specialties !== false ) { ?>
 						<h4 class="specialties">
 							<?php foreach ( $d2g_profile_data->specialties as $specialty ) { ?>
 								<span><?php echo esc_html( $specialty->name ); ?></span>

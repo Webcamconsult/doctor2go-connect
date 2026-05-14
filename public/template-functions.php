@@ -77,11 +77,11 @@ function d2gc_single_d2g_doctor_content() {
     // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 	$view = isset( $_GET['view'] ) ? sanitize_text_field( wp_unslash( $_GET['view'] ) ) : '';
 	if ( get_option( 'd2gc_detail_page_view' ) !== 'single-v2' && get_option( 'd2gc_detail_page_view' ) !== 'single-v3' && ! $view ) {
-		include d2gc_locate_template( 'content-single-d2g_doctor.php' );
+		include d2gc_locate_template( 'single-content/content-single-d2g_doctor.php' );
 	} elseif ( get_option( 'd2gc_detail_page_view' ) == 'single-v2' || $view == 'v2' ) {
-		include d2gc_locate_template( 'content-single-d2g_doctor-v2.php' );
+		include d2gc_locate_template( 'single-content/content-single-d2g_doctor-v2.php' );
 	} elseif ( get_option( 'd2gc_detail_page_view' ) == 'single-v3' || $view == 'v3' ) {
-		include d2gc_locate_template( 'content-single-d2g_doctor-v3.php' );
+		include d2gc_locate_template( 'single-content/content-single-d2g_doctor-v3.php' );
 	}
 }
 
@@ -681,7 +681,7 @@ function d2gc_show_booking_calendar( $post = '', $only_cal = false, $in_tabs = f
 							<label class="form-label fw-bold"><?php echo esc_html__( 'Location', 'doctor2go-connect' ); ?></label>
 							<div id="location" class="form-control-plaintext"></div>
 						</div>
-						<div class="col-12">
+						<div class="col-12 mb-3">
 							<label class="form-label fw-bold"><?php echo esc_html__( 'Your info', 'doctor2go-connect' ); ?></label>
 							<div id="patient" class="row g-3">
 								<?php if ( is_user_logged_in() ) {
@@ -726,6 +726,18 @@ function d2gc_show_booking_calendar( $post = '', $only_cal = false, $in_tabs = f
 							</div>
 						</div>
 					</div>
+                    <?php
+                    global $form_type; 
+                    $form_type = $d2g_profile_data->doctor_meta['written_con_type'][0];
+                    if($form_type == 'medofenic_advice'){
+                        $template_path = D2GC_PLUGIN_DIR . 'public/templates/bookingform-extensions/generic-medofenic-form-extension.php';					
+                    } else {
+                        $template_path = D2GC_PLUGIN_DIR . 'public/templates/bookingform-extensions/standard-derma-form-extension.php';
+                    }
+                    if ( file_exists( $template_path ) ) {
+                        include $template_path;
+                    }
+                    ?>
 					<p class="text-muted mt-3"><?php echo esc_html__( '* These are mandatory fields', 'doctor2go-connect' ); ?></p>
 					<div class="simple_hide bg-secondary bg-opacity-25 p-3 rounded mt-3">
 						<input readonly type="text" id="wp_doc_id" class="form-control mb-2" value="<?php echo esc_html( $d2g_profile_data->doctor_profile_ID ); ?>">
@@ -1004,9 +1016,9 @@ function d2gc_show_written_con_form() {
 
 
 	if($type == 'medofenic_advice'){
-		$template_path = D2GC_PLUGIN_DIR . 'public/templates/generic-medofenic-email-form.php';					
+		$template_path = D2GC_PLUGIN_DIR . 'public/templates/email-advice/generic-medofenic-email-form.php';					
 	} else {
-		$template_path = D2GC_PLUGIN_DIR . 'public/templates/standard-derma-email-adv-form.php';
+		$template_path = D2GC_PLUGIN_DIR . 'public/templates/email-advice/standard-derma-email-adv-form.php';
 	}
 	// Path to your template file
     

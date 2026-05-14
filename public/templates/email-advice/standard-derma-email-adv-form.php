@@ -35,9 +35,7 @@ if ( is_user_logged_in() ) {
         </div>
     <?php }?>
     
-    <?php if ( function_exists( 'd2gc_ai_summary' ) && $_GET['use_ai_info'] === '1' ) {?>
-        <div class="mb-5"><?php d2gc_ai_summary();?></div>
-    <?php }?>
+    
     <div class="alert alert-danger simple_hide" id="written_con_error"></div>
     <div class="walkin_form_inner_wrapper mb-s">
         <form id="written_con_form" method="post" action="" enctype="multipart/form-data">

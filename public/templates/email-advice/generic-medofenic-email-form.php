@@ -1,4 +1,11 @@
-<?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
+<?php if ( ! defined( 'ABSPATH' ) ) exit; 
+global $d2g_profile_data, $currUser, $userMeta, $type;
+$site_key = get_option( 'd2gc_recaptcha_site_key' );
+if ( is_user_logged_in() ) {
+    $currUser = wp_get_current_user();
+    $userMeta = get_user_meta( $currUser->data->ID );
+}
+?>
 <div id="written_consult" class="walkin_form_wrapper d2g_wrapper">
     <h3 class="section_title"><?php echo esc_html__( 'E-mail advice', 'doctor2go-connect' ); ?></h3>
     <span class="price_wrapper">
