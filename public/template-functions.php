@@ -314,7 +314,7 @@ function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '' ) {
 		$success_code 	= '<span class="text-success">&#10004;</span>';
 		?>
         <h4 class="text-primary d-flex justify-content-between <?php echo esc_html( $liClass ); ?>">
-            <strong><?php echo esc_html__('Consultation offers');?></strong>
+            <?php echo esc_html__('Consultation offers');?>
             <a href="#info_content" class="fancybox info_link">
                 <span class="icon-info"></span>
             </a>
@@ -626,37 +626,43 @@ function d2gc_show_booking_calendar( $post = '', $only_cal = false, $in_tabs = f
 	$pageRegis = $d2gAdmin::d2gc_page_url( $currLang, 'patient_registration', true )['url'] . '?redirect_to=' . urlencode( $redirectURL );
 	?>
 	<!--booking calendar-->
-	<div class="row">
+	<div id="booking_area_wrapper" class="booking_wrapper d2g_wrapper">
 			
-		<div id="calendar_wrapper" class="calendar section mb-5 col-sm-6">
-			<h3 class="section_title"><?php echo esc_html__('Booking calendar', 'doctor2go-connect')?></h3>
-			<div class="mb-5"  id="booking_intro">
-				<h4 class="opener"><?php echo esc_html__('Need help? Click here for the booking instructions.', 'doctor2go-connect')?> <span class="icon-angle-down"></span></h4>
-				<ol class="list-group list-group-numbered simple_hide">
-					<li class="list-group-item">
-						<?php echo esc_html__( 'In the calendar, select a day that has available appointments. The available days are marked with a button showing the number of free slots (for example, "3 slots").', 'doctor2go-connect' ); ?>
-					</li>
-					<li class="list-group-item">
-						<?php echo esc_html__( 'Click the button for your preferred day to choose a time.', 'doctor2go-connect' ); ?>
-					</li>
-					<li class="list-group-item">
-						<?php echo esc_html__( 'After selecting your time, fill in the booking form with your details and submit it to complete your reservation.', 'doctor2go-connect' ); ?>
-					</li>
-					<li class="list-group-item">
-						<?php echo esc_html__( 'You will than receive an email with futher instructions.', 'doctor2go-connect' ); ?>
-					</li>
-				</ol>
-			</div>
-			<div id="calendar"></div>
+		<div id="calendar_wrapper" class="calendar section mb-5 card">
+            <div class="card-body">
+                <legend class="fs-5 mb-3">
+                    <strong><?php echo esc_html__('Booking calendar', 'doctor2go-connect')?></strong>
+                </legend>
+                <div  id="booking_intro">
+                    <p class="opener"><?php echo esc_html__('Booking instructions', 'doctor2go-connect')?> <span class="icon-angle-down"></span></p>
+                    <ol class="list-group list-group-numbered simple_hide">
+                        <li class="list-group-item">
+                            <?php echo esc_html__( 'In the calendar, select a day that has available appointments. The available days are marked with a button showing the number of free slots (for example, "3 slots").', 'doctor2go-connect' ); ?>
+                        </li>
+                        <li class="list-group-item">
+                            <?php echo esc_html__( 'Click the button for your preferred day to choose a time.', 'doctor2go-connect' ); ?>
+                        </li>
+                        <li class="list-group-item">
+                            <?php echo esc_html__( 'After selecting your time, fill in the booking form with your details and submit it to complete your reservation.', 'doctor2go-connect' ); ?>
+                        </li>
+                        <li class="list-group-item">
+                            <?php echo esc_html__( 'You will than receive an email with futher instructions.', 'doctor2go-connect' ); ?>
+                        </li>
+                    </ol>
+                </div>
+                <div id="calendar"></div>
+            </div>
 		</div>
 		<!--booking form-->
-		<div class="col-sm-6 cal_form_wrapper">
+		<div class="card cal_form_wrapper">
 			
-			<div  class=" p-4 border rounded bg-light simple_hide" id="booking_form_wrapper">
+			<div  class="card-body simple_hide" id="booking_form_wrapper">
 				<div id="error" class="alert alert-danger simple_hide"></div>
 				<p id="app_msg_success" class="alert alert-success simple_hide"></p>
 				<form name="booking_form" id="booking_form">
-					<h3 class="mb-4"><?php echo esc_html__( 'Booking details', 'doctor2go-connect' ); ?></h3>
+                    <legend class="fs-5 mb-3">
+                        <strong><?php echo esc_html__('Booking details', 'doctor2go-connect')?></strong>
+                    </legend>
 					<div id="app_details" class="row g-3">
 						<div class="col-12">
 							<label class="form-label fw-bold"><?php echo esc_html__( 'Doctor', 'doctor2go-connect' ); ?></label>
@@ -739,7 +745,7 @@ function d2gc_show_booking_calendar( $post = '', $only_cal = false, $in_tabs = f
                     }
                     ?>
 					<p class="text-muted mt-3"><?php echo esc_html__( '* These are mandatory fields', 'doctor2go-connect' ); ?></p>
-					<div class="simple_hide bg-secondary bg-opacity-25 p-3 rounded mt-3">
+					<div class="simple_hide">
 						<input readonly type="text" id="wp_doc_id" class="form-control mb-2" value="<?php echo esc_html( $d2g_profile_data->doctor_profile_ID ); ?>">
 						<input readonly type="text" id="wp_user_id" class="form-control mb-2" value="<?php echo esc_html( $patient->data->ID ); ?>">
 						<input readonly type="text" id="location_id" class="form-control mb-2" value="">
@@ -755,6 +761,9 @@ function d2gc_show_booking_calendar( $post = '', $only_cal = false, $in_tabs = f
 						<div id="captcha_calendar"></div>
 					<?php } ?>
 					<?php wp_nonce_field( 'booking' ); ?>
+                    <div class="mb-3">
+                        <?php d2gc_confirmation_checkboxes( '_vc' ); ?>
+                    </div>
 					<input name='user[tel_number]' id="tel_number" type="checkbox" value="1" tabindex="-1" style="display:none" autocomplete="false"/>
 					<div class="mt-3">
 						<input id="submit_booking" type="submit" class="btn btn-primary" value="<?php esc_html_e( 'submit', 'doctor2go-connect' ); ?>">
@@ -786,19 +795,14 @@ function d2gc_confirmation_checkboxes( $form = '', $disclaimer = true ) {
 	?>
 	<div id="conf_boxes">
 		<p>
-			<label for="conf_terms<?php echo esc_html( $form ); ?>"><input id="conf_terms<?php echo esc_html( $form ); ?>" name="meta[conf_terms]" type="checkbox" value="yes"> <?php echo esc_html__( 'I accept the terms and conditions.', 'doctor2go-connect' ); ?></label>&nbsp;&nbsp;&nbsp;&nbsp; 
-			<a target="_blank" href="<?php echo esc_html( $pageDataTerms['url'] ); ?>"><?php echo esc_html__( 'view the terms & conditions', 'doctor2go-connect' ); ?></a>
+			<label for="conf_all<?php echo esc_html( $form ); ?>"><input id="conf_all<?php echo esc_html( $form ); ?>" name="meta[conf_terms]" type="checkbox" value="yes"> <?php echo esc_html__( 'I accept the:', 'doctor2go-connect' ); ?></label>&nbsp;
+			<a target="_blank" href="<?php echo esc_html( $pageDataTerms['url'] ); ?>"><?php echo esc_html__( 'terms & conditions', 'doctor2go-connect' ); ?></a>, 
+            <a target="_blank" href="<?php echo esc_html( $pageDataPriv['url'] ); ?>"><?php echo esc_html__( 'privacy rules', 'doctor2go-connect' ); ?></a>  
+            <?php if ( $disclaimer === true ) {?>
+			and <a target="_blank" href="<?php echo esc_html( $pageDataDiscl['url'] ); ?>"><?php echo esc_html__( 'disclaimer', 'doctor2go-connect' ); ?></a>
+		    <?php } ?>
+            
 		</p>
-		<p>
-			<label for="conf_privacy<?php echo esc_html( $form ); ?>"><input id="conf_privacy<?php echo esc_html( $form ); ?>" name="meta[conf_privacy]" type="checkbox" value="yes"> <?php echo esc_html__( 'I accept the privacy rules.', 'doctor2go-connect' ); ?></label>&nbsp;&nbsp;&nbsp;&nbsp;
-			<a target="_blank" href="<?php echo esc_html( $pageDataPriv['url'] ); ?>"><?php echo esc_html__( 'view the privacy rules', 'doctor2go-connect' ); ?></a>
-		</p>
-		<?php if ( $disclaimer === true ) {?>
-			<p>
-				<label for="conf_discl<?php echo esc_html( $form ); ?>"><input id="conf_discl<?php echo esc_html( $form ); ?>" name="meta[conf_discl]" type="checkbox" value="yes"> <?php echo esc_html__( 'I accept the disclaimer.', 'doctor2go-connect' ); ?></label>&nbsp;&nbsp;&nbsp;&nbsp;
-				<a target="_blank" href="<?php echo esc_html( $pageDataDiscl['url'] ); ?>"><?php echo esc_html__( 'view the disclaimer', 'doctor2go-connect' ); ?></a>
-			</p>
-		<?php } ?>
 	</div>
 	<?php
 }

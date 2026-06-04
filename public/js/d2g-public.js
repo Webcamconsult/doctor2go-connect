@@ -811,7 +811,7 @@ jQuery(document).ready(function ($) {
             var checker = false;
 
             // Required fields for written consultation
-            $('.required_wc').each(function () {
+            $('#written_con_form').find('.required_wc').each(function () {
                 if ($(this).val() === "") {
                     $(this).css('border-color', '#970808');
                     checker = true;
@@ -832,23 +832,10 @@ jQuery(document).ready(function ($) {
                 checker_message += d.msg.robot;
             }
 
-            // Extra checks for guests
-            if (!d.user || !d.user.is_logged_in) {
-
-                if (!$('#conf_privacy_ea').is(':checked')) {
-                    checker = true;
-                    checker_message += d.msg.privacy + '<br>';
-                }
-
-                if (!$('#conf_terms_ea').is(':checked')) {
-                    checker = true;
-                    checker_message += d.msg.terms + '<br>';
-                }
-
-                if (!$('#conf_disclaimer_ea').is(':checked')) {
-                    checker = true;
-                    checker_message += d.msg.disclaimer + '<br>';
-                }
+            // legal checkboxe
+            if (!$('#conf_all_ea').is(':checked')) {
+                checker = true;
+                checker_message += d.msg.privacy + '<br>';
             }
 
             // File size check only for PDFs/files, not images
