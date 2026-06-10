@@ -800,7 +800,7 @@ jQuery(document).ready(function ($) {
 
 	/* =========================================
        EMAIL CONSULTATION FORM
-    ==========================================*/
+    ========================================== */
 
     if (d && d.ajax && d.msg && d.recaptcha) {
 
@@ -812,7 +812,7 @@ jQuery(document).ready(function ($) {
 
             // Required fields for written consultation
             $('#written_con_form').find('.required_wc').each(function () {
-                if ($(this).val() === "") {
+                if ($(this).val() === '') {
                     $(this).css('border-color', '#970808');
                     checker = true;
                     checker_message = d.msg.check1 + '<br>';
@@ -826,21 +826,22 @@ jQuery(document).ready(function ($) {
                 checker_message = checker_message + d.msg.invalid_email + '<br>';
             }
 
-            // reCAPTCHA check (same pattern as walk-in)
+            // reCAPTCHA check
             if (d.recaptcha.enabled && (typeof window.captchaCodeEmail === 'undefined' || window.captchaCodeEmail.length === 0)) {
                 checker = true;
                 checker_message += d.msg.robot;
             }
 
-            // legal checkboxe
+            // Legal checkbox
             if (!$('#conf_all_ea').is(':checked')) {
                 checker = true;
                 checker_message += d.msg.privacy + '<br>';
             }
 
             // File size check only for PDFs/files, not images
-            const MAX_FILE_SIZE = 1.5 * 1024 * 1024; // 1.5 MB
+            const MAX_FILE_SIZE = 1.5 * 1024 * 1024;
             const pdfInputs = ['file_1', 'file_2', 'file_3'];
+            const imageInputs = ['image_upload_1', 'image_upload_2', 'image_upload_3'];
 
             pdfInputs.forEach(id => {
                 const el = document.getElementById(id);
@@ -855,16 +856,38 @@ jQuery(document).ready(function ($) {
             });
 
             if (checker === false) {
-                // Compress images asynchronously
-                const imageInputs = ['image_1', 'image_2', 'image_3'];
-                const imagePromises = imageInputs.map(id => {
-                    const input = $('#' + id)[0];
+
+                const imagePromises = imageInputs.map((id, index) => {
+                    const input = document.getElementById(id);
                     const file = input && input.files ? input.files[0] : null;
-                    if (!file || !file.type.startsWith('image/')) return Promise.resolve(null);
-                    return compressImage(file);
+
+                    if (!file || !file.type || !file.type.startsWith('image/')) {
+                        return Promise.resolve($('#derma_pic_' + (index + 1)).val() || '');
+                    }
+
+                    return compressImage(file)
+                        .then(compressedFile => {
+                            if (!compressedFile) {
+                                return '';
+                            }
+
+                            return new Promise((resolve, reject) => {
+                                const reader = new FileReader();
+                                reader.onload = function () {
+                                    resolve(reader.result || '');
+                                };
+                                reader.onerror = function (err) {
+                                    reject(err);
+                                };
+                                reader.readAsDataURL(compressedFile);
+                            });
+                        })
+                        .then(base64String => {
+                            $('#derma_pic_' + (index + 1)).val(base64String || '');
+                            return base64String || '';
+                        });
                 });
 
-                // Base64-encode PDFs asynchronously
                 const pdfPromises = pdfInputs.map(id => {
                     const el = document.getElementById(id);
                     if (!el || !el.files || !el.files[0]) return Promise.resolve(null);
@@ -874,49 +897,44 @@ jQuery(document).ready(function ($) {
 
                     return new Promise((resolve, reject) => {
                         const reader = new FileReader();
-                        reader.onload = () => resolve(reader.result);
-                        reader.onerror = (err) => reject(err);
+                        reader.onload = function () {
+                            resolve(reader.result);
+                        };
+                        reader.onerror = function (err) {
+                            reject(err);
+                        };
                         reader.readAsDataURL(file);
                     });
                 });
 
                 Promise.all(imagePromises)
-                    .then(compressedFiles => {
-                        return Promise.all(pdfPromises).then(pdfBase64s => ({
-                            compressedFiles,
-                            pdfBase64s
-                        }));
+                    .then(function (imageBase64s) {
+                        return Promise.all(pdfPromises).then(function (pdfBase64s) {
+                            return {
+                                imageBase64s: imageBase64s,
+                                pdfBase64s: pdfBase64s
+                            };
+                        });
                     })
-                    .then(({ compressedFiles, pdfBase64s }) => {
-                        var myformData = new FormData($("#written_con_form")[0]);
+                    .then(function (result) {
+                        var imageBase64s = result.imageBase64s;
+                        var pdfBase64s = result.pdfBase64s;
+
+                        var myformData = new FormData($('#written_con_form')[0]);
                         myformData.append('action', 'd2gc_create_wcc_written_cosnsult');
 
-                        // Handle multi-select #veranderd as ; separated string
-                        const veranderdSelect = document.getElementById('veranderd');
-                        if (veranderdSelect) {
-                            const selectedValues = Array.from(veranderdSelect.selectedOptions)
-                                .map(option => option.value.trim())
-                                .filter(Boolean)
-                                .join('; ');
-                            myformData.set('has_changed', selectedValues);
-                        }
+                        // Make sure hidden derma fields are explicitly sent
+                        imageBase64s.forEach(function (b64, index) {
+                            myformData.set('derma_pic_' + (index + 1), b64 || $('#derma_pic_' + (index + 1)).val() || '');
+                        });
 
-                        // Replace original images with compressed ones
-                        imageInputs.forEach((id, index) => {
-                            const compressed = compressedFiles[index];
-                            const input = $('#' + id)[0];
-                            const hasNewFile = input && input.files && input.files[0];
-                            const hiddenValue = $('#derma_pic_' + (index + 1)).val();
-
-                            if (compressed) {
-                                myformData.set(id, compressed);
-                            } else if (!hasNewFile && hiddenValue) {
-                                myformData.set(id, hiddenValue);
-                            }
+                        // Remove raw image upload fields from FormData, since backend fallback uses derma_pic_X
+                        imageInputs.forEach(function (id) {
+                            myformData.delete(id);
                         });
 
                         // Attach PDF base64 data
-                        pdfInputs.forEach((id, index) => {
+                        pdfInputs.forEach(function (id, index) {
                             const b64 = pdfBase64s[index];
                             if (b64) {
                                 myformData.set(id + '_base64', b64);
@@ -924,13 +942,14 @@ jQuery(document).ready(function ($) {
                         });
 
                         $.ajax({
-                            type: "POST",
+                            type: 'POST',
                             data: myformData,
                             url: d.ajax.url,
                             processData: false,
                             contentType: false,
                             beforeSend: function () {
-                                $("#loader").show();
+                                $('#loader').show();
+                                $('#written_con_error').addClass('simple_hide');
                             },
                             success: function (response) {
                                 console.log(response);
@@ -939,17 +958,19 @@ jQuery(document).ready(function ($) {
                                 }
                             },
                             error: function (xhr, textStatus, errorThrown) {
-                                $("#written_consult").toggleClass('loading');
                                 console.log(errorThrown);
                             },
                             complete: function () {
-                                $("#loader").hide();
+                                $('#loader').hide();
                             }
                         });
                     })
-                    .catch(error => {
+                    .catch(function (error) {
                         console.error('Image/PDF handling failed:', error);
-                        $("#loader").hide();
+                        $('#loader').hide();
+                        $('#written_con_error')
+                            .html('An error occurred while processing the files.')
+                            .removeClass('simple_hide');
                     });
 
             } else {
@@ -979,3 +1000,158 @@ document.addEventListener('DOMContentLoaded', () => {
     complaintWrapper.classList.add('show');
   });
 });
+
+(function () {
+    const boundInputs = new WeakSet();
+
+    function findFirstExistingId(ids) {
+        for (const id of ids) {
+            const el = document.getElementById(id);
+            if (el) return el;
+        }
+        return null;
+    }
+
+    function getHiddenFieldForInput(inputId) {
+        const map = {
+            image_upload_1: ['derma_pic_1', 'dermapic1'],
+            image_upload_2: ['derma_pic_2', 'dermapic2'],
+            image_upload_3: ['derma_pic_3', 'dermapic3'],
+
+            imageupload1: ['derma_pic_1', 'dermapic1'],
+            imageupload2: ['derma_pic_2', 'dermapic2'],
+            imageupload3: ['derma_pic_3', 'dermapic3'],
+
+            booking_image_1: ['bookingdermapic1'],
+            booking_image_2: ['bookingdermapic2'],
+            booking_image_3: ['bookingdermapic3'],
+
+            bookingimage1: ['bookingdermapic1'],
+            bookingimage2: ['bookingdermapic2'],
+            bookingimage3: ['bookingdermapic3']
+        };
+
+        const hiddenIds = map[inputId] || [];
+        return findFirstExistingId(hiddenIds);
+    }
+
+    function clearPreview(input, preview) {
+        if (!preview) return;
+
+        const oldObjectUrl = preview.dataset.objectUrl;
+        if (oldObjectUrl) {
+            URL.revokeObjectURL(oldObjectUrl);
+            delete preview.dataset.objectUrl;
+        }
+
+        preview.innerHTML = '';
+
+        if (input && input.id) {
+            const hiddenField = getHiddenFieldForInput(input.id);
+            if (hiddenField) {
+                hiddenField.value = '';
+            }
+        }
+    }
+
+    function renderPreviewWithRemove(input, preview, src, isObjectUrl) {
+        if (!preview || !src) return;
+
+        clearPreview(null, preview);
+
+        preview.innerHTML = `
+            <div class="position-relative w-100" style="aspect-ratio:1/1; overflow:hidden; border-radius:12px; background:#f2f2f2;">
+                <img src="${src}" alt="Preview" style="width:100%; height:100%; object-fit:cover; display:block;">
+                <button
+                    type="button"
+                    class="remove-btn"
+                    title="Verwijder foto"
+                    style="position:absolute; top:8px; right:8px; width:32px; height:32px; border:none; border-radius:50%; background:#fff; color:#000; font-size:20px; line-height:1; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,.2);"
+                >×</button>
+            </div>
+        `;
+
+        if (isObjectUrl) {
+            preview.dataset.objectUrl = src;
+        }
+
+        const removeBtn = preview.querySelector('.remove-btn');
+        if (!removeBtn) return;
+
+        removeBtn.addEventListener('click', function () {
+            if (input) {
+                input.value = '';
+            }
+            clearPreview(input, preview);
+        });
+    }
+
+    function setupPreview(inputIds, previewIds) {
+        const input = findFirstExistingId(inputIds);
+        const preview = findFirstExistingId(previewIds);
+
+        if (!input || !preview) return;
+        if (boundInputs.has(input)) return;
+
+        boundInputs.add(input);
+
+        input.addEventListener('change', function () {
+            const file = this.files && this.files[0] ? this.files[0] : null;
+
+            if (file && file.size > 5 * 1024 * 1024) {
+                alert('Deze foto is te groot (maximaal 5MB). Gebruik een kleinere foto.');
+                this.value = '';
+                clearPreview(this, preview);
+                return;
+            }
+
+            if (!file) {
+                clearPreview(this, preview);
+                return;
+            }
+
+            const imgUrl = URL.createObjectURL(file);
+            renderPreviewWithRemove(this, preview, imgUrl, true);
+
+            const hiddenField = getHiddenFieldForInput(this.id);
+            if (hiddenField) {
+                hiddenField.value = '';
+            }
+        });
+    }
+
+    function initUploadPreviews() {
+        setupPreview(
+            ['image_upload_1', 'imageupload1'],
+            ['image_placeholder_1', 'imageplaceholder1']
+        );
+        setupPreview(
+            ['image_upload_2', 'imageupload2'],
+            ['image_placeholder_2', 'imageplaceholder2']
+        );
+        setupPreview(
+            ['image_upload_3', 'imageupload3'],
+            ['image_placeholder_3', 'imageplaceholder3']
+        );
+
+        setupPreview(
+            ['booking_image_1', 'bookingimage1'],
+            ['booking_image_placeholder_1', 'bookingimageplaceholder1']
+        );
+        setupPreview(
+            ['booking_image_2', 'bookingimage2'],
+            ['booking_image_placeholder_2', 'bookingimageplaceholder2']
+        );
+        setupPreview(
+            ['booking_image_3', 'bookingimage3'],
+            ['booking_image_placeholder_3', 'bookingimageplaceholder3']
+        );
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initUploadPreviews);
+    } else {
+        initUploadPreviews();
+    }
+})();
+

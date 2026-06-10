@@ -55,62 +55,32 @@
         }
 
         var html = ''
-            + '<div id="booking_confirmation_box" class="d2g-booking-confirmation panel panel-default">'
-            + '  <div class="panel-body">'
-            + '    <div class="row">'
-            + '      <div class="col-xs-12">'
-            + '        <div class="d2g-booking-confirmation__inner clearfix">'
-            + '          <div class="pull-left">'
-            + '            <h3 class="d2g-booking-confirmation__title">' + d2gEscapeHtml(d2gBookingVars.i18n.video_consultation_title || 'Video consultation') + '</h3>'
-            + '          </div>'
-            + '          <div class="pull-right">'
-            + '            <span class="label label-default d2g-booking-confirmation__badge">' + d2gEscapeHtml(d2gBookingVars.i18n.your_appointment || 'Your appointment') + '</span>'
-            + '          </div>'
-            + '        </div>'
-            + '      </div>'
-            + '    </div>'
-
-            + '    <div class="row">'
-            + '      <div class="col-xs-12 col-md-10">'
-            + '        <div class="media d2g-booking-confirmation__item">'
-            + '          <div class="media-left media-middle">'
-            + '            <span class="d2g-booking-confirmation__icon icon-calendar"></span>'
-            + '          </div>'
-            + '          <div class="media-body media-middle">'
-            + '            <div class="d2g-booking-confirmation__date"><strong>' + d2gEscapeHtml(data.booking_date) + '</strong></div>'
-            + '          </div>'
-            + '        </div>'
-
-            + '        <div class="media d2g-booking-confirmation__item">'
-            + '          <div class="media-left media-middle">'
-            + '            <span class="d2g-booking-confirmation__icon icon-clock"></span>'
-            + '          </div>'
-            + '          <div class="media-body media-middle">'
-            + '            <div class="d2g-booking-confirmation__meta">at ' + d2gEscapeHtml(data.booking_time) + ' (' + d2gEscapeHtml(data.booking_timezone) + ')</div>'
-            + '          </div>'
-            + '        </div>'
-
-            + '        <div class="media d2g-booking-confirmation__item">'
-            + '          <div class="media-left media-middle">'
-            + '            <span class="d2g-booking-confirmation__icon icon-plus-circled"></span>'
-            + '          </div>'
-            + '          <div class="media-body media-middle">'
-            + '            <div class="d2g-booking-confirmation__meta">' + d2gEscapeHtml(data.doctor_name) + '</div>'
-            + '          </div>'
-            + '        </div>'
-            + '      </div>'
-            + '    </div>'
-
-            + '    <div class="row">'
-            + '      <div class="col-xs-12 col-md-10">'
-            + '        <div class="d2g-booking-confirmation__text">'
-            + '          <p>' + d2gEscapeHtml(d2gBookingVars.i18n.reservation_success) + '</p>'
-            + '          <p><a href="' + d2gEscapeHtml(data.appointment_manager_url) + '">' + d2gEscapeHtml(d2gBookingVars.i18n.reservation_redirect) + '</a></p>'
-            + '        </div>'
-            + '      </div>'
-            + '    </div>'
-            + '  </div>'
-            + '</div>';
+        + '<div id="booking_confirmation_box" class="d2g-booking-confirmation card">'
+        + '  <div class="card-body"><div class="alert alert-info">'
+        + '    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 mb-4">'
+        + '      <h3 class="d2g-booking-confirmation__title mb-0">' + d2gEscapeHtml(d2gBookingVars.i18n.video_consultation_title || 'Video consultation') + '</h3>'
+        + '      <span class="d2g-booking-confirmation__badge badge rounded-pill text-primary bg-white px-3 py-2">' + d2gEscapeHtml(d2gBookingVars.i18n.your_appointment || 'Your appointment') + '</span>'
+        + '    </div>'
+        + '    <div class="d-flex flex-column gap-3 mb-4">'
+        + '      <div class="d-flex align-items-center d2g-booking-confirmation__item">'
+        + '        <span class="d2g-booking-confirmation__icon icon-calendar me-3"></span>'
+        + '        <div class="d2g-booking-confirmation__date mb-0"><strong>' + d2gEscapeHtml(data.booking_date) + '</strong></div>'
+        + '      </div>'
+        + '      <div class="d-flex align-items-center d2g-booking-confirmation__item">'
+        + '        <span class="d2g-booking-confirmation__icon icon-clock me-3"></span>'
+        + '        <div class="d2g-booking-confirmation__meta mb-0">at ' + d2gEscapeHtml(data.booking_time) + ' (' + d2gEscapeHtml(data.booking_timezone) + ')</div>'
+        + '      </div>'
+        + '      <div class="d-flex align-items-center d2g-booking-confirmation__item">'
+        + '        <span class="d2g-booking-confirmation__icon icon-plus-circled me-3"></span>'
+        + '        <div class="d2g-booking-confirmation__meta mb-0">' + d2gEscapeHtml(data.doctor_name) + '</div>'
+        + '      </div>'
+        + '    </div>'
+        + '    <div class="d2g-booking-confirmation__text">'
+        + '      <p class="mb-2">' + d2gEscapeHtml(d2gBookingVars.i18n.reservation_success) + '</p>'
+        + '      <p class="mb-0"><a href="' + d2gEscapeHtml(data.appointment_manager_url) + '">' + d2gEscapeHtml(d2gBookingVars.i18n.reservation_link_text) + '</a></p>'
+        + '    </div>'
+        + '  </div></div>'
+        + '</div>';
 
         $('#booking_area_wrapper').html(html);
     }
@@ -145,6 +115,124 @@
                 $('body').scrollTo(goal,{duration:'slow', offset : -260});
             }, 300);
         }
+    }
+
+    function d2gCompressImage(file, maxWidth, quality){
+        maxWidth = maxWidth || 1024;
+        quality = quality || 0.7;
+
+        return new Promise(function(resolve, reject){
+            if( !file || !file.type || file.type.indexOf('image/') !== 0 ){
+                resolve(null);
+                return;
+            }
+
+            var img = new Image();
+            img.onload = function(){
+                var width = img.width;
+                var height = img.height;
+
+                if( width > maxWidth ){
+                    height = Math.round((height * maxWidth) / width);
+                    width = maxWidth;
+                }
+
+                var canvas = document.createElement('canvas');
+                canvas.width = width;
+                canvas.height = height;
+
+                var ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                var mimeType = file.type;
+                if( mimeType === 'image/png' ){
+                    mimeType = 'image/png';
+                } else if( mimeType === 'image/webp' ){
+                    mimeType = 'image/webp';
+                } else {
+                    mimeType = 'image/jpeg';
+                }
+
+                canvas.toBlob(function(blob){
+                    if( !blob ){
+                        reject(new Error('Compression failed'));
+                        return;
+                    }
+
+                    var newName = file.name;
+                    if( mimeType === 'image/jpeg' && !newName.toLowerCase().match(/\.jpe?g$/) ){
+                        newName = newName.replace(/\.[^.]+$/, '') + '-compressed.jpg';
+                    } else if( mimeType === 'image/png' && !newName.toLowerCase().match(/\.png$/) ){
+                        newName = newName.replace(/\.[^.]+$/, '') + '-compressed.png';
+                    } else if( mimeType === 'image/webp' && !newName.toLowerCase().match(/\.webp$/) ){
+                        newName = newName.replace(/\.[^.]+$/, '') + '-compressed.webp';
+                    }
+
+                    var compressedFile = new File([blob], newName, {
+                        type: mimeType,
+                        lastModified: Date.now()
+                    });
+
+                    resolve(compressedFile);
+                }, mimeType, quality);
+            };
+
+            img.onerror = function(err){
+                reject(err);
+            };
+
+            img.src = URL.createObjectURL(file);
+        });
+    }
+
+    function d2gFileToBase64(file){
+        return new Promise(function(resolve, reject){
+            if( !file ){
+                resolve('');
+                return;
+            }
+
+            var reader = new FileReader();
+            reader.onload = function(){
+                resolve(reader.result || '');
+            };
+            reader.onerror = function(err){
+                reject(err);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    function d2gPrepareBookingImages(){
+        var configs = [
+            { input: '#booking_image_1', hidden: '#bookingdermapic1' },
+            { input: '#booking_image_2', hidden: '#bookingdermapic2' },
+            { input: '#booking_image_3', hidden: '#bookingdermapic3' }
+        ];
+
+        var tasks = configs.map(function(item){
+            var input = $(item.input)[0];
+            var $hidden = $(item.hidden);
+
+            if( !input || !input.files || !input.files.length ){
+                return Promise.resolve($hidden.val() || '');
+            }
+
+            var file = input.files[0];
+            return d2gCompressImage(file, 1024, 0.7)
+                .then(function(compressedFile){
+                    if( !compressedFile ){
+                        return '';
+                    }
+                    return d2gFileToBase64(compressedFile);
+                })
+                .then(function(base64String){
+                    $hidden.val(base64String || '');
+                    return base64String || '';
+                });
+        });
+
+        return Promise.all(tasks);
     }
 
     function d2gInitCalendar(){
@@ -325,6 +413,7 @@
 
                 $('#hourly_price').val(payment_price);
                 $('#pay_price').html(payment_price);
+                $('#pay_price2').html(payment_price);
                 localStorage.setItem('payment_price', payment_price);
 
                 $('#vat').val(payment_vat);
@@ -332,6 +421,7 @@
 
                 $('#currency').val(payment_currency);
                 $('#pay_cur').html(payment_currency);
+                $('#pay_cur2').html(payment_currency);
                 localStorage.setItem('payment_currency', payment_currency);
 
                 $('#location').html(doc_location);
@@ -392,7 +482,7 @@
             $(this).css('border', 'none');
         });
 
-        $('#submit_booking').click(function (e) {
+        $('#submit_booking').off('click').on('click', function (e) {
             e.preventDefault();
 
             if ($('#tel_number').is(':checked')) {
@@ -411,6 +501,12 @@
             var checker_message = '';
             var $bookingForm = $('#booking_form');
             var complaintWrapperVisible = $('#booking_complaint_form_wrapper').length > 0;
+
+            void(uname);
+            void(rpass);
+            void(user_tel);
+            void($bookingForm);
+            void(complaintWrapperVisible);
 
             $('.myrequired').each(function () {
                 if ($(this).val() === '') {
@@ -439,60 +535,6 @@
                 }
             }
 
-            var changedValues = [];
-            $('#booking_veranderd option:selected').each(function () {
-                changedValues.push($(this).val());
-            });
-
-            var complaintData = {
-                complaint_description: $('#booking_beschrijf_de_klacht').val() || '',
-                first_noticed: $('#booking_opgemerkt').val() || '',
-                medical_history: $('#booking_history').val() || '',
-                treatment_history: $('#booking_treatment_history').val() || '',
-                complaint_location: $('#booking_locatie').val() || '',
-                has_changed: changedValues,
-                itch_check: $('#booking_jeuk').is(':checked') ? $('#booking_jeuk').val() : '',
-                blood_check: $('#booking_bloed').is(':checked') ? $('#booking_bloed').val() : '',
-                derma_pic_1: $('#derma_pic_1').val() || '',
-                derma_pic_2: $('#derma_pic_2').val() || '',
-                derma_pic_3: $('#derma_pic_3').val() || ''
-            };
-
-            var data = {
-                action: 'd2gc_create_wcc_appointment',
-                start: $('#start_str').val(),
-                end: $('#end_str').val(),
-                vat: $('#vat').val(),
-                email: $('#patient_email').val(),
-                patient_fname: $('#patient_fname').val(),
-                patient_lname: $('#patient_lname').val(),
-                wp_doc_id: $('#wp_doc_id').val(),
-                wcc_user_id: $('#wcc_user_id').val(),
-                wp_user_id: $('#wp_user_id').val(),
-                docPrice: $('#hourly_price').val(),
-                comment: $('#patient_comment').val(),
-                user_action: user_action,
-                pass: pass,
-                location_id: location_id,
-                token: $('#token').val(),
-                p_tel: $('#p_tel').val(),
-                currency: $('#currency').val(),
-                questionnaire_id: $('#questionnaire').val(),
-                'g-recaptcha-response': typeof captchaCodeCalendar !== 'undefined' ? captchaCodeCalendar : '',
-                _wpnonce: $('#_wpnonce').val(),
-                complaint_description: complaintData.complaint_description,
-                first_noticed: complaintData.first_noticed,
-                medical_history: complaintData.medical_history,
-                treatment_history: complaintData.treatment_history,
-                complaint_location: complaintData.complaint_location,
-                has_changed: complaintData.has_changed,
-                itch_check: complaintData.itch_check,
-                blood_check: complaintData.blood_check,
-                derma_pic_1: complaintData.derma_pic_1,
-                derma_pic_2: complaintData.derma_pic_2,
-                derma_pic_3: complaintData.derma_pic_3
-            };
-
             if (checker === false) {
                 $('#booking_form').addClass('loading');
                 $('#error').addClass('simple_hide');
@@ -500,24 +542,66 @@
                 $('#app_msg_success').addClass('simple_hide');
                 $('#loader_booking').show();
 
-                $.post(ajax_url, data, function (response) {
-                    console.log(response);
+                d2gPrepareBookingImages().then(function(){
+                    var data = {
+                        action: 'd2gc_create_wcc_appointment',
+                        start: $('#start_str').val(),
+                        end: $('#end_str').val(),
+                        vat: $('#vat').val(),
+                        email: $('#patient_email').val(),
+                        patient_fname: $('#patient_fname').val(),
+                        patient_lname: $('#patient_lname').val(),
+                        wp_doc_id: $('#wp_doc_id').val(),
+                        wcc_user_id: $('#wcc_user_id').val(),
+                        wp_user_id: $('#wp_user_id').val(),
+                        docPrice: $('#hourly_price').val(),
+                        comment: $('#patient_comment').val(),
+                        user_action: user_action,
+                        pass: pass,
+                        location_id: location_id,
+                        token: $('#token').val(),
+                        p_tel: $('#p_tel').val(),
+                        currency: $('#currency').val(),
+                        bday: $('#booking_option_bday').val(),
+                        gender: $('#booking_option_aanhef').val(),
+                        questionnaire_id: $('#questionnaire').val(),
+                        complaint_description: $('#booking_beschrijf_de_klacht').val() || '',
+                        first_noticed: $('#booking_opgemerkt').val() || '',
+                        medical_history: $('#booking_history').val() || '',
+                        treatment_history: $('#booking_treatment_history').val() || '',
+                        complaint_location: $('#booking_locatie').val() || '',
+                        booking_ai_info: $('#booking_ai_info').val() || '',
+                        derma_pic_1: $('#bookingdermapic1').val(),
+                        derma_pic_2: $('#bookingdermapic2').val(),
+                        derma_pic_3: $('#bookingdermapic3').val(),
+                        'g-recaptcha-response': typeof captchaCodeCalendar !== 'undefined' ? captchaCodeCalendar : '',
+                        _wpnonce: $('#_wpnonce').val()
+                    };
 
-                    if (response !== 'error') {
-                        d2gStoreBookingConfirmation(response);
-                        d2gRenderBookingConfirmation();
-                        $('#loader_booking').hide();
-                    } else {
-                        var answer = '<p>' + d2gBookingVars.i18n.error_general + '</p>';
-                        $('#error').html(answer).removeClass('simple_hide');
-                        $('#loader_booking').hide();
-                    }
+                    $.post(ajax_url, data, function (response) {
+                        console.log(response);
 
-                    $('#booking_form').toggleClass('loading');
-                    $('#booking_form').toggleClass('simple_hide');
-                    var goal = '#booking_form_wrapper';
-                    $('body').scrollTo(goal, { duration: 'slow', offset: -260 });
-                }).fail(function () {
+                        if (response !== 'error') {
+                            d2gStoreBookingConfirmation(response);
+                            d2gRenderBookingConfirmation();
+                            $('#booking_form').addClass('simple_hide');
+                            $('#loader_booking').hide();
+                        } else {
+                            var answer = '<p>' + d2gBookingVars.i18n.error_general + '</p>';
+                            $('#error').html(answer).removeClass('simple_hide');
+                            $('#loader_booking').hide();
+                            $('#booking_form').removeClass('loading');
+                        }
+
+                        var goal = '#booking_form_wrapper';
+                        $('body').scrollTo(goal, { duration: 'slow', offset: -260 });
+                    }).fail(function () {
+                        $('#loader_booking').hide();
+                        $('#booking_form').removeClass('loading');
+                        $('#error').html('<p>' + d2gBookingVars.i18n.error_general + '</p>').removeClass('simple_hide');
+                    });
+                }).catch(function(err){
+                    console.log(err);
                     $('#loader_booking').hide();
                     $('#booking_form').removeClass('loading');
                     $('#error').html('<p>' + d2gBookingVars.i18n.error_general + '</p>').removeClass('simple_hide');
@@ -556,7 +640,6 @@
     }
 
     $(document).ready(function(){
-        d2gRenderBookingConfirmation();
         d2gHandlePrefillFromLocalStorage();
         d2gHandleBookingWrapperDisplay();
         d2gInitBookingForm();

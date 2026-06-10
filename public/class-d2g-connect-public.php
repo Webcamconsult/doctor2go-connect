@@ -186,7 +186,7 @@ class D2gConnect_Public {
                 'recaptcha_required'       => esc_html__( ' Please verify that you are not a robot. ', 'doctor2go-connect' ),
                 'reservation_success'      => esc_html__( 'Your reservation has been completed successfully.', 'doctor2go-connect' ),
                 'reservation_payment_info' => esc_html__( 'Online consultation reservations are valid for 24 hours and require payment within this period. Otherwise, they will be canceled.', 'doctor2go-connect' ),
-                'reservation_redirect'     => esc_html__( 'You will now be redirected to your appointment manager.', 'doctor2go-connect' ),
+                'reservation_link_text'    => esc_html__( 'Click here to manage your appointment.', 'doctor2go-connect' ),
                 'pay_now'                  => esc_html__( 'pay now', 'doctor2go-connect' ),
                 'error_general'            => esc_html__( 'There has been an error, please try an other slot or try later. In case of futher issues, please contact the support.', 'doctor2go-connect' ),
                 'holiday_attention'        => esc_html__( 'Attention: I am unavailable in the following periode.', 'doctor2go-connect' ),

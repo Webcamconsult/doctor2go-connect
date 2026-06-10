@@ -1597,21 +1597,19 @@ class D2gConnect_Shortcodes {
 		// Your reCAPTCHA site key.
 		$recaptcha_site_key = get_option( 'd2gc_recaptcha_site_key' );
 		?>
-	<div class="d2g_form_wrapper  mt-4">
-		<form method="post" class="w-100 w-md-50 mx-auto border rounded-3 p-4 bg-light shadow-sm" action="<?php echo esc_url( wp_login_url( $redirect_to ) ); ?>" id="custom-loginform">
+	<div class="d2g_form_wrapper login_form_wrapper  mt-4 card">
+		<form method="post" class="w-100 w-md-50 mx-auto border card-body" action="<?php echo esc_url( wp_login_url( $redirect_to ) ); ?>" id="custom-loginform">
 			<?php
 			// Add nonce field to the form.
 			wp_nonce_field( 'd2g_login_action', 'd2g_login_nonce' );
 			?>
 
 			<div class="mb-3">
-				<label for="user_login" class="form-label"><?php esc_html_e( 'Email', 'doctor2go-connect' ); ?></label>
-				<input type="email" name="log" id="user_login" class="form-control" required>
+				<input type="email" name="log" id="user_login" class="form-control" required placeholder="<?php esc_attr_e( 'Enter your email address', 'doctor2go-connect' ); ?>">
 			</div>
 
 			<div class="mb-3">
-				<label for="user_pass" class="form-label"><?php esc_html_e( 'Password', 'doctor2go-connect' ); ?></label>
-				<input type="password" name="pwd" id="user_pass" class="form-control" required>
+				<input type="password" name="pwd" id="user_pass" class="form-control" required placeholder="<?php esc_attr_e( 'Enter your password', 'doctor2go-connect' ); ?>">
 			</div>
 
 			<!-- reCAPTCHA Widget -->
@@ -1638,16 +1636,17 @@ class D2gConnect_Shortcodes {
 				</div>
 			</div>
 
-			<button type="submit" class="btn btn-primary w-100 mb-3"><?php echo esc_attr__( 'Login', 'doctor2go-connect' ); ?></button>
+			<button type="submit" class="btn btn-primary mb-3"><?php echo esc_attr__( 'Login', 'doctor2go-connect' ); ?></button>
+            <div class="d-flex justify-content-between">
+                <?php $pageData = $d2gAdmin::d2gc_page_url( $currLang, 'lost_password', true ); ?>
+                <a href="<?php echo esc_url( $pageData['url'] ); ?>" class="btn btn-link p-0"><?php esc_html_e( 'Lost password?', 'doctor2go-connect' ); ?></a>
+
+                <?php $pageData = $d2gAdmin::d2gc_page_url( $currLang, 'patient_registration', true ); ?>
+                <a href="<?php echo esc_url( $pageData['url'] ); ?>" class="btn btn-link p-0"><?php esc_html_e( 'Register as patient', 'doctor2go-connect' ); ?></a>
+            </div>
 		</form>
 
-		<div class="text-center">
-			<?php $pageData = $d2gAdmin::d2gc_page_url( $currLang, 'lost_password', true ); ?>
-			<a href="<?php echo esc_url( $pageData['url'] ); ?>" class="btn btn-link p-0"><?php esc_html_e( 'Lost password?', 'doctor2go-connect' ); ?></a>
-
-			<?php $pageData = $d2gAdmin::d2gc_page_url( $currLang, 'patient_registration', true ); ?>
-			<a href="<?php echo esc_url( $pageData['url'] ); ?>" class="btn btn-link p-0"><?php esc_html_e( 'Register as patient', 'doctor2go-connect' ); ?></a>
-		</div>
+		
 	</div>
 
 
@@ -2305,10 +2304,10 @@ class D2gConnect_Shortcodes {
 							<h3 class="alert alert-danger"><?php echo esc_html__( 'You don\’t have any upcoming consultations. Book a new appointment when you\'re ready.', 'doctor2go-connect' ); ?></h3>
 						<?php } else { ?>
 							<?php foreach ( $appointments as $appointment ) {
-								$docObj = $this->d2gc_get_doctor_by_wcc_id( $appointment->user_id )[0];
-								$doc_email    = get_post_meta( $docObj->ID, 'd2g_main_email', true );
-								$d2gc_single_appointment = d2gc_single_appointment($appointment, $docObj, $client_token, $timezone, $currLang, $d2gAdmin, false, $doc_email);
-								$structuredAppointments += $d2gc_single_appointment;
+								$docObj                     = $this->d2gc_get_doctor_by_wcc_id( $appointment->user_id )[0];
+								$doc_email                  = get_post_meta( $docObj->ID, 'd2g_main_email', true );
+								$d2gc_single_appointment    = d2gc_single_appointment($appointment, $docObj, $client_token, $timezone, $currLang, $d2gAdmin, false, $doc_email);
+								$structuredAppointments     += $d2gc_single_appointment;
 
 								if ( isset( $appointment->answer_set_id ) ) {
 									// url to load in iframe
@@ -2317,19 +2316,8 @@ class D2gConnect_Shortcodes {
 
 								$app_id = isset( $_GET['app'] ) ? sanitize_text_field( wp_unslash( $_GET['app'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query param, no state change.
 								
-								if ( $appointment->_id == $app_id ) {
-									if ( $questionnaireURLSimple != '' ) { ?>
-										<div class="alert d-flex alert-warning mb-5 mt-5 align-items-center justify-content-between">
-											<strong><?php echo esc_html__( 'For this appointment you are requiered to fill in an intake questionnaire.', 'doctor2go-connect' ); ?></strong>
-											<a class="scroll_to btn button btn-primary" href="#questionnaire"><?php echo esc_html__( 'Go to questionnaire', 'doctor2go-connect' ); ?></a>
-										</div>
-									<?php } ?>
-									
+								if ( $appointment->_id == $app_id ) { ?>									
 									<?php echo wp_kses_post( $structuredAppointments[ $appointment->date ] ); ?>
-										
-									<?php if ( $questionnaireURLSimple != '' ) { ?>
-										<iframe id="questionnaire" src="<?php echo esc_url( $questionnaireURLSimple ); ?>" style="width:100%; border:none; height:2500px"></iframe>
-									<?php } ?>
 								<?php } ?>
 								
 							<?php } ?>  

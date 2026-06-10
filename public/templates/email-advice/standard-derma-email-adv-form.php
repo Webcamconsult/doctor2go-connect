@@ -79,16 +79,27 @@ if ( is_user_logged_in() ) {
                 </div>
             </div>
             <!-- Over de huidaandoening -->
-             <div id="complaint_form_wrapper" class="card mb-5 <?php echo ($_GET['use_ai_info'] === '1') ? 'simple_hide' : 'show'; ?>">
+            
+             <div class="card mb-5 ">
                 <div class="card-body">
-                    <fieldset class="mb-4">
-                        <legend class="fs-5 mb-3">
-                            <strong><?php echo esc_html__('About your complaint', 'doctor2go-connect')?></strong>
-                        </legend>
+                    <legend class="fs-5 mb-3">
+                        <strong><?php echo esc_html__('About your complaint', 'doctor2go-connect')?></strong>
+                    </legend>
+                     <?php if ( isset( $_GET['use_ai_info'] ) && '1' === $_GET['use_ai_info'] ) { ?>
+                        <div class="opener"><strong><?php echo esc_html__( 'Edit your information', 'doctor2go-connect' ); ?></strong><span class="icon-down-open text-small"></span><p class="text-small"><?php echo esc_html__( 'Pre-filled from your AI check.', 'doctor2go-connect' ); ?></p></div>
+                    <?php } ?>
+                    <fieldset id="complaint_form_wrapper" class="mb-4 <?php echo ($_GET['use_ai_info'] === '1') ? 'simple_hide' : 'show'; ?>">
+                        
                         <div class="row mb-3">
+                            <div class="row g-3 mb-3">
                             <div class="col-md-4">
-                                <label for="image_1" class="form-label"><?php echo esc_html__( 'Upload image 1', 'doctor2go-connect' ); ?></label>
-                                <input class="form-control" capture="user" type="file" name="image_1" id="image_1" accept="image/*" placeholder="<?php echo esc_attr__( 'Choose image 1', 'doctor2go-connect' ); ?>">
+                                <div class="mb-3">
+                                    <label for="image_upload_1" class="form-label btn btn-outline-primary">
+                                        <strong><?php echo ($type == 'derma_email_advice') ? esc_html__('Photo of the skin condition (above)', 'doctor2go-connect') : esc_html__('Photo of the condition (above)', 'doctor2go-connect') ; ?></strong>
+                                    </label>
+                                    <div class="image_placeholder border rounded mb-2 p-2" id="image_placeholder_1"></div>
+                                    <input type="file" class="form-control simple_hide" capture="user" id="image_upload_1" name="skin_photo[]" accept="image/*">
+                                </div>
                             </div>
                             <?php if ( wpmd_is_phone() ) { ?>
                                 <p class="text-primary text-decoration-underline mb-3 opener">
@@ -97,12 +108,22 @@ if ( is_user_logged_in() ) {
                                 <div class="simple_hide">
                             <?php } ?>
                             <div class="col-md-4">
-                                <label for="image_2" class="form-label"><?php echo esc_html__( 'Upload image 2', 'doctor2go-connect' ); ?></label>
-                                <input class="form-control" capture="user" type="file" name="image_2" id="image_2" accept="image/*" placeholder="<?php echo esc_attr__( 'Choose image 2', 'doctor2go-connect' ); ?>">
+                                <div class="mb-3">
+                                    <label for="image_upload_2" class="form-label btn btn-outline-primary">
+                                        <strong><?php echo ($type == 'derma_email_advice') ? esc_html__('Photo of the skin condition (side)', 'doctor2go-connect') : esc_html__('Photo of the condition (side)', 'doctor2go-connect') ; ?></strong>
+                                    </label>
+                                    <div class="image_placeholder border rounded mb-2 p-2" id="image_placeholder_2"></div>
+                                    <input type="file" class="form-control simple_hide " capture="user" id="image_upload_2" name="skin_photo[]" accept="image/*">
+                                </div>
                             </div>
                             <div class="col-md-4">
-                                <label for="image_3" class="form-label"><?php echo esc_html__( 'Upload image 3', 'doctor2go-connect' ); ?></label>
-                                <input class="form-control" capture="user" type="file" name="image_3" id="image_3" accept="image/*" placeholder="<?php echo esc_attr__( 'Choose image 3', 'doctor2go-connect' ); ?>">
+                                <div class="mb-3">
+                                    <label for="image_upload_3" class="form-label btn btn-outline-primary">
+                                        <strong><?php echo ($type == 'derma_email_advice') ? esc_html__('Photo of the skin condition (extra)', 'doctor2go-connect') : esc_html__('Photo of the condition (extra)', 'doctor2go-connect') ; ?></strong>
+                                    </label>
+                                    <div class="image_placeholder border rounded mb-2 p-2" id="image_placeholder_3"></div>
+                                    <input type="file" class="form-control simple_hide " capture="user" id="image_upload_3" name="skin_photo[]" accept="image/*">
+                                </div>
                             </div>
                             <?php if ( wpmd_is_phone() ) { ?>
                                 </div>
@@ -115,23 +136,24 @@ if ( is_user_logged_in() ) {
                             <div class="row g-3 mb-3">
                                 <div class="col-md-6">
                                     <label for="opgemerkt" class="form-label">
-                                        <?php echo esc_html__('When did you first notice your skin problem', 'doctor2go-connect')?> *
+                                        <?php echo ($type == 'derma_email_advice') ? esc_html__('When did you first notice your skin problem', 'doctor2go-connect') : esc_html__('When did you first notice your complaint', 'doctor2go-connect') ; ?> *
                                     </label>
                                     <input type="text" id="opgemerkt" name="first_noticed" class="form-control required_wc" rows="2" placeholder="<?php echo esc_attr__('since...days,weeks,months, years', 'doctor2go-connect')?>">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="locatie" class="form-label">
-                                        <?php echo esc_html__('Location(s) on the body', 'doctor2go-connect')?> *
+                                        <?php echo ($type == 'derma_email_advice') ? esc_html__('Location(s) on the body', 'doctor2go-connect') : esc_html__('Location(s) of your complaint', 'doctor2go-connect') ; ?> *
                                     </label>
                                     <input type="text" id="locatie" name="location" class="form-control required_wc" placeholder="<?php echo esc_attr__('For example: left forearm', 'doctor2go-connect')?>">
                                 </div>
                             </div>
+                            <input type="hidden" id="email_ai_info" name="email_ai_info" value="">
                         <?php } ?>
 
                         <!-- Beschrijving / eerste opgemerkt -->
                         <div class="mb-3">
                             <label for="beschrijf_de_klacht" class="form-label">
-                                <?php echo esc_html__('Describe your skin problem (color, size, growing, bleeding, itching, occasional or continuous) ', 'doctor2go-connect')?> *
+                                <?php echo ($type == 'derma_email_advice') ? esc_html__('Describe your skin problem (color, size, growing, bleeding, itching, occasional or continuous) ', 'doctor2go-connect'): esc_html__('Describe your complaint (how it looks like, what you feel, level of pain,  occasional or continuous) ', 'doctor2go-connect')?> *
                             </label>
                             <textarea id="beschrijf_de_klacht" name="complaint_description" class="form-control required_wc" rows="3" placeholder="<?php echo esc_attr__('For example: itchy red spots or bumps...', 'doctor2go-connect')?>"></textarea>
                         </div>
@@ -140,63 +162,16 @@ if ( is_user_logged_in() ) {
                             <!-- only DERMA -->
                              <div class="mb-3">
                                 <label for="treatment_history" class="form-label">
-                                    <?php echo esc_html__('Treatment history (what medications did you use for your skin problem and what was the result)', 'ai-derma-plugin')?>
+                                    <?php echo ($type == 'derma_email_advice') ? esc_html__('Treatment history (what medications did you use for your skin problem and what was the result)', 'ai-derma-plugin') : esc_html__('Treatment history (what medications did you use for your complaint and what was the result)', 'ai-derma-plugin')?>
                                 </label>
                                 <textarea id="treatment_history" name="treatment_history" class="form-control" rows="3" placeholder="<?php echo esc_attr__('If applicable...', 'ai-derma-plugin')?>"></textarea>
                             </div>
 
                             <div class="mb-3">
                                 <label for="history" class="form-label">
-                                    <?php echo esc_html__('Medical history (other relevant medical conditions and medications)', 'ai-derma-plugin')?>
+                                    <?php echo ($type == 'derma_email_advice') ? esc_html__('Medical history (other relevant medical conditions and medications)', 'ai-derma-plugin') : esc_html__('Medical history (other relevant medical conditions and medications)', 'ai-derma-plugin')?>
                                 </label>
                                 <textarea id="history" name="medical_history" class="form-control" rows="3" placeholder="<?php echo esc_attr__('If applicable...', 'ai-derma-plugin')?>"></textarea>
-                            </div>
-
-                            
-                            <!-- deprecated fields, kept for backward compatibility -->
-                            <div class="simple_hide">
-                                <!-- Locatie / veranderd -->
-                                <div class="row g-3 mb-3">
-                                    <div class="col-md-6">
-                                        <label for="veranderd" class="form-label">
-                                            <?php echo esc_html__('Has the spot changed? Choose one or more options.', 'doctor2go-connect')?>
-                                        </label>
-                                        <select id="veranderd" name="has_changed[]" class="form-select" multiple placeholder="<?php echo esc_attr__('Select one or more options', 'doctor2go-connect'); ?>">
-                                            <option value="<?php echo esc_attr__('no', 'doctor2go-connect'); ?>">
-                                                <?php echo esc_html__('No', 'doctor2go-connect'); ?>
-                                            </option>
-                                            <option value="<?php echo esc_attr__('yes, in size', 'doctor2go-connect'); ?>">
-                                                <?php echo esc_html__('Yes, in size', 'doctor2go-connect'); ?>
-                                            </option>
-                                            <option value="<?php echo esc_attr__('yes, in color', 'doctor2go-connect'); ?>">
-                                                <?php echo esc_html__('Yes, in color', 'doctor2go-connect'); ?>
-                                            </option>
-                                            <option value="<?php echo esc_attr__('yes, in shape', 'doctor2go-connect'); ?>">
-                                                <?php echo esc_html__('Yes, in shape', 'doctor2go-connect'); ?>
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <!-- Symptomen switches -->
-                                <div class="row g-3 mb-3">
-                                    <div class="col-md-6">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="jeuk" name="itch_check" value="<?php echo esc_html__('Yes', 'doctor2go-connect'); ?>" role="switch">
-                                            <label class="form-check-label" for="jeuk">
-                                                <?php echo esc_html__('Does the skin condition itch?', 'doctor2go-connect')?>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="bloed" name="blood_check" value="<?php echo esc_html__('Yes', 'doctor2go-connect'); ?>" role="switch">
-                                            <label class="form-check-label" for="bloed">
-                                                <?php echo esc_html__('Does the skin condition bleed?', 'doctor2go-connect')?>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         <?php } ?>
                         
@@ -223,7 +198,8 @@ if ( is_user_logged_in() ) {
                     <p class="mb-3 border-top border-bottom py-3 d-flex h4 align-items-center justify-content-between">
                         <span class="me-3"><strong><?php echo esc_html__( 'E-mail advice', 'doctor2go-connect' ); ?></strong></span>
                         <span class="price_wrapper">
-                            <strong><?php echo esc_html( $d2g_profile_data->doctor_meta['written_con_currency'][0] . ' ' . $d2g_profile_data->doctor_meta['written_con_price'][0] ); ?></strong>
+                            <strong><?php echo esc_html( $d2g_profile_data->doctor_meta['written_con_currency'][0] . ' ' . $d2g_profile_data->doctor_meta['written_con_price'][0] ); ?></strong><br>
+                            <small class="text-muted">(excl. VAT)</small>
                         </span>
                     </p>
                     <?php if ( get_option( 'd2gc_recaptcha_site_key' ) ) { ?>
