@@ -1975,8 +1975,8 @@ class D2gConnect_Shortcodes {
 
 		ob_start();
 		?>
-		<div class="d2g_form_wrapper py-5">
-			<form id="custom-registration-form" method="post" action="<?php echo esc_url( $action_url ); ?>" class="w-100 w-md-75 w-lg-50 mx-auto border rounded-3 p-4 bg-light shadow-sm needs-validation" novalidate>
+		<div class="d2g_form_wrapper card" style="max-width: 600px; margin:0 auto;">
+			<form id="custom-registration-form" method="post" action="<?php echo esc_url( $action_url ); ?>" class="card-body" novalidate>
 				<?php wp_nonce_field( 'd2g_registration_action', 'd2g_reg_nonce' ); ?>
 
 				<div id="error" class="alert alert-danger d-none"></div>
@@ -2062,14 +2062,8 @@ class D2gConnect_Shortcodes {
 				<div class="mb-3">
 					<?php d2gc_confirmation_checkboxes(); ?>
 				</div>
-
 				<input type="hidden" name="custom_registration" value="1">
-
-				<div class="d-grid">
-					<input id="submit_registration" type="submit"
-						value="<?php echo esc_html__( 'Register', 'doctor2go-connect' ); ?>"
-						class="btn btn-primary">
-				</div>
+				<input id="submit_registration" type="submit" value="<?php echo esc_html__( 'Register', 'doctor2go-connect' ); ?>" class="btn btn-primary">
 			</form>
 		</div>
 		<?php
