@@ -103,7 +103,7 @@ if ( is_user_logged_in() ) {
                             </div>
                             <?php if ( wpmd_is_phone() ) { ?>
                                 <p class="text-primary text-decoration-underline mb-3 opener">
-                                    <?php echo esc_html__('Upload / make more photos', 'ai-derma-plugin')?>
+                                    <?php echo esc_html__('Upload / make more photos', 'doctor2go-connect')?>
                                 </p>
                                 <div class="simple_hide">
                             <?php } ?>
@@ -162,16 +162,16 @@ if ( is_user_logged_in() ) {
                             <!-- only DERMA -->
                              <div class="mb-3">
                                 <label for="treatment_history" class="form-label">
-                                    <?php echo ($type == 'derma_email_advice') ? esc_html__('Treatment history (what medications did you use for your skin problem and what was the result)', 'ai-derma-plugin') : esc_html__('Treatment history (what medications did you use for your complaint and what was the result)', 'ai-derma-plugin')?>
+                                    <?php echo ($type == 'derma_email_advice') ? esc_html__('Treatment history (what medications did you use for your skin problem and what was the result)', 'doctor2go-connect') : esc_html__('Treatment history (what medications did you use for your complaint and what was the result)', 'doctor2go-connect')?>
                                 </label>
-                                <textarea id="treatment_history" name="treatment_history" class="form-control" rows="3" placeholder="<?php echo esc_attr__('If applicable...', 'ai-derma-plugin')?>"></textarea>
+                                <textarea id="treatment_history" name="treatment_history" class="form-control" rows="3" placeholder="<?php echo esc_attr__('If applicable...', 'doctor2go-connect')?>"></textarea>
                             </div>
 
                             <div class="mb-3">
                                 <label for="history" class="form-label">
-                                    <?php echo ($type == 'derma_email_advice') ? esc_html__('Medical history (other relevant medical conditions and medications)', 'ai-derma-plugin') : esc_html__('Medical history (other relevant medical conditions and medications)', 'ai-derma-plugin')?>
+                                    <?php echo ($type == 'derma_email_advice') ? esc_html__('Medical history (other relevant medical conditions and medications)', 'doctor2go-connect') : esc_html__('Medical history (other relevant medical conditions and medications)', 'doctor2go-connect')?>
                                 </label>
-                                <textarea id="history" name="medical_history" class="form-control" rows="3" placeholder="<?php echo esc_attr__('If applicable...', 'ai-derma-plugin')?>"></textarea>
+                                <textarea id="history" name="medical_history" class="form-control" rows="3" placeholder="<?php echo esc_attr__('If applicable...', 'doctor2go-connect')?>"></textarea>
                             </div>
                         <?php } ?>
                         
