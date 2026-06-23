@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Doctor2Go Connect\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-19 08:49+0000\n"
-"PO-Revision-Date: 2026-06-23 07:34+0000\n"
+"PO-Revision-Date: 2026-06-23 08:06+0000\n"
 "Last-Translator: Thomas Wiese\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -909,6 +909,13 @@ msgstr ""
 msgid "Identifier"
 msgstr "Kennung"
 
+#: public/templates/email-advice/standard-derma-email-adv-form.php:167
+#: public/templates/email-advice/standard-derma-email-adv-form.php:174
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:91
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:98
+msgid "If applicable..."
+msgstr "Falls zutreffend..."
+
 #: public/class-d2g-connect-public.php:680
 msgid ""
 "If this was not intended, simply ignore this e-mail. Nothing will happen. "
@@ -1082,6 +1089,13 @@ msgstr "Auswahl treffen"
 #: public/templates/bookingform-extensions/generic-medofenic-form-extension.php:106
 msgid "male"
 msgstr "männlich"
+
+#: public/templates/email-advice/standard-derma-email-adv-form.php:172
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:96
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:96
+msgid "Medical history (other relevant medical conditions and medications)"
+msgstr ""
+"Medizinische Vorgeschichte (andere relevante Erkrankungen und Medikamente)"
 
 #: admin/class-d2g-connect-admin.php:735 admin/partials/metaboxes.php:25
 msgid "Mobile"
@@ -1684,6 +1698,24 @@ msgstr ""
 "Um Ihre gewählte Beratung zu starten, müssen Sie sich zuerst anmelden oder "
 "ein Konto registrieren."
 
+#: public/templates/email-advice/standard-derma-email-adv-form.php:165
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:89
+msgid ""
+"Treatment history (what medications did you use for your complaint and what "
+"was the result)"
+msgstr ""
+"Behandlungsverlauf (welche Medikamente haben Sie gegen Ihre Beschwerden "
+"eingenommen und was war das Ergebnis)"
+
+#: public/templates/email-advice/standard-derma-email-adv-form.php:165
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:89
+msgid ""
+"Treatment history (what medications did you use for your skin problem and "
+"what was the result)"
+msgstr ""
+"Behandlungshistorie (welche Medikamente haben Sie gegen Ihr Hautproblem "
+"angewendet und was war das Ergebnis)"
+
 #: admin/class-d2g-connect-admin.php:111
 #: public/class-d2g-connect-public.php:193
 #: public/class-d2g-connect-public.php:342 public/template-functions.php:573
@@ -1707,6 +1739,11 @@ msgstr "Aktualisierung war erfolgreich"
 #: admin/partials/d2g-connect-admin-display.php:119
 msgid "Upload"
 msgstr "Hochladen"
+
+#: public/templates/email-advice/standard-derma-email-adv-form.php:106
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:33
+msgid "Upload / make more photos"
+msgstr "Fotos hochladen / mehr hinzufügen"
 
 #: public/templates/email-advice/generic-medofenic-email-form.php:61
 #: public/templates/bookingform-extensions/generic-medofenic-form-extension.php:47
