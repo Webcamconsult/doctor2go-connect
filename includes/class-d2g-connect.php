@@ -245,6 +245,10 @@ class D2gConnect {
 		// send d2gc email
 		$this->loader->add_action( 'wp_ajax_d2gc_send_ajax_d2g_email', $plugin_public, 'd2gc_send_ajax_d2g_email' );
 		$this->loader->add_action( 'wp_ajax_nopriv_d2gc_send_ajax_d2g_email', $plugin_public, 'd2gc_send_ajax_d2g_email' );
+
+        // update booking roles in WCC
+		$this->loader->add_action( 'wp_ajax_d2gc_update_booking_rules', $plugin_public, 'd2gc_update_booking_rules' );
+		$this->loader->add_action( 'wp_ajax_nopriv_d2gc_update_booking_rules', $plugin_public, 'd2gc_update_booking_rules' );
 	}
 
 

@@ -92,21 +92,21 @@ function add_form_row(type, rowID) {
     if (type === 'edu' || type === 'exp') {
         row = '<div class="row exp_edu ' + type + '_' + newRowID + '"><a class="remove_btn btn-add" href="#"><span class="icon-minus-circled"></span> </a>' +
             '<div class="col-sm-3"><div class="row"><div class="col-sm-6">' +
-            '<input type="text" id="d2g_exp_edu_start_date' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_exp_edu_start_date]" placeholder="' + s.start + '"/>' +
-            '</div><div class="col-sm-6"><input type="text" id="d2g_exp_edu_end_date' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_exp_edu_end_date]" placeholder="' + s.end + '"/>' +
+            '<input type="text" class="form-control"" id="d2g_exp_edu_start_date' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_exp_edu_start_date]" placeholder="' + s.start + '"/>' +
+            '</div><div class="col-sm-6"><input type="text" class="form-control"" id="d2g_exp_edu_end_date' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_exp_edu_end_date]" placeholder="' + s.end + '"/>' +
             '</div></div></div>';
 
         if (type === 'edu') {
             row +=
-                '<div class="col-sm-3"><input type="text" id="d2g_exp_edu_study' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_exp_edu_study]" placeholder="' + s.study_area + '"/></div>' +
-                '<div class="col-sm-3"><input type="text" id="d2g_exp_edu_title' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_exp_edu_title]" placeholder="' + s.degree + '"/></div>' +
-                '<div class="col-sm-3"><input type="text" id="d2g_exp_edu_org' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_exp_edu_org]" placeholder="' + s.institution + '"/></div>' +
+                '<div class="col-sm-3"><input type="text" class="form-control"" id="d2g_exp_edu_study' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_exp_edu_study]" placeholder="' + s.study_area + '"/></div>' +
+                '<div class="col-sm-3"><input type="text" class="form-control"" id="d2g_exp_edu_title' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_exp_edu_title]" placeholder="' + s.degree + '"/></div>' +
+                '<div class="col-sm-3"><input type="text" class="form-control"" id="d2g_exp_edu_org' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_exp_edu_org]" placeholder="' + s.institution + '"/></div>' +
                 '</div>';
         } else {
             row +=
-                '<div class="col-sm-3"><input type="text" id="d2g_exp_edu_expertise" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_exp_edu_expertise]" placeholder="' + s.expertise + '"/></div>' +
-                '<div class="col-sm-3"><input type="text" id="d2g_exp_edu_title" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_exp_edu_title]" placeholder="' + s.position + '"/></div>' +
-                '<div class="col-sm-3"><input type="text" id="d2g_exp_edu_org' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_exp_edu_org]" placeholder="' + s.organisation + '"/></div>' +
+                '<div class="col-sm-3"><input type="text" class="form-control"" id="d2g_exp_edu_expertise" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_exp_edu_expertise]" placeholder="' + s.expertise + '"/></div>' +
+                '<div class="col-sm-3"><input type="text" class="form-control"" id="d2g_exp_edu_title" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_exp_edu_title]" placeholder="' + s.position + '"/></div>' +
+                '<div class="col-sm-3"><input type="text" class="form-control"" id="d2g_exp_edu_org' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_exp_edu_org]" placeholder="' + s.organisation + '"/></div>' +
                 '</div>';
         }
 
@@ -114,12 +114,12 @@ function add_form_row(type, rowID) {
         // Publication rows
         row =
             '<div class="row exp_edu ' + type + '_' + newRowID + '"><a class="remove_btn btn-add" href="#"><span class="icon-minus-circled"></span> </a>' +
-            '<div class="col-sm-2"><input type="text" id="d2g_pub_title' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_pub_title]" placeholder="' + s.title + '"/></div>' +
-            '<div class="col-sm-2"><input type="text" id="d2g_pub_link' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_pub_link]" placeholder="' + s.web_link + '"/></div>' +
-            '<div class="col-sm-2"><input type="text" id="d2g_pub_journal' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_pub_journal]" placeholder="' + s.journal + '"/></div>' +
-            '<div class="col-sm-2"><input type="text" id="d2g_pub_type' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_pub_type]" placeholder="' + s.type_publication + '"/></div>' +
-            '<div class="col-sm-2"><input type="text" id="d2g_pub_author' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_pub_author]" placeholder="' + s.author + '"/></div>' +
-            '<div class="col-sm-2"><input type="text" id="d2g_pub_date' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_pub_date]" placeholder="' + s.publication_date + '"/></div>' +
+            '<div class="col-sm-2"><input type="text" class="form-control"" id="d2g_pub_title' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_pub_title]" placeholder="' + s.title + '"/></div>' +
+            '<div class="col-sm-2"><input type="text" class="form-control"" id="d2g_pub_link' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_pub_link]" placeholder="' + s.web_link + '"/></div>' +
+            '<div class="col-sm-2"><input type="text" class="form-control"" id="d2g_pub_journal' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_pub_journal]" placeholder="' + s.journal + '"/></div>' +
+            '<div class="col-sm-2"><input type="text" class="form-control"" id="d2g_pub_type' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_pub_type]" placeholder="' + s.type_publication + '"/></div>' +
+            '<div class="col-sm-2"><input type="text" class="form-control"" id="d2g_pub_author' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_pub_author]" placeholder="' + s.author + '"/></div>' +
+            '<div class="col-sm-2"><input type="text" class="form-control"" id="d2g_pub_date' + newRowID + '" value="" tabindex="1" size="40" name="meta[' + type + 's][' + newRowID + '][d2g_pub_date]" placeholder="' + s.publication_date + '"/></div>' +
             '</div>';
     }
 
@@ -490,6 +490,8 @@ jQuery(document).ready(function ($) {
             return false;
         }
     });
+
+    
 
     // Tabs (pm_tabs) at top of doctor form – adjust form action by role and tab
     $("ul.pm_tabs").find('span').on('click', function (event) {
@@ -975,7 +977,7 @@ jQuery(document).ready(function ($) {
 
             } else {
                 $('#written_con_error').html(checker_message).removeClass('simple_hide');
-                $('body').scrollTo('#content_wrapper', { duration: 'fast' });
+                $('body').scrollTo('#written_con_error', { duration: 'fast', offset: -180});
                 return false;
             }
 

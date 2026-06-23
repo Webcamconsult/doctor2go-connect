@@ -147,6 +147,59 @@ class D2gConnect_Public {
 		//load doctors
 		wp_enqueue_script( 'd2g-load-doctors', plugin_dir_url( __FILE__ ) . 'js/load-doctors.js', array( 'jquery' ), $this->version, true );
 
+        //edit booking rules doctors
+		wp_enqueue_script( 'd2gc-booking-editor', plugin_dir_url( __FILE__ ) . 'js/booking-editor.js', array( 'jquery' ), $this->version, true );
+        wp_localize_script(
+			'd2gc-booking-editor',
+			'd2gBookingRulesData',
+			array(
+
+				/* AJAX + security */
+				'ajax' => array(
+					'url'          => admin_url( 'admin-ajax.php' ),
+					'send_booking_rules_nonce' => wp_create_nonce( 'send_booking_rules_nonce' ),
+					
+				),
+
+				/* user */
+				'user' => array(
+					'role'         => ! empty( $current_user->roles ) ? $current_user->roles[0] : null,
+					'is_logged_in' => is_user_logged_in(),
+				),
+
+				/* page state */
+				'page' => array(
+					'edit_id'   => isset( $_GET['edit'] ) ? absint( wp_unslash( $_GET['edit'] ) ) : 0, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					'open'      => isset( $_GET['open'] ) ? sanitize_key( wp_unslash( $_GET['open'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					'scroll_to' => isset( $_GET['scroll_to'] ) ? sanitize_key( wp_unslash( $_GET['scroll_to'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				),
+
+				
+				
+				
+				/* strings used for dynamic form rows */
+				'str' => array(
+					'start'             => esc_html__( 'start date', 'doctor2go-connect' ),
+					'end'               => esc_html__( 'end date', 'doctor2go-connect' ),
+					'study_area'        => esc_html__( 'study area', 'doctor2go-connect' ),
+					'degree'            => esc_html__( 'degree', 'doctor2go-connect' ),
+					'institution'       => esc_html__( 'institution', 'doctor2go-connect' ),
+					'expertise'         => esc_html__( 'expertise', 'doctor2go-connect' ),
+					'position'          => esc_html__( 'position', 'doctor2go-connect' ),
+					'organisation'      => esc_html__( 'organisation / company', 'doctor2go-connect' ),
+					'title'             => esc_html__( 'title', 'doctor2go-connect' ),
+					'web_link'          => esc_html__( 'web link', 'doctor2go-connect' ),
+					'journal'           => esc_html__( 'journal', 'doctor2go-connect' ),
+					'type_publication'  => esc_html__( 'type of publication', 'doctor2go-connect' ),
+					'author'            => esc_html__( 'author', 'doctor2go-connect' ),
+					'publication_date'  => esc_html__( 'publication date', 'doctor2go-connect' ),
+				),
+
+				
+
+			)
+		);
+
 		//booking via calendar
 		wp_enqueue_script( $this->plugin_name . '-booking', plugin_dir_url( __FILE__ ) . 'js/doctor2go-booking.js', array( 'jquery' ), $this->version, true );
 
@@ -208,7 +261,11 @@ class D2gConnect_Public {
 			)
 		);
 
-		// custom js needs tom come last
+        ////////////////////////////////////////////////////
+        // do not touch this
+        // this is the big file with all small functions
+		// custom js needs to come last
+        ////////////////////////////////////
 		$current_user = wp_get_current_user();
 		wp_enqueue_script( 'd2g-public', plugin_dir_url( __FILE__ ) . 'js/d2g-public.js', array( 'jquery' ), $this->version, true );
 		wp_localize_script(
@@ -919,4 +976,132 @@ class D2gConnect_Public {
 
 		wp_die();
 	}
+
+
+    function d2gc_update_booking_rules() {
+        check_ajax_referer( 'send_booking_rules_nonce', 'send_booking_rules_nonce' );
+
+        $wpDocID    = isset( $_POST['wp_doc_id'] ) ? absint( wp_unslash( $_POST['wp_doc_id'] ) ) : 0;
+        $rules_json = isset( $_POST['simple_rules_json'] ) ? wp_unslash( $_POST['simple_rules_json'] ) : '';
+        $anchor_date = isset( $_POST['anchor_date'] ) ? sanitize_text_field( wp_unslash( $_POST['anchor_date'] ) ) : '';
+
+        if ( ! $wpDocID ) {
+            wp_send_json_error(
+                array(
+                    'message' => 'Missing or invalid doctor ID.',
+                )
+            );
+        }
+
+        $rules_data = json_decode( $rules_json, true );
+
+        if ( JSON_ERROR_NONE !== json_last_error() || ! is_array( $rules_data ) ) {
+            wp_send_json_error(
+                array(
+                    'message' => 'Invalid rules JSON.',
+                    'json_error' => json_last_error_msg(),
+                )
+            );
+        }
+
+        $clean_rules = array();
+
+        if ( ! empty( $rules_data['rules'] ) && is_array( $rules_data['rules'] ) ) {
+            foreach ( $rules_data['rules'] as $rule ) {
+                $clean_rules[] = array(
+                    'anchor_date'   => isset( $rule['anchor_date'] ) && null !== $rule['anchor_date'] ? absint( $rule['anchor_date'] ) : null,
+                    'start_time'    => isset( $rule['start_time'] ) ? sanitize_text_field( $rule['start_time'] ) : '',
+                    'end_time'      => isset( $rule['end_time'] ) ? sanitize_text_field( $rule['end_time'] ) : '',
+                    'wdays'         => isset( $rule['wdays'] ) ? absint( $rule['wdays'] ) : 0,
+                    'week_interval' => isset( $rule['week_interval'] ) ? absint( $rule['week_interval'] ) : 1,
+                );
+            }
+        }
+
+        $docKey    = get_post_meta( $wpDocID, 'user_key', true );
+        $docOrgKey = get_post_meta( $wpDocID, 'organisation_key', true );
+        $docWCC_ID = get_post_meta( $wpDocID, 'wcc_user_id', true );
+
+        if ( empty( $docKey ) ) {
+            wp_send_json_error(
+                array(
+                    'message' => 'Doctor token not found.',
+                )
+            );
+        }
+
+        $myTime   = new DateTime();
+        $unixTime = $myTime->format( 'U' );
+        $superKey = get_option( 'd2gc_wcc_token' );
+        $myHash   = hash( 'sha256', $unixTime . '_' . $docKey . '_' . $superKey );
+
+        $url = trailingslashit( get_option( 'd2gc_api_url_short' ) ) . 'doclisting/update_bookings_rules_for_user';
+
+        $body = array(
+            'handshake' => array(
+                'time'  => (string) $unixTime,
+                'token' => $docKey,
+                'hash'  => $myHash,
+                'type'  => 'user',
+            ),
+            'simple_rules_json'        => json_encode($clean_rules),
+            'user_id'                  => $docWCC_ID,
+            'is_simple_form'              => true 
+        );
+
+        $args = array(
+            'method'      => 'POST',
+            'timeout'     => 30,
+            'headers'     => array(
+                'Content-Type'  => 'application/json',
+                'Cache-Control' => 'no-cache',
+                'Pragma'        => 'no-cache',
+            ),
+            'body'        => wp_json_encode( $body ),
+            'data_format' => 'body',
+        );
+
+        $response = wp_remote_request( $url, $args );
+
+        if ( is_wp_error( $response ) ) {
+            wp_send_json_error(
+                array(
+                    'message' => 'Remote request failed.',
+                    'error'   => $response->get_error_message(),
+                )
+            );
+        }
+
+        $status_code   = wp_remote_retrieve_response_code( $response );
+        $response_body = wp_remote_retrieve_body( $response );
+        $resp          = json_decode( $response_body );
+
+        if ( 200 !== (int) $status_code ) {
+            wp_send_json_error(
+                array(
+                    'message'      => 'API returned an unexpected status code.',
+                    'status_code'  => $status_code,
+                    'raw_response' => $response_body,
+                )
+            );
+        }
+
+        if ( $resp->message == 'ok' ) {
+            wp_send_json_success(
+                array(
+                    'message'        => 'Booking rules updated successfully.',
+                    'rules'          => $clean_rules,
+                    'api_response'   => $resp,
+                )
+            );
+        } else {
+            wp_send_json_error(
+                array(
+                    'message'      => 'API returned an unexpected status code.',
+                    'rules'          => $clean_rules,
+                    'api_response'   => $resp,
+                )
+            );
+        }
+    }
 }

@@ -57,8 +57,8 @@ if ( is_user_logged_in() ) {
                     <div class="row mb-3">
                         <div class="col-sm-4">
                             <div>
-                                <label class="form-label" for="option_bday"><?php echo esc_html__( 'Date of Birth: day/month/year  ', 'doctor2go-connect' ); ?></label>
-                                <input class="form-control" type="date" name="option_bday" id="option_bday" value="<?php echo esc_html( $userMeta['p_bday'][0] ); ?>" placeholder="<?php echo esc_attr__( 'Select your date of birth', 'doctor2go-connect' ); ?>">
+                                <label class="form-label" for="option_bday"><?php echo esc_html__( 'Date of Birth: month/year  ', 'doctor2go-connect' ); ?></label>
+                                <input class="form-control" max="2012-12-31" type="month" name="option_bday" id="option_bday" value="<?php echo esc_html( $userMeta['p_bday'][0] ); ?>" placeholder="<?php echo esc_attr__( 'Select your date of birth', 'doctor2go-connect' ); ?>">
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -98,7 +98,7 @@ if ( is_user_logged_in() ) {
                                         <strong><?php echo ($type == 'derma_email_advice') ? esc_html__('Photo of the skin condition (above)', 'doctor2go-connect') : esc_html__('Photo of the condition (above)', 'doctor2go-connect') ; ?></strong>
                                     </label>
                                     <div class="image_placeholder border rounded mb-2 p-2" id="image_placeholder_1"></div>
-                                    <input type="file" class="form-control simple_hide" capture="user" id="image_upload_1" name="skin_photo[]" accept="image/*">
+                                    <input type="file" class="form-control simple_hide" id="image_upload_1" name="skin_photo[]" accept="image/*">
                                 </div>
                             </div>
                             <?php if ( wpmd_is_phone() ) { ?>
@@ -113,7 +113,7 @@ if ( is_user_logged_in() ) {
                                         <strong><?php echo ($type == 'derma_email_advice') ? esc_html__('Photo of the skin condition (side)', 'doctor2go-connect') : esc_html__('Photo of the condition (side)', 'doctor2go-connect') ; ?></strong>
                                     </label>
                                     <div class="image_placeholder border rounded mb-2 p-2" id="image_placeholder_2"></div>
-                                    <input type="file" class="form-control simple_hide " capture="user" id="image_upload_2" name="skin_photo[]" accept="image/*">
+                                    <input type="file" class="form-control simple_hide " id="image_upload_2" name="skin_photo[]" accept="image/*">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -122,7 +122,7 @@ if ( is_user_logged_in() ) {
                                         <strong><?php echo ($type == 'derma_email_advice') ? esc_html__('Photo of the skin condition (extra)', 'doctor2go-connect') : esc_html__('Photo of the condition (extra)', 'doctor2go-connect') ; ?></strong>
                                     </label>
                                     <div class="image_placeholder border rounded mb-2 p-2" id="image_placeholder_3"></div>
-                                    <input type="file" class="form-control simple_hide " capture="user" id="image_upload_3" name="skin_photo[]" accept="image/*">
+                                    <input type="file" class="form-control simple_hide " id="image_upload_3" name="skin_photo[]" accept="image/*">
                                 </div>
                             </div>
                             <?php if ( wpmd_is_phone() ) { ?>

@@ -203,6 +203,11 @@ class D2gConnect_Shortcodes {
 									<strong><?php echo esc_html( __( 'Education & working experience', 'doctor2go-connect' ) ); ?></strong>
 								</button>
 							</li>
+                            <li class="nav-item" role="presentation">
+								<button class="nav-link booking_button" id="booking-tab" data-bs-toggle="tab" data-bs-target="#booking-tab-pane" type="button" role="tab" aria-controls="booking-tab-pane" aria-selected="false">
+									<strong><?php echo esc_html( __( 'Booking rules (availibilities & prices)', 'doctor2go-connect' ) ); ?></strong>
+								</button>
+							</li>
 						</ul>
 
 						<div class="alert alert-danger mt-3 mb-3 simple_hide"></div>
@@ -211,580 +216,971 @@ class D2gConnect_Shortcodes {
 							<div class="basic_data pm_d2g_tab_content first tab-pane fade show active" id="basic-tab-pane" role="tabpanel" aria-labelledby="email-tab" tabindex="0">
 								<div class="row mb-3">
 									<div class="col-12 col-lg-6">
-										<h3><?php echo esc_html__( 'Personal information', 'doctor2go-connect' ); ?></h3>
-										<div class="form-table">
-											<div class="mb-3">
-												<label class="form-label small">
-													<?php echo esc_html__( 'Organisation', 'doctor2go-connect' ); ?>
-												</label>
-												<input type="text" class="form-control" id="d2g_organisation" value="<?php echo esc_html( $doctor_meta['d2g_organisation'][0] ); ?>" tabindex="1" name="meta[d2g_organisation]" placeholder="<?php echo esc_html__( 'Organisation', 'doctor2go-connect' ); ?>"/>
+										
+										<div class="form-table card mb-5">
+                                            <div class="card-body">
+                                                <h3><?php echo esc_html__( 'Personal information', 'doctor2go-connect' ); ?></h3>
+                                                <div class="mb-3">
+                                                    <label class="form-label small">
+                                                        <?php echo esc_html__( 'Organisation', 'doctor2go-connect' ); ?>
+                                                    </label>
+                                                    <input type="text" class="form-control" id="d2g_organisation" value="<?php echo esc_html( $doctor_meta['d2g_organisation'][0] ); ?>" tabindex="1" name="meta[d2g_organisation]" placeholder="<?php echo esc_html__( 'Organisation', 'doctor2go-connect' ); ?>"/>
 
-												<label class="form-label small mt-2">
-													<?php echo esc_html__( 'First name *', 'doctor2go-connect' ); ?>
-												</label>
-												<input type="text" class="form-control required" id="d2g_first_name" value="<?php echo esc_html( $doctor_meta['d2g_first_name'][0] ); ?>" tabindex="1" name="meta[d2g_first_name]" placeholder="<?php echo esc_html__( 'First name *', 'doctor2go-connect' ); ?>"/>
+                                                    <label class="form-label small mt-2">
+                                                        <?php echo esc_html__( 'First name *', 'doctor2go-connect' ); ?>
+                                                    </label>
+                                                    <input type="text" class="form-control required" id="d2g_first_name" value="<?php echo esc_html( $doctor_meta['d2g_first_name'][0] ); ?>" tabindex="1" name="meta[d2g_first_name]" placeholder="<?php echo esc_html__( 'First name *', 'doctor2go-connect' ); ?>"/>
 
-												<label class="form-label small mt-2">
-													<?php echo esc_html__( 'Last name *', 'doctor2go-connect' ); ?>
-												</label>
-												<input type="text" class="form-control required" id="d2g_last_name" value="<?php echo esc_html( $doctor_meta['d2g_last_name'][0] ); ?>" tabindex="1" name="meta[d2g_last_name]" placeholder="<?php echo esc_html__( 'Last name *', 'doctor2go-connect' ); ?>"/>
+                                                    <label class="form-label small mt-2">
+                                                        <?php echo esc_html__( 'Last name *', 'doctor2go-connect' ); ?>
+                                                    </label>
+                                                    <input type="text" class="form-control required" id="d2g_last_name" value="<?php echo esc_html( $doctor_meta['d2g_last_name'][0] ); ?>" tabindex="1" name="meta[d2g_last_name]" placeholder="<?php echo esc_html__( 'Last name *', 'doctor2go-connect' ); ?>"/>
 
-												<label class="form-label small mt-2">
-													<?php echo esc_html__( 'Title *', 'doctor2go-connect' ); ?>
-												</label>
-												<input type="text" class="form-control" id="d2g_emp_title" value="<?php echo esc_html( $doctor_meta['d2g_emp_title'][0] ); ?>" tabindex="1" name="meta[d2g_emp_title]" placeholder="<?php echo esc_html__( 'Title *', 'doctor2go-connect' ); ?>"/>
+                                                    <label class="form-label small mt-2">
+                                                        <?php echo esc_html__( 'Title *', 'doctor2go-connect' ); ?>
+                                                    </label>
+                                                    <input type="text" class="form-control" id="d2g_emp_title" value="<?php echo esc_html( $doctor_meta['d2g_emp_title'][0] ); ?>" tabindex="1" name="meta[d2g_emp_title]" placeholder="<?php echo esc_html__( 'Title *', 'doctor2go-connect' ); ?>"/>
 
-												<label class="form-label small mt-2">
-													<?php echo esc_html__( 'Display name', 'doctor2go-connect' ); ?>
-												</label>
-												<input type="text" class="form-control" id="d2g_post_title" value="<?php echo esc_html( $pubProfile->post_title ); ?>" tabindex="1" name="post_title" placeholder="<?php echo esc_html__( 'Display name', 'doctor2go-connect' ); ?>"/>
+                                                    <label class="form-label small mt-2">
+                                                        <?php echo esc_html__( 'Display name', 'doctor2go-connect' ); ?>
+                                                    </label>
+                                                    <input type="text" class="form-control" id="d2g_post_title" value="<?php echo esc_html( $pubProfile->post_title ); ?>" tabindex="1" name="post_title" placeholder="<?php echo esc_html__( 'Display name', 'doctor2go-connect' ); ?>"/>
 
-												<label class="form-label small mt-2">
-													<?php echo esc_html__( 'Address', 'doctor2go-connect' ); ?>
-												</label>
-												<input type="text" class="form-control" id="address" value="<?php echo esc_html( $doctor_meta['d2g_address'][0] ); ?>" tabindex="1" name="meta[d2g_address]" placeholder="<?php echo esc_html__( 'Address', 'doctor2go-connect' ); ?>"/>
+                                                    <label class="form-label small mt-2">
+                                                        <?php echo esc_html__( 'Address', 'doctor2go-connect' ); ?>
+                                                    </label>
+                                                    <input type="text" class="form-control" id="address" value="<?php echo esc_html( $doctor_meta['d2g_address'][0] ); ?>" tabindex="1" name="meta[d2g_address]" placeholder="<?php echo esc_html__( 'Address', 'doctor2go-connect' ); ?>"/>
 
-												<label class="form-label small mt-2">
-													<?php echo esc_html__( 'Zip', 'doctor2go-connect' ); ?>
-												</label>
-												<input type="text" class="form-control" id="zip" value="<?php echo esc_html( $doctor_meta['d2g_zip'][0] ); ?>" tabindex="1" name="meta[d2g_zip]" placeholder="<?php echo esc_html__( 'Zip code', 'doctor2go-connect' ); ?>"/>
+                                                    <label class="form-label small mt-2">
+                                                        <?php echo esc_html__( 'Zip', 'doctor2go-connect' ); ?>
+                                                    </label>
+                                                    <input type="text" class="form-control" id="zip" value="<?php echo esc_html( $doctor_meta['d2g_zip'][0] ); ?>" tabindex="1" name="meta[d2g_zip]" placeholder="<?php echo esc_html__( 'Zip code', 'doctor2go-connect' ); ?>"/>
 
-												<label class="form-label small mt-2">
-													<?php echo esc_html__( 'City', 'doctor2go-connect' ); ?>
-												</label>
-												<input type="text" class="form-control" id="city" value="<?php echo esc_html( $doctor_meta['d2g_city'][0] ); ?>" tabindex="1" name="meta[d2g_city]" placeholder="<?php echo esc_html__( 'City *', 'doctor2go-connect' ); ?>"/>
+                                                    <label class="form-label small mt-2">
+                                                        <?php echo esc_html__( 'City', 'doctor2go-connect' ); ?>
+                                                    </label>
+                                                    <input type="text" class="form-control" id="city" value="<?php echo esc_html( $doctor_meta['d2g_city'][0] ); ?>" tabindex="1" name="meta[d2g_city]" placeholder="<?php echo esc_html__( 'City *', 'doctor2go-connect' ); ?>"/>
 
-												<label class="form-label small mt-2">
-													<?php echo esc_html__( 'Country *', 'doctor2go-connect' ); ?>
-												</label>
-												<select name="tax[country-origin]" class="form-select">
-													<option value="">
-														<?php echo esc_html__( 'Country', 'doctor2go-connect' ); ?>
-													</option>
-													<?php
-													foreach ( $allCountries as $country ) {
-														$selected = '';
-														if ( isset( $countriesArray[ $country->slug ] ) ) {
-															$selected = 'selected';
-														}
-														?>
-														<option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $country->slug ); ?>">
-															<?php
-															if ( get_option( 'd2gc_pseudo_translations' ) == 1 ) {
-																echo ( $currLang == 'en' ) ? esc_html( $country->name ) : esc_html( get_term_meta( $country->term_id, 'rudr_text_' . $currLang, true ) );
-															} else {
-																echo esc_html( $country->name );
-															}
-															?>
-														</option>
-														<?php
-													}
-													?>
-												</select>
+                                                    <label class="form-label small mt-2">
+                                                        <?php echo esc_html__( 'Country *', 'doctor2go-connect' ); ?>
+                                                    </label>
+                                                    <select name="tax[country-origin]" class="form-select">
+                                                        <option value="">
+                                                            <?php echo esc_html__( 'Country', 'doctor2go-connect' ); ?>
+                                                        </option>
+                                                        <?php
+                                                        foreach ( $allCountries as $country ) {
+                                                            $selected = '';
+                                                            if ( isset( $countriesArray[ $country->slug ] ) ) {
+                                                                $selected = 'selected';
+                                                            }
+                                                            ?>
+                                                            <option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $country->slug ); ?>">
+                                                                <?php
+                                                                if ( get_option( 'd2gc_pseudo_translations' ) == 1 ) {
+                                                                    echo ( $currLang == 'en' ) ? esc_html( $country->name ) : esc_html( get_term_meta( $country->term_id, 'rudr_text_' . $currLang, true ) );
+                                                                } else {
+                                                                    echo esc_html( $country->name );
+                                                                }
+                                                                ?>
+                                                            </option>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </select>
 
-												<label class="form-label small mt-2">
-													<?php echo esc_html__( 'Practice phone number (optional but recommended for use with a reception)', 'doctor2go-connect' ); ?>
-												</label>
-												<input type="text" class="form-control" id="tel" value="<?php echo esc_html( $doctor_meta['tel'][0] ); ?>" tabindex="1" name="meta[tel]" placeholder="<?php echo esc_html__( 'Tel ', 'doctor2go-connect' ); ?>"/>
+                                                    <label class="form-label small mt-2">
+                                                        <?php echo esc_html__( 'Practice phone number (optional but recommended for use with a reception)', 'doctor2go-connect' ); ?>
+                                                    </label>
+                                                    <input type="text" class="form-control" id="tel" value="<?php echo esc_html( $doctor_meta['tel'][0] ); ?>" tabindex="1" name="meta[tel]" placeholder="<?php echo esc_html__( 'Tel ', 'doctor2go-connect' ); ?>"/>
 
-												<label class="form-label small mt-2">
-													<?php echo esc_html__( 'Mobile phone number  (optional)', 'doctor2go-connect' ); ?>
-												</label>
-												<input type="text" class="form-control" id="mobile" value="<?php echo esc_html( $doctor_meta['d2g_mobile'][0] ); ?>" tabindex="1" name="meta[d2g_mobile]" placeholder="<?php echo esc_html__( 'Mobile ', 'doctor2go-connect' ); ?>"/>
+                                                    <label class="form-label small mt-2">
+                                                        <?php echo esc_html__( 'Mobile phone number  (optional)', 'doctor2go-connect' ); ?>
+                                                    </label>
+                                                    <input type="text" class="form-control" id="mobile" value="<?php echo esc_html( $doctor_meta['d2g_mobile'][0] ); ?>" tabindex="1" name="meta[d2g_mobile]" placeholder="<?php echo esc_html__( 'Mobile ', 'doctor2go-connect' ); ?>"/>
 
-												<label class="form-label small mt-2">
-													<?php echo esc_html__( 'E-mail *', 'doctor2go-connect' ); ?>
-												</label>
-												<input type="text" class="form-control required" id="email" value="<?php echo esc_html( $doctor_meta['d2g_main_email'][0] ); ?>" tabindex="1" name="meta[d2g_main_email]" placeholder="<?php echo esc_html__( 'E-mail *', 'doctor2go-connect' ); ?>"/>
-											</div>
-
-											<h3 class="mt-5">
-												<?php echo esc_html__( 'Registration information', 'doctor2go-connect' ); ?>
-											</h3>
-
-											<label class="form-label small">
-												<?php echo esc_html__( 'Registration number', 'doctor2go-connect' ); ?>
-											</label>
-											<input type="text" class="form-control" id="reg_nr" value="<?php echo esc_html( $doctor_meta['reg_nr'][0] ); ?>" tabindex="1" name="meta[reg_nr]" placeholder="<?php echo esc_html__( 'Registration number ', 'doctor2go-connect' ); ?>"/>
-
-											<label class="form-label small mt-2">
-												<?php echo esc_html__( 'Country of registration', 'doctor2go-connect' ); ?>
-											</label>
-											<input type="text" class="form-control" id="reg_country" value="<?php echo esc_html( $doctor_meta['reg_country'][0] ); ?>" tabindex="1" name="meta[reg_country]" placeholder="<?php echo esc_html__( 'Country of registration', 'doctor2go-connect' ); ?>"/>
+                                                    <label class="form-label small mt-2">
+                                                        <?php echo esc_html__( 'E-mail *', 'doctor2go-connect' ); ?>
+                                                    </label>
+                                                    <input type="text" class="form-control required" id="email" value="<?php echo esc_html( $doctor_meta['d2g_main_email'][0] ); ?>" tabindex="1" name="meta[d2g_main_email]" placeholder="<?php echo esc_html__( 'E-mail *', 'doctor2go-connect' ); ?>"/>
+                                                </div>
+                                            </div>
+										</div>
+                                        <div class="card mb-5">
+                                            <div class="card-body">
+                                                <h3>
+                                                    <?php echo esc_html__( 'Languages', 'doctor2go-connect' ); ?> *
+                                                </h3>
+                                                <div class="mb-3">
+                                                    <select name="tax[doctor-language][]" multiple="multiple" class="form-select mb-3">
+                                                        <?php
+                                                        foreach ( $allLanguages as $language ) {
+                                                            $selected = '';
+                                                            if ( isset( $langArray[ $language->slug ] ) ) {
+                                                                $selected = 'selected';
+                                                            }
+                                                            ?>
+                                                            <option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $language->slug ); ?>">
+                                                                <?php
+                                                                if ( get_option( 'd2gc_pseudo_translations' ) == 1 ) {
+                                                                    echo ( $currLang == 'en' ) ? esc_html( $language->name ) : esc_html( get_term_meta( $language->term_id, 'rudr_text_' . $currLang, true ) );
+                                                                } else {
+                                                                    echo esc_html( $language->name );
+                                                                }
+                                                                ?>
+                                                            </option>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                                <div class="extra mb-3">
+                                                    <label class="form-check-label" for="sub_title">
+                                                        <input name="meta[sub_title]" id="sub_title" type="checkbox" checked value="y" class="form-check-input">
+                                                        <?php echo esc_html__( 'I offer subtitles (this is standard function with in webcamconsult)', 'doctor2go-connect' ); ?>
+                                                    </label>
+                                                </div>
+                                            </div>
+										</div>
+										<div class="card mb-5">
+                                            <div class="card-body">
+                                                <div id="specialty_wrapper" class="mb-5">
+                                                    <h3>
+                                                        <?php echo esc_html__( 'Fields of study', 'doctor2go-connect' ); ?> *
+                                                    </h3>
+                                                    <select name="tax[doctor-specialty][]" multiple="multiple" class="form-select mb-3">
+                                                        <?php
+                                                        foreach ( $allSpecialities as $speciality ) {
+                                                            $selected = '';
+                                                            if ( isset( $specArray[ $speciality->slug ] ) ) {
+                                                                $selected = 'selected';
+                                                            }
+                                                            ?>
+                                                            <option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $speciality->slug ); ?>">
+                                                                <?php
+                                                                if ( get_option( 'd2gc_pseudo_translations' ) == 1 ) {
+                                                                    echo ( $currLang == 'en' ) ? esc_html( $speciality->name ) : esc_html( get_term_meta( $speciality->term_id, 'rudr_text_' . $currLang, true ) );
+                                                                } else {
+                                                                    echo esc_html( $speciality->name );
+                                                                }
+                                                                ?>
+                                                            </option>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
 										</div>
 
-										<?php if ( get_option( 'd2gc_local_user' ) == 1 ) { ?>
+									</div>
+
+									<div class="col-12 col-lg-6 lists">
+										<div class="form-table card pic_upload_wrapper mb-5">
+                                            <div class="card-body">
+                                                <h3><?php echo esc_html__( 'Profile image', 'doctor2go-connect' ); ?></h3>
+                                                <?php if ( ! $feat_pic_full ) { ?>
+                                                    <p class="mb-2">
+                                                        <input type="file" class="form-control" name="picture_1"/>
+                                                    </p>
+                                                    <p class="small text-muted">
+                                                        <?php esc_html_e( 'To upload your image you first need to choose one and than save your profile. The image will be displayed after the pagereload.', 'doctor2go-connect' ); ?>
+                                                    </p>
+                                                <?php } else { ?>
+                                                    <p class="mb-3">
+                                                        <?php esc_html_e( 'Before you can upload a new image, please first delete the old one.', 'doctor2go-connect' ); ?>
+                                                    </p>
+                                                    <div class="profile_pic_wrapper" style="max-width:400px">
+                                                        <a class="del_img_link btn btn-outline-danger flaticon-dustbin mb-2" data-doc-id="<?php echo esc_html( $pubProfileID ); ?>" data-image-id="<?php echo esc_html( $img_ID ); ?>" href="#"></a>
+                                                        <img class="img-fluid" src="<?php echo esc_html( $feat_pic_full ); ?>">
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+										</div>
+										<div class="card mb-5">
+                                            <div class="card-body">
+                                                <h3>
+                                                    <?php echo esc_html__( 'Registration information', 'doctor2go-connect' ); ?>
+                                                </h3>
+
+                                                <label class="form-label small">
+                                                    <?php echo esc_html__( 'Registration number', 'doctor2go-connect' ); ?>
+                                                </label>
+                                                <input type="text" class="form-control" id="reg_nr" value="<?php echo esc_html( $doctor_meta['reg_nr'][0] ); ?>" tabindex="1" name="meta[reg_nr]" placeholder="<?php echo esc_html__( 'Registration number ', 'doctor2go-connect' ); ?>"/>
+
+                                                <label class="form-label small mt-2">
+                                                    <?php echo esc_html__( 'Country of registration', 'doctor2go-connect' ); ?>
+                                                </label>
+                                                <input type="text" class="form-control" id="reg_country" value="<?php echo esc_html( $doctor_meta['reg_country'][0] ); ?>" tabindex="1" name="meta[reg_country]" placeholder="<?php echo esc_html__( 'Country of registration', 'doctor2go-connect' ); ?>"/>
+                                            </div>
+										</div>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h3>
+                                                    <?php echo esc_html__( 'About your self', 'doctor2go-connect' ); ?>
+                                                </h3>
+                                                <p>
+                                                    <strong>
+                                                        <?php echo esc_html__( 'Please provide a brief biography highlighting your background and strengths for visitors.', 'doctor2go-connect' ); ?>
+                                                    </strong>
+                                                </p>
+                                                <?php wp_editor( $pubProfile->post_content, 'docdesc' ); ?>
+                                            </div>
+                                        </div>
+										
+									</div>
+								</div>
+							</div>
+
+							<div class="tab-pane fade pm_d2g_tab_content edu exp_edu" id="exp_edu-tab-pane" role="tabpanel" aria-labelledby="exp_edu-tab" tabindex="0">
+								
+
+								<div class="form-table card  mb-4">
+                                    <div class="card-body edu_wrapper">
+                                        <h3><?php echo esc_html__( 'education', 'doctor2go-connect' ); ?></h3>
+                                        <?php $counter = 0; ?>
+
+                                        <div class="row exp_edu fw-bold mb-2">
+                                            <div class="col-12 col-md-3">
+                                                <?php echo esc_html__( 'start & end date', 'doctor2go-connect' ); ?>
+                                            </div>
+                                            <div class="col-12 col-md-3">
+                                                <?php echo esc_html__( 'study area', 'doctor2go-connect' ); ?>
+                                            </div>
+                                            <div class="col-12 col-md-3">
+                                                <?php echo esc_html__( 'degree', 'doctor2go-connect' ); ?>
+                                            </div>
+                                            <div class="col-12 col-md-3">
+                                                <?php echo esc_html__( 'institution', 'doctor2go-connect' ); ?>
+                                            </div>
+                                        </div>
+
+                                        <?php if ( isset( $doctor_meta['edus'] ) ) { ?>
+                                            <?php foreach ( $doctor_meta['edus'] as $edu ) { ?>
+                                                <div class="row exp_edu edu_<?php echo esc_html( $counter ); ?> align-items-start mb-2">
+                                                    <?php if ( $counter > 0 ) { ?>
+                                                        
+                                                            <a class="remove_btn" href="#">
+                                                                <span class="icon-minus-circled"></span>
+                                                            </a>
+                                                        
+                                                    <?php } ?>
+
+                                                    <div class="col-12 col-md-3">
+                                                        <div class="row g-2">
+                                                            <div class="col-6">
+                                                                <input type="text" class="form-control" id="d2g_exp_edu_date" value="<?php echo esc_html( $edu['d2g_exp_edu_start_date'] ); ?>" tabindex="1" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_start_date]" placeholder="<?php echo esc_html__( 'start date', 'doctor2go-connect' ); ?>"/>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <input type="text" class="form-control" id="d2g_exp_edu_study" value="<?php echo esc_html( $edu['d2g_exp_edu_end_date'] ); ?>" tabindex="1" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_end_date]" placeholder="<?php echo esc_html__( 'end date', 'doctor2go-connect' ); ?>"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-3 mt-2 mt-md-0">
+                                                        <input type="text" class="form-control" id="d2g_exp_edu_study" value="<?php echo esc_html( $edu['d2g_exp_edu_study'] ); ?>" tabindex="1" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_study]" placeholder="<?php echo esc_html__( 'study area', 'doctor2go-connect' ); ?>"/>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-3 mt-2 mt-md-0">
+                                                        <input type="text" class="form-control" id="d2g_exp_edu_title" value="<?php echo esc_html( $edu['d2g_exp_edu_title'] ); ?>" tabindex="1" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_title]" placeholder="<?php echo esc_html__( 'degree', 'doctor2go-connect' ); ?>"/>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-3 mt-2 mt-md-0">
+                                                        <input type="text" class="form-control" id="d2g_exp_edu_org" value="<?php echo esc_html( $edu['d2g_exp_edu_org'] ); ?>" tabindex="1" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_org]" placeholder="<?php echo esc_html__( 'institution', 'doctor2go-connect' ); ?>"/>
+                                                    </div>
+                                                </div>
+                                                <?php ++$counter; ?>
+                                            <?php } ?>
+                                        <?php } else { ?>
+                                            <div class="row exp_edu edu_0 mb-2">
+                                                <div class="col-12 col-md-3">
+                                                    <div class="row g-2">
+                                                        <div class="col-6">
+                                                            <input type="text" class="form-control" id="d2g_exp_edu_date" tabindex="1" name="meta[edus][0][d2g_exp_edu_start_date]" placeholder="<?php echo esc_html__( 'start date', 'doctor2go-connect' ); ?>"/>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <input type="text" class="form-control" id="d2g_exp_edu_study" tabindex="1" name="meta[edus][0][d2g_exp_edu_end_date]" placeholder="<?php echo esc_html__( 'end date', 'doctor2go-connect' ); ?>"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-3 mt-2 mt-md-0">
+                                                    <input type="text" class="form-control" id="d2g_exp_edu_study" tabindex="1" name="meta[edus][0][d2g_exp_edu_study]" placeholder="<?php echo esc_html__( 'study area', 'doctor2go-connect' ); ?>"/>
+                                                </div>
+
+                                                <div class="col-12 col-md-3 mt-2 mt-md-0">
+                                                    <input type="text" class="form-control" id="d2g_exp_edu_title" tabindex="1" name="meta[edus][0][d2g_exp_edu_title]" placeholder="<?php echo esc_html__( 'degree', 'doctor2go-connect' ); ?>"/>
+                                                </div>
+
+                                                <div class="col-12 col-md-3 mt-2 mt-md-0">
+                                                    <input type="text" class="form-control" id="d2g_exp_edu_org" tabindex="1" name="meta[edus][0][d2g_exp_edu_org]" placeholder="<?php echo esc_html__( 'institution', 'doctor2go-connect' ); ?>"/>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                        <div class="btn_wrapper mb-4">
+                                            <a class="btn btn-outline-primary wp-block-button__link add_edu invert" data-entry-id="<?php echo esc_html( $counter ) - 1; ?>" href="#">
+                                                <?php echo esc_html__( 'add an extra education', 'doctor2go-connect' ); ?>
+                                            </a>
+                                        </div>
+                                    </div>
+								</div>
+
+								
+
+								
+
+								<div class="form-table card  mb-5">
+                                    <div class="card-body exp_wrapper">
+                                        <h3><?php echo esc_html__( 'working experience', 'doctor2go-connect' ); ?></h3>
+                                        <?php $counter = 0; ?>
+
+                                        <div class="row exp_edu fw-bold mb-2">
+                                            <div class="col-12 col-md-3">
+                                                <?php echo esc_html__( 'start & end date', 'doctor2go-connect' ); ?>
+                                            </div>
+                                            <div class="col-12 col-md-3">
+                                                <?php echo esc_html__( 'expertise', 'doctor2go-connect' ); ?>
+                                            </div>
+                                            <div class="col-12 col-md-3">
+                                                <?php echo esc_html__( 'position', 'doctor2go-connect' ); ?>
+                                            </div>
+                                            <div class="col-12 col-md-3">
+                                                <?php echo esc_html__( 'company', 'doctor2go-connect' ); ?>
+                                            </div>
+                                        </div>
+
+                                        <?php if ( isset( $doctor_meta['exps'] ) ) { ?>
+                                            <?php foreach ( $doctor_meta['exps'] as $exp ) { ?>
+                                                <div class="row exp_edu exp_<?php echo esc_html( $counter ); ?> align-items-start mb-2">
+                                                    <?php if ( $counter > 0 ) { ?>
+                                                        
+                                                            <a class="remove_btn" href="#">
+                                                                <span class="icon-minus-circled"></span>
+                                                            </a>
+                                                        
+                                                    <?php } ?>
+
+                                                    <div class="col-12 col-md-3">
+                                                        <div class="row g-2">
+                                                            <div class="col-6">
+                                                                <input type="text" class="form-control" id="d2g_exp_edu_date" value="<?php echo esc_html( $exp['d2g_exp_edu_start_date'] ); ?>" tabindex="1" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_start_date]" placeholder="<?php echo esc_html__( 'start date', 'doctor2go-connect' ); ?>"/>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <input type="text" class="form-control" id="d2g_exp_edu_study" value="<?php echo esc_html( $exp['d2g_exp_edu_end_date'] ); ?>" tabindex="1" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_end_date]" placeholder="<?php echo esc_html__( 'end date', 'doctor2go-connect' ); ?>"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-3 mt-2 mt-md-0">
+                                                        <input type="text" class="form-control" id="d2g_exp_edu_expertise" value="<?php echo esc_html( $exp['d2g_exp_edu_expertise'] ); ?>" tabindex="1" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_expertise]" placeholder="<?php echo esc_html__( 'exptertise', 'doctor2go-connect' ); ?>"/>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-3 mt-2 mt-md-0">
+                                                        <input type="text" class="form-control" id="d2g_exp_edu_title" value="<?php echo esc_html( $exp['d2g_exp_edu_title'] ); ?>" tabindex="1" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_title]" placeholder="<?php echo esc_html__( 'position', 'doctor2go-connect' ); ?>"/>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-3 mt-2 mt-md-0">
+                                                        <input type="text" class="form-control" id="d2g_exp_edu_org" value="<?php echo esc_html( $exp['d2g_exp_edu_org'] ); ?>" tabindex="1" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_org]" placeholder="<?php echo esc_html__( 'company', 'doctor2go-connect' ); ?>"/>
+                                                    </div>
+                                                </div>
+                                                <?php ++$counter; ?>
+                                            <?php } ?>
+                                        <?php } else { ?>
+                                            <div class="row exp_edu exp_0 mb-2">
+                                                <div class="col-12 col-md-3">
+                                                    <div class="row g-2">
+                                                        <div class="col-6">
+                                                            <input type="text" class="form-control" id="d2g_exp_edu_date" tabindex="1" name="meta[exps][0][d2g_exp_edu_start_date]" placeholder="<?php echo esc_html__( 'start date', 'doctor2go-connect' ); ?>"/>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <input type="text" class="form-control" id="d2g_exp_edu_study" tabindex="1" name="meta[exps][0][d2g_exp_edu_end_date]" placeholder="<?php echo esc_html__( 'end date', 'doctor2go-connect' ); ?>"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-3 mt-2 mt-md-0">
+                                                    <input type="text" class="form-control" id="d2g_exp_edu_expertise" tabindex="1" name="meta[exps][0][d2g_exp_edu_expertise]" placeholder="<?php echo esc_html__( 'exptertise', 'doctor2go-connect' ); ?>"/>
+                                                </div>
+
+                                                <div class="col-12 col-md-3 mt-2 mt-md-0">
+                                                    <input type="text" class="form-control" id="d2g_exp_edu_title" tabindex="1" name="meta[exps][0][d2g_exp_edu_title]" placeholder="<?php echo esc_html__( 'title', 'doctor2go-connect' ); ?>"/>
+                                                </div>
+
+                                                <div class="col-12 col-md-3 mt-2 mt-md-0">
+                                                    <input type="text" class="form-control" id="d2g_exp_edu_org" tabindex="1" name="meta[exps][0][d2g_exp_edu_org]" placeholder="<?php echo esc_html__( 'company', 'doctor2go-connect' ); ?>"/>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                    
+
+                                    <div class="btn_wrapper mb-4">
+                                        <a class="btn btn-outline-primary wp-block-button__link add_exp invert" data-entry-id="<?php echo esc_html( $counter ) - 1; ?>" href="#">
+                                            <?php echo esc_html__( 'add an extra working experience', 'doctor2go-connect' ); ?>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+								
+
+								<div class="form-table card  mb-4">
+                                    <div class="card-body pub_wrapper">
+                                        <h3><?php echo esc_html__( 'publications', 'doctor2go-connect' ); ?></h3>
+                                        <?php $counter = 0; ?>
+
+                                        <div class="row exp_edu fw-bold mb-2">
+                                            <div class="col-12 col-md-2">
+                                                <?php echo esc_html__( 'title', 'doctor2go-connect' ); ?>
+                                            </div>
+                                            <div class="col-12 col-md-2">
+                                                <?php echo esc_html__( 'web link', 'doctor2go-connect' ); ?>
+                                            </div>
+                                            <div class="col-12 col-md-2">
+                                                <?php echo esc_html__( 'journal', 'doctor2go-connect' ); ?>
+                                            </div>
+                                            <div class="col-12 col-md-2">
+                                                <?php echo esc_html__( 'type of publication', 'doctor2go-connect' ); ?>
+                                            </div>
+                                            <div class="col-12 col-md-2">
+                                                <?php echo esc_html__( 'author', 'doctor2go-connect' ); ?>
+                                            </div>
+                                            <div class="col-12 col-md-2">
+                                                <?php echo esc_html__( 'publication Date', 'doctor2go-connect' ); ?>
+                                            </div>
+                                        </div>
+
+                                        <?php if ( isset( $doctor_meta['pubs'] ) ) { ?>
+                                            <?php foreach ( $doctor_meta['pubs'] as $exp ) { ?>
+                                                <div class="row exp_edu exp_<?php echo esc_html( $counter ); ?> align-items-start mb-2">
+                                                    <?php if ( $counter > 0 ) { ?>
+                                                        <a class="remove_btn" href="#">
+                                                            <span class="icon-minus-circled"></span>
+                                                        </a>
+                                                    <?php } ?>
+
+                                                    <div class="col-12 col-md-2">
+                                                        <input type="text" class="form-control" id="d2g_pub_title" value="<?php echo esc_html( $exp['d2g_pub_title'] ); ?>" tabindex="1" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_title]" placeholder="<?php echo esc_html__( 'title', 'doctor2go-connect' ); ?>"/>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-2 mt-2 mt-md-0">
+                                                        <input type="text" class="form-control" id="d2g_pub_link" value="<?php echo esc_html( $exp['d2g_pub_link'] ); ?>" tabindex="1" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_link]" placeholder="<?php echo esc_html__( 'web link', 'doctor2go-connect' ); ?>"/>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-2 mt-2 mt-md-0">
+                                                        <input type="text" class="form-control" id="d2g_pub_journal" value="<?php echo esc_html( $exp['d2g_pub_journal'] ); ?>" tabindex="1" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_journal]" placeholder="<?php echo esc_html__( 'journal', 'doctor2go-connect' ); ?>"/>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-2 mt-2 mt-md-0">
+                                                        <input type="text" class="form-control" id="d2g_pub_type" value="<?php echo esc_html( $exp['d2g_pub_type'] ); ?>" tabindex="1" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_type]" placeholder="<?php echo esc_html__( 'type of publication', 'doctor2go-connect' ); ?>"/>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-2 mt-2 mt-md-0">
+                                                        <input type="text" class="form-control" id="d2g_pub_author" value="<?php echo esc_html( $exp['d2g_pub_author'] ); ?>" tabindex="1" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_author]" placeholder="<?php echo esc_html__( 'author', 'doctor2go-connect' ); ?>"/>
+                                                    </div>
+
+                                                    <div class="col-12 col-md-2 mt-2 mt-md-0">
+                                                        <input type="text" class="form-control" id="d2g_pub_date" value="<?php echo esc_html( $exp['d2g_pub_date'] ); ?>" tabindex="1" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_date]" placeholder="<?php echo esc_html__( 'publication date', 'doctor2go-connect' ); ?>"/>
+                                                    </div>
+                                                </div>
+                                                <?php ++$counter; ?>
+                                            <?php } ?>
+                                        <?php } else { ?>
+                                            <div class="row exp_edu exp_0 mb-2">
+                                                <div class="col-12 col-md-2">
+                                                    <input type="text" class="form-control" id="d2g_pub_title" tabindex="1" name="meta[pubs][0][d2g_pub_title]" placeholder="<?php echo esc_html__( 'title', 'doctor2go-connect' ); ?>"/>
+                                                </div>
+
+                                                <div class="col-12 col-md-2 mt-2 mt-md-0">
+                                                    <input type="text" class="form-control" id="d2g_pub_link" tabindex="1" name="meta[pubs][0][d2g_pub_link]" placeholder="<?php echo esc_html__( 'web link', 'doctor2go-connect' ); ?>"/>
+                                                </div>
+
+                                                <div class="col-12 col-md-2 mt-2 mt-md-0">
+                                                    <input type="text" class="form-control" id="d2g_pub_journal" tabindex="1" name="meta[pubs][0][d2g_pub_journal]" placeholder="<?php echo esc_html__( 'journal', 'doctor2go-connect' ); ?>"/>
+                                                </div>
+
+                                                <div class="col-12 col-md-2 mt-2 mt-md-0">
+                                                    <input type="text" class="form-control" id="d2g_pub_type" tabindex="1" name="meta[pubs][0][d2g_pub_type]" placeholder="<?php echo esc_html__( 'type of publication', 'doctor2go-connect' ); ?>"/>
+                                                </div>
+
+                                                <div class="col-12 col-md-2 mt-2 mt-md-0">
+                                                    <input type="text" class="form-control" id="d2g_pub_author" tabindex="1" name="meta[pubs][0][d2g_pub_author]" placeholder="<?php echo esc_html__( 'author', 'doctor2go-connect' ); ?>"/>
+                                                </div>
+
+                                                <div class="col-12 col-md-2 mt-2 mt-md-0">
+                                                    <input type="text" class="form-control" id="d2g_pub_date" tabindex="1" name="meta[pubs][0][d2g_pub_date]" placeholder="<?php echo esc_html__( 'publication Date', 'doctor2go-connect' ); ?>"/>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                        <div class="btn_wrapper mb-4">
+                                            <a class="btn btn-outline-primary wp-block-button__link add_pub invert" data-entry-id="<?php echo esc_html( $counter ) - 1; ?>" href="#">
+                                                <?php echo esc_html__( 'add an extra publication', 'doctor2go-connect' ); ?>
+                                            </a>
+                                        </div>
+                                    </div>
+								</div>
+							</div>
+                            <div class="tab-pane fade pm_d2g_tab_content booking" id="booking-tab-pane" role="tabpanel" aria-labelledby="booking-tab" tabindex="0">
+                                <div class="row">
+                                    <div class="col-sm-12 col-lg-6">
+                                        <?php if ( get_option( 'd2gc_local_user' ) == 1 ) { ?>
 											<h3 class="mt-5">
 												<?php echo esc_html__( 'Code for booking calendar', 'doctor2go-connect' ); ?>
 											</h3>
-											<div class="form-table">
+											<div class="form-table card">
 												<input type="text" class="form-control" id="d2g_cal_code" value="<?php echo esc_html( $doctor_meta['d2g_cal_code'][0] ); ?>" tabindex="1" name="meta[d2g_cal_code]" placeholder="<?php echo esc_html__( 'Shortcode or iframe for booking calendar', 'doctor2go-connect' ); ?>"/>
 											</div>
 										<?php } else { ?>
 											<?php
 											$currencies = array( 'EUR', 'USD', 'GBP', 'ALL', 'MXN', 'AUD', 'INR', 'AZN', 'BYN', 'BGN', 'HRK', 'CZK', 'DKK', 'GEL', 'HUF', 'ISK', 'CHF', 'MKD', 'MDL', 'NOK', 'PLN', 'RON', 'RUB', 'RSD', 'SEK', 'CHF', 'TRY', 'UAH', 'CAD', 'NZD', 'BRL', 'ZAR' );
 											?>
-											<h3 class="mt-5">
-												<?php echo esc_html__( 'Payment & extra consult settings', 'doctor2go-connect' ); ?>
-											</h3>
-											<div class="form-table payment_settings mb-3">
-												<p class="alert alert-light">
-													<strong>
-														<?php echo esc_html__( 'Tariffs for the booking calendar are configured in your Webcamconsult / Doctor2Go dashboard, as outlined in the Getting Started guide. However, prices for email and walk-in consultations must be set separately here, as they are special consults.', 'doctor2go-connect' ); ?>
-													</strong>
-												</p>
+											
+											<div class="form-table card payment_settings mb-5">
+                                                <div class="card-body">
+                                                    <h3>
+                                                        <?php echo esc_html__( 'Payment & extra consult settings', 'doctor2go-connect' ); ?>
+                                                    </h3>
+                                                    <p class="alert alert-light">
+                                                        <strong>
+                                                            <?php echo esc_html__( 'Tariffs for the booking calendar are configured in your Webcamconsult / Doctor2Go dashboard, as outlined in the Getting Started guide. However, prices for email and walk-in consultations must be set separately here, as they are special consults.', 'doctor2go-connect' ); ?>
+                                                        </strong>
+                                                    </p>
 
-												<label class="form-label small">
-													<?php echo esc_html__( 'Walk-in price & currency', 'doctor2go-connect' ); ?>*
-												</label>
-												<div class="row g-2 align-items-center">
-													<div class="col-8">
-														<input type="text" class="form-control price_input" id="walk_in_price" value="<?php echo esc_html( $doctor_meta['walk_in_price'][0] ); ?>" tabindex="1" name="meta[walk_in_price]" placeholder="<?php echo esc_html__( 'Walk-In price', 'doctor2go-connect' ); ?>*"/>
-													</div>
-													<div class="col-4">
-														<select class="form-select" name="meta[walk_in_currency]" id="walk_in_currency">
-															<?php foreach ( $currencies as $currency ) { ?>
-																<option <?php echo ( $currency == $doctor_meta['walk_in_currency'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $currency ); ?>">
-																	<?php echo esc_html( $currency ); ?>
-																</option>
-															<?php } ?>
-														</select>
-													</div>
-												</div>
+                                                    <label class="form-label small">
+                                                        <?php echo esc_html__( 'Walk-in price & currency', 'doctor2go-connect' ); ?>*
+                                                    </label>
+                                                    <div class="row g-2 align-items-center">
+                                                        <div class="col-8">
+                                                            <input type="text" class="form-control price_input" id="walk_in_price" value="<?php echo esc_html( $doctor_meta['walk_in_price'][0] ); ?>" tabindex="1" name="meta[walk_in_price]" placeholder="<?php echo esc_html__( 'Walk-In price', 'doctor2go-connect' ); ?>*"/>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <select class="form-select" name="meta[walk_in_currency]" id="walk_in_currency">
+                                                                <?php foreach ( $currencies as $currency ) { ?>
+                                                                    <option <?php echo ( $currency == $doctor_meta['walk_in_currency'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $currency ); ?>">
+                                                                        <?php echo esc_html( $currency ); ?>
+                                                                    </option>
+                                                                <?php } ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
 
-												<label class="form-label small mt-3">
-													<?php echo esc_html__( 'Email advice price & currency', 'doctor2go-connect' ); ?>*
-												</label>
-												<div class="row g-2 align-items-center">
-													<div class="col-8">
-														<input type="text" class="form-control price_input" id="written_con_price" value="<?php echo esc_html( $doctor_meta['written_con_price'][0] ); ?>" tabindex="1" name="meta[written_con_price]" placeholder="<?php echo esc_html__( 'Written consult price', 'doctor2go-connect' ); ?>"/>
-													</div>
-													<div class="col-4">
-														<select class="form-select" name="meta[written_con_currency]" id="written_con_currency">
-															<?php foreach ( $currencies as $currency ) { ?>
-																<option <?php echo ( $currency == $doctor_meta['written_con_currency'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $currency ); ?>">
-																	<?php echo esc_html( $currency ); ?>
-																</option>
-															<?php } ?>
-														</select>
-													</div>
-												</div>
+                                                    <label class="form-label small mt-3">
+                                                        <?php echo esc_html__( 'Email advice price & currency', 'doctor2go-connect' ); ?>*
+                                                    </label>
+                                                    <div class="row g-2 align-items-center">
+                                                        <div class="col-8">
+                                                            <input type="text" class="form-control price_input" id="written_con_price" value="<?php echo esc_html( $doctor_meta['written_con_price'][0] ); ?>" tabindex="1" name="meta[written_con_price]" placeholder="<?php echo esc_html__( 'Written consult price', 'doctor2go-connect' ); ?>"/>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <select class="form-select" name="meta[written_con_currency]" id="written_con_currency">
+                                                                <?php foreach ( $currencies as $currency ) { ?>
+                                                                    <option <?php echo ( $currency == $doctor_meta['written_con_currency'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $currency ); ?>">
+                                                                        <?php echo esc_html( $currency ); ?>
+                                                                    </option>
+                                                                <?php } ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
 
-												<div class="mt-3">
-													<label class="small"><?php echo esc_html__( 'E-mail consult questionnaire', 'doctor2go-connect' ); ?>*</label>
-													<select class="form-control" name="meta[written_con_type]" id="written_con_type">
-														<?php 
-														$types	  = array( 'short' => 'Short generic Email Advice', 'derma_email_advice' => 'Dermatology Email Advice' );
-														foreach ( $types as $type => $label ) { ?>
-															<option <?php echo ( $type == $doctor_meta['written_con_type'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $type ); ?>"><?php echo esc_html( $label ); ?></option>    
-														<?php } ?>
-													</select>
-												</div>
+                                                    <div class="mt-3">
+                                                        <label class="small"><?php echo esc_html__( 'E-mail consult questionnaire', 'doctor2go-connect' ); ?>*</label>
+                                                        <select class="form-control" name="meta[written_con_type]" id="written_con_type">
+                                                            <?php 
+                                                            $types	  = array( 'short' => 'Short generic Email Advice', 'derma_email_advice' => 'Dermatology Email Advice' );
+                                                            foreach ( $types as $type => $label ) { ?>
+                                                                <option <?php echo ( $type == $doctor_meta['written_con_type'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $type ); ?>"><?php echo esc_html( $label ); ?></option>    
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
 
-												<p class="mt-3 mb-4 simple_hide">
-													<label class="form-check-label">
-														<input <?php echo ( $doctor_meta['d2g_intake_call'][0] == 1 ) ? 'checked' : ''; ?> class="form-check-input" name="meta[d2g_intake_call]" type="checkbox" value="1">
-														<span>
-															<?php echo esc_html__( 'I offer a free intake call', 'doctor2go-connect' ); ?>
-														</span>
-													</label>
-												</p>
+                                                    <p class="mt-3 mb-4 simple_hide">
+                                                        <label class="form-check-label">
+                                                            <input <?php echo ( $doctor_meta['d2g_intake_call'][0] == 1 ) ? 'checked' : ''; ?> class="form-check-input" name="meta[d2g_intake_call]" type="checkbox" value="1">
+                                                            <span>
+                                                                <?php echo esc_html__( 'I offer a free intake call', 'doctor2go-connect' ); ?>
+                                                            </span>
+                                                        </label>
+                                                    </p>
+                                                </div>  
 											</div>
 										<?php } ?>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h3>
+                                                    <?php echo esc_html__( 'Holiday settings', 'doctor2go-connect' ); ?>
+                                                </h3>
+                                                <p class="alert alert-light">
+                                                    <strong>
+                                                        <?php echo esc_html__( 'Enter your next holiday here to block e-mail consults and to show a notice on your detail page during your absence.', 'doctor2go-connect' ); ?>
+                                                    </strong>
+                                                </p>
+                                                <div class="row g-3">
+                                                    <div class="col-12 col-md-6">
+                                                        <label class="form-label small">
+                                                            <?php echo esc_html__( 'Start date', 'doctor2go-connect' ); ?>
+                                                        </label>
+                                                        <input type="date" class="form-control" name="meta[start_holiday]" value="<?php echo esc_html( $doctor_meta['start_holiday'][0] ); ?>">
+                                                    </div>
+                                                    <div class="col-12 col-md-6">
+                                                        <label class="form-label small">
+                                                            <?php echo esc_html__( 'End date', 'doctor2go-connect' ); ?>
+                                                        </label>
+                                                        <input type="date" class="form-control" name="meta[end_holiday]" value="<?php echo esc_html( $doctor_meta['end_holiday'][0] ); ?>">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-6">
+                                        <h2>Booking Rules</h2>
+                                        <div class="nav-tabs-custom">
+                                            <ul class="nav nav-tabs" id="bookingRulesTabs" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link active" id="simple-tab" data-bs-toggle="tab" data-bs-target="#simple-panel" type="button" role="tab" aria-controls="simple-panel" aria-selected="true">Simple</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="advanced-tab" data-bs-toggle="tab" data-bs-target="#advanced-panel" type="button" role="tab" aria-controls="advanced-panel" aria-selected="false">Advanced</button>
+                                                </li>
+                                            </ul>
 
-										<h3 class="mt-5">
-											<?php echo esc_html__( 'Holiday settings', 'doctor2go-connect' ); ?>
-										</h3>
-										<p class="alert alert-light">
-											<strong>
-												<?php echo esc_html__( 'Enter your next holiday here to block e-mail consults and to show a notice on your detail page during your absence.', 'doctor2go-connect' ); ?>
-											</strong>
-										</p>
-										<div class="row g-3">
-											<div class="col-12 col-md-6">
-												<label class="form-label small">
-													<?php echo esc_html__( 'Start date', 'doctor2go-connect' ); ?>
-												</label>
-												<input type="date" class="form-control" name="meta[start_holiday]" value="<?php echo esc_html( $doctor_meta['start_holiday'][0] ); ?>">
-											</div>
-											<div class="col-12 col-md-6">
-												<label class="form-label small">
-													<?php echo esc_html__( 'End date', 'doctor2go-connect' ); ?>
-												</label>
-												<input type="date" class="form-control" name="meta[end_holiday]" value="<?php echo esc_html( $doctor_meta['end_holiday'][0] ); ?>">
-											</div>
-										</div>
-									</div>
+                                            <div class="tab-content pt-3" id="bookingRulesTabsContent">
+                                                <div class="tab-pane fade show active" id="simple-panel" role="tabpanel" aria-labelledby="simple-tab" tabindex="0">
+                                                    <div class="vlakje">
+                                                        <div class="card simple-availability-card">
+                                                            <div class="card-header">
+                                                                <div class="row align-items-center gy-3">
+                                                                    <div class="col-md-6">
+                                                                        <h3 class="card-title h5 mb-0">Simple Availability Settings</h3>
+                                                                    </div>
+                                                                    <div class="col-md-6 text-md-end">
+                                                                        <div class="timezone-selector d-inline-flex flex-column align-items-md-end">
+                                                                            <label for="timezone-select" class="form-label mb-1">Timezone</label>
+                                                                            <div><!-- current_user.time_zone --></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
-									<div class="col-12 col-lg-6 lists">
-										<h3><?php echo esc_html__( 'Profile image', 'doctor2go-connect' ); ?></h3>
-										<div class="form-table pic_upload_wrapper mb-3">
-											<?php if ( ! $feat_pic_full ) { ?>
-												<p class="mb-2">
-													<input type="file" class="form-control" name="picture_1"/>
-												</p>
-												<p class="small text-muted">
-													<?php esc_html_e( 'To upload your image you first need to choose one and than save your profile. The image will be displayed after the pagereload.', 'doctor2go-connect' ); ?>
-												</p>
-											<?php } else { ?>
-												<p class="mb-3">
-													<?php esc_html_e( 'Before you can upload a new image, please first delete the old one.', 'doctor2go-connect' ); ?>
-												</p>
-												<div class="profile_pic_wrapper" style="max-width:400px">
-													<a class="del_img_link btn btn-outline-danger flaticon-dustbin mb-2" data-doc-id="<?php echo esc_html( $pubProfileID ); ?>" data-image-id="<?php echo esc_html( $img_ID ); ?>" href="#"></a>
-													<img class="img-fluid" src="<?php echo esc_html( $feat_pic_full ); ?>">
-												</div>
-											<?php } ?>
-										</div>
-										<div class="mb-3">
-											<h3>
-												<?php echo esc_html__( 'Languages', 'doctor2go-connect' ); ?> *
-											</h3>
-											<select name="tax[doctor-language][]" multiple="multiple" class="form-select mb-3">
-												<?php
-												foreach ( $allLanguages as $language ) {
-													$selected = '';
-													if ( isset( $langArray[ $language->slug ] ) ) {
-														$selected = 'selected';
-													}
-													?>
-													<option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $language->slug ); ?>">
-														<?php
-														if ( get_option( 'd2gc_pseudo_translations' ) == 1 ) {
-															echo ( $currLang == 'en' ) ? esc_html( $language->name ) : esc_html( get_term_meta( $language->term_id, 'rudr_text_' . $currLang, true ) );
-														} else {
-															echo esc_html( $language->name );
-														}
-														?>
-													</option>
-													<?php
-												}
-												?>
-											</select>
-										</div>
+                                                            <div id="simple-rules-form">
+                                                                <input type="hidden" id="simple-rules-json-output" name="availability_rule[simple_rules_json]" value="">
+                                                                <input type="hidden" id="anchor-date-input-simple" class="anchor-date-input" value="<?php echo time(); ?>">
+                                                                <input type="hidden" id="doc_id_simple" value="<?php echo esc_html($pubProfileID)?>">
+                                                                <input type="hidden" id="form_type_simple" name="availability_rule[is_simple_form]" value="true">
 
-										<div class="extra mb-5">
-											<label class="form-check-label" for="sub_title">
-												<input name="meta[sub_title]" id="sub_title" type="checkbox" checked value="y" class="form-check-input">
-												<?php echo esc_html__( 'I offer subtitles (this is standard function with in webcamconsult)', 'doctor2go-connect' ); ?>
-											</label>
-										</div>
+                                                                <div class="card-body days-list">
+                                                                    <div class="row day-row day-row-flex align-items-center py-2" data-wday="1">
+                                                                        <div class="col-md-1 col-2">
+                                                                            <div class="day-label-group form-check form-switch">
+                                                                                <input class="form-check-input day-toggle" type="checkbox" checked>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-2 col-3">
+                                                                            <strong class="day-name">Monday</strong>
+                                                                        </div>
+                                                                        <div class="col-md-9 col-7">
+                                                                            <div class="slots-container">
+                                                                                <div class="time-slot-row d-flex align-items-center gap-2">
+                                                                                    <input class="form-control form-control-sm start-time-input" type="time" value="09:00">
+                                                                                    <span class="time-separator">-</span>
+                                                                                    <input class="form-control form-control-sm end-time-input" type="time" value="17:00">
+                                                                                    <button class="btn btn-outline-secondary btn-sm add-subslot-btn" type="button">+</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
 
-										<div id="specialty_wrapper" class="mb-5">
-											<h3>
-												<?php echo esc_html__( 'Fields of study', 'doctor2go-connect' ); ?> *
-											</h3>
-											<select name="tax[doctor-specialty][]" multiple="multiple" class="form-select mb-3">
-												<?php
-												foreach ( $allSpecialities as $speciality ) {
-													$selected = '';
-													if ( isset( $specArray[ $speciality->slug ] ) ) {
-														$selected = 'selected';
-													}
-													?>
-													<option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $speciality->slug ); ?>">
-														<?php
-														if ( get_option( 'd2gc_pseudo_translations' ) == 1 ) {
-															echo ( $currLang == 'en' ) ? esc_html( $speciality->name ) : esc_html( get_term_meta( $speciality->term_id, 'rudr_text_' . $currLang, true ) );
-														} else {
-															echo esc_html( $speciality->name );
-														}
-														?>
-													</option>
-													<?php
-												}
-												?>
-											</select>
-										</div>
+                                                                    <div class="row day-row day-row-flex align-items-center py-2" data-wday="2">
+                                                                        <div class="col-md-1 col-2">
+                                                                            <div class="day-label-group form-check form-switch">
+                                                                                <input class="form-check-input day-toggle" type="checkbox" checked>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-2 col-3">
+                                                                            <strong class="day-name">Tuesday</strong>
+                                                                        </div>
+                                                                        <div class="col-md-9 col-7">
+                                                                            <div class="slots-container">
+                                                                                <div class="time-slot-row d-flex align-items-center gap-2">
+                                                                                    <input class="form-control form-control-sm start-time-input" type="time" value="09:00">
+                                                                                    <span class="time-separator">-</span>
+                                                                                    <input class="form-control form-control-sm end-time-input" type="time" value="17:00">
+                                                                                    <button class="btn btn-outline-secondary btn-sm add-subslot-btn" type="button">+</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
 
-										<h3>
-											<?php echo esc_html__( 'About your self', 'doctor2go-connect' ); ?>
-										</h3>
-										<p>
-											<strong>
-												<?php echo esc_html__( 'Please provide a brief biography highlighting your background and strengths for visitors.', 'doctor2go-connect' ); ?>
-											</strong>
-										</p>
-										<div class="form-table mb-3">
-											<?php wp_editor( $pubProfile->post_content, 'docdesc' ); ?>
-										</div>
-									</div>
-								</div>
-							</div>
+                                                                    <div class="row day-row day-row-flex align-items-center py-2" data-wday="3">
+                                                                        <div class="col-md-1 col-2">
+                                                                            <div class="day-label-group form-check form-switch">
+                                                                                <input class="form-check-input day-toggle" type="checkbox" checked>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-2 col-3">
+                                                                            <strong class="day-name">Wednesday</strong>
+                                                                        </div>
+                                                                        <div class="col-md-9 col-7">
+                                                                            <div class="slots-container">
+                                                                                <div class="time-slot-row d-flex align-items-center gap-2">
+                                                                                    <input class="form-control form-control-sm start-time-input" type="time" value="09:00">
+                                                                                    <span class="time-separator">-</span>
+                                                                                    <input class="form-control form-control-sm end-time-input" type="time" value="17:00">
+                                                                                    <button class="btn btn-outline-secondary btn-sm add-subslot-btn" type="button">+</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
 
-							<div class="tab-pane fade pm_d2g_tab_content edu exp_edu" id="exp_edu-tab-pane" role="tabpanel" aria-labelledby="exp_edu-tab" tabindex="0">
-								<h3><?php echo esc_html__( 'education', 'doctor2go-connect' ); ?></h3>
+                                                                    <div class="row day-row day-row-flex align-items-center py-2" data-wday="4">
+                                                                        <div class="col-md-1 col-2">
+                                                                            <div class="day-label-group form-check form-switch">
+                                                                                <input class="form-check-input day-toggle" type="checkbox" checked>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-2 col-3">
+                                                                            <strong class="day-name">Thursday</strong>
+                                                                        </div>
+                                                                        <div class="col-md-9 col-7">
+                                                                            <div class="slots-container">
+                                                                                <div class="time-slot-row d-flex align-items-center gap-2">
+                                                                                    <input class="form-control form-control-sm start-time-input" type="time" value="09:00">
+                                                                                    <span class="time-separator">-</span>
+                                                                                    <input class="form-control form-control-sm end-time-input" type="time" value="17:00">
+                                                                                    <button class="btn btn-outline-secondary btn-sm add-subslot-btn" type="button">+</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
 
-								<div class="form-table edu_wrapper mb-4">
-									<?php $counter = 0; ?>
+                                                                    <div class="row day-row day-row-flex align-items-center py-2" data-wday="5">
+                                                                        <div class="col-md-1 col-2">
+                                                                            <div class="day-label-group form-check form-switch">
+                                                                                <input class="form-check-input day-toggle" type="checkbox" checked>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-2 col-3">
+                                                                            <strong class="day-name">Friday</strong>
+                                                                        </div>
+                                                                        <div class="col-md-9 col-7">
+                                                                            <div class="slots-container">
+                                                                                <div class="time-slot-row d-flex align-items-center gap-2">
+                                                                                    <input class="form-control form-control-sm start-time-input" type="time" value="09:00">
+                                                                                    <span class="time-separator">-</span>
+                                                                                    <input class="form-control form-control-sm end-time-input" type="time" value="17:00">
+                                                                                    <button class="btn btn-outline-secondary btn-sm add-subslot-btn" type="button">+</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
 
-									<div class="row exp_edu fw-bold mb-2">
-										<div class="col-12 col-md-3">
-											<?php echo esc_html__( 'start & end date', 'doctor2go-connect' ); ?>
-										</div>
-										<div class="col-12 col-md-3">
-											<?php echo esc_html__( 'study area', 'doctor2go-connect' ); ?>
-										</div>
-										<div class="col-12 col-md-3">
-											<?php echo esc_html__( 'degree', 'doctor2go-connect' ); ?>
-										</div>
-										<div class="col-12 col-md-3">
-											<?php echo esc_html__( 'institution', 'doctor2go-connect' ); ?>
-										</div>
-									</div>
+                                                                    <div class="row day-row day-row-flex align-items-center py-2" data-wday="6">
+                                                                        <div class="col-md-1 col-2">
+                                                                            <div class="day-label-group form-check form-switch">
+                                                                                <input class="form-check-input day-toggle" type="checkbox">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-2 col-3">
+                                                                            <strong class="day-name">Saturday</strong>
+                                                                        </div>
+                                                                        <div class="col-md-9 col-7">
+                                                                            <div class="slots-container">
+                                                                                <div class="unavailable-txt text-muted">Unavailable</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
 
-									<?php if ( isset( $doctor_meta['edus'] ) ) { ?>
-										<?php foreach ( $doctor_meta['edus'] as $edu ) { ?>
-											<div class="row exp_edu edu_<?php echo esc_html( $counter ); ?> align-items-start mb-2">
-												<?php if ( $counter > 0 ) { ?>
-													<div class="col-12 text-end mb-1">
-														<a class="remove_btn btn btn-sm btn-outline-danger btn-add" href="#">
-															<span class="icon-minus-circled"></span>
-														</a>
-													</div>
-												<?php } ?>
+                                                                    <div class="row day-row day-row-flex align-items-center py-2" data-wday="0">
+                                                                        <div class="col-md-1 col-2">
+                                                                            <div class="day-label-group form-check form-switch">
+                                                                                <input class="form-check-input day-toggle" type="checkbox">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-2 col-3">
+                                                                            <strong class="day-name">Sunday</strong>
+                                                                        </div>
+                                                                        <div class="col-md-9 col-7">
+                                                                            <div class="slots-container">
+                                                                                <div class="unavailable-txt text-muted">Unavailable</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
 
-												<div class="col-12 col-md-3">
-													<div class="row g-2">
-														<div class="col-6">
-															<input type="text" class="form-control" id="d2g_exp_edu_date" value="<?php echo esc_html( $edu['d2g_exp_edu_start_date'] ); ?>" tabindex="1" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_start_date]" placeholder="<?php echo esc_html__( 'start date', 'doctor2go-connect' ); ?>"/>
-														</div>
-														<div class="col-6">
-															<input type="text" class="form-control" id="d2g_exp_edu_study" value="<?php echo esc_html( $edu['d2g_exp_edu_end_date'] ); ?>" tabindex="1" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_end_date]" placeholder="<?php echo esc_html__( 'end date', 'doctor2go-connect' ); ?>"/>
-														</div>
-													</div>
-												</div>
+                                                                <div class="card-footer text-end">
+                                                                    <button id="save-simple-rules-btn" class="btn btn-primary" type="button">Update availability</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-												<div class="col-12 col-md-3 mt-2 mt-md-0">
-													<input type="text" class="form-control" id="d2g_exp_edu_study" value="<?php echo esc_html( $edu['d2g_exp_edu_study'] ); ?>" tabindex="1" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_study]" placeholder="<?php echo esc_html__( 'study area', 'doctor2go-connect' ); ?>"/>
-												</div>
+                                                <template id="subslot-template">
+                                                    <div class="time-slot-row d-flex align-items-center gap-2">
+                                                        <input class="form-control form-control-sm start-time-input" type="time" value="09:00">
+                                                        <span class="time-separator">-</span>
+                                                        <input class="form-control form-control-sm end-time-input" type="time" value="17:00">
+                                                    </div>
+                                                </template>
 
-												<div class="col-12 col-md-3 mt-2 mt-md-0">
-													<input type="text" class="form-control" id="d2g_exp_edu_title" value="<?php echo esc_html( $edu['d2g_exp_edu_title'] ); ?>" tabindex="1" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_title]" placeholder="<?php echo esc_html__( 'degree', 'doctor2go-connect' ); ?>"/>
-												</div>
+                                                <div class="tab-pane fade" id="advanced-panel" role="tabpanel" aria-labelledby="advanced-tab" tabindex="0">
+                                                    <div class="vlakje">
+                                                        <div class="availability-form">
+                                                            <input type="hidden" id="rules-json-output" name="availability_rule[rules_json]" value="">
+                                                            <input type="hidden" id="form_type_advanced" name="availability_rule[is_advanced_form]" value="true">
 
-												<div class="col-12 col-md-3 mt-2 mt-md-0">
-													<input type="text" class="form-control" id="d2g_exp_edu_org" value="<?php echo esc_html( $edu['d2g_exp_edu_org'] ); ?>" tabindex="1" name="meta[edus][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_org]" placeholder="<?php echo esc_html__( 'institution', 'doctor2go-connect' ); ?>"/>
-												</div>
-											</div>
-											<?php ++$counter; ?>
-										<?php } ?>
-									<?php } else { ?>
-										<div class="row exp_edu edu_0 mb-2">
-											<div class="col-12 col-md-3">
-												<div class="row g-2">
-													<div class="col-6">
-														<input type="text" class="form-control" id="d2g_exp_edu_date" tabindex="1" name="meta[edus][0][d2g_exp_edu_start_date]" placeholder="<?php echo esc_html__( 'start date', 'doctor2go-connect' ); ?>"/>
-													</div>
-													<div class="col-6">
-														<input type="text" class="form-control" id="d2g_exp_edu_study" tabindex="1" name="meta[edus][0][d2g_exp_edu_end_date]" placeholder="<?php echo esc_html__( 'end date', 'doctor2go-connect' ); ?>"/>
-													</div>
-												</div>
-											</div>
+                                                            <div class="card form-builder-section mb-4">
+                                                                <div class="card-header">
+                                                                    <h3 class="card-title h5 mb-0">Add / Edit a Rule</h3>
+                                                                </div>
 
-											<div class="col-12 col-md-3 mt-2 mt-md-0">
-												<input type="text" class="form-control" id="d2g_exp_edu_study" tabindex="1" name="meta[edus][0][d2g_exp_edu_study]" placeholder="<?php echo esc_html__( 'study area', 'doctor2go-connect' ); ?>"/>
-											</div>
+                                                                <div class="card-body">
+                                                                    <div class="mb-3">
+                                                                        <label for="rule-type-select" class="form-label">Repeat Type</label>
+                                                                        <select id="rule-type-select" class="form-select">
+                                                                            <option value="weekly">Weekly Rhythm</option>
+                                                                            <option value="monthly_relative">Monthly Relative (e.g., 2nd Tuesday)</option>
+                                                                            <option value="monthly_fixed">Monthly Fixed Day (e.g., Every 12th)</option>
+                                                                        </select>
+                                                                    </div>
 
-											<div class="col-12 col-md-3 mt-2 mt-md-0">
-												<input type="text" class="form-control" id="d2g_exp_edu_title" tabindex="1" name="meta[edus][0][d2g_exp_edu_title]" placeholder="<?php echo esc_html__( 'degree', 'doctor2go-connect' ); ?>"/>
-											</div>
+                                                                    <div id="weekly-options" class="rule-section">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                <div class="mb-3">
+                                                                                    <label class="form-label">Day of the Week</label>
+                                                                                    <select class="form-select wday-input">
+                                                                                        <option value="0">Sunday</option>
+                                                                                        <option value="1">Monday</option>
+                                                                                        <option value="2">Tuesday</option>
+                                                                                        <option value="3">Wednesday</option>
+                                                                                        <option value="4">Thursday</option>
+                                                                                        <option value="5">Friday</option>
+                                                                                        <option value="6">Saturday</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="mb-3">
+                                                                                    <label class="form-label">Every X weeks</label>
+                                                                                    <input class="form-control week-interval-input" type="number" value="1" min="1">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
 
-											<div class="col-12 col-md-3 mt-2 mt-md-0">
-												<input type="text" class="form-control" id="d2g_exp_edu_org" tabindex="1" name="meta[edus][0][d2g_exp_edu_org]" placeholder="<?php echo esc_html__( 'institution', 'doctor2go-connect' ); ?>"/>
-											</div>
-										</div>
-									<?php } ?>
-								</div>
+                                                                    <div id="monthly-relative-options" class="rule-section" style="display: none;">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                <div class="mb-3">
+                                                                                    <label class="form-label">Week of the Month</label>
+                                                                                    <select class="form-select week-of-month-input">
+                                                                                        <option value="1">1st</option>
+                                                                                        <option value="2">2nd</option>
+                                                                                        <option value="3">3rd</option>
+                                                                                        <option value="4">4th</option>
+                                                                                        <option value="-1">Last</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="mb-3">
+                                                                                    <label class="form-label">Day of the Week</label>
+                                                                                    <select class="form-select wday-input">
+                                                                                        <option value="0">Sunday</option>
+                                                                                        <option value="1">Monday</option>
+                                                                                        <option value="2">Tuesday</option>
+                                                                                        <option value="3">Wednesday</option>
+                                                                                        <option value="4">Thursday</option>
+                                                                                        <option value="5">Friday</option>
+                                                                                        <option value="6">Saturday</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
 
-								<div class="btn_wrapper mb-4">
-									<a class="btn btn-outline-primary wp-block-button__link add_edu invert" data-entry-id="<?php echo esc_html( $counter ) - 1; ?>" href="#">
-										<?php echo esc_html__( 'add an extra education', 'doctor2go-connect' ); ?>
-									</a>
-								</div>
+                                                                    <div id="monthly-fixed-options" class="rule-section" style="display: none;">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                <div class="mb-3">
+                                                                                    <label class="form-label">Day of the Month</label>
+                                                                                    <input class="form-control mday-input" type="number" min="1" max="31" placeholder="e.g., 12">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="mb-3">
+                                                                                    <label class="form-label">Every X months</label>
+                                                                                    <input class="form-control month-interval-input" type="number" value="1" min="1">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
 
-								<h3><?php echo esc_html__( 'working experience', 'doctor2go-connect' ); ?></h3>
+                                                                    <hr>
 
-								<div class="form-table exp_wrapper mb-4">
-									<?php $counter = 0; ?>
+                                                                    <div class="time-range">
+                                                                        <div class="row">
+                                                                            <div class="col-md-4">
+                                                                                <div class="mb-3">
+                                                                                    <label class="form-label">From</label>
+                                                                                    <input class="form-control start-time-input" type="time" value="11:00">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="mb-3">
+                                                                                    <label class="form-label">To</label>
+                                                                                    <input class="form-control end-time-input" type="time" value="15:00">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="mb-3">
+                                                                                    <label class="form-label">Anchor Date</label>
+                                                                                    <input class="form-control anchor-date-input" type="date" value="">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
 
-									<div class="row exp_edu fw-bold mb-2">
-										<div class="col-12 col-md-3">
-											<?php echo esc_html__( 'start & end date', 'doctor2go-connect' ); ?>
-										</div>
-										<div class="col-12 col-md-3">
-											<?php echo esc_html__( 'expertise', 'doctor2go-connect' ); ?>
-										</div>
-										<div class="col-12 col-md-3">
-											<?php echo esc_html__( 'position', 'doctor2go-connect' ); ?>
-										</div>
-										<div class="col-12 col-md-3">
-											<?php echo esc_html__( 'company', 'doctor2go-connect' ); ?>
-										</div>
-									</div>
+                                                                <div class="card-footer text-end">
+                                                                    <button id="add-rule-btn" class="btn btn-success" type="button">Add Rule to List</button>
+                                                                </div>
+                                                            </div>
 
-									<?php if ( isset( $doctor_meta['exps'] ) ) { ?>
-										<?php foreach ( $doctor_meta['exps'] as $exp ) { ?>
-											<div class="row exp_edu exp_<?php echo esc_html( $counter ); ?> align-items-start mb-2">
-												<?php if ( $counter > 0 ) { ?>
-													<div class="col-12 text-end mb-1">
-														<a class="remove_btn btn btn-sm btn-outline-danger btn-add" href="#">
-															<span class="icon-minus-circled"></span>
-														</a>
-													</div>
-												<?php } ?>
+                                                            <div class="card rules-list-section">
+                                                                <div class="card-header">
+                                                                    <h3 class="card-title h5 mb-0">Active Rules</h3>
+                                                                </div>
 
-												<div class="col-12 col-md-3">
-													<div class="row g-2">
-														<div class="col-6">
-															<input type="text" class="form-control" id="d2g_exp_edu_date" value="<?php echo esc_html( $exp['d2g_exp_edu_start_date'] ); ?>" tabindex="1" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_start_date]" placeholder="<?php echo esc_html__( 'start date', 'doctor2go-connect' ); ?>"/>
-														</div>
-														<div class="col-6">
-															<input type="text" class="form-control" id="d2g_exp_edu_study" value="<?php echo esc_html( $exp['d2g_exp_edu_end_date'] ); ?>" tabindex="1" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_end_date]" placeholder="<?php echo esc_html__( 'end date', 'doctor2go-connect' ); ?>"/>
-														</div>
-													</div>
-												</div>
+                                                                <ul id="rules-container" class="list-group list-group-flush">
+                                                                    <!-- JavaScript will inject items directly into this list group -->
+                                                                </ul>
 
-												<div class="col-12 col-md-3 mt-2 mt-md-0">
-													<input type="text" class="form-control" id="d2g_exp_edu_expertise" value="<?php echo esc_html( $exp['d2g_exp_edu_expertise'] ); ?>" tabindex="1" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_expertise]" placeholder="<?php echo esc_html__( 'exptertise', 'doctor2go-connect' ); ?>"/>
-												</div>
+                                                                <div class="card-body">
+                                                                    <!-- <pre></pre> -->
+                                                                </div>
 
-												<div class="col-12 col-md-3 mt-2 mt-md-0">
-													<input type="text" class="form-control" id="d2g_exp_edu_title" value="<?php echo esc_html( $exp['d2g_exp_edu_title'] ); ?>" tabindex="1" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_title]" placeholder="<?php echo esc_html__( 'position', 'doctor2go-connect' ); ?>"/>
-												</div>
+                                                                <div class="card-footer text-end">
+                                                                    <button type="submit" class="btn btn-primary">Save All Rules</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
-												<div class="col-12 col-md-3 mt-2 mt-md-0">
-													<input type="text" class="form-control" id="d2g_exp_edu_org" value="<?php echo esc_html( $exp['d2g_exp_edu_org'] ); ?>" tabindex="1" name="meta[exps][<?php echo esc_html( $counter ); ?>][d2g_exp_edu_org]" placeholder="<?php echo esc_html__( 'company', 'doctor2go-connect' ); ?>"/>
-												</div>
-											</div>
-											<?php ++$counter; ?>
-										<?php } ?>
-									<?php } else { ?>
-										<div class="row exp_edu exp_0 mb-2">
-											<div class="col-12 col-md-3">
-												<div class="row g-2">
-													<div class="col-6">
-														<input type="text" class="form-control" id="d2g_exp_edu_date" tabindex="1" name="meta[exps][0][d2g_exp_edu_start_date]" placeholder="<?php echo esc_html__( 'start date', 'doctor2go-connect' ); ?>"/>
-													</div>
-													<div class="col-6">
-														<input type="text" class="form-control" id="d2g_exp_edu_study" tabindex="1" name="meta[exps][0][d2g_exp_edu_end_date]" placeholder="<?php echo esc_html__( 'end date', 'doctor2go-connect' ); ?>"/>
-													</div>
-												</div>
-											</div>
-
-											<div class="col-12 col-md-3 mt-2 mt-md-0">
-												<input type="text" class="form-control" id="d2g_exp_edu_expertise" tabindex="1" name="meta[exps][0][d2g_exp_edu_expertise]" placeholder="<?php echo esc_html__( 'exptertise', 'doctor2go-connect' ); ?>"/>
-											</div>
-
-											<div class="col-12 col-md-3 mt-2 mt-md-0">
-												<input type="text" class="form-control" id="d2g_exp_edu_title" tabindex="1" name="meta[exps][0][d2g_exp_edu_title]" placeholder="<?php echo esc_html__( 'title', 'doctor2go-connect' ); ?>"/>
-											</div>
-
-											<div class="col-12 col-md-3 mt-2 mt-md-0">
-												<input type="text" class="form-control" id="d2g_exp_edu_org" tabindex="1" name="meta[exps][0][d2g_exp_edu_org]" placeholder="<?php echo esc_html__( 'company', 'doctor2go-connect' ); ?>"/>
-											</div>
-										</div>
-									<?php } ?>
-								</div>
-
-								<div class="btn_wrapper mb-4">
-									<a class="btn btn-outline-primary wp-block-button__link add_exp invert" data-entry-id="<?php echo esc_html( $counter ) - 1; ?>" href="#">
-										<?php echo esc_html__( 'add an extra working experience', 'doctor2go-connect' ); ?>
-									</a>
-								</div>
-
-								<h3><?php echo esc_html__( 'publications', 'doctor2go-connect' ); ?></h3>
-
-								<div class="form-table pub_wrapper mb-4">
-									<?php $counter = 0; ?>
-
-									<div class="row exp_edu fw-bold mb-2">
-										<div class="col-12 col-md-2">
-											<?php echo esc_html__( 'title', 'doctor2go-connect' ); ?>
-										</div>
-										<div class="col-12 col-md-2">
-											<?php echo esc_html__( 'web link', 'doctor2go-connect' ); ?>
-										</div>
-										<div class="col-12 col-md-2">
-											<?php echo esc_html__( 'journal', 'doctor2go-connect' ); ?>
-										</div>
-										<div class="col-12 col-md-2">
-											<?php echo esc_html__( 'type of publication', 'doctor2go-connect' ); ?>
-										</div>
-										<div class="col-12 col-md-2">
-											<?php echo esc_html__( 'author', 'doctor2go-connect' ); ?>
-										</div>
-										<div class="col-12 col-md-2">
-											<?php echo esc_html__( 'publication Date', 'doctor2go-connect' ); ?>
-										</div>
-									</div>
-
-									<?php if ( isset( $doctor_meta['pubs'] ) ) { ?>
-										<?php foreach ( $doctor_meta['pubs'] as $exp ) { ?>
-											<div class="row exp_edu exp_<?php echo esc_html( $counter ); ?> align-items-start mb-2">
-												<?php if ( $counter > 0 ) { ?>
-													<div class="col-12 text-end mb-1">
-														<a class="remove_btn btn btn-sm btn-outline-danger btn-add" href="#">
-															<span class="icon-minus-circled"></span>
-														</a>
-													</div>
-												<?php } ?>
-
-												<div class="col-12 col-md-2">
-													<input type="text" class="form-control" id="d2g_pub_title" value="<?php echo esc_html( $exp['d2g_pub_title'] ); ?>" tabindex="1" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_title]" placeholder="<?php echo esc_html__( 'title', 'doctor2go-connect' ); ?>"/>
-												</div>
-
-												<div class="col-12 col-md-2 mt-2 mt-md-0">
-													<input type="text" class="form-control" id="d2g_pub_link" value="<?php echo esc_html( $exp['d2g_pub_link'] ); ?>" tabindex="1" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_link]" placeholder="<?php echo esc_html__( 'web link', 'doctor2go-connect' ); ?>"/>
-												</div>
-
-												<div class="col-12 col-md-2 mt-2 mt-md-0">
-													<input type="text" class="form-control" id="d2g_pub_journal" value="<?php echo esc_html( $exp['d2g_pub_journal'] ); ?>" tabindex="1" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_journal]" placeholder="<?php echo esc_html__( 'journal', 'doctor2go-connect' ); ?>"/>
-												</div>
-
-												<div class="col-12 col-md-2 mt-2 mt-md-0">
-													<input type="text" class="form-control" id="d2g_pub_type" value="<?php echo esc_html( $exp['d2g_pub_type'] ); ?>" tabindex="1" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_type]" placeholder="<?php echo esc_html__( 'type of publication', 'doctor2go-connect' ); ?>"/>
-												</div>
-
-												<div class="col-12 col-md-2 mt-2 mt-md-0">
-													<input type="text" class="form-control" id="d2g_pub_author" value="<?php echo esc_html( $exp['d2g_pub_author'] ); ?>" tabindex="1" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_author]" placeholder="<?php echo esc_html__( 'author', 'doctor2go-connect' ); ?>"/>
-												</div>
-
-												<div class="col-12 col-md-2 mt-2 mt-md-0">
-													<input type="text" class="form-control" id="d2g_pub_date" value="<?php echo esc_html( $exp['d2g_pub_date'] ); ?>" tabindex="1" name="meta[pubs][<?php echo esc_html( $counter ); ?>][d2g_pub_date]" placeholder="<?php echo esc_html__( 'publication date', 'doctor2go-connect' ); ?>"/>
-												</div>
-											</div>
-											<?php ++$counter; ?>
-										<?php } ?>
-									<?php } else { ?>
-										<div class="row exp_edu exp_0 mb-2">
-											<div class="col-12 col-md-2">
-												<input type="text" class="form-control" id="d2g_pub_title" tabindex="1" name="meta[pubs][0][d2g_pub_title]" placeholder="<?php echo esc_html__( 'title', 'doctor2go-connect' ); ?>"/>
-											</div>
-
-											<div class="col-12 col-md-2 mt-2 mt-md-0">
-												<input type="text" class="form-control" id="d2g_pub_link" tabindex="1" name="meta[pubs][0][d2g_pub_link]" placeholder="<?php echo esc_html__( 'web link', 'doctor2go-connect' ); ?>"/>
-											</div>
-
-											<div class="col-12 col-md-2 mt-2 mt-md-0">
-												<input type="text" class="form-control" id="d2g_pub_journal" tabindex="1" name="meta[pubs][0][d2g_pub_journal]" placeholder="<?php echo esc_html__( 'journal', 'doctor2go-connect' ); ?>"/>
-											</div>
-
-											<div class="col-12 col-md-2 mt-2 mt-md-0">
-												<input type="text" class="form-control" id="d2g_pub_type" tabindex="1" name="meta[pubs][0][d2g_pub_type]" placeholder="<?php echo esc_html__( 'type of publication', 'doctor2go-connect' ); ?>"/>
-											</div>
-
-											<div class="col-12 col-md-2 mt-2 mt-md-0">
-												<input type="text" class="form-control" id="d2g_pub_author" tabindex="1" name="meta[pubs][0][d2g_pub_author]" placeholder="<?php echo esc_html__( 'author', 'doctor2go-connect' ); ?>"/>
-											</div>
-
-											<div class="col-12 col-md-2 mt-2 mt-md-0">
-												<input type="text" class="form-control" id="d2g_pub_date" tabindex="1" name="meta[pubs][0][d2g_pub_date]" placeholder="<?php echo esc_html__( 'publication Date', 'doctor2go-connect' ); ?>"/>
-											</div>
-										</div>
-									<?php } ?>
-								</div>
-							</div>
+                                                        <template id="rule-item-template">
+                                                            <li class="list-group-item rule-item d-flex justify-content-between align-items-center">
+                                                                <span class="rule-text"></span>
+                                                                <div class="btn-group btn-group-sm rule-actions" role="group">
+                                                                    <button class="btn btn-outline-secondary edit-rule-btn" type="button">Edit</button>
+                                                                    <button class="btn btn-danger remove-rule-btn" type="button">Remove</button>
+                                                                </div>
+                                                            </li>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 						</div>
 
 						<input type="hidden" name="doc_action" value="doc_update" />
@@ -819,8 +1215,8 @@ class D2gConnect_Shortcodes {
 								</p>
 								<?php wp_nonce_field( 'doc-update' ); ?>
 							</div>
-						</div>
-					</form>
+                        </form>
+                    </div>
 				</div>
 			</div>
 		</div>
