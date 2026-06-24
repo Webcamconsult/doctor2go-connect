@@ -2734,92 +2734,94 @@ class D2gConnect_Shortcodes {
 
 		ob_start();
 		?>
-		<div class="d2g_form_wrapper">
-			<?php
-			if ( ! empty( $errors ) ) {
-				foreach ( $errors as $error ) {
-					echo '<p class="alert alert-danger">' . esc_html( $error ) . '</p>';
-				}
-			} elseif (
-				isset( $_SERVER['REQUEST_METHOD'] ) &&
-				'POST' === wp_unslash( $_SERVER['REQUEST_METHOD'] ) &&
-				isset( $_POST['custom_registration'] )
-			) {
-				echo '<p class="success">' . esc_html__( 'Update was successful.', 'doctor2go-connect' ) . '</p>';
-			}
-			?>
+		<div class="d2g_form_wrapper card">
+            <div class="card-body">
+                <?php
+                if ( ! empty( $errors ) ) {
+                    foreach ( $errors as $error ) {
+                        echo '<p class="alert alert-danger">' . esc_html( $error ) . '</p>';
+                    }
+                } elseif (
+                    isset( $_SERVER['REQUEST_METHOD'] ) &&
+                    'POST' === wp_unslash( $_SERVER['REQUEST_METHOD'] ) &&
+                    isset( $_POST['custom_registration'] )
+                ) {
+                    echo '<p class="success">' . esc_html__( 'Update was successful.', 'doctor2go-connect' ) . '</p>';
+                }
+                ?>
 
-			<form id="custom-registration-form" method="post">
-				<?php wp_nonce_field( 'd2g_account_action', 'd2g_account_nonce' ); ?>
+                <form id="custom-registration-form" method="post">
+                    <?php wp_nonce_field( 'd2g_account_action', 'd2g_account_nonce' ); ?>
 
-				<div class="mb-3">
-					<label for="first_name" class="form-label"><?php echo esc_html__( 'First name', 'doctor2go-connect' ); ?></label>
-					<input type="text" name="meta[first_name]" id="first_name" class="form-control" required value="<?php echo isset( $user_meta['first_name'][0] ) ? esc_attr( $user_meta['first_name'][0] ) : ''; ?>">
-				</div>
+                    <div class="mb-3">
+                        <label for="first_name" class="form-label"><?php echo esc_html__( 'First name', 'doctor2go-connect' ); ?></label>
+                        <input type="text" name="meta[first_name]" id="first_name" class="form-control" required value="<?php echo isset( $user_meta['first_name'][0] ) ? esc_attr( $user_meta['first_name'][0] ) : ''; ?>">
+                    </div>
 
-				<div class="mb-3">
-					<label for="last_name" class="form-label"><?php echo esc_html__( 'Last name', 'doctor2go-connect' ); ?></label>
-					<input type="text" name="meta[last_name]" id="last_name" class="form-control" required value="<?php echo isset( $user_meta['last_name'][0] ) ? esc_attr( $user_meta['last_name'][0] ) : ''; ?>">
-				</div>
+                    <div class="mb-3">
+                        <label for="last_name" class="form-label"><?php echo esc_html__( 'Last name', 'doctor2go-connect' ); ?></label>
+                        <input type="text" name="meta[last_name]" id="last_name" class="form-control" required value="<?php echo isset( $user_meta['last_name'][0] ) ? esc_attr( $user_meta['last_name'][0] ) : ''; ?>">
+                    </div>
 
-				<div class="mb-3 alert alert-warning">
-					<label for="email" class="form-label"><?php echo esc_html__( 'Email (can not be changed)', 'doctor2go-connect' ); ?></label>
-					<input type="email" readonly class="form-control-plaintext" name="email" id="email" required value="<?php echo esc_attr( $current_user->user_email ); ?>">
-				</div>
+                    <div class="mb-3 alert alert-warning">
+                        <label for="email" class="form-label"><?php echo esc_html__( 'Email (can not be changed)', 'doctor2go-connect' ); ?></label>
+                        <input type="email" readonly class="form-control-plaintext" name="email" id="email" required value="<?php echo esc_attr( $current_user->user_email ); ?>">
+                    </div>
 
-				<div class="mb-3">
-					<label for="p_tel" class="form-label"><?php echo esc_html__( 'Phone', 'doctor2go-connect' ); ?></label>
-					<input type="text" name="meta[p_tel]" id="p_tel" class="form-control" required value="<?php echo isset( $user_meta['p_tel'][0] ) ? esc_attr( $user_meta['p_tel'][0] ) : ''; ?>">
-				</div>
+                    <div class="mb-3">
+                        <label for="p_tel" class="form-label"><?php echo esc_html__( 'Phone', 'doctor2go-connect' ); ?></label>
+                        <input type="text" name="meta[p_tel]" id="p_tel" class="form-control" required value="<?php echo isset( $user_meta['p_tel'][0] ) ? esc_attr( $user_meta['p_tel'][0] ) : ''; ?>">
+                    </div>
 
-				<div class="mb-3">
-					<label class="form-label" for="p_bday"><?php echo esc_html__( 'Date of Birth', 'doctor2go-connect' ); ?></label>
-					<input class="form-control" type="date" name="meta[p_bday]" id="p_bday" value="<?php echo isset( $user_meta['p_bday'][0] ) ? esc_attr( $user_meta['p_bday'][0] ) : ''; ?>">
-				</div>
+                    <div class="mb-3">
+                        <label class="form-label" for="p_bday"><?php echo esc_html__( 'Date of Birth', 'doctor2go-connect' ); ?></label>
+                        <input class="form-control" type="date" name="meta[p_bday]" id="p_bday" value="<?php echo isset( $user_meta['p_bday'][0] ) ? esc_attr( $user_meta['p_bday'][0] ) : ''; ?>">
+                    </div>
 
-				<div class="mb-3">
-					<label class="form-label" for="p_gender"><?php echo esc_html__( 'Gender', 'doctor2go-connect' ); ?></label>
-					<select name="meta[p_gender]" id="p_gender" class="form-select">
-						<option <?php selected( isset( $user_meta['p_gender'][0] ) ? $user_meta['p_gender'][0] : '', '0' ); ?> value="0"><?php echo esc_html__( 'make a choice', 'doctor2go-connect' ); ?></option>
-						<option <?php selected( isset( $user_meta['p_gender'][0] ) ? $user_meta['p_gender'][0] : '', 'male' ); ?> value="male"><?php echo esc_html__( 'male', 'doctor2go-connect' ); ?></option>
-						<option <?php selected( isset( $user_meta['p_gender'][0] ) ? $user_meta['p_gender'][0] : '', 'female' ); ?> value="female"><?php echo esc_html__( 'female', 'doctor2go-connect' ); ?></option>
-						<option <?php selected( isset( $user_meta['p_gender'][0] ) ? $user_meta['p_gender'][0] : '', 'other' ); ?> value="other"><?php echo esc_html__( 'other', 'doctor2go-connect' ); ?></option>
-					</select>
-				</div>
+                    <div class="mb-3">
+                        <label class="form-label" for="p_gender"><?php echo esc_html__( 'Gender', 'doctor2go-connect' ); ?></label>
+                        <select name="meta[p_gender]" id="p_gender" class="form-select">
+                            <option <?php selected( isset( $user_meta['p_gender'][0] ) ? $user_meta['p_gender'][0] : '', '0' ); ?> value="0"><?php echo esc_html__( 'make a choice', 'doctor2go-connect' ); ?></option>
+                            <option <?php selected( isset( $user_meta['p_gender'][0] ) ? $user_meta['p_gender'][0] : '', 'male' ); ?> value="male"><?php echo esc_html__( 'male', 'doctor2go-connect' ); ?></option>
+                            <option <?php selected( isset( $user_meta['p_gender'][0] ) ? $user_meta['p_gender'][0] : '', 'female' ); ?> value="female"><?php echo esc_html__( 'female', 'doctor2go-connect' ); ?></option>
+                            <option <?php selected( isset( $user_meta['p_gender'][0] ) ? $user_meta['p_gender'][0] : '', 'other' ); ?> value="other"><?php echo esc_html__( 'other', 'doctor2go-connect' ); ?></option>
+                        </select>
+                    </div>
 
-				<div class="mb-3" id="time_zone_wrapper">
-					<label for="p_timezone" class="form-label"><?php echo esc_html__( 'Timezone', 'doctor2go-connect' ); ?></label>
-					<select name="meta[p_timezone]" class="form-select" id="p_timezone">
-						<option value="0"><?php echo esc_html__( 'make a selection', 'doctor2go-connect' ); ?></option>
-						<?php foreach ( $timezones as $group => $zones ) { ?>
-							<optgroup label="<?php echo esc_attr( $group ); ?>">
-								<?php foreach ( $zones as $key => $name ) { ?>
-									<option <?php selected( isset( $user_meta['p_timezone'][0] ) ? $user_meta['p_timezone'][0] : '', $key ); ?> value="<?php echo esc_attr( $key ); ?>">
-										<?php echo esc_html( $name ); ?>
-									</option>
-								<?php } ?>
-							</optgroup>
-						<?php } ?>
-					</select>
-				</div>
+                    <div class="mb-3" id="time_zone_wrapper">
+                        <label for="p_timezone" class="form-label"><?php echo esc_html__( 'Timezone', 'doctor2go-connect' ); ?></label>
+                        <select name="meta[p_timezone]" class="form-select" id="p_timezone">
+                            <option value="0"><?php echo esc_html__( 'make a selection', 'doctor2go-connect' ); ?></option>
+                            <?php foreach ( $timezones as $group => $zones ) { ?>
+                                <optgroup label="<?php echo esc_attr( $group ); ?>">
+                                    <?php foreach ( $zones as $key => $name ) { ?>
+                                        <option <?php selected( isset( $user_meta['p_timezone'][0] ) ? $user_meta['p_timezone'][0] : '', $key ); ?> value="<?php echo esc_attr( $key ); ?>">
+                                            <?php echo esc_html( $name ); ?>
+                                        </option>
+                                    <?php } ?>
+                                </optgroup>
+                            <?php } ?>
+                        </select>
+                    </div>
 
-				<p class="mb-3 text-warning"><?php echo esc_html__( 'Only fill in the password fields, if you want to change your password.', 'doctor2go-connect' ); ?></p>
+                    <p class="mb-3 text-warning"><?php echo esc_html__( 'Only fill in the password fields, if you want to change your password.', 'doctor2go-connect' ); ?></p>
 
-				<div class="mb-3">
-					<label for="password" class="form-label"><?php echo esc_html__( 'Password', 'doctor2go-connect' ); ?></label>
-					<input type="password" name="password" id="password" class="form-control">
-				</div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label"><?php echo esc_html__( 'Password', 'doctor2go-connect' ); ?></label>
+                        <input type="password" name="password" id="password" class="form-control">
+                    </div>
 
-				<div class="mb-3">
-					<label for="confirm_password" class="form-label"><?php echo esc_html__( 'Confirm Password', 'doctor2go-connect' ); ?></label>
-					<input type="password" name="confirm_password" id="confirm_password" class="form-control">
-				</div>
+                    <div class="mb-3">
+                        <label for="confirm_password" class="form-label"><?php echo esc_html__( 'Confirm Password', 'doctor2go-connect' ); ?></label>
+                        <input type="password" name="confirm_password" id="confirm_password" class="form-control">
+                    </div>
 
-				<div class="mb-3">
-					<input type="hidden" name="custom_registration" value="1">
-					<input type="submit" class="btn btn-primary" value="<?php echo esc_attr__( 'save', 'doctor2go-connect' ); ?>">
-				</div>
-			</form>
+                    <div class="mb-3">
+                        <input type="hidden" name="custom_registration" value="1">
+                        <input type="submit" class="btn btn-primary" value="<?php echo esc_attr__( 'save', 'doctor2go-connect' ); ?>">
+                    </div>
+                </form>
+            </div>
 		</div>
 
 		<?php if ( '1' === get_option( 'd2gc_activate_2fa_link' ) ) { ?>
@@ -2860,7 +2862,7 @@ class D2gConnect_Shortcodes {
 			echo '<div id="doctor_wrapper" class="outer_wrapper"><div class="d2g-doctor-grid row">'; // Wrapper div for styling
 			while ( $query->have_posts() ) {
 				$query->the_post();
-				include d2gc_locate_template( 'content-doctor-grid.php' );
+				include d2gc_locate_template( 'overview-content/content-doctor-grid.php' );
 			}
 			echo '</div></div>';
 		} else {
