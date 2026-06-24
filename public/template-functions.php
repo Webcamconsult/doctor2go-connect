@@ -1015,7 +1015,7 @@ function d2gc_show_walkin_form() {
                     ?>
                 </p>
                 <p class="mb-3 border-top border-bottom py-3 d-flex h4 align-items-center justify-content-between">
-                    <span class="me-3"><strong><?php echo esc_html__( 'E-mail advice', 'doctor2go-connect' ); ?></strong></span>
+                    <span class="me-3"><strong><?php echo esc_html__( 'Walk-in consult', 'doctor2go-connect' ); ?></strong></span>
                     <span class="price_wrapper">
                         <strong><?php echo esc_html( $d2g_profile_data->doctor_meta['walk_in_currency'][0] . ' ' . $d2g_profile_data->doctor_meta['walk_in_price'][0] ); ?></strong><br>
                         <small class="text-muted">(excl. VAT)</small>
