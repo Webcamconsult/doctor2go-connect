@@ -82,6 +82,14 @@ class D2gConnect_Shortcodes {
 		$profileStatus = $pubProfile->post_status;
 
 		$doctor_meta = get_post_meta( $pubProfileID );
+        if($doctor_meta["simple_booking_rules"][0] != ''){
+            $simple_booking_rules = unserialize($doctor_meta["simple_booking_rules"][0]);
+        } else {
+            $simple_booking_rules = '';
+        }
+        
+
+        //nice_dump($simple_booking_rules);
 
 		// specialties
 		$specialties   = get_the_terms( $pubProfileID, 'doctor-specialty' );
@@ -163,6 +171,7 @@ class D2gConnect_Shortcodes {
 
 		ob_start();
 		?>
+        
 		<div class="d2g_doctor-form container d2g_wrapper">
 			<div class="row">
 				<div class="col-12 outer_form_wrapper">
@@ -846,167 +855,110 @@ class D2gConnect_Shortcodes {
                                                 <div class="tab-pane fade show active" id="simple-panel" role="tabpanel" aria-labelledby="simple-tab" tabindex="0">
                                                     <div class="vlakje">
                                                         <div class="card simple-availability-card">
-                                                            <div class="card-header">
-                                                                <div class="row align-items-center gy-3">
-                                                                    <div class="col-md-6">
-                                                                        <h3 class="card-title h5 mb-0">Simple Availability Settings</h3>
-                                                                    </div>
-                                                                    <div class="col-md-6 text-md-end">
-                                                                        <div class="timezone-selector d-inline-flex flex-column align-items-md-end">
-                                                                            <label for="timezone-select" class="form-label mb-1">Timezone</label>
-                                                                            <div><!-- current_user.time_zone --></div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            
+                                                            <?php
+                                                            $rules_by_day = array();
+                                                            $anchor_date  = time();
+
+                                                            foreach ( $simple_booking_rules as $rule ) {
+                                                                $wday = isset( $rule['wdays'] ) ? (int) $rule['wdays'] : null;
+
+                                                                if ( null === $wday ) {
+                                                                    continue;
+                                                                }
+
+                                                                if ( isset( $rule['anchor_date'] ) && ! empty( $rule['anchor_date'] ) ) {
+                                                                    $anchor_date = (int) $rule['anchor_date'];
+                                                                }
+
+                                                                if ( ! isset( $rules_by_day[ $wday ] ) ) {
+                                                                    $rules_by_day[ $wday ] = array();
+                                                                }
+
+                                                                $rules_by_day[ $wday ][] = array(
+                                                                    'start_time' => isset( $rule['start_time'] ) ? $rule['start_time'] : '09:00',
+                                                                    'end_time'   => isset( $rule['end_time'] ) ? $rule['end_time'] : '17:00',
+                                                                );
+                                                            }
+
+                                                            $days = array(
+                                                                1 => esc_html__( 'Monday', 'doctor2go-connect' ),
+                                                                2 => esc_html__( 'Tuesday', 'doctor2go-connect' ),
+                                                                3 => esc_html__( 'Wednesday', 'doctor2go-connect' ),
+                                                                4 => esc_html__( 'Thursday', 'doctor2go-connect' ),
+                                                                5 => esc_html__( 'Friday', 'doctor2go-connect' ),
+                                                                6 => esc_html__( 'Saturday', 'doctor2go-connect' ),
+                                                                0 => esc_html__( 'Sunday', 'doctor2go-connect' ),
+                                                            );
+                                                            ?>
 
                                                             <div id="simple-rules-form">
                                                                 <input type="hidden" id="simple-rules-json-output" name="availability_rule[simple_rules_json]" value="">
-                                                                <input type="hidden" id="anchor-date-input-simple" class="anchor-date-input" value="<?php echo time(); ?>">
-                                                                <input type="hidden" id="doc_id_simple" value="<?php echo esc_html($pubProfileID)?>">
+                                                                <input type="hidden" id="anchor-date-input-simple" class="anchor-date-input" value="<?php echo esc_attr( $anchor_date ); ?>">
+                                                                <input type="hidden" id="doc_id_simple" value="<?php echo esc_attr( $pubProfileID ); ?>">
                                                                 <input type="hidden" id="form_type_simple" name="availability_rule[is_simple_form]" value="true">
 
                                                                 <div class="card-body days-list">
-                                                                    <div class="row day-row day-row-flex align-items-center py-2" data-wday="1">
-                                                                        <div class="col-md-1 col-2">
-                                                                            <div class="day-label-group form-check form-switch">
-                                                                                <input class="form-check-input day-toggle" type="checkbox" checked>
+                                                                    
+                                                                    <div class="row align-items-center gy-3 mb-5">
+                                                                        <div class="col-md-6">
+                                                                            <h3><?php echo esc_html__( 'Simple Availability Settings', 'doctor2go-connect' ); ?></h3>
+                                                                        </div>
+                                                                        <div class="col-md-6 text-md-end">
+                                                                            <div class="timezone-selector d-inline-flex flex-column align-items-md-end">
+                                                                                <label for="timezone-select" class="form-label mb-1"><?php echo esc_html__( 'Timezone', 'doctor2go-connect' ); ?></label>
+                                                                                <div><!-- current_user.time_zone --></div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-md-2 col-3">
-                                                                            <strong class="day-name">Monday</strong>
-                                                                        </div>
-                                                                        <div class="col-md-9 col-7">
-                                                                            <div class="slots-container">
-                                                                                <div class="time-slot-row d-flex align-items-center gap-2">
-                                                                                    <input class="form-control form-control-sm start-time-input" type="time" value="09:00">
-                                                                                    <span class="time-separator">-</span>
-                                                                                    <input class="form-control form-control-sm end-time-input" type="time" value="17:00">
-                                                                                    <button class="btn btn-outline-secondary btn-sm add-subslot-btn" type="button">+</button>
+                                                                    </div>
+                                                                    <div id="simple_book_msg" class="alert alert-info mb-5"></div>
+                                                                    <?php foreach ( $days as $day_number => $day_label ) : ?>
+                                                                        <?php
+                                                                        $day_rules  = isset( $rules_by_day[ $day_number ] ) ? $rules_by_day[ $day_number ] : array();
+                                                                        $is_checked = ! empty( $day_rules );
+                                                                        ?>
+                                                                        <div class="row day-row day-row-flex align-items-center py-2" data-wday="<?php echo esc_attr( $day_number ); ?>">
+                                                                            <div class="col-md-1 col-2">
+                                                                                <div class="day-label-group form-check form-switch">
+                                                                                    <input class="form-check-input day-toggle" type="checkbox" <?php checked( $is_checked ); ?>>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-3 col-4">
+                                                                                <strong class="day-name"><?php echo esc_html( $day_label ); ?></strong>
+                                                                            </div>
+
+                                                                            <div class="col-md-8 col-6">
+                                                                                <div class="slots-container">
+                                                                                    <?php if ( $is_checked ) : ?>
+                                                                                        <?php foreach ( $day_rules as $index => $slot ) : ?>
+                                                                                            <div class="time-slot-row d-flex align-items-center gap-2">
+                                                                                                <input class="form-control form-control-sm start-time-input" type="time" value="<?php echo esc_attr( $slot['start_time'] ); ?>">
+                                                                                                <span class="time-separator">-</span>
+                                                                                                <input class="form-control form-control-sm end-time-input" type="time" value="<?php echo esc_attr( $slot['end_time'] ); ?>">
+
+                                                                                                <?php if ( $index === count( $day_rules ) - 1 ) : ?>
+                                                                                                    <button class="btn btn-outline-secondary btn-sm add-subslot-btn" type="button">+</button>
+                                                                                                <?php endif; ?>
+                                                                                            </div>
+                                                                                        <?php endforeach; ?>
+                                                                                    <?php else : ?>
+                                                                                        <div class="unavailable-txt text-muted"><?php echo esc_html__( 'Unavailable', 'doctor2go-connect' ); ?></div>
+                                                                                    <?php endif; ?>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-
-                                                                    <div class="row day-row day-row-flex align-items-center py-2" data-wday="2">
-                                                                        <div class="col-md-1 col-2">
-                                                                            <div class="day-label-group form-check form-switch">
-                                                                                <input class="form-check-input day-toggle" type="checkbox" checked>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-2 col-3">
-                                                                            <strong class="day-name">Tuesday</strong>
-                                                                        </div>
-                                                                        <div class="col-md-9 col-7">
-                                                                            <div class="slots-container">
-                                                                                <div class="time-slot-row d-flex align-items-center gap-2">
-                                                                                    <input class="form-control form-control-sm start-time-input" type="time" value="09:00">
-                                                                                    <span class="time-separator">-</span>
-                                                                                    <input class="form-control form-control-sm end-time-input" type="time" value="17:00">
-                                                                                    <button class="btn btn-outline-secondary btn-sm add-subslot-btn" type="button">+</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="row day-row day-row-flex align-items-center py-2" data-wday="3">
-                                                                        <div class="col-md-1 col-2">
-                                                                            <div class="day-label-group form-check form-switch">
-                                                                                <input class="form-check-input day-toggle" type="checkbox" checked>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-2 col-3">
-                                                                            <strong class="day-name">Wednesday</strong>
-                                                                        </div>
-                                                                        <div class="col-md-9 col-7">
-                                                                            <div class="slots-container">
-                                                                                <div class="time-slot-row d-flex align-items-center gap-2">
-                                                                                    <input class="form-control form-control-sm start-time-input" type="time" value="09:00">
-                                                                                    <span class="time-separator">-</span>
-                                                                                    <input class="form-control form-control-sm end-time-input" type="time" value="17:00">
-                                                                                    <button class="btn btn-outline-secondary btn-sm add-subslot-btn" type="button">+</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="row day-row day-row-flex align-items-center py-2" data-wday="4">
-                                                                        <div class="col-md-1 col-2">
-                                                                            <div class="day-label-group form-check form-switch">
-                                                                                <input class="form-check-input day-toggle" type="checkbox" checked>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-2 col-3">
-                                                                            <strong class="day-name">Thursday</strong>
-                                                                        </div>
-                                                                        <div class="col-md-9 col-7">
-                                                                            <div class="slots-container">
-                                                                                <div class="time-slot-row d-flex align-items-center gap-2">
-                                                                                    <input class="form-control form-control-sm start-time-input" type="time" value="09:00">
-                                                                                    <span class="time-separator">-</span>
-                                                                                    <input class="form-control form-control-sm end-time-input" type="time" value="17:00">
-                                                                                    <button class="btn btn-outline-secondary btn-sm add-subslot-btn" type="button">+</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="row day-row day-row-flex align-items-center py-2" data-wday="5">
-                                                                        <div class="col-md-1 col-2">
-                                                                            <div class="day-label-group form-check form-switch">
-                                                                                <input class="form-check-input day-toggle" type="checkbox" checked>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-2 col-3">
-                                                                            <strong class="day-name">Friday</strong>
-                                                                        </div>
-                                                                        <div class="col-md-9 col-7">
-                                                                            <div class="slots-container">
-                                                                                <div class="time-slot-row d-flex align-items-center gap-2">
-                                                                                    <input class="form-control form-control-sm start-time-input" type="time" value="09:00">
-                                                                                    <span class="time-separator">-</span>
-                                                                                    <input class="form-control form-control-sm end-time-input" type="time" value="17:00">
-                                                                                    <button class="btn btn-outline-secondary btn-sm add-subslot-btn" type="button">+</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="row day-row day-row-flex align-items-center py-2" data-wday="6">
-                                                                        <div class="col-md-1 col-2">
-                                                                            <div class="day-label-group form-check form-switch">
-                                                                                <input class="form-check-input day-toggle" type="checkbox">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-2 col-3">
-                                                                            <strong class="day-name">Saturday</strong>
-                                                                        </div>
-                                                                        <div class="col-md-9 col-7">
-                                                                            <div class="slots-container">
-                                                                                <div class="unavailable-txt text-muted">Unavailable</div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="row day-row day-row-flex align-items-center py-2" data-wday="0">
-                                                                        <div class="col-md-1 col-2">
-                                                                            <div class="day-label-group form-check form-switch">
-                                                                                <input class="form-check-input day-toggle" type="checkbox">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-2 col-3">
-                                                                            <strong class="day-name">Sunday</strong>
-                                                                        </div>
-                                                                        <div class="col-md-9 col-7">
-                                                                            <div class="slots-container">
-                                                                                <div class="unavailable-txt text-muted">Unavailable</div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                    <?php endforeach; ?>
                                                                 </div>
 
-                                                                <div class="card-footer text-end">
-                                                                    <button id="save-simple-rules-btn" class="btn btn-primary" type="button">Update availability</button>
+                                                                <div class="card-footer">
+                                                                    <p class="alert alert-info mb-3"><strong><?php esc_html_e('Updates are processed overnight and active the next day.', 'doctor2go-connect')?><strong></p>
+                                                                    <button id="save-simple-rules-btn" class="btn btn-primary" type="button">
+                                                                        <span class="btn-label"><?php echo esc_html__( 'Update availabilites', 'doctor2go-connect' ); ?></span>
+                                                                        <span class="spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
+                                                                        <span class="visually-hidden"><?php echo esc_html__( 'Loading...', 'doctor2go-connect' ); ?></span>
+                                                                    </button>
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1181,7 +1133,7 @@ class D2gConnect_Shortcodes {
                                     </div>
                                 </div>
                             </div>
-						</div>
+                        </div>
 
 						<input type="hidden" name="doc_action" value="doc_update" />
 						<input type="hidden" name="d2g_lang" value="<?php echo esc_html( $currLang ); ?>" />
@@ -2595,6 +2547,7 @@ class D2gConnect_Shortcodes {
 
 		// get clinet appointments from WCC
 		$appointments           = json_decode( $this->get_patient_appointments_simple( $tokensSimpleArr ) );
+        //nice_dump($tokensAssArray);
 		$structuredAppointments = array();
 
 		ob_start();
@@ -3059,6 +3012,8 @@ class D2gConnect_Shortcodes {
 	 * API call to get appointments from client
 	 */
 	private function get_patient_appointments_simple( $tokens = array() ) {
+
+    
 
 		$myTime   = new DateTime();
 		$unixTime = $myTime->format( 'U' );

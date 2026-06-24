@@ -609,12 +609,15 @@ function d2gc_show_doctor_extended_info() {
 
 function d2gc_show_booking_calendar( $post = '', $only_cal = false, $in_tabs = false ) {
 
+
+
 	if ( $post == '' ) {
 		global $d2g_profile_data;
 	} else {
 		$d2g_profile_data = new D2G_ProfileData( $post, true );
 	}
 	$post_id = $d2g_profile_data->doctor_profile_ID;
+    
 	// patient data
 	$patient      = wp_get_current_user();
 	$patient_meta = get_user_meta( $patient->data->ID );
@@ -779,7 +782,7 @@ function d2gc_show_booking_calendar( $post = '', $only_cal = false, $in_tabs = f
                         </p>
                         <p class="text-muted mt-3"><?php echo esc_html__( '* These are mandatory fields', 'doctor2go-connect' ); ?></p>
                         <div class="simple_hide">
-                            <input readonly type="text" id="wp_doc_id" class="form-control mb-2" value="<?php echo esc_html( $d2g_profile_data->doctor_profile_ID ); ?>">
+                            <input readonly type="text" id="wp_doc_id" class="form-control mb-2" value="<?php echo esc_html( $post_id ); ?>">
                             <input readonly type="text" id="wp_user_id" class="form-control mb-2" value="<?php echo esc_html( $patient->data->ID ); ?>">
                             <input readonly type="text" id="location_id" class="form-control mb-2" value="">
                             <input readonly type="text" id="start_str" class="form-control mb-2">
@@ -861,6 +864,7 @@ function d2gc_prepMyArray( $objects ) {
 // this will create the walkin form
 function d2gc_show_walkin_form() {
 	global $d2g_profile_data;
+    $doctor_name = $d2g_profile_data->doctor->post_title;
 	$currLang  = explode( '_', get_locale() )[0];
 	// countries
 	$argsCountry    = array(
@@ -883,8 +887,10 @@ function d2gc_show_walkin_form() {
 	$allCountriesArray = ( $allCountries !== false ) ? d2gc_prepMyArray( $allCountries ) : '';
 
 	$site_key = get_option( 'd2gc_recaptcha_site_key' );
+    $user_email = '';
 	if ( is_user_logged_in() ) {
 		$currUser   = wp_get_current_user();
+        $user_email = $currUser->data->user_email;
 		$currUserID = $currUser->ID;
 		$userMeta   = get_user_meta( $currUserID );
 		// nice_dump($currUser);
@@ -902,115 +908,135 @@ function d2gc_show_walkin_form() {
 
 	// nice_dump($d2g_profile_data);
 	?>
-	<div id="inloop" class="walkin_form_wrapper">
-		<h3 class="section_title"><?php echo esc_html__( 'Walk-in consultation', 'doctor2go-connect' ); ?></h3>
-		<span class="price_wrapper">
-			<p style="margin-bottom: 2px;"><?php echo esc_html__( 'Consultation fee:', 'doctor2go-connect' ); ?></p>
-			<strong><?php echo esc_html( $d2g_profile_data->doctor_meta['walk_in_currency'][0] . ' ' . $d2g_profile_data->doctor_meta['walk_in_price'][0] ); ?></strong>
-		</span>
-		<div class="alert alert-light info_notes mb-3">
-		<?php
-		echo esc_html__(
-			'This doctor is currently available for a walk-in consultation.
-			Please complete the form and click “Pay and Continue” to proceed.
-			After your payment is confirmed, you’ll be placed in the waiting room. If others are ahead of you, a short wait may apply.','doctor2go-connect')?>
-		</div>
-		
-		<div class="error simple_hide" id="walkin_error"></div>
-		<div class="walkin_form_inner_wrapper mb-s">
-			<form id="walkin_form" method="post" action="" enctype="multipart/form-data">
-				<?php wp_nonce_field( 'walkin_form_action', 'walkin_form_nonce' ); ?>
-				<input type="hidden" name="wp_doc_id" value="<?php echo esc_html( $d2g_profile_data->doctor_profile_ID ); ?>"> 
-				<div class="row mb-3">
-					<div class="col-sm-4">
-						<div>
-							<label class="form-label" for="client_name"><?php echo esc_html__( 'Patient name', 'doctor2go-connect' ); ?> *</label>
-							<input class="required_walk form-control" type="text" value="<?php echo esc_html( $userMeta['first_name'][0] . ' ' . $userMeta['last_name'][0] ); ?>" name="client_name" id="client_name">
-						</div>
-					</div>
-					<div class="col-sm-4">
-						<div>
-							<label class="form-label" for="client_email"><?php echo esc_html__( 'Patient email', 'doctor2go-connect' ); ?> *</label>
-							<input class="required_walk form-control" type="text" value="<?php echo esc_html( $currUser->data->user_email ); ?>" name="client_email" id="client_email">
-						</div>
-					</div>
-					<div class="col-sm-4">
-						<div>
-							<label class="form-label" for="optie_telefoonnummer"><?php echo esc_html__( 'Patient phone', 'doctor2go-connect' ); ?></label>
-							<input class="form-control" type="text" value="<?php echo esc_html( $userMeta['p_tel'][0] ); ?>" name="optie_telefoonnummer" id="optie_telefoonnummer">
-						</div>
-					</div>
-				</div>
-				<div class="row mb-3">
-					<div class="col-sm-4">
-						<div>
-							<label class="form-label" for="optie_geboortedatum"><?php echo esc_html__( 'Date of Birth: day/month/year  ', 'doctor2go-connect' ); ?> *</label>
-							<input class="required_walk form-control" type="date"  name="optie_geboortedatum" id="optie_geboortedatum"  value="<?php echo esc_html( $userMeta['p_bday'][0] ); ?>">
-						</div>
-					</div>
-					<div class="col-sm-4">
-						<div>
-							<label class="form-label" for="optie_aanhef"><?php echo esc_html__( 'Gender', 'doctor2go-connect' ); ?></label>
-							<select name="optie_aanhef form-select" id="optie_aanhef">
-								<option <?php echo ( '0' == $userMeta['p_gender'][0] ) ? 'selected' : ''; ?> value="0"><?php echo esc_html__( 'make a choice', 'doctor2go-connect' ); ?></option>
-								<option <?php echo ( 'male' == $userMeta['p_gender'][0] ) ? 'selected' : ''; ?> value="male"><?php echo esc_html__( 'male', 'doctor2go-connect' ); ?></option>
-								<option <?php echo ( 'female' == $userMeta['p_gender'][0] ) ? 'selected' : ''; ?> value="female"><?php echo esc_html__( 'female', 'doctor2go-connect' ); ?></option>
-								<option <?php echo ( 'other' == $userMeta['p_gender'][0] ) ? 'selected' : ''; ?> value="other"><?php echo esc_html__( 'other', 'doctor2go-connect' ); ?></option>
-							</select>
-						</div>
-					</div>
-					<div class="col-sm-4">
-						<div>
-							<label class="form-label"><?php echo esc_html__( 'Country', 'doctor2go-connect' ); ?></label>
-							<select name="optie_land">
-								<option value="0"><?php echo esc_html__( 'Country', 'doctor2go-connect' ); ?></option>
-								<?php
-								if ( get_option( 'd2gc_pseudo_translations' ) == 1 ) {
-									foreach ( $allCountries as $country ) {
-										$selected = '';
-										if ( isset( $countriesArray[ $country->slug ] ) ) {
-											$selected = 'selected';
-										}
-										?>
-										<option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $country->slug ); ?>"><?php echo ( pll_current_language() == 'en' ) ? esc_html( $country->name ) : esc_html( get_term_meta( $country->term_id, 'rudr_text_' . pll_current_language(), true ) ); ?></option>
-										<?php
-									}
-								} else {
-									foreach ( $allCountriesArray as $slug => $name ) {
-										$selected = '';
-										if ( isset( $countriesArray[ $slug ] ) ) {
-											$selected = 'selected';
-										}
-										?>
-										<option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $slug ); ?>"><?php echo esc_html( $name ); ?></option>
-										<?php
-									}
-								}
-								?>
-							</select>
-						</div>
-					</div>  
-				</div>
-				<div class="mb-3">
-					<label for="optie_reason" class="form-label"><?php echo esc_html__( 'Reason for consult', 'doctor2go-connect' ); ?>*</label>
-					<textarea class="required_walk form-control w-100" name="optie_reason" rows="3" id="optie_reason"></textarea>
-				</div>
-				<div class="mb-3">
-					<?php if ( ! is_user_logged_in() ) { ?>
-						<?php d2gc_confirmation_checkboxes( '_wf' ); ?>
-					<?php } ?>
-					<!-- reCAPTCHA Widget -->
-					<?php if ( get_option( 'd2gc_recaptcha_site_key' ) ) { ?>
-						<div class="g-recaptcha mb-s" data-sitekey="<?php echo esc_attr( $site_key ); ?>"></div>
-						<div id="captcha_walkin"></div>
-					<?php } ?>
-				</div>
-				<p class="mb-3"><button class="btn btn-primary wp-block-button__link request_walkin button" tabindex="6" id="save"><?php esc_html_e( 'pay and continue', 'doctor2go-connect' ); ?></button></p>
-				<p><?php esc_html_e( 'After your payment goes through, you’ll enter the waiting room. The doctor will begin the consultation shortly', 'doctor2go-connect' ); ?></p>
-			</form>
-		</div>
-		<p><?php echo esc_html__( '* required fields.', 'doctor2go-connect' ); ?></p>
-	</div>
+    <form id="walkin_form" method="post" action="" enctype="multipart/form-data">
+        <div id="inloop" class="walkin_form_wrapper card">
+            <div class="card-body">
+                <h3 class="section_title"><?php echo esc_html__( 'Walk-in consultation', 'doctor2go-connect' ); ?></h3>
+                <div class="alert alert-info info_notes mb-3">
+                <?php
+                echo esc_html__(
+                    'This doctor is currently available for an immediate walk-in consultation. Complete the form and click “Pay and Continue” to proceed.','doctor2go-connect')?>
+                </div>
+                
+                <div class="error simple_hide alert alert-danger" id="walkin_error"></div>
+                <?php wp_nonce_field( 'walkin_form_action', 'walkin_form_nonce' ); ?>
+                <input type="hidden" name="wp_doc_id" value="<?php echo esc_html( $d2g_profile_data->doctor_profile_ID ); ?>"> 
+                <div class="row mb-3">
+                    <div class="col-sm-4">
+                        <div>
+                            <label class="form-label" for="client_name"><?php echo esc_html__( 'Patient name', 'doctor2go-connect' ); ?> *</label>
+                            <input class="required_walk form-control" type="text" value="<?php echo esc_html( $userMeta['first_name'][0] . ' ' . $userMeta['last_name'][0] ); ?>" name="client_name" id="client_name">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>
+                            <label class="form-label" for="client_email"><?php echo esc_html__( 'Patient email', 'doctor2go-connect' ); ?> *</label>
+                            <input class="required_walk form-control" type="text" value="<?php echo esc_html( $user_email ); ?>" name="client_email" id="client_email">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>
+                            <label class="form-label" for="optie_telefoonnummer"><?php echo esc_html__( 'Patient phone', 'doctor2go-connect' ); ?></label>
+                            <input class="form-control" type="text" value="<?php echo esc_html( $userMeta['p_tel'][0] ); ?>" name="optie_telefoonnummer" id="optie_telefoonnummer">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-4">
+                        <div>
+                            <label class="form-label" for="optie_geboortedatum"><?php echo esc_html__( 'Date of Birth: day/month/year  ', 'doctor2go-connect' ); ?> *</label>
+                            <input class="required_walk form-control" type="date"  name="optie_geboortedatum" id="optie_geboortedatum"  value="<?php echo esc_html( $userMeta['p_bday'][0] ); ?>">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>
+                            <label class="form-label" for="optie_aanhef"><?php echo esc_html__( 'Gender', 'doctor2go-connect' ); ?></label>
+                            <select name="optie_aanhef form-select" id="optie_aanhef">
+                                <option <?php echo ( '0' == $userMeta['p_gender'][0] ) ? 'selected' : ''; ?> value="0"><?php echo esc_html__( 'make a choice', 'doctor2go-connect' ); ?></option>
+                                <option <?php echo ( 'male' == $userMeta['p_gender'][0] ) ? 'selected' : ''; ?> value="male"><?php echo esc_html__( 'male', 'doctor2go-connect' ); ?></option>
+                                <option <?php echo ( 'female' == $userMeta['p_gender'][0] ) ? 'selected' : ''; ?> value="female"><?php echo esc_html__( 'female', 'doctor2go-connect' ); ?></option>
+                                <option <?php echo ( 'other' == $userMeta['p_gender'][0] ) ? 'selected' : ''; ?> value="other"><?php echo esc_html__( 'other', 'doctor2go-connect' ); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>
+                            <label class="form-label"><?php echo esc_html__( 'Country', 'doctor2go-connect' ); ?></label>
+                            <select name="optie_land">
+                                <option value="0"><?php echo esc_html__( 'Country', 'doctor2go-connect' ); ?></option>
+                                <?php
+                                if ( get_option( 'd2gc_pseudo_translations' ) == 1 ) {
+                                    foreach ( $allCountries as $country ) {
+                                        $selected = '';
+                                        if ( isset( $countriesArray[ $country->slug ] ) ) {
+                                            $selected = 'selected';
+                                        }
+                                        ?>
+                                        <option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $country->slug ); ?>"><?php echo ( pll_current_language() == 'en' ) ? esc_html( $country->name ) : esc_html( get_term_meta( $country->term_id, 'rudr_text_' . pll_current_language(), true ) ); ?></option>
+                                        <?php
+                                    }
+                                } else {
+                                    foreach ( $allCountriesArray as $slug => $name ) {
+                                        $selected = '';
+                                        if ( isset( $countriesArray[ $slug ] ) ) {
+                                            $selected = 'selected';
+                                        }
+                                        ?>
+                                        <option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $slug ); ?>"><?php echo esc_html( $name ); ?></option>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>  
+                </div>
+                <div class="mb-3">
+                    <label for="optie_reason" class="form-label"><?php echo esc_html__( 'Reason for consult', 'doctor2go-connect' ); ?>*</label>
+                    <textarea class="required_walk form-control w-100" name="optie_reason" rows="3" id="optie_reason"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="card mt-5">
+            <div class="card-body">
+
+                <legend class="fs-5 mb-3">
+                    <strong><?php echo esc_html__('Your consultation', 'doctor2go-connect')?></strong>
+                </legend>
+                <p>
+                    <?php
+                    /* translators: %s is the doctor's name. */
+                    echo esc_html(
+                        sprintf(
+                            __( 'After your payment is confirmed, you’ll be placed in the waiting room. If others are ahead of you, a short wait may apply.', 'doctor2go-connect' ),
+                            $doctor_name
+                        )
+                    );
+                    ?>
+                </p>
+                <p class="mb-3 border-top border-bottom py-3 d-flex h4 align-items-center justify-content-between">
+                    <span class="me-3"><strong><?php echo esc_html__( 'E-mail advice', 'doctor2go-connect' ); ?></strong></span>
+                    <span class="price_wrapper">
+                        <strong><?php echo esc_html( $d2g_profile_data->doctor_meta['walk_in_currency'][0] . ' ' . $d2g_profile_data->doctor_meta['walk_in_price'][0] ); ?></strong><br>
+                        <small class="text-muted">(excl. VAT)</small>
+                    </span>
+                </p>
+
+
+                <div class="mb-3">
+                    <?php d2gc_confirmation_checkboxes( '_wf' ); ?>
+                    <!-- reCAPTCHA Widget -->
+                    <?php if ( get_option( 'd2gc_recaptcha_site_key' ) ) { ?>
+                        <div class="g-recaptcha mb-s" data-sitekey="<?php echo esc_attr( $site_key ); ?>"></div>
+                        <div id="captcha_walkin"></div>
+                    <?php } ?>
+                </div>
+                <p class="mb-3"><button class="btn btn-primary wp-block-button__link request_walkin button" tabindex="6" id="save"><?php esc_html_e( 'pay and continue', 'doctor2go-connect' ); ?></button></p>
+
+                <p><?php echo esc_html__( '* required fields.', 'doctor2go-connect' ); ?></p>
+            </div>
+        </div>
+    </form>
 <?php }
 
 

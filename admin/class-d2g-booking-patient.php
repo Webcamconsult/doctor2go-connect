@@ -238,19 +238,27 @@ class D2G_booking_wcc_user {
         
 
         if ( isset( $appointment['client']['id'] ) && is_user_logged_in() ) {
-			$client = $appointment['client'];
+            $client = $appointment['client'];
 
-			$ids    = (array) get_user_meta( $currUser->ID, 'ids', true );
-			$tokens = (array) get_user_meta( $currUser->ID, 'tokens', true );
+            $ids    = get_user_meta( $currUser->ID, 'ids', true );
+            $tokens = get_user_meta( $currUser->ID, 'tokens', true );
 
-			if ( ! isset( $tokens[ $docOrgKey ] ) ) {
-				$ids[ $docOrgKey ]    = $client['id'];
-				$tokens[ $docOrgKey ] = $client['authentication_token'];
+            if ( ! is_array( $ids ) ) {
+                $ids = array();
+            }
 
-				update_user_meta( $currUser->ID, 'ids', $ids );
-				update_user_meta( $currUser->ID, 'tokens', $tokens );
-			}
-		}
+            if ( ! is_array( $tokens ) ) {
+                $tokens = array();
+            }
+
+            if ( ! empty( $docOrgKey ) && ! isset( $tokens[ $docOrgKey ] ) ) {
+                $ids[ $docOrgKey ]    = $client['id'];
+                $tokens[ $docOrgKey ] = $client['authentication_token'];
+
+                update_user_meta( $currUser->ID, 'ids', $ids );
+                update_user_meta( $currUser->ID, 'tokens', $tokens );
+            }
+        }
 
 
         if ( isset( $appointment['url'] ) ) {
@@ -319,8 +327,135 @@ class D2G_booking_wcc_user {
 
 
 
-	// this retrieves a URL for the walk-in appointment
+	
+    // this retrieves a URL for the walk-in appointment
 	// if success user gets redirected to the doctor waiting room
+	public static function d2gc_create_wcc_walkin() {
+
+		// Validate CAPTCHA
+		$secret_key = get_option( 'd2g_recaptcha_secret_key' ); 
+		if ( $secret_key !== '' ) {
+			$recaptcha_response = sanitize_text_field( $_POST['g-recaptcha-response'] );
+
+			$recaptcha_verify = wp_remote_post(
+				'https://www.google.com/recaptcha/api/siteverify',
+				[
+					'body'    => [
+						'secret'   => $secret_key,
+						'response' => $recaptcha_response,
+						'remoteip' => $_SERVER['REMOTE_ADDR'],
+					],
+					'timeout' => 10,
+				]
+			);
+
+			if ( is_wp_error( $recaptcha_verify ) ) {
+				return false;
+			}
+
+			$recaptcha_result = json_decode( wp_remote_retrieve_body( $recaptcha_verify ) );
+
+			if ( empty( $recaptcha_result ) || ! $recaptcha_result->success ) {
+				return false;
+			}
+		}
+
+		$wpDocID        = absint( wp_unslash( $_POST['wp_doc_id'] ) );
+		$client_name    = sanitize_text_field( wp_unslash( $_POST['client_name'] ) );
+		$client_email   = sanitize_email( wp_unslash( $_POST['client_email'] ) );
+		$client_tel     = sanitize_text_field( wp_unslash( $_POST['optie_telefoonnummer'] ) );
+		$client_bday    = sanitize_text_field( wp_unslash( $_POST['optie_geboortedatum'] ) );
+		$client_gender  = sanitize_text_field( wp_unslash( $_POST['optie_aanhef'] ) );
+		$client_country = sanitize_text_field( $_POST['optie_land'] );
+		$client_reason  = sanitize_text_field( $_POST['optie_reason'] );
+		$currLang       = explode( '_', get_locale() )[0];
+
+		$docKey     = get_post_meta( $wpDocID, 'user_key', true );
+		$docOrgKey  = get_post_meta( $wpDocID, 'organisation_key', true ); 
+		$docWCC_ID  = get_post_meta( $wpDocID, 'wcc_user_id', true );
+		$orgSlug    = get_post_meta( $wpDocID, 'organisation_subdomain', true ) . '.';
+		$price      = get_post_meta( $wpDocID, 'walk_in_price', true );
+		$currency   = get_post_meta( $wpDocID, 'walk_in_currency', true );
+		$baseUrl    = get_option( 'wcc_base_url' );
+
+		$unixTime = time();
+		$superKey = get_option( 'wcc_token' );
+		$myHash   = hash( 'sha256', $unixTime . '_' . $docKey . '_' . $superKey );
+
+		$payload = [
+			'consultant_id'        => (string) $docWCC_ID,
+			'requires_payment'     => 'true',
+			'payment_price'        => (string) $price,
+			'payment_currency'     => (string) $currency,
+			'client_email'         => $client_email,
+			'client_name'          => $client_name,
+			'language'             => $currLang,
+			'optie_telefoonnummer' => $client_tel,
+			'optie_geboortedatum'  => $client_bday,
+			'optie_aanhef'         => $client_gender,
+			'optie_land'           => $client_country,
+			'optie_reason'         => $client_reason,
+			'handshake' => [
+				'time'  => (string) $unixTime,
+				'token' => $docKey,
+				'hash'  => $myHash,
+				'type'  => 'user',
+			],
+		];
+
+		$response = wp_remote_post(
+			get_option( 'api_url_short' ) . 'doclisting/inloopspreekuur',
+			[
+				'headers' => [
+					'Content-Type' => 'application/json',
+				],
+				'body'    => wp_json_encode( $payload ),
+				'timeout' => 20,
+			]
+		);
+
+		if ( is_wp_error( $response ) ) {
+			wp_die( esc_html__( 'There has been an error.', 'd2g-connect' ) );
+		}
+
+		$response_body = json_decode( wp_remote_retrieve_body( $response ) );
+
+		// get current user
+		$currUser = wp_get_current_user();
+
+		if ( isset( $response_body->client->id ) && $currUser->ID !== 0 ) {
+			$client = $response_body->client;
+
+			$ids    = get_user_meta( $currUser->ID, 'ids', true );
+            $tokens = get_user_meta( $currUser->ID, 'tokens', true );
+
+            if ( ! is_array( $ids ) ) {
+                $ids = array();
+            }
+
+            if ( ! is_array( $tokens ) ) {
+                $tokens = array();
+            }
+
+            if ( ! empty( $docOrgKey ) && ! isset( $tokens[ $docOrgKey ] ) ) {
+                $ids[ $docOrgKey ]    = $client['id'];
+                $tokens[ $docOrgKey ] = $client['authentication_token'];
+
+                update_user_meta( $currUser->ID, 'ids', $ids );
+                update_user_meta( $currUser->ID, 'tokens', $tokens );
+            }
+		}
+
+		if ( isset( $response_body->url ) ) {
+			$waiting_room_full_url = 'https://' . $orgSlug . $baseUrl . $response_body->url;
+			wp_send_json_success( [ 'redirect_url' => $waiting_room_full_url ] );
+		}
+
+		wp_die( esc_html__( 'There has been an error.', 'd2g-connect' ) );
+	}
+
+
+    //email advice 
 	public static function d2gc_create_wcc_written_cosnsult() {
 
 		// Verify nonce early and bail on failure.
@@ -499,16 +634,24 @@ class D2G_booking_wcc_user {
 		if ( isset( $response_body->client->id ) && is_user_logged_in() ) {
 			$client = $response_body->client;
 
-			$ids    = (array) get_user_meta( $currUser->ID, 'ids', true );
-			$tokens = (array) get_user_meta( $currUser->ID, 'tokens', true );
+			$ids    = get_user_meta( $currUser->ID, 'ids', true );
+            $tokens = get_user_meta( $currUser->ID, 'tokens', true );
 
-			if ( ! isset( $tokens[ $docOrgKey ] ) ) {
-				$ids[ $docOrgKey ]    = $client->id;
-				$tokens[ $docOrgKey ] = $client->authentication_token;
+            if ( ! is_array( $ids ) ) {
+                $ids = array();
+            }
 
-				update_user_meta( $currUser->ID, 'ids', $ids );
-				update_user_meta( $currUser->ID, 'tokens', $tokens );
-			}
+            if ( ! is_array( $tokens ) ) {
+                $tokens = array();
+            }
+
+            if ( ! empty( $docOrgKey ) && ! isset( $tokens[ $docOrgKey ] ) ) {
+                $ids[ $docOrgKey ]    = $client['id'];
+                $tokens[ $docOrgKey ] = $client['authentication_token'];
+
+                update_user_meta( $currUser->ID, 'ids', $ids );
+                update_user_meta( $currUser->ID, 'tokens', $tokens );
+            }
 		}
 
 		if ( isset( $response_body->url ) ) {

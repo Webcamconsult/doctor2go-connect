@@ -742,22 +742,9 @@ jQuery(document).ready(function ($) {
             });
 
             // Extra checks for guests
-            if (!d.user || !d.user.is_logged_in) {
-
-                if (!$('#conf_privacy_wf').is(':checked')) {
-                    checker = true;
-                    checker_message += ' ' + d.msg.privacy;
-                }
-
-                if (!$('#conf_terms_wf').is(':checked')) {
-                    checker = true;
-                    checker_message += ' ' + d.msg.terms;
-                }
-
-                if (!$('#conf_disclaimer_wf').is(':checked')) {
-                    checker = true;
-                    checker_message += ' ' + d.msg.disclaimer;
-                }
+            if (!$('#conf_all_wf').is(':checked')) {
+                checker = true;
+                checker_message += ' ' + d.msg.privacy;
             }
 
             // Recaptcha check
