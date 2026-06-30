@@ -108,6 +108,9 @@ class D2gConnect {
 		// create update doc user and doc profile functions
 		require_once D2GC_PLUGIN_DIR . 'admin/class-d2g-doc-user-profile.php';
 
+        // AI translations from doctor meta data
+		require_once D2GC_PLUGIN_DIR . 'admin/class-d2g-ai-translate-doctor-meta.php';
+
 		// The class responsible for defining all actions that occur in the public-facing side of the site.
 		require_once D2GC_PLUGIN_DIR . 'public/class-d2g-connect-public.php';
 

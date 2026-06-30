@@ -976,7 +976,11 @@ class D2gConnect_Shortcodes {
                                                 <div class="tab-pane fade" id="advanced-panel" role="tabpanel" aria-labelledby="advanced-tab" tabindex="0">
                                                     <div class="vlakje">
                                                         <div class="availability-form">
-                                                            <input type="hidden" id="rules-json-output" name="availability_rule[rules_json]" value="">
+                                                            <?php
+                                                                $output = json_encode(['rules' => $simple_booking_rules]);
+                                                                $escaped = htmlspecialchars($output, ENT_QUOTES, 'UTF-8');
+                                                            ?>
+                                                            <input type="hidden" id="rules-json-output" name="availability_rule[rules_json]" value="<?php echo $escaped?>">
                                                             <input type="hidden" id="form_type_advanced" name="availability_rule[is_advanced_form]" value="true">
 
                                                             <div class="card form-builder-section mb-4">
@@ -1071,24 +1075,19 @@ class D2gConnect_Shortcodes {
 
                                                                     <div class="time-range">
                                                                         <div class="row">
-                                                                            <div class="col-md-4">
+                                                                            <div class="col-md-6">
                                                                                 <div class="mb-3">
                                                                                     <label class="form-label">From</label>
                                                                                     <input class="form-control start-time-input" type="time" value="11:00">
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-md-4">
+                                                                            <div class="col-md-6">
                                                                                 <div class="mb-3">
                                                                                     <label class="form-label">To</label>
                                                                                     <input class="form-control end-time-input" type="time" value="15:00">
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-md-4">
-                                                                                <div class="mb-3">
-                                                                                    <label class="form-label">Anchor Date</label>
-                                                                                    <input class="form-control anchor-date-input" type="date" value="">
-                                                                                </div>
-                                                                            </div>
+                                                                            
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1105,14 +1104,32 @@ class D2gConnect_Shortcodes {
 
                                                                 <ul id="rules-container" class="list-group list-group-flush">
                                                                     <!-- JavaScript will inject items directly into this list group -->
+                                                                     <?php if($simple_booking_rules){
+                                                                        nice_dump($simple_booking_rules);
+                                                                        foreach($simple_booking_rules as $rule){ ?>
+                                                                            <li class="list-group-item rule-item d-flex justify-content-between align-items-center">
+                                                                                <span class="rule-text"><?php echo $days[$rule['wdays']];?> <?php echo esc_html__('between', 'doctor2go-connect')?> <?php echo esc_html($rule['start_time']);?> <?php echo esc_html__('and', 'doctor2go-connect')?> <?php echo esc_html($rule['end_time']);?>. <?php echo esc_html__('Weekly interval:', 'doctor2go-connect')?>  <?php echo esc_html($rule['week_interval']);?></span>
+                                                                                <div class="btn-group btn-group-sm rule-actions" role="group">
+                                                                                    <button class="btn btn-outline-secondary edit-rule-btn" type="button">Edit</button>
+                                                                                    <button class="btn btn-danger remove-rule-btn" type="button">Remove</button>
+                                                                                </div>
+                                                                            </li>
+                                                                        <?php }
+                                                                     }?>
                                                                 </ul>
 
                                                                 <div class="card-body">
                                                                     <!-- <pre></pre> -->
                                                                 </div>
 
-                                                                <div class="card-footer text-end">
-                                                                    <button type="submit" class="btn btn-primary">Save All Rules</button>
+                                                                <div class="card-footer">
+                                                                    <p class="alert alert-info mb-3"><strong><?php esc_html_e('Updates are processed overnight and active the next day.', 'doctor2go-connect')?><strong></p>
+                                                                    <button id="save-adv-rules-btn" class="btn btn-primary" type="button">
+                                                                        <span class="btn-label"><?php echo esc_html__( 'Update availabilites', 'doctor2go-connect' ); ?></span>
+                                                                        <span class="spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
+                                                                        <span class="visually-hidden"><?php echo esc_html__( 'Loading...', 'doctor2go-connect' ); ?></span>
+                                                                    </button>
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -2504,14 +2521,13 @@ class D2gConnect_Shortcodes {
 		ob_start();
 
 		?>
-		<ul class="user_menu row justify-content-between w-100 mt-5 mb-5">
+		<ul class="user_menu mt-5 mb-5 nav nav-tabs">
 			<?php
 			foreach ( $pages as $page => $image ) {
 				$pageData = $d2gAdmin::d2gc_page_url( $currLang, $page, true );
 				?>
-				<li class="col-sm-3">
-					<a href="<?php echo esc_html( $pageData['url'] ); ?>">
-						<img style="width:50px; display:inline-block; margin-right:10px;" src="<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'images/' . $image ); ?>">
+				<li class="nav-item">
+					<a class="nav-link" href="<?php echo esc_html( $pageData['url'] ); ?>">
 						<span><?php echo esc_html( $pageData['title'] ); ?></span>
 					</a>
 				</li>

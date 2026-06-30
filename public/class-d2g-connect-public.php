@@ -987,9 +987,13 @@ class D2gConnect_Public {
     function d2gc_update_booking_rules() {
         check_ajax_referer( 'send_booking_rules_nonce', 'send_booking_rules_nonce' );
 
-        $wpDocID    = isset( $_POST['wp_doc_id'] ) ? absint( wp_unslash( $_POST['wp_doc_id'] ) ) : 0;
-        $rules_json = isset( $_POST['simple_rules_json'] ) ? wp_unslash( $_POST['simple_rules_json'] ) : '';
-        $anchor_date = isset( $_POST['anchor_date'] ) ? sanitize_text_field( wp_unslash( $_POST['anchor_date'] ) ) : '';
+        $wpDocID        = isset( $_POST['wp_doc_id'] ) ? absint( wp_unslash( $_POST['wp_doc_id'] ) ) : 0;
+        $rules_json     = isset( $_POST['simple_rules_json'] ) ? wp_unslash( $_POST['simple_rules_json'] ) : '';
+        $anchor_date    = isset( $_POST['anchor_date'] ) ? sanitize_text_field( wp_unslash( $_POST['anchor_date'] ) ) : '';
+        $type           = isset( $_POST['type'] ) ? sanitize_text_field( wp_unslash( $_POST['type'] ) ) : '';
+
+
+        
 
         if ( ! $wpDocID ) {
             wp_send_json_error(
@@ -1046,17 +1050,33 @@ class D2gConnect_Public {
 
         $url = trailingslashit( get_option( 'd2gc_api_url_short' ) ) . 'doclisting/update_bookings_rules_for_user';
 
-        $body = array(
-            'handshake' => array(
-                'time'  => (string) $unixTime,
-                'token' => $docKey,
-                'hash'  => $myHash,
-                'type'  => 'user',
-            ),
-            'simple_rules_json'        => json_encode($clean_rules),
-            'user_id'                  => $docWCC_ID,
-            'is_simple_form'           => true 
-        );
+        if($type == 'adv'){
+            $body = array(
+                'handshake' => array(
+                    'time'  => (string) $unixTime,
+                    'token' => $docKey,
+                    'hash'  => $myHash,
+                    'type'  => 'user',
+                ),
+                'rules_json'               => $rules_json,
+                'user_id'                  => $docWCC_ID,
+                'is_simple_form'           => false 
+            );
+        } else {
+            $body = array(
+                'handshake' => array(
+                    'time'  => (string) $unixTime,
+                    'token' => $docKey,
+                    'hash'  => $myHash,
+                    'type'  => 'user',
+                ),
+                'simple_rules_json'        => json_encode($clean_rules),
+                'user_id'                  => $docWCC_ID,
+                'is_simple_form'           => true 
+            );
+        }
+
+        
 
         $args = array(
             'method'      => 'POST',

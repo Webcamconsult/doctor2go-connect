@@ -184,3 +184,4 @@ jQuery(document).ready(function($){
 		custom_uploader2.open();
 	});      
 });
+

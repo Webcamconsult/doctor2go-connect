@@ -1,0 +1,31 @@
+<wpml-config>
+    <custom-fields>
+        <custom-field action="translate">d2g_first_name</custom-field>
+        <custom-field action="translate">d2g_last_name</custom-field>
+        <custom-field action="translate">d2g_emp_title</custom-field>
+        <custom-field action="translate">d2g_address</custom-field>
+        <custom-field action="translate">d2g_city</custom-field>
+        <custom-field action="translate">d2g_organisation</custom-field>
+    </custom-fields>
+
+    <admin-texts>
+        <key name="exps">
+            <key name="d2g_exp_edu_expertise" />
+            <key name="d2g_exp_edu_title" />
+            <key name="d2g_exp_edu_org" />
+        </key>
+        <key name="edus">
+            <key name="d2g_exp_edu_study" />
+            <key name="d2g_exp_edu_title" />
+            <key name="d2g_exp_edu_org" />
+        </key>
+        <key name="pubs">
+            <key name="d2g_pub_title" />
+            <key name="d2g_pub_link" />
+            <key name="d2g_pub_journal" />
+            <key name="d2g_pub_type" />
+            <key name="d2g_pub_author" />
+            <key name="d2g_pub_date" />
+        </key>
+    </admin-texts>
+</wpml-config>

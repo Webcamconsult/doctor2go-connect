@@ -501,13 +501,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const compileRuleFromForm = () => {
         const type = typeSelect ? typeSelect.value : "weekly";
-        const anchorDateInput = document.querySelector(".anchor-date-input");
         const startTimeInput = document.querySelector(".start-time-input");
         const endTimeInput = document.querySelector(".end-time-input");
 
+        const anchorDateInput = document.querySelector(".anchor-date-input");
+        
+        const rawDateVal = anchorDateInput ? String(anchorDateInput.value).trim() : "";
+        let epochAnchor;
 
-        const dateVal = anchorDateInput ? anchorDateInput.value : new Date().toISOString().split("T")[0];
-        const epochAnchor = Math.floor(new Date(dateVal).getTime() / 1000);
+
+        if (!rawDateVal) {
+            epochAnchor = Math.floor(Date.now() / 1000);
+        } else if (/^\d+$/.test(rawDateVal)) {
+            epochAnchor = parseInt(rawDateVal, 10);
+        } else {
+            const parsedDate = new Date(rawDateVal);
+            epochAnchor = Number.isNaN(parsedDate.getTime())
+                ? Math.floor(Date.now() / 1000)
+                : Math.floor(parsedDate.getTime() / 1000);
+        }
+
 
 
         let rule = {
@@ -684,3 +697,40 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+
+jQuery(document).ready(function($){
+    $('#save-adv-rules-btn').click(function(){
+        var dsr = typeof d2gBookingRulesData !== "undefined" ? d2gBookingRulesData : null;
+        var i18n = dsr && dsr.i18n ? dsr.i18n : {};
+
+
+        if (!dsr || !dsr.ajax || !dsr.ajax.url) {
+            throw new Error(i18n.missing_ajax_url || "d2gBookingRulesData.ajax.url is missing");
+        }
+
+
+        var data = {
+            action: "d2gc_update_booking_rules",
+            send_booking_rules_nonce: dsr.ajax.send_booking_rules_nonce,
+            simple_rules_json: jQuery("#rules-json-output").val(),
+            wp_doc_id: jQuery("#doc_id_simple").val(),
+            anchor_date: jQuery("#anchor-date-input-simple").val(),
+            type:'adv'
+        };
+
+
+        console.log("Sending adv rules:", data);
+        
+
+
+        jQuery.post(dsr.ajax.url, data, function (response) {
+            console.log(response);
+            if (response && response.success) {
+                console.log(response);
+            } else {
+                console.log(response || { error: i18n.request_failed || "Request failed" });
+            }
+        })
+    });
+})
