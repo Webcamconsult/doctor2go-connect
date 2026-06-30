@@ -46,7 +46,15 @@ class D2GC_Doctor_AI_Translator {
             return;
         }
 
-        echo '<p>This will translate the linked source doctor title, content, excerpt, and custom meta into the current post, including education, experience, and publications.</p>';
+        echo '<p>This will translate the linked source doctor custom meta into the current post. You can optionally include title, content, and excerpt.</p>';
+
+        echo '<p style="margin:10px 0;">';
+        echo '<label for="d2gc-translate-post-fields">';
+        echo '<input type="checkbox" id="d2gc-translate-post-fields" value="1" style="margin-right:6px;" />';
+        echo 'Also translate title, content, and excerpt';
+        echo '</label>';
+        echo '</p>';
+
         echo '<p><button type="button" class="button button-primary" id="d2gc-translate-current-btn" data-post-id="' . esc_attr( $post->ID ) . '">Translate into this post</button></p>';
         echo '<div id="d2gc-translate-result" style="margin-top:10px;"></div>';
     }
@@ -66,7 +74,7 @@ class D2GC_Doctor_AI_Translator {
             'd2gc-ai-translate-current',
             plugin_dir_url( __FILE__ ) . '../admin/js/d2gc-ai-translate-current.js',
             array( 'jquery' ),
-            '1.0.0',
+            '1.1.0',
             true
         );
 
@@ -92,6 +100,7 @@ class D2GC_Doctor_AI_Translator {
         }
 
         $current_post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
+        $translate_post_fields = ! empty( $_POST['translate_post_fields'] ) && '1' === (string) $_POST['translate_post_fields'];
 
         if ( ! $current_post_id || 'd2g_doctor' !== get_post_type( $current_post_id ) ) {
             wp_send_json_error( array( 'message' => 'Invalid doctor post.' ), 400 );
@@ -120,11 +129,14 @@ class D2GC_Doctor_AI_Translator {
 
         $meta_fields = $this->get_translatable_fields();
 
-        $source_post_fields = array(
-            'post_title'   => get_post_field( 'post_title', $source_post_id ),
-            'post_content' => get_post_field( 'post_content', $source_post_id ),
-            'post_excerpt' => get_post_field( 'post_excerpt', $source_post_id ),
-        );
+        $source_post_fields = array();
+        if ( $translate_post_fields ) {
+            $source_post_fields = array(
+                'post_title'   => get_post_field( 'post_title', $source_post_id ),
+                'post_content' => get_post_field( 'post_content', $source_post_id ),
+                'post_excerpt' => get_post_field( 'post_excerpt', $source_post_id ),
+            );
+        }
 
         $source_meta_fields = array();
 
@@ -134,8 +146,9 @@ class D2GC_Doctor_AI_Translator {
 
         $translated = $this->translate_fields_with_ai(
             array(
-                'post_fields' => $source_post_fields,
-                'meta_fields' => $source_meta_fields,
+                'translate_post_fields' => $translate_post_fields,
+                'post_fields'           => $source_post_fields,
+                'meta_fields'           => $source_meta_fields,
             ),
             $current_lang
         );
@@ -147,7 +160,7 @@ class D2GC_Doctor_AI_Translator {
         $updated_post_fields = array();
         $saved_meta_keys     = array();
 
-        if ( isset( $translated['post_fields'] ) && is_array( $translated['post_fields'] ) ) {
+        if ( $translate_post_fields && isset( $translated['post_fields'] ) && is_array( $translated['post_fields'] ) ) {
             $post_update = array(
                 'ID' => $current_post_id,
             );
@@ -185,14 +198,19 @@ class D2GC_Doctor_AI_Translator {
             }
         }
 
+        $message = $translate_post_fields
+            ? 'Translated selected post fields and custom fields saved into current post.'
+            : 'Translated custom fields saved into current post.';
+
         wp_send_json_success(
             array(
-                'message'             => 'Translated title, content, excerpt, and custom fields saved into current post.',
-                'source_post_id'      => (int) $source_post_id,
-                'current_post_id'     => (int) $current_post_id,
-                'current_lang'        => $current_lang,
-                'updated_post_fields' => $updated_post_fields,
-                'saved_keys'          => $saved_meta_keys,
+                'message'               => $message,
+                'source_post_id'        => (int) $source_post_id,
+                'current_post_id'       => (int) $current_post_id,
+                'current_lang'          => $current_lang,
+                'translate_post_fields' => $translate_post_fields,
+                'updated_post_fields'   => $updated_post_fields,
+                'saved_keys'            => $saved_meta_keys,
             )
         );
     }
@@ -217,6 +235,16 @@ class D2GC_Doctor_AI_Translator {
             return new WP_Error( 'missing_api_key', 'D2GC_AI_API_KEY is not defined.' );
         }
 
+        $translate_post_fields = ! empty( $source_data['translate_post_fields'] );
+        $post_fields           = isset( $source_data['post_fields'] ) && is_array( $source_data['post_fields'] ) ? $source_data['post_fields'] : array();
+        $meta_fields           = isset( $source_data['meta_fields'] ) && is_array( $source_data['meta_fields'] ) ? $source_data['meta_fields'] : array();
+
+        $system_prompt = 'You translate WordPress doctor post data. Return valid JSON only with exactly two top-level keys: post_fields and meta_fields. Preserve all keys and structure exactly. Translate human-readable text into the target language. Preserve HTML formatting in post_content and any HTML-bearing meta fields. For array meta fields such as edus, exps, and pubs, preserve the exact nested structure, indexes, and subkeys, but translate only the human-readable text values inside them. Do not invent, remove, reorder, or rename keys. Leave names, phone numbers, emails, URLs, years, dates, IDs, registration numbers, and proper nouns unchanged unless clearly translatable.';
+
+        if ( ! $translate_post_fields ) {
+            $system_prompt .= ' The post_fields object may be empty. In that case, return post_fields as an empty object and translate only meta_fields.';
+        }
+
         $payload = array(
             'model'       => 'gpt-4.1-mini',
             'temperature' => 0.2,
@@ -226,15 +254,16 @@ class D2GC_Doctor_AI_Translator {
             'messages'    => array(
                 array(
                     'role'    => 'system',
-                    'content' => 'You translate WordPress doctor post data. Return valid JSON only with exactly two top-level keys: post_fields and meta_fields. Preserve all keys and structure exactly. Translate human-readable text into the target language. Preserve HTML formatting in post_content and any HTML-bearing meta fields. For array meta fields such as edus, exps, and pubs, preserve the exact nested structure, indexes, and subkeys, but translate only the human-readable text values inside them. Do not invent, remove, reorder, or rename keys. Leave names, phone numbers, emails, URLs, years, dates, IDs, registration numbers, and proper nouns unchanged unless clearly translatable.',
+                    'content' => $system_prompt,
                 ),
                 array(
                     'role'    => 'user',
                     'content' => wp_json_encode(
                         array(
-                            'target_language' => $target_lang,
-                            'post_fields'     => isset( $source_data['post_fields'] ) ? $source_data['post_fields'] : array(),
-                            'meta_fields'     => isset( $source_data['meta_fields'] ) ? $source_data['meta_fields'] : array(),
+                            'target_language'       => $target_lang,
+                            'translate_post_fields' => $translate_post_fields,
+                            'post_fields'           => $post_fields,
+                            'meta_fields'           => $meta_fields,
                         ),
                         JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
                     ),

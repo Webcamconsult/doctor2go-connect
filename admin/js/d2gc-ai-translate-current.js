@@ -3,6 +3,7 @@ jQuery(function ($) {
     const $button = $(this);
     const postId = $button.data('post-id');
     const $result = $('#d2gc-translate-result');
+    const translatePostFields = $('#d2gc-translate-post-fields').is(':checked') ? '1' : '0';
 
     if (!postId) {
       $result.html('<span style="color:red;">Missing post ID.</span>');
@@ -15,7 +16,8 @@ jQuery(function ($) {
     $.post(d2gcAiTranslateCurrent.ajaxUrl, {
       action: 'd2gc_translate_doctor_fields_into_current_post',
       nonce: d2gcAiTranslateCurrent.nonce,
-      post_id: postId
+      post_id: postId,
+      translate_post_fields: translatePostFields
     })
       .done(function (response) {
         if (response && response.success) {
