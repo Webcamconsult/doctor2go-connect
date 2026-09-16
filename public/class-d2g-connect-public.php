@@ -227,6 +227,7 @@ class D2gConnect_Public {
             'only_cal'              => (bool) $only_cal,
             'in_tabs'               => (bool) $in_tabs,
             'd2gc_waiting_room_url' => get_option( 'd2gc_waiting_room_url' ),
+            'use_derma_questionnaire' => (bool) get_option( 'd2gc_use_derma_questionnaire' ),
             'recaptcha_site_key'    => (string) $site_key,
             'd2g_timezone'          => ! empty( $patient_meta['p_timezone'][0] ) ? $patient_meta['p_timezone'][0] : '',
             'is_user_logged_in'     => is_user_logged_in(),

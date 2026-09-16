@@ -156,6 +156,8 @@ if ( ! defined( 'WPINC' ) ) {
 				<p><?php echo esc_html__( 'Doctors will be translated via meta values in the post and in the meta values in the connected taxonomies.', 'doctor2go-connect' ); ?></p>
 				<input type="checkbox" name="d2gc_use_default_questionnaire" id="d2gc_use_default_questionnaire" value="1"  <?php echo ( get_option( 'd2gc_use_default_questionnaire' ) == '1' ) ? 'checked' : ''; ?>><label for="d2gc_use_default_questionnaire"><?php echo esc_html__( 'Use default questionnaire as intake form for appointments.', 'doctor2go-connect' ); ?></label>
 				<p><?php echo esc_html__( 'The questinonaire will be fetched in the WCC software based on langauge and on type default.', 'doctor2go-connect' ); ?></p>
+                <input type="checkbox" name="d2gc_use_derma_questionnaire" id="d2gc_use_derma_questionnaire" value="1"  <?php echo ( get_option( 'd2gc_use_derma_questionnaire' ) == '1' ) ? 'checked' : ''; ?>><label for="d2gc_use_derma_questionnaire"><?php echo esc_html__( 'Use derma questionnaire as intake form for appointments.', 'doctor2go-connect' ); ?></label>
+				<p><?php echo esc_html__( 'The derma email advice questinonaire will used as intake form for bookings.', 'doctor2go-connect' ); ?></p>
 				<input type="checkbox" name="d2g_debug" id="d2g_debug" value="1"  <?php echo ( get_option( 'd2g_debug' ) == '1' ) ? 'checked' : ''; ?>><label for="d2g_debug"><?php echo esc_html__( 'Activate debug logging', 'doctor2go-connect' ); ?></label>
 				<p><?php echo esc_html__( 'Writes extra details to the PHP error log when a request fails (e.g. the written consultation form). Only enable temporarily while investigating an issue.', 'doctor2go-connect' ); ?></p>
 			</div>

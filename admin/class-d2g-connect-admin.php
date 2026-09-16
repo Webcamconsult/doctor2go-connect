@@ -611,6 +611,7 @@ class D2gConnect_Admin {
 			'd2gc_pseudo_translations' => 'absint',
 			'd2gc_use_imgix' => 'absint',
 			'd2gc_use_default_questionnaire' => 'absint',
+            'd2gc_use_derma_questionnaire' => 'absint',
 			'd2gc_load_availability_info' => 'absint',
 			'd2gc_bootstrap_js' => 'absint',
 			'd2gc_activate_sso' => 'absint',

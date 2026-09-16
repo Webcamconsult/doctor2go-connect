@@ -575,7 +575,7 @@
 
                 d2gPrepareBookingImages().then(function(){
                     var data = {
-                        action: 'd2gc_create_wcc_appointment',
+                        action: d2gBookingVars.use_derma_questionnaire ? 'd2gc_create_wcc_appointment' : 'd2gc_create_wcc_appointment_no_intake',
                         start: $('#start_str').val(),
                         end: $('#end_str').val(),
                         vat: $('#vat').val(),
