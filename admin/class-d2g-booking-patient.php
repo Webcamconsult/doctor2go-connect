@@ -602,7 +602,7 @@ class D2G_booking_wcc_user {
 		$baseUrl    = get_option( 'wcc_base_url' );
 
 		$unixTime = time();
-		$superKey = get_option( 'wcc_token' );
+		$superKey = get_option( 'd2gc_wcc_token' );
 		$myHash   = hash( 'sha256', $unixTime . '_' . $docKey . '_' . $superKey );
 
 		$payload = [
