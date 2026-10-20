@@ -1946,7 +1946,7 @@ class D2gConnect_Shortcodes {
 
 		// Check if the user is already logged in.
 		if ( is_user_logged_in() ) {
-			echo '<p>' . esc_html__( 'You are logged in', 'doctor2go-connect' ) . '</p>';
+			echo '<p class="mt-3 login_form_wrapper alert alert-success alert-dismissible fade show center" role="alert">' . esc_html__( 'You are logged in', 'doctor2go-connect' ) . '</p>';
 			return ob_get_clean();
 		}
 
@@ -1955,9 +1955,9 @@ class D2gConnect_Shortcodes {
 		$logout_flag  = isset( $_GET['logout'] ) ? absint( wp_unslash( $_GET['logout'] ) ) : 0;
 
 		if ( 'failed' === $login_status ) {
-			echo '<p>' . esc_html__( 'You either have entered a wrong username or password, please try again or click on lost password to reset your password.', 'doctor2go-connect' ) . '</p>';
+			echo '<p class="mt-3 login_form_wrapper alert alert-danger alert-dismissible fade show center" role="alert">' . esc_html__( 'You either have entered a wrong username or password, please try again or click on lost password to reset your password.', 'doctor2go-connect' ) . '</p>';
 		} elseif ( 1 === $logout_flag ) {
-			echo '<p>' . esc_html__( 'You have logged out from this website.', 'doctor2go-connect' ) . '</p>';
+			echo '<p class="mt-3 login_form_wrapper alert alert-success alert-dismissible fade show center" role="alert">' . esc_html__( 'You have logged out from this website.', 'doctor2go-connect' ) . '</p>';
 		}
 
 		// Determine the default redirect URL after login.

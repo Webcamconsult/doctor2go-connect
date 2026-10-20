@@ -348,6 +348,19 @@ function d2gc_body_class( $classes, $class ) {
 		}
 	}
 
+	if ( is_user_logged_in() ) {
+		$userRoles = (array) wp_get_current_user()->roles;
+		if ( in_array( 'patient', $userRoles, true ) ) {
+			$classes[] = 'logged_patient';
+		}
+		if ( in_array( 'doctor', $userRoles, true ) ) {
+			$classes[] = 'logged_doctor';
+		}
+		if ( in_array( 'administrator', $userRoles, true ) ) {
+			$classes[] = 'logged_admin';
+		}
+	}
+
 	// Give me my new, modified $classes.
 	return $classes;
 }
