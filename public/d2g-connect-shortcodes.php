@@ -225,8 +225,8 @@ class D2gConnect_Shortcodes {
 								</button>
 							</li>
                             <li class="nav-item" role="presentation">
-								<a href="https://app.derm2check.com" target="_blank" class="nav-link">
-                                    <strong><?php echo esc_html( __( 'back to dashbaord', 'doctor2go-connect' ) ); ?></strong>    
+								<a href="https://app.derm2check.com?locale=<?php echo $currLang; ?>" target="_blank" class="nav-link">
+                                    <strong><?php echo esc_html( __( 'Dashbaord', 'doctor2go-connect' ) ); ?></strong>    
                                 </a>
 							</li>
 						</ul>

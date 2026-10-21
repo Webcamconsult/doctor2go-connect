@@ -1229,7 +1229,9 @@ class D2gConnect_Public {
             );
         }
 
-        if ( $resp->message == 'ok' ) {
+        // WCC answers with HTTP 200 and a descriptive message ("created N availabilities"), not "ok";
+        // a failure contains an "errors" key (same as the vacation endpoint)
+        if ( is_object( $resp ) && empty( $resp->errors ) ) {
             wp_send_json_success(
                 array(
                     'message'        => __('Booking rules updated successfully.', 'doctor2go-connect'),
