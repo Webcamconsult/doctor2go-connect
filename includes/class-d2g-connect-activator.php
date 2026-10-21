@@ -32,7 +32,7 @@ class D2gConnect_Activator {
 	public static function activate(){		
  		$protectedPages = array(
 			'My profile'            => '[d2gc_profile_edit]',
-			'Patient dashboard'     => '[d2gc_patient_dashbaord]',
+			'Patient dashboard'     => '[d2gc_patient_dashboard]',
 			'Appointments'          => '[d2gc_patient_appointments]',
 			'Account settings'      => '[d2gc_account_settings]',
 			'Liked doctors'         => '[d2gc_liked_posts]',

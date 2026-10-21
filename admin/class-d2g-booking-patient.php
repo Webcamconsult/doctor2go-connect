@@ -20,6 +20,7 @@ class D2G_booking_wcc_user {
 
 		// delete appointment
 		add_action( 'wp_ajax_d2gc_delete_wcc_appointment', array( __CLASS__, 'd2gc_delete_wcc_appointment' ) );
+		// not logged in: only with the client_token from the appointment e-mail, see d2gc_get_own_appointment()
 		add_action( 'wp_ajax_nopriv_d2gc_delete_wcc_appointment', array( __CLASS__, 'd2gc_delete_wcc_appointment' ) );
 
 		// walk in appointment
@@ -500,22 +501,131 @@ class D2G_booking_wcc_user {
         wp_die();
     }
 
+	/**
+	 * WCC client tokens of the patient making the request:
+	 * logged in -> the tokens stored with the user, not logged in -> the client_token from the link in the
+	 * appointment e-mail (appointment confirmation page). That token is the patient's proof of identity.
+	 *
+	 * @return string[]
+	 */
+	public static function d2gc_get_request_client_tokens() {
+		if ( is_user_logged_in() ) {
+			$tokens = maybe_unserialize( get_user_meta( get_current_user_id(), 'tokens', true ) );
+			return ( is_array( $tokens ) ) ? array_values( array_filter( $tokens ) ) : array();
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce is verified in the calling AJAX handler
+		$client_token = isset( $_POST['client_token'] ) ? sanitize_text_field( wp_unslash( $_POST['client_token'] ) ) : '';
+		return '' !== $client_token ? array( $client_token ) : array();
+	}
+
+	/**
+	 * Signed request to the WCC client API (same handshake as the patient dashboard).
+	 *
+	 * @param string   $path   e.g. 'doclisting/appointments/client'
+	 * @param string[] $tokens client tokens
+	 * @return mixed decoded JSON, null on failure
+	 */
+	private static function d2gc_wcc_client_request( $path, $tokens ) {
+		if ( empty( $tokens ) ) {
+			return null;
+		}
+
+		$unixTime = time();
+		$response = wp_remote_request(
+			get_option( 'd2gc_api_url_short' ) . $path,
+			array(
+				'method'  => 'POST',
+				'timeout' => 20,
+				'headers' => array( 'Content-Type' => 'application/json' ),
+				'body'    => wp_json_encode(
+					array(
+						'time'   => (string) $unixTime,
+						'token'  => $tokens[0],
+						'hash'   => hash( 'sha256', $unixTime . '_' . $tokens[0] . '_' . get_option( 'd2gc_wcc_token' ) ),
+						'type'   => 'client',
+						'tokens' => $tokens,
+					)
+				),
+			)
+		);
+
+		return is_wp_error( $response ) ? null : json_decode( wp_remote_retrieve_body( $response ) );
+	}
+
+	/**
+	 * E-mail address of the patient as known in WCC (for not logged-in patients, never taken from the request).
+	 *
+	 * @return string empty when unknown
+	 */
+	public static function d2gc_get_request_client_email() {
+		$client = self::d2gc_wcc_client_request( 'doclisting/client', self::d2gc_get_request_client_tokens() );
+		if ( is_array( $client ) ) {
+			$client = $client[0] ?? null;
+		}
+		if ( is_object( $client ) && isset( $client->client ) && is_object( $client->client ) ) {
+			$client = $client->client;
+		}
+		return ( is_object( $client ) && ! empty( $client->email ) && is_email( $client->email ) ) ? sanitize_email( $client->email ) : '';
+	}
+
+	/**
+	 * Finds an appointment of the patient making the request in WCC (logged in: own tokens, not logged in: client_token
+	 * from the e-mail link). Used to make sure a patient can only act on their own appointments; the doctor, date etc.
+	 * are taken from here, never from the request.
+	 *
+	 * @param string $app_id WCC appointment id
+	 * @return object|null the appointment (with _id, user_id = doctor WCC id, date, ...), null when it is not one of this patient
+	 */
+	public static function d2gc_get_own_appointment( $app_id ) {
+		if ( '' === (string) $app_id ) {
+			return null;
+		}
+
+		$appointments = self::d2gc_wcc_client_request( 'doclisting/appointments/client', self::d2gc_get_request_client_tokens() );
+		if ( ! is_array( $appointments ) ) {
+			return null;
+		}
+		foreach ( $appointments as $appointment ) {
+			if ( isset( $appointment->_id ) && (string) $appointment->_id === (string) $app_id ) {
+				return $appointment;
+			}
+		}
+
+		return null;
+	}
+
 	/*
 	* this function is used to delete an appointment in the D2G software
+	* only the own appointments of the patient (logged in, or with the client_token from the e-mail link), see d2gc_get_own_appointment()
 	*/
 	public static function d2gc_delete_wcc_appointment() {
 
 		// Nonce check
 		check_ajax_referer( 'd2gc_delete_wcc_appointment_nonce', 'security' );
 
-		if ( ! isset( $_POST['wcc_user_id'], $_POST['app_id'] ) ) {
-			return;
+		$app_id      = isset( $_POST['app_id'] ) ? sanitize_text_field( wp_unslash( $_POST['app_id'] ) ) : '';
+		$appointment = self::d2gc_get_own_appointment( $app_id );
+		$not_allowed = __( 'Your appointment cloud not be canceled. Please contact your doctor.', 'doctor2go-connect' );
+
+		if ( ! $appointment ) {
+			echo esc_html( $not_allowed ); // HTTP 200 on purpose: the dashboard JS shows this text in the appointment row
+			wp_die();
 		}
 
-		$wcc_user_id = sanitize_text_field( wp_unslash( $_POST['wcc_user_id'] ) );
-		$app_id      = sanitize_text_field( wp_unslash( $_POST['app_id'] ) );
+		// same rule as the cancel button in the patient dashboard: not within the last 24 hours before the appointment
+		$diffInSeconds = ( new DateTime( $appointment->date ) )->getTimestamp() - time();
+		if ( $diffInSeconds > 0 && $diffInSeconds <= 86400 ) {
+			echo esc_html( $not_allowed ); // HTTP 200 on purpose: the dashboard JS shows this text in the appointment row
+			wp_die();
+		}
 
-		$docObj = self::d2gc_get_doctor_by_wcc_id( $wcc_user_id )[0];
+		// the doctor (and with it the organisation key) comes from the appointment, not from the request
+		$docObj = self::d2gc_get_doctor_by_wcc_id( $appointment->user_id )[0] ?? null;
+		if ( ! $docObj ) {
+			echo esc_html( $not_allowed );
+			wp_die();
+		}
 
 		$orgKey = get_post_meta( $docObj->ID, 'organisation_key', true );
 
@@ -556,9 +666,9 @@ class D2G_booking_wcc_user {
 	public static function d2gc_create_wcc_walkin() {
 
 		// Validate CAPTCHA
-		$secret_key = get_option( 'd2g_recaptcha_secret_key' ); 
-		if ( $secret_key !== '' ) {
-			$recaptcha_response = sanitize_text_field( $_POST['g-recaptcha-response'] );
+		$secret_key = get_option( 'd2gc_recaptcha_secret_key' );
+		if ( ! empty( $secret_key ) ) {
+			$recaptcha_response = isset( $_POST['g-recaptcha-response'] ) ? sanitize_text_field( wp_unslash( $_POST['g-recaptcha-response'] ) ) : '';
 
 			$recaptcha_verify = wp_remote_post(
 				'https://www.google.com/recaptcha/api/siteverify',
@@ -599,7 +709,7 @@ class D2G_booking_wcc_user {
 		$orgSlug    = get_post_meta( $wpDocID, 'organisation_subdomain', true ) . '.';
 		$price      = get_post_meta( $wpDocID, 'walk_in_price', true );
 		$currency   = get_post_meta( $wpDocID, 'walk_in_currency', true );
-		$baseUrl    = get_option( 'wcc_base_url' );
+		$baseUrl    = get_option( 'd2gc_wcc_base_url' );
 
 		$unixTime = time();
 		$superKey = get_option( 'd2gc_wcc_token' );
@@ -627,7 +737,7 @@ class D2G_booking_wcc_user {
 		];
 
 		$response = wp_remote_post(
-			get_option( 'api_url_short' ) . 'doclisting/inloopspreekuur',
+			get_option( 'd2gc_api_url_short' ) . 'doclisting/inloopspreekuur',
 			[
 				'headers' => [
 					'Content-Type' => 'application/json',
@@ -638,7 +748,7 @@ class D2G_booking_wcc_user {
 		);
 
 		if ( is_wp_error( $response ) ) {
-			wp_die( esc_html__( 'There has been an error.', 'd2g-connect' ) );
+			wp_die( esc_html__( 'There has been an error.', 'doctor2go-connect' ) );
 		}
 
 		$response_body = json_decode( wp_remote_retrieve_body( $response ) );
@@ -674,7 +784,7 @@ class D2G_booking_wcc_user {
 			wp_send_json_success( [ 'redirect_url' => $waiting_room_full_url ] );
 		}
 
-		wp_die( esc_html__( 'There has been an error.', 'd2g-connect' ) );
+		wp_die( esc_html__( 'There has been an error.', 'doctor2go-connect' ) );
 	}
 
 

@@ -71,7 +71,7 @@ class D2gConnect {
 	public function __construct() {
 
 		$this->plugin_name = 'doctor2go-connect';
-		$this->version     = '1.0.0';
+		$this->version     = '1.0.1';
 
 		$this->load_dependencies();
 		$this->define_admin_hooks();
@@ -247,11 +247,12 @@ class D2gConnect {
 
 		// send d2gc email
 		$this->loader->add_action( 'wp_ajax_d2gc_send_ajax_d2g_email', $plugin_public, 'd2gc_send_ajax_d2g_email' );
+		// not logged in: only with the client_token from the appointment e-mail (appointment confirmation page)
 		$this->loader->add_action( 'wp_ajax_nopriv_d2gc_send_ajax_d2g_email', $plugin_public, 'd2gc_send_ajax_d2g_email' );
 
         // update booking roles in WCC
 		$this->loader->add_action( 'wp_ajax_d2gc_update_booking_rules', $plugin_public, 'd2gc_update_booking_rules' );
-		$this->loader->add_action( 'wp_ajax_nopriv_d2gc_update_booking_rules', $plugin_public, 'd2gc_update_booking_rules' );
+		$this->loader->add_action( 'wp_ajax_d2gc_update_vacation_periods', $plugin_public, 'd2gc_update_vacation_periods' );
 	}
 
 

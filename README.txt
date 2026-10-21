@@ -1,164 +1,167 @@
 === Doctor2Go Connect ===
-Contributors: doctor2go (Webcamconsult BV), playfield-media (BV Playfield-Media)
-Tags: online practice, medical websites, doctors, bookings
+Contributors: doctor2go, playfield-media
+Tags: online practice, doctors, appointments, telemedicine, booking
 Requires at least: 5.6
-Tested up to: 6.9
+Tested up to: 7.1
 Requires PHP: 7.3
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
-License URI: [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Online practice: Doctor2Go Connect links your WordPress site to doctor2go.online, giving patients a dashboard to book and manage appointments.
+Connect your WordPress site to doctor2go.online: doctor profiles, online booking, e-mail advice and a patient dashboard.
 
 == Description ==
-Turn your WordPress site into an online medical practice by connecting it to doctor2go.online. Patients can book and manage appointments, access medical files, and receive paid advice or online consultations. 
-All data is securely handled via doctor2go.online’s API and databases. A doctor2go.online subscription is required—click the link to learn more.
 
-With Doctor2Go Connect you get:
+Doctor2Go Connect turns your WordPress site into the public front end of an online medical practice. It connects your site to [doctor2go.online](https://doctor2go.online), the online practice software by Webcamconsult BV, where appointments, payments, video consultations and patient files are managed.
 
-* Smooth booking process for video and physical consultations
-* E-mail advice
-* Patient dashboard
-* SEO-friendly & compatible with popular plugins like Yoast SEO and Polylang
-* Hassle-free payments through secure and popular payment gateways
+Patients find a doctor on your site, book a video, physical or walk-in consultation, request written e-mail advice and manage their appointments in a personal dashboard. Doctors keep their public profile up to date directly from the front end.
 
-=== Core Features ===
+A doctor2go.online subscription is required. Patient and appointment data is processed and stored by doctor2go.online, see the External Services section below.
 
-* Unlimited doctor profiles: Create an unlimited number of doctor profiles (that your server can store). Show all relevant information about the doctor, like specialty, languages, location, prices, booking calendar, and more.
-* Search filters on the overview page: specialty / language / country / doctor name
-* Payment system: Stripe and PayPal
-* Multiple pricing and availabilities: Add different pricing for weekdays vs weekends.
-* Tax options: Add tax to consultation prices.
-* Email notifications: Doctors and patients receive notifications for bookings. All email templates are customizable.
-* Patient area: Registration, login, lost password, appointments listing, liked doctors, questionnaires (intake forms), and access to the secure patient portal from doctor2go.online with chat and EMR.
-* Shortcodes: Flexible shortcodes to configure your pages.
+= Features =
 
-=== User Management ===
-The plugin provides several tools for users and to createn the correct connections between your WordPress site with the Doctor2Go software.  
+* **Doctor profiles:** unlimited public doctor profiles with specialty, languages, locations, prices, education, experience, publications and a booking calendar.
+* **Doctor overview with search:** filter by specialty, language, country and name.
+* **Online booking:** video, physical and walk-in consultations based on the availability in doctor2go.online, with different prices per time slot.
+* **E-mail advice:** patients request a written assessment, including photos and medical history.
+* **Payments:** handled securely by doctor2go.online (including Stripe and PayPal), with optional VAT on consultation prices.
+* **E-mail notifications:** doctors and patients are notified about bookings. All e-mail templates can be customised.
+* **Patient area:** registration, login, password reset, appointment overview, favourite doctors, intake questionnaires and access to the secure doctor2go.online patient portal with chat and medical records.
+* **Front-end profile editor:** doctors edit their public profile and availability without access to wp-admin.
+* **Shortcodes:** place every part (doctor listing, search, calendar, forms, patient pages) on any page.
+* **Multilingual:** compatible with Polylang and WPML.
 
-Some features are optional and must be enabled manually in the settings page, while others are core functionalities that are always active.
+= Doctor accounts =
 
-=== Optional User Tools (require activation in settings) ===
-- **Custom registration, login, and password reset forms:** These forms can be embedded anywhere using shortcodes. They support Google reCAPTCHA v2 and [Altcha CAPTCHA](https://altcha.org/), and include mandatory GDPR consent checkboxes linked to automatically generated legal pages (Terms & Conditions, Privacy Policy, and Disclaimer).  
-  Alternatively, you can use the standard WordPress registration and login forms. Just make sure that registration is activated and the **New User Default Role** (in *Settings → General*) is set to **Patient**, so newly registered users are properly assigned.
-  The custom login system also works seamlessly with Solid Security, which is recommended for medical and privacy-sensitive websites.
+Doctor users and their public profiles are created and updated automatically by doctor2go.online, so the connection details of each doctor are always set correctly. Doctors can log in to your site directly from doctor2go.online (single sign-on), if this option is enabled.
 
-- **Single Sign-On (SSO) for doctors:** Allows doctors to log in directly from the Doctor2Go software by clicking “Go to D2GConnect” on their profile page, securely authenticating them with your WordPress site.
+= Patient accounts =
 
-=== Core User Tools (always active) ===
-- **Patient dashboard:** Provides pages for appointments, liked doctors, and secure access to the patient portal for electronic medical records and doctor chat.  
-- **Doctor management endpoint:** Automatically creates and manages doctor users and public profiles via the Doctor2Go software. This ensures all required API keys are configured correctly. Manual copying of credentials is possible but not recommended except for advanced users.  
-- **Front-end public profile editor:** Allows doctors to edit their public information directly from the front end. This editor can also be embedded into any page using a shortcode.
+The plugin includes its own registration, login and password reset forms that can be placed on any page with a shortcode. They include the required consent checkboxes linked to your terms and conditions, privacy policy and disclaimer pages, and can optionally be protected with Google reCAPTCHA or ALTCHA.
 
-=== Integrations ===
+You can also use the standard WordPress registration and login. In that case, enable registration and set the **New User Default Role** (Settings → General) to **Patient**.
 
-* Yoast SEO: Enhance website SEO with seamless integration.
-* Google recaptcha v2
-* Altcha captcha 
-* Solid security
-* Polylang: Translate your website into multiple languages for a global audience.
+Some features are optional and need to be enabled on the plugin settings page.
+
+= Works well with =
+
+* Yoast SEO
+* Polylang and WPML
+* Solid Security, recommended for medical and privacy-sensitive websites
+* Google reCAPTCHA v2 and ALTCHA
 
 == Installation ==
 
-=== Using the WordPress Dashboard ===
-Navigate to the 'Add New' in the Plugins dashboard
-Search for "Doctor2Go Connect"
-Click Install Now
-Activate the plugin on the Plugin dashboard
+1. In wp-admin, go to Plugins → Add New and search for "Doctor2Go Connect".
+2. Click **Install Now** and then **Activate**.
+3. Go to **Doctor2Go Connect** in the admin menu and enter the API details of your doctor2go.online account.
+4. Place the shortcodes on your pages. An overview of all shortcodes is available under **Doctor2Go Connect → Shortcodes info**.
 
-=== Uploading in WordPress Dashboard ===
-Navigate to the 'Add New' in the Plugins dashboard
-Go to the 'Upload' area
-Select Doctor2Go Connect.zip from your computer
-Click 'Install Now'
-Activate the plugin on the Plugin dashboard
-
-=== Using FTP ===
-Download Doctor2Go Connect.zip
-Extract the Doctor2Go Connect directory to your computer
-Upload the Doctor2Go Connect directory to the /wp-content/plugins/ directory
-Activate the plugin in the Plugin dashboard
+To install manually, upload the `doctor2go-connect` folder to `/wp-content/plugins/` and activate the plugin on the Plugins screen.
 
 == External Services ==
-This plugin relies on some third-party/external services and libraries for certain functionality. Users should be aware of what data is sent and why.
 
-All third-party JavaScript and CSS libraries (such as Bootstrap, FullCalendar, Moment.js, Moment Timezone, Datejs, Fancybox, Select2, and related 
-locale/extension files) are included as downloaded vendor files from their official sources, without any custom build process or transpilation. 
-The plugin uses these libraries in their distributed form (no bundlers or build tools like webpack, Babel, or npm are used).
+This plugin connects to the external services listed below. For each service you will find what it is used for, which data is sent and when, and links to its terms of service and privacy policy.
 
+= doctor2go.online (Webcamconsult) API =
 
+This plugin is the WordPress front end of the doctor2go.online online practice software by Webcamconsult BV, and a doctor2go.online subscription is required. Doctors, appointments, payments, video consultations and patient files are managed in doctor2go.online. The plugin communicates with the API URL that you enter in the plugin settings.
 
-=== Google reCAPTCHA ===
-- Service: Google reCAPTCHA v2 / v3
-- Purpose: Prevents spam and automated bots on forms (e.g., doctor registration or booking forms).
-- Data sent: User's reCAPTCHA token and metadata (such as IP address) are sent to Google when a form is submitted.
-- Terms of Service: [https://policies.google.com/terms](https://policies.google.com/terms)
-- Privacy Policy: [https://policies.google.com/privacy](https://policies.google.com/privacy)
+Data is exchanged in the following situations:
 
-=== FullCalendar ===
-- Service: FullCalendar JavaScript library
-- Purpose: Provides a dynamic calendar UI for displaying doctor availability and appointments.
-- Data sent: None directly; only used to render calendar events within the plugin.
-- License & Documentation: [https://fullcalendar.io/docs](https://fullcalendar.io/docs) and [https://fullcalendar.io/license](https://fullcalendar.io/license)
+* Doctor profiles: when a doctor account is created or changed in doctor2go.online, doctor2go.online sends the doctor's name, e-mail address, organisation, locations and tariffs to your site, where the WordPress user and the public doctor profile are created or updated.
+* Doctor availability: when a doctor profile, doctor listing or booking calendar is shown, the plugin requests the doctor's available time slots. Only the doctor's key is sent, no visitor data.
+* Booking an appointment (video, physical or walk-in consultation): the patient's name, e-mail address, phone number, date of birth, salutation, country, language, time zone and reason for the consultation are sent, together with the chosen doctor, date, location and price. The patient is looked up by e-mail address in doctor2go.online and a patient record is created there if it does not exist yet.
+* E-mail advice (written consultation): the patient's details listed above, plus the health information entered in the form: description of the complaint, location on the body, when it was first noticed, medical and treatment history, an optional AI assessment and the uploaded photos.
+* Patient dashboard: when a logged-in patient opens the dashboard, the patient's appointments and portal links are requested. Registering an account on your site only creates a WordPress user and sends nothing to doctor2go.online.
+* Cancelling an appointment: the appointment ID is sent.
+* Doctors editing their availability in the front end: the booking rules are sent.
+* Patients are taken to doctor2go.online for payment, the video waiting room, intake questionnaires and the patient portal.
 
-=== Google Calendar API (optional) ===
-- Service: Google Calendar API v3
-- Purpose: If calendar sync is enabled, retrieves doctor appointments from Google Calendar.
-- Data sent: Calendar IDs and event metadata may be sent to Google servers.
-- Terms of Service: [https://developers.google.com/terms](https://developers.google.com/terms)
-- Privacy Policy: [https://policies.google.com/privacy](https://policies.google.com/privacy)
+Terms of service: [https://doctor2go.online/Algemene%20voorwaarden-Webcamconsult-EN.pdf](https://doctor2go.online/Algemene%20voorwaarden-Webcamconsult-EN.pdf)
+Privacy policy: [https://doctor2go.online/en/privacy-policy](https://doctor2go.online/en/privacy-policy)
 
-=== Fancybox JS ===
-- Service: Fancybox JavaScript library
-- Purpose: Used to display modal popups/lightboxes for images and other content in the plugin.
-- Data sent: None; purely client-side library.
-- License & Documentation: [https://fancyapps.com/docs/ui/fancybox/](https://fancyapps.com/docs/ui/fancybox/)
+= Google reCAPTCHA (optional) =
 
-=== jQuery ScrollTo JS ===
-- Service: jQuery ScrollTo library
-- Purpose: Smooth scrolling to anchors or elements in the plugin UI.
-- Data sent: None; purely client-side library.
-- License & Documentation: [https://github.com/flesler/jquery.scrollTo](https://github.com/flesler/jquery.scrollTo)
+Only active when you enter your own reCAPTCHA keys in the plugin settings. It protects the registration, login, booking, walk-in and e-mail advice forms against spam. Without keys, nothing is loaded from or sent to Google.
 
-=== Select2 JS ===
-- Service: Select2 JavaScript library
-- Purpose: Enhances select boxes with search and better UX for dropdowns in plugin forms.
-- Data sent: None; purely client-side library.
-- License & Documentation: [https://select2.org/](https://select2.org/)
+* Data sent: the reCAPTCHA script is loaded from Google on pages with these forms, which sends the visitor's IP address and browser data to Google. When a form is submitted, the reCAPTCHA token is sent to Google for verification.
+* Terms of service: [https://policies.google.com/terms](https://policies.google.com/terms)
+* Privacy policy: [https://policies.google.com/privacy](https://policies.google.com/privacy)
 
-=== Bootstrap 5 ===
-- Service: Bootstrap 5 CSS and JavaScript framework
-- Purpose: Provides responsive layout, grid system, and UI components used in the plugin’s frontend output.
-- Data sent: None by itself; Bootstrap is a front-end CSS/JS framework and does not send data to external servers.
-- License & Documentation: [https://getbootstrap.com/docs/5.3/getting-started/introduction/](https://getbootstrap.com/docs/5.3/getting-started/introduction/) and [https://github.com/twbs/bootstrap/blob/main/LICENSE](https://github.com/twbs/bootstrap/blob/main/LICENSE)
+= Google Maps (embedded map) =
+
+On doctor profile pages with practice locations, each location is shown on an embedded Google Maps map.
+
+* Data sent: the address of the location is sent to Google to show the map. When the map loads, Google also receives the visitor's IP address and browser data.
+* Terms of service: [https://maps.google.com/help/terms_maps/](https://maps.google.com/help/terms_maps/)
+* Privacy policy: [https://policies.google.com/privacy](https://policies.google.com/privacy)
+
+= OpenAI API (optional, admin only) =
+
+Used by the translate box on the doctor edit screen in wp-admin, to translate a doctor profile into another language. Only available when the constant `D2GC_AI_API_KEY` with your own OpenAI API key is defined in wp-config.php, and only used when an editor starts a translation.
+
+* Data sent: the texts of the doctor profile that is being translated: job title, subtitle, city, organisation, country of registration, education, work experience and publications, and optionally the profile title and description. No patient data is sent.
+* Terms of use: [https://openai.com/policies/terms-of-use](https://openai.com/policies/terms-of-use)
+* Privacy policy: [https://openai.com/policies/privacy-policy](https://openai.com/policies/privacy-policy)
+
+= ALTCHA (optional, via the ALTCHA plugin) =
+
+If the separate ALTCHA plugin is active, its widget is shown on the login, registration and lost password forms. Verification is handled entirely by the ALTCHA plugin. Doctor2Go Connect does not send any data to ALTCHA itself.
+
+== Third-party libraries ==
+
+The following libraries are bundled in their distributed form (no build step), all under GPL-compatible licenses. They run in the browser and do not send data anywhere.
+
+* Bootstrap 5.3.8 (MIT): [https://getbootstrap.com](https://getbootstrap.com)
+* FullCalendar 6.1.15 with the Moment Timezone plugin (MIT): [https://fullcalendar.io](https://fullcalendar.io)
+* Moment Timezone (MIT): [https://momentjs.com/timezone/](https://momentjs.com/timezone/)
+* Select2 4.1.0-rc.0 (MIT): [https://select2.org](https://select2.org)
+* jQuery ScrollTo 2.1.3 (MIT): [https://github.com/flesler/jquery.scrollTo](https://github.com/flesler/jquery.scrollTo)
 
 == Frequently Asked Questions ==
 
-=== Where can I find Doctor2Go Connect documentation and user guides? ===
-In the plugin folder you will find the guide.
+= Do I need a doctor2go.online account? =
 
-=== There is something cool you could add... ===
-This feature is still to come.
+Yes. Doctor2Go Connect is the WordPress front end of doctor2go.online. Appointments, payments, video consultations and patient files are handled there. Visit [doctor2go.online](https://doctor2go.online) for more information.
 
-=== Where can I get support? ===
-This feature is still to come.
+= Where do I find the available shortcodes? =
 
-=== Will Doctor2Go Connect work with my theme? ===
-Yes, Doctor2Go Connect will work with any theme, but may require some styling adjustments to match nicely. Works perfectly with the default WordPress theme.
+In wp-admin under **Doctor2Go Connect → Shortcodes info** you find all shortcodes with a short description and their options.
 
-=== Can I run WooCommerce or Easy Digital Downloads and WP Travel at the same time? ===
-Yes, there are no technological conflicts. Each plugin handles its own cart system; Doctor2Go Connect bookings and consultations use their own payment gateways.
+= Does it work with my theme? =
 
-=== Does the plugin have payment gateways? ===
-Doctor2Go Connect uses the payment gateways from the doctor2go.online software.
+Doctor2Go Connect works with any theme. The plugin ships with its own Bootstrap based styling, which you can switch off in the settings if your theme already loads Bootstrap or if you prefer your own styles. Templates can be overridden in your theme.
+
+= Can I use it together with WooCommerce or other booking plugins? =
+
+Yes. Consultations are paid through doctor2go.online, so there is no conflict with the cart or checkout of other plugins.
+
+= Which payment methods are supported? =
+
+Payments are processed by doctor2go.online, which supports among others Stripe and PayPal.
+
+= Where can I get support? =
+
+Please use the support forum of this plugin on WordPress.org.
 
 == Screenshots ==
-1. Overview page from doctors
-2. Detail page from doctor
-3. Patient appointments page
+
+1. Doctor overview page with search filters
+2. Doctor profile page with booking options
+3. Patient appointments overview
 
 == Changelog ==
-No changelog yet
 
-== Upgrade Notice ==
-N/A
+= 1.0.1 =
+* Security: profile, profile picture, booking rule and vacation updates are only possible for the doctor who owns the profile (or an editor/administrator).
+* Security: appointments can only be cancelled, and cancellation e-mails only be sent, by the patient of that appointment.
+* Security: reCAPTCHA on the plugin login form no longer blocks logins via wp-login.php.
+* New: price and currency per booking rule (simple and advanced editor), loader and messages when saving.
+* New: vacation periods in the profile editor, synchronised with doctor2go.online; e-mail advice is paused and a notice is shown during a vacation.
+* Replaced fancyBox with Bootstrap modals (licence), removed unused libraries and fonts.
+* Fixed: walk-in form data, unclosed HTML tags in the booking rule editor, option names in the walk-in flow, price display with several prices.
+* The sidebar detail layout (v1) is no longer offered, existing sites fall back to the full width layout (v2).
+
+= 1.0.0 =
+* Initial release.

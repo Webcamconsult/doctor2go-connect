@@ -674,8 +674,8 @@ class D2gConnect_Admin {
 	 */
 	public function d2gc_sanitize_detail_page_view( $value ) {
 
+		// single-v1 (sidebar layout) is no longer offered
 		$allowed = array(
-			'single-v1',
 			'single-v2',
 			'single-v3'
 		);
@@ -685,7 +685,7 @@ class D2gConnect_Admin {
 		}
 
 		// Safe fallback
-		return 'single-v1';
+		return 'single-v2';
 	}
 
 	// function adds metaboxes with callback function where the html is defined

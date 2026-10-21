@@ -57,7 +57,7 @@ $location_check = $d2g_profile_data->doctor_meta['locations_to_go'];
 						</header>
 						<div class="entry_content">
 							<div class="mb-5">
-								<?php do_action( 'd2g_info_box', 'detail', 'col-2' ); ?>
+								<?php do_action( 'd2g_info_box', 'detail', 'col-2', '', 'top' ); ?>
 							</div>
 							<!--ACTION HOOK consult buttons-->
 							<?php do_action( 'd2g_consult_buttons', 'detail', 'small' ); ?>

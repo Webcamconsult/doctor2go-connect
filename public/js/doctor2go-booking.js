@@ -649,28 +649,33 @@
         });
     }
 
+    // Vacation notice on the doctor profile, shown below the doctor's name.
+    // d2gBookingVars.vacation is only set while a vacation period is active (see d2gc_get_vacation_notice_data()).
     function d2gInitHolidayAlert(){
-        if( ! d2gBookingVars.start_holiday || ! d2gBookingVars.end_holiday ){
+        var vacation = d2gBookingVars.vacation;
+        if( ! vacation || $('.d2g-vacation-notice-top').length ){
             return;
         }
 
-        try{
-            var start = new Date(d2gBookingVars.start_holiday);
-            var end = new Date(d2gBookingVars.end_holiday);
-            var check = new Date();
+        var $notice = $(
+            '<div class="alert alert-warning d-flex align-items-start gap-3 mb-4 d2g-vacation-notice d2g-vacation-notice-top" role="status">' +
+                (vacation.icon || '') + // static SVG from d2gc_get_info_icon_svg()
+                '<div><strong class="d-block mb-1 js-title"></strong><span class="js-text"></span> <strong class="js-back"></strong></div>' +
+            '</div>'
+        );
+        $notice.find('.js-title').text(vacation.title);
+        $notice.find('.js-text').text(vacation.text);
+        $notice.find('.js-back').text(vacation.back);
 
-            start.setHours(0,0,0,0);
-            end.setHours(0,0,0,0);
-            check.setHours(0,0,0,0);
-
-            if( check >= start && check <= end ){
-                var options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-                var formattedStart = start.toLocaleDateString(undefined, options);
-                var formattedEnd = end.toLocaleDateString(undefined, options);
-                alert(d2gBookingVars.i18n.holiday_attention + ' ' + formattedStart + ' - ' + formattedEnd);
+        // inside the content container above the doctor card; tried in this order, so it works for all
+        // detail templates (also when overridden in the theme)
+        var targets = ['#info_top .entry_content', '.doc_details .container', 'article.type-d2g_doctor'];
+        for( var i = 0; i < targets.length; i++ ){
+            var $target = $(targets[i]).first();
+            if( $target.length ){
+                $target.prepend($notice);
+                break;
             }
-        } catch(e){
-            console.log(e);
         }
     }
 

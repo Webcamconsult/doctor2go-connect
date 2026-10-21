@@ -21,7 +21,7 @@ if ( is_user_logged_in() ) {
                 <div class="row g-3 mb-3">
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <img src="<?php echo esc_url( plugins_url( 'images/picture-top-down-view.svg', dirname(__FILE__) ) ); ?>" alt="<?php echo esc_attr__('Photo of the skin condition (above)', 'ai-derma-plugin')?>" class="img-fluid mb-2">
+                            <img src="<?php echo esc_url( plugins_url( 'images/picture-top-down-view.svg', dirname(__FILE__) ) ); ?>" alt="<?php echo esc_attr__('Photo of the skin condition (above)', 'doctor2go-connect')?>" class="img-fluid mb-2">
                             <label for="booking_image_1" class="form-label btn btn-outline-primary">
                                 <strong><?php echo ($form_type == 'derma_email_advice') ? esc_html__('Photo of the skin condition (above)', 'doctor2go-connect') : esc_html__('Photo of the condition (above)', 'doctor2go-connect') ; ?></strong>
                             </label>
@@ -37,7 +37,7 @@ if ( is_user_logged_in() ) {
                     <?php } ?>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <img src="<?php echo esc_url( plugins_url( 'images/picture-side.svg', dirname(__FILE__) ) ); ?>" alt="<?php echo esc_attr__('Photo of the skin condition (side)', 'ai-derma-plugin')?>" class="img-fluid mb-2">
+                            <img src="<?php echo esc_url( plugins_url( 'images/picture-side.svg', dirname(__FILE__) ) ); ?>" alt="<?php echo esc_attr__('Photo of the skin condition (side)', 'doctor2go-connect')?>" class="img-fluid mb-2">
                             <label for="booking_image_2" class="form-label btn btn-outline-primary">
                                 <strong><?php echo ($form_type == 'derma_email_advice') ? esc_html__('Photo of the skin condition (side)', 'doctor2go-connect') : esc_html__('Photo of the condition (side)', 'doctor2go-connect') ; ?></strong>
                             </label>
@@ -47,7 +47,7 @@ if ( is_user_logged_in() ) {
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <img src="<?php echo esc_url( plugins_url( 'images/Picture-scaled-up-additional.svg', dirname(__FILE__) ) ); ?>" alt="<?php echo esc_attr__('Photo of the skin condition (extra)', 'ai-derma-plugin')?>" class="img-fluid mb-2">
+                            <img src="<?php echo esc_url( plugins_url( 'images/Picture-scaled-up-additional.svg', dirname(__FILE__) ) ); ?>" alt="<?php echo esc_attr__('Photo of the skin condition (extra)', 'doctor2go-connect')?>" class="img-fluid mb-2">
                             <label for="booking_image_3" class="form-label btn btn-outline-primary">
                                 <strong><?php echo ($form_type == 'derma_email_advice') ? esc_html__('Photo of the skin condition (extra)', 'doctor2go-connect') : esc_html__('Photo of the condition (extra)', 'doctor2go-connect') ; ?></strong>
                             </label>

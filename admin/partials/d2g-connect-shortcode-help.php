@@ -205,7 +205,7 @@ if ( ! defined( 'WPINC' ) ) {
 		<h3>[d2gc_patient_menu] <span class="red simple_hide"><?php echo esc_html__( '(PRO version only*)', 'doctor2go-connect' ); ?></span></h3>
 		<p class="mb-l"><?php echo esc_html__( 'Use this shortcode to display a menu form the patient pages. Ideal it is used with in combination with the following shortcodes: d2gc_account_settings / d2gc_patient_appointments / d2gc_liked_posts / d2gc_patient_dashbaord . No parameters are required.', 'doctor2go-connect' ); ?></p>
 
-		<h3>[d2gc_patient_dashbaord] <span class="red simple_hide"><?php echo esc_html__( '(PRO version only*)', 'doctor2go-connect' ); ?></span></h3>
+		<h3>[d2gc_patient_dashboard] <span class="red simple_hide"><?php echo esc_html__( '(PRO version only*)', 'doctor2go-connect' ); ?></span></h3>
 		<p class="mb-l"><?php echo esc_html__( 'Use this shortcode to display the patient dashboard, the page patients are redirected to after logging in. No parameters are required.', 'doctor2go-connect' ); ?></p>
 
 		<h3>[d2gc_account_settings] <span class="red simple_hide"><?php echo esc_html__( '(PRO version only*)', 'doctor2go-connect' ); ?></span></h3>

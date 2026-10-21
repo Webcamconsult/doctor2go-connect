@@ -43,7 +43,7 @@ add_filter( 'single_template', 'd2gc_redirect_single_template' );
  */
 function d2gc_load_single_d2g_doctor_hooks() {
     // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-	if ( get_option( 'd2gc_detail_page_view' ) != 'single-v2' && ! isset( $_GET['view'] ) ) {
+	if ( d2gc_get_detail_page_view() != 'single-v2' && ! isset( $_GET['view'] ) ) {
 		add_action( 'd2g_single_sidebar', 'd2gc_cb_d2g_single_sidebar', 10, 1 );
 	}
 	add_action( 'd2g_doctor_locations', 'd2gc_show_doctor_locations_by_id', 10, 1 );
@@ -55,6 +55,115 @@ function d2gc_load_single_d2g_doctor_hooks() {
 	add_action( 'd2g_doctor_consultancy_tabs', 'd2gc_show_consultancy_tabs' );
 	add_action( 'd2g_back_to_overview', 'd2gc_show_back_btn' );
 }
+/**
+ * The detail page layout to use. The sidebar layout (single-v1) is no longer offered,
+ * so an empty or single-v1 setting falls back to the full width layout (single-v2).
+ *
+ * @return string single-v2|single-v3
+ */
+function d2gc_get_detail_page_view() {
+	return 'single-v3' === get_option( 'd2gc_detail_page_view' ) ? 'single-v3' : 'single-v2';
+}
+
+/**
+ * The vacation period of a doctor that is active on $date, or null.
+ * The periods (meta d2g_vacation_periods) are saved on the doctor post that is edited in the front end,
+ * with Polylang the translations of the post are checked as well.
+ *
+ * @param int    $doctor_id
+ * @param string $date Y-m-d, default today in the site timezone
+ * @return array|null array( 'start_date' => 'Y-m-d', 'end_date' => 'Y-m-d' )
+ */
+function d2gc_get_active_vacation( $doctor_id, $date = '' ) {
+	$doctor_id = (int) $doctor_id;
+	if ( ! $doctor_id ) {
+		return null;
+	}
+	$date = $date ? $date : wp_date( 'Y-m-d' );
+
+	$ids = array( $doctor_id );
+	if ( function_exists( 'pll_get_post_translations' ) ) {
+		$ids = array_unique( array_merge( $ids, array_map( 'intval', pll_get_post_translations( $doctor_id ) ) ) );
+	}
+
+	foreach ( $ids as $id ) {
+		$periods = get_post_meta( $id, 'd2g_vacation_periods', true );
+		if ( ! is_array( $periods ) ) {
+			continue;
+		}
+		foreach ( $periods as $period ) {
+			// Y-m-d strings compare correctly as text
+			if ( isset( $period['start_date'], $period['end_date'] ) && $period['start_date'] <= $date && $date <= $period['end_date'] ) {
+				return $period;
+			}
+		}
+	}
+
+	return null;
+}
+
+/**
+ * Texts for the vacation notice on the doctor profile (dates in the site's date format), or null when there is no active vacation.
+ *
+ * @param int $doctor_id
+ * @return array|null
+ */
+function d2gc_get_vacation_notice_data( $doctor_id ) {
+	$vacation = d2gc_get_active_vacation( $doctor_id );
+	if ( ! $vacation ) {
+		return null;
+	}
+
+	$format = get_option( 'date_format' );
+	$tz     = wp_timezone();
+	$start  = new DateTimeImmutable( $vacation['start_date'], $tz );
+	$end    = new DateTimeImmutable( $vacation['end_date'], $tz );
+	$back   = $end->modify( '+1 day' );
+
+	return array(
+		'start_date' => $vacation['start_date'],
+		'end_date'   => $vacation['end_date'],
+		'icon'       => d2gc_get_info_icon_svg(),
+		'title'      => __( 'Currently on vacation', 'doctor2go-connect' ),
+		'email_text' => __( 'E-mail advice is paused during the vacation of this doctor.', 'doctor2go-connect' ),
+		/* translators: 1: first day of the vacation, 2: last day of the vacation */
+		'text'       => sprintf( __( 'This doctor is away from %1$s until %2$s. E-mail advice is not available during this period.', 'doctor2go-connect' ), wp_date( $format, $start->getTimestamp() ), wp_date( $format, $end->getTimestamp() ) ),
+		/* translators: %s: first day after the vacation */
+		'back'       => sprintf( __( 'Available again from %s.', 'doctor2go-connect' ), wp_date( $format, $back->getTimestamp() ) ),
+	);
+}
+
+/**
+ * Small info icon (inline SVG, does not depend on an icon font being loaded).
+ *
+ * @return string
+ */
+function d2gc_get_info_icon_svg() {
+	return '<svg class="flex-shrink-0 mt-1" width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">'
+		. '<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>'
+		. '<path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>'
+		. '</svg>';
+}
+
+/**
+ * Short vacation notice for the e-mail advice tab (replaces the form during a vacation), empty string when not on vacation.
+ * The full notice with the dates is shown at the top of the profile by doctor2go-booking.js.
+ *
+ * @param int $doctor_id
+ * @return string
+ */
+function d2gc_get_vacation_notice_html( $doctor_id ) {
+	$notice = d2gc_get_vacation_notice_data( $doctor_id );
+	if ( ! $notice ) {
+		return '';
+	}
+
+	return '<div class="alert alert-warning d-flex align-items-start gap-3 d2g-vacation-notice" role="status">'
+		. $notice['icon'] // static markup
+		. '<div>' . esc_html( $notice['email_text'] ) . ' <strong>' . esc_html( $notice['back'] ) . '</strong></div>'
+		. '</div>';
+}
+
 /*
 * sets the path to the corre3ct template file for the view from a single doctor
 */
@@ -76,11 +185,10 @@ function d2gc_redirect_single_template( $template ) {
 function d2gc_single_d2g_doctor_content() {
     // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 	$view = isset( $_GET['view'] ) ? sanitize_text_field( wp_unslash( $_GET['view'] ) ) : '';
-	if ( get_option( 'd2gc_detail_page_view' ) !== 'single-v2' && get_option( 'd2gc_detail_page_view' ) !== 'single-v3' && ! $view ) {
-		include d2gc_locate_template( 'single-content/content-single-d2g_doctor.php' );
-	} elseif ( get_option( 'd2gc_detail_page_view' ) == 'single-v2' || $view == 'v2' ) {
+	// the sidebar layout (content-single-d2g_doctor.php, single-v1) is no longer used
+	if ( d2gc_get_detail_page_view() == 'single-v2' || $view == 'v2' ) {
 		include d2gc_locate_template( 'single-content/content-single-d2g_doctor-v2.php' );
-	} elseif ( get_option( 'd2gc_detail_page_view' ) == 'single-v3' || $view == 'v3' ) {
+	} else {
 		include d2gc_locate_template( 'single-content/content-single-d2g_doctor-v3.php' );
 	}
 }
@@ -326,7 +434,7 @@ function d2gc_body_class( $classes, $class ) {
 	$currMeta = get_post_meta( $post->ID );
 	if ( is_singular( 'd2g_doctor' ) ) {
 		$classes[] = 'd2g-single-doctor';
-		if ( get_option( 'd2gc_detail_page_view' ) != 'single-v2' ) {
+		if ( d2gc_get_detail_page_view() != 'single-v2' ) {
 			$classes[] = 'sidebar-menu';
 		} else {
 			$classes[] = 'full-width';
@@ -466,7 +574,7 @@ function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '', $part = '' ) {
 		?>
         <h4 class="text-primary d-flex <?php echo esc_html( $liClass ); ?> align-items-center mb-2 h4-list-group-item">
             <span class="flex-grow-1"><?php echo esc_html__('Consultation offers', 'doctor2go-connect');?>&nbsp;&nbsp;</span>
-            <a href="#info_content" class="fancybox text-decoration-none" data-fancybox data-src="#info_content" data-modal="true">
+            <a href="#info_content" class="d2g-modal-trigger text-decoration-none">
                 <span class="d2cif-Info-line icon"></span>
             </a>
         </h4>
@@ -483,7 +591,7 @@ function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '', $part = '' ) {
                 <span class="icon d2cif-video"></span>
 				<div class="ms-2 me-auto">
                     <?php if($video == true){ ?>
-                        <a class="video_con_trigger" href="<?php echo $video ? esc_url(add_query_arg(['consult' => 'video', 'use_ai_info' => sanitize_text_field(wp_unslash($_GET['use_ai_info'] ?? '0'))], get_permalink())) : '#info_not_available'; ?>" class="<?php echo  ($video !== true)?'fancybox':''?>">
+                        <a class="video_con_trigger<?php echo ( $video !== true ) ? ' d2g-modal-trigger' : ''; ?>" href="<?php echo $video ? esc_url(add_query_arg(['consult' => 'video', 'use_ai_info' => sanitize_text_field(wp_unslash($_GET['use_ai_info'] ?? '0'))], get_permalink())) : '#info_not_available'; ?>">
                     <?php } ?>
 						<div class="fw-bold"><?php echo esc_html__('Video consult on appointment', 'doctor2go-connect')?></div>
                     <?php if($video == true){ ?>
@@ -494,7 +602,7 @@ function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '', $part = '' ) {
                     
 				</div>
                 <?php if($video == true){ ?>
-                    <a class="video_con_trigger" href="<?php echo $video ? esc_url(add_query_arg(['consult' => 'video', 'use_ai_info' => sanitize_text_field(wp_unslash($_GET['use_ai_info'] ?? '0'))], get_permalink())) : '#info_not_available'; ?>" class="<?php echo  ($video !== true)?'fancybox':''?>">
+                    <a class="video_con_trigger<?php echo ( $video !== true ) ? ' d2g-modal-trigger' : ''; ?>" href="<?php echo $video ? esc_url(add_query_arg(['consult' => 'video', 'use_ai_info' => sanitize_text_field(wp_unslash($_GET['use_ai_info'] ?? '0'))], get_permalink())) : '#info_not_available'; ?>">
                 <?php } ?>
                     <span class="badge text-bg-primary rounded-pill">
                         <?php echo ( $video == true) ? wp_kses_post( $d2g_profile_data->doctor_meta['d2g_tariffs'][0] ):esc_html__('n/a')?>
@@ -514,7 +622,7 @@ function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '', $part = '' ) {
                 <span class="icon d2cif-mail"></span>
 				<div class="ms-2 me-auto">
 					<?php if($email == true){ ?>
-						<a class="email_con_trigger" href="<?php echo $email ? esc_url(add_query_arg(['consult' => 'email', 'use_ai_info' => sanitize_text_field(wp_unslash($_GET['use_ai_info'] ?? '0'))], get_permalink())) : '#info_not_available'; ?>" class="<?php echo  ($email !== true)?'fancybox':''?>">
+						<a class="email_con_trigger<?php echo ( $email !== true ) ? ' d2g-modal-trigger' : ''; ?>" href="<?php echo $email ? esc_url(add_query_arg(['consult' => 'email', 'use_ai_info' => sanitize_text_field(wp_unslash($_GET['use_ai_info'] ?? '0'))], get_permalink())) : '#info_not_available'; ?>">
 					<?php } ?>
 						<div class="fw-bold"><?php echo esc_html__('E-mail advice', 'doctor2go-connect')?></div>
 					<?php if($email == true){ ?>
@@ -523,7 +631,7 @@ function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '', $part = '' ) {
 					<span class="form-text"><?php echo ($email == true)?esc_html__('available at any time', 'doctor2go-connect'): '' ?></span>
 				</div>
                 <?php if($email == true){ ?>
-                    <a class="email_con_trigger" href="<?php echo $email ? esc_url(add_query_arg(['consult' => 'email', 'use_ai_info' => sanitize_text_field(wp_unslash($_GET['use_ai_info'] ?? '0'))], get_permalink())) : '#info_not_available'; ?>" class="<?php echo  ($email !== true)?'fancybox':''?>">
+                    <a class="email_con_trigger<?php echo ( $email !== true ) ? ' d2g-modal-trigger' : ''; ?>" href="<?php echo $email ? esc_url(add_query_arg(['consult' => 'email', 'use_ai_info' => sanitize_text_field(wp_unslash($_GET['use_ai_info'] ?? '0'))], get_permalink())) : '#info_not_available'; ?>">
                 <?php } ?>
                     <span class="badge text-bg-primary rounded-pill">
                         <?php echo ($email == true) ? esc_html( $d2g_profile_data->doctor_meta['written_con_currency'][0] ).' '. esc_html( $d2g_profile_data->doctor_meta['written_con_price'][0] ):esc_html__('n/a')?>
@@ -543,7 +651,7 @@ function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '', $part = '' ) {
                 <span class="icon d2cif-Video-waiting"></span>
 				<div class="ms-2 me-auto">
 					<?php if($walkin == true){ ?>
-						<a class="walkin_con_trigger" href="<?php echo $walkin ? esc_url(add_query_arg(['consult' => 'walkin', 'use_ai_info' => sanitize_text_field(wp_unslash($_GET['use_ai_info'] ?? '0'))], get_permalink())) : '#info_not_available'; ?>" class="<?php echo  ($walkin !== true)?'fancybox':''?>">
+						<a class="walkin_con_trigger<?php echo ( $walkin !== true ) ? ' d2g-modal-trigger' : ''; ?>" href="<?php echo $walkin ? esc_url(add_query_arg(['consult' => 'walkin', 'use_ai_info' => sanitize_text_field(wp_unslash($_GET['use_ai_info'] ?? '0'))], get_permalink())) : '#info_not_available'; ?>">
                     <?php } ?>
 							<div class="fw-bold"><?php echo esc_html__('Walkin video consult', 'doctor2go-connect')?></div>
                     <?php if($walkin == true){ ?>
@@ -552,7 +660,7 @@ function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '', $part = '' ) {
 					<span class="form-text"><?php echo ($walkin == true)?esc_html__('now available', 'doctor2go-connect'): '' ?></span>
 				</div>
                 <?php if($walkin == true){ ?>
-                    <a class="walkin_con_trigger" href="<?php echo $walkin ? esc_url(add_query_arg(['consult' => 'walkin', 'use_ai_info' => sanitize_text_field(wp_unslash($_GET['use_ai_info'] ?? '0'))], get_permalink())) : '#info_not_available'; ?>" class="<?php echo  ($walkin !== true)?'fancybox':''?>">
+                    <a class="walkin_con_trigger<?php echo ( $walkin !== true ) ? ' d2g-modal-trigger' : ''; ?>" href="<?php echo $walkin ? esc_url(add_query_arg(['consult' => 'walkin', 'use_ai_info' => sanitize_text_field(wp_unslash($_GET['use_ai_info'] ?? '0'))], get_permalink())) : '#info_not_available'; ?>">
                 <?php } ?>
                         <span class="badge text-bg-primary rounded-pill">
                             <?php echo ($walkin == true) ? esc_html( $d2g_profile_data->doctor_meta['walk_in_currency'][0] ).' '. esc_html( $d2g_profile_data->doctor_meta['walk_in_price'][0] ):esc_html__('n/a')?>
@@ -1052,7 +1160,13 @@ function d2gc_prepMyArray( $objects ) {
 }
 
 // this will create the walkin form
-function d2gc_show_walkin_form() {
+/**
+ * Walk-in consult form.
+ *
+ * @param string $context 'tab' when shown inside the consultancy tabs (v3), anything else (default) when it is
+ *                        opened in a popup via the walk-in button (v2), then it is hidden on the page.
+ */
+function d2gc_show_walkin_form( $context = '' ) {
 	global $d2g_profile_data;
     $doctor_name = $d2g_profile_data->doctor->post_title;
 	$currLang  = explode( '_', get_locale() )[0];
@@ -1098,7 +1212,7 @@ function d2gc_show_walkin_form() {
 
 	// nice_dump($d2g_profile_data);
 	?>
-    <form id="walkin_form" method="post" action="" enctype="multipart/form-data">
+    <form id="walkin_form" class="<?php echo ( 'tab' === $context ) ? '' : 'simple_hide'; ?>" method="post" action="" enctype="multipart/form-data">
         <div id="inloop" class="walkin_form_wrapper card">
             <div class="card-body">
                 <h3 class="section_title"><?php echo esc_html__( 'Walk-in consultation', 'doctor2go-connect' ); ?></h3>
@@ -1319,10 +1433,16 @@ function d2gc_show_consultancy_tabs($post = '', $stand_alone = false){
 	<div class="tab-content mb-5" id="myTabContent">
 		<?php if ( $d2g_profile_data->doctor_meta['written_con_price'][0] != '' ) {?>
 			<div class="tab-pane fade show active" id="email-tab-pane" role="tabpanel" aria-labelledby="email-tab" tabindex="0">
+				<?php $vacation_notice = d2gc_get_vacation_notice_html( $post_ID ); ?>
+				<?php if ( $vacation_notice ) { ?>
+					<?php // no e-mail advice during a vacation period, the notice explains why and from when it is available again ?>
+					<?php echo $vacation_notice; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in d2gc_get_vacation_notice_html() ?>
+				<?php } else { ?>
                 <div class="card alert alert-info mb-5" role="alert">
                     <h3 class="mb-0"><?php echo esc_html__( 'Request e-mail advice from:', 'doctor2go-connect' ); ?> <?php the_title(); ?></h3>
                 </div>
 				<?php do_action( 'd2g_doctor_written_con_form' ); ?>
+				<?php } ?>
 			</div>
 		<?php } ?>
 		<div class="tab-pane fade" id="calendar-tab-pane" role="tabpanel" aria-labelledby="calendar-tab" tabindex="0">
@@ -1340,7 +1460,7 @@ function d2gc_show_consultancy_tabs($post = '', $stand_alone = false){
                 <div class="card alert alert-info mb-5" role="alert">
                     <h3 class="mb-0"><?php echo esc_html__( 'You are lucky the doctor is now available for a walk-in consultation:', 'doctor2go-connect' ); ?> <?php the_title(); ?></h3>
                 </div>
-				<?php do_action( 'd2g_doctor_walkin_form' );?>
+				<?php do_action( 'd2g_doctor_walkin_form', 'tab' );?>
 			</div>
 		<?php } ?>
 	</div>
@@ -1363,19 +1483,9 @@ function d2gc_show_consult_buttons( $template = '', $size = '' ) {
 		$location_check = unserialize( $d2g_profile_data->doctor_meta['locations_to_go'][0] );
 	}
 
-	if ( $d2g_profile_data->doctor_meta['end_holiday'][0] != '' && $d2g_profile_data->doctor_meta['start_holiday'][0] != '' ) {
-		$start = new DateTime( $d2g_profile_data->doctor_meta['start_holiday'][0] );
-		$end   = new DateTime( $d2g_profile_data->doctor_meta['end_holiday'][0] );
-		$check = new DateTime();
-
-		// Only compare the date part (ignore time)
-		$check->setTime( 0, 0, 0 );
-		$start->setTime( 0, 0, 0 );
-		$end->setTime( 0, 0, 0 );
-
-		if ( $check >= $start && $check <= $end ) {
-			$holiday = true;
-		}
+	// e-mail advice is not offered during a vacation period (set in the "Extended absence settings" of the profile editor)
+	if ( d2gc_get_active_vacation( $d2g_profile_data->doctor_profile_ID ) ) {
+		$holiday = true;
 	}
 
 	$consult_buttons = array(
@@ -1385,9 +1495,9 @@ function d2gc_show_consult_buttons( $template = '', $size = '' ) {
 			'name'        => __( 'Walk-in Consult', 'doctor2go-connect' ),
 			'show'        => ( $d2g_profile_data->doctor_meta['walk_in_price'][0] != '' ) ? true : false,
 			'li_class'    => 'simple_hide',
-			'a_class'     => ( $template == 'detail' ) ? 'fancybox variant' : 'variant',
-			'a_class_out' => 'fancybox',
-			'link'        => ( $template == 'detail' ) ? '#inloop' : $detail_link . '?open=walk_in_link',
+			'a_class'     => ( $template == 'detail' ) ? 'd2g-modal-trigger variant' : 'variant',
+			'a_class_out' => 'd2g-modal-trigger',
+			'link'        => ( $template == 'detail' ) ? '#walkin_form' : $detail_link . '?open=walk_in_link',
 			'price'       => $d2g_profile_data->doctor_meta['walk_in_price'][0],
 			'currency'    => $d2g_profile_data->doctor_meta['walk_in_currency'][0],
 			'link_login'  => $pageLogin['url'] . '?redirect_to=' . urlencode( $detail_link . '?open=walk_in_link' ),
@@ -1399,8 +1509,8 @@ function d2gc_show_consult_buttons( $template = '', $size = '' ) {
 			'name'        => __( 'E-mail advice', 'doctor2go-connect' ),
 			'show'        => ( $d2g_profile_data->doctor_meta['written_con_price'][0] != '' && $holiday == false ) ? true : false,
 			'li_class'    => '',
-			'a_class'     => ( $template == 'detail' ) ? 'fancybox' : '',
-			'a_class_out' => 'fancybox',
+			'a_class'     => ( $template == 'detail' ) ? 'd2g-modal-trigger' : '',
+			'a_class_out' => 'd2g-modal-trigger',
 			'link'        => ( $template == 'detail' ) ? '#written_consult' : $detail_link . '?open=written_con_link',
 			'price'       => $d2g_profile_data->doctor_meta['written_con_price'][0],
 			'currency'    => $d2g_profile_data->doctor_meta['written_con_currency'][0],
@@ -1415,7 +1525,7 @@ function d2gc_show_consult_buttons( $template = '', $size = '' ) {
 			'show'        => ( count( $location_check ) > 0 ) ? true : false,
 			'li_class'    => 'simple_hide booking_con',
 			'a_class'     => ( $template == 'detail' ) ? 'scroll_to variant' : 'variant',
-			'a_class_out' => 'fancybox variant',
+			'a_class_out' => 'd2g-modal-trigger variant',
 			'link'        => ( $template == 'detail' ) ? '#calendar_wrapper' : $detail_link . '?scroll_to=calendar_wrapper',
 			'price'       => '0',
 			'currency'    => '',
@@ -1462,7 +1572,7 @@ function d2gc_show_consult_buttons( $template = '', $size = '' ) {
 		<?php } ?>
 	</ul>
 	<div class="consult_buttons info_btn_wrapper">
-		<a href="#info_content" class="fancybox link">
+		<a href="#info_content" class="d2g-modal-trigger link">
 			<span class="d2cif-Info-line icon"></span>
 			<span class="link_name"><?php echo esc_html__( 'More info about the consultation types', 'doctor2go-connect' ); ?></span>
 		</a>
@@ -1527,10 +1637,10 @@ function d2gc_single_appointment($appointment, $docObj, $client_token, $timezone
 		$questionnaireLink = '<a class="btn btn-outline-primary payment_btn w-100 mb-2" target="_blank" href="'.$pageAppConf.'?app='.$appointment->_id.'&client_token='.$client_token.'"><span class="flaticon-medical-information"></span> '.esc_html__( 'intake quesionnaire', 'doctor2go-connect' ).'</a>';
 	}
 	$consultLink 		= '<a class="button btn-primary btn invert mb-2 w-100" target="_blank" href="' . get_option( 'd2gc_waiting_room_url' ) . 'wachtkamer/' . $appointment->token . '?locale=' . explode( '_', get_locale() )[0] . '">' . esc_html__( 'go to consultation', 'doctor2go-connect' ) . '</a>';
-	$contactBtn      	= '<a class="prep_cancellation_email contact_link scroll_to w-100 fancybox_spec " href="#cancellation_form_wrapper" data-app-date="'.$date->format("d/m/Y").' '. esc_html__(' at ', 'doctor2go-connect').' ' .$date->format("H:i").'  ('.$timezone.')" data-app-link="'.get_option('d2gc_waiting_room_url').'admin/appointments/'.$appointment->_id.'" data-doc-email="'.$doc_email.'" data-doc-name="'.$docObj->post_title.'"><span class="d2cif-mail icon"></span> '. esc_html__('contact doctor', 'doctor2go-connect').'</a>';
+	$contactBtn      	= '<a class="prep_cancellation_email contact_link w-100 d2g-modal-trigger" href="#cancellation_form_wrapper" data-app-id="'.esc_attr( $appointment->_id ).'" data-client-token="'.esc_attr( $client_token ).'" data-app-date="'.$date->format("d/m/Y").' '. esc_html__(' at ', 'doctor2go-connect').' ' .$date->format("H:i").'  ('.$timezone.')" data-app-link="'.get_option('d2gc_waiting_room_url').'admin/appointments/'.$appointment->_id.'" data-doc-email="'.$doc_email.'" data-doc-name="'.$docObj->post_title.'"><span class="d2cif-mail icon"></span> '. esc_html__('contact doctor', 'doctor2go-connect').'</a>';
 	
 	if ( $diffInSeconds <= 0 || $diffInSeconds > 86400 ) {
-		$delBtn 		= '<a class="del_app button btn-danger btn w-100 mb-2" href="#" data-app-id="' . $appointment->_id . '" data-user-id="' . $appointment->user_id . '"><span class=" icon-cancel-circled"></span> ' . esc_html__( 'cancel appointment', 'doctor2go-connect' ) . '<span class="btn-spinner spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span></a>';
+		$delBtn 		= '<a class="del_app button btn-danger btn w-100 mb-2" href="#" data-app-id="' . esc_attr( $appointment->_id ) . '" data-client-token="' . esc_attr( $client_token ) . '"><span class=" icon-cancel-circled"></span> ' . esc_html__( 'cancel appointment', 'doctor2go-connect' ) . '<span class="btn-spinner spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span></a>';
 	} else {
 		$delBtn 		= '<div class="icon-info-outline alert alert-danger w-100 mb-2 p-btn text-center" 
 		data-bs-toggle="tooltip" 
@@ -1697,6 +1807,17 @@ function d2gc_footer_html() {
 		<h3><?php echo esc_html__( 'We are very sorry!', 'doctor2go-connect' ); ?></h3>
         <p><strong><?php echo esc_html__( 'This consultation type is currently not available for this doctor.', 'doctor2go-connect' ); ?></strong></p>
 	</div>
+	<!-- Popup for all .d2g-modal-trigger links, the linked content is moved into .modal-body while open (see d2g-public.js) -->
+	<div class="modal fade" id="d2gc_modal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+			<div class="modal-content">
+				<div class="modal-header border-0 pb-0">
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?php echo esc_attr__( 'Close', 'doctor2go-connect' ); ?>"></button>
+				</div>
+				<div class="modal-body pt-0"></div>
+			</div>
+		</div>
+	</div>
 	<?php
 }
 add_action( 'wp_footer', 'd2gc_footer_html' );
@@ -1829,7 +1950,9 @@ function d2gc_programmatic_login( $username ) {
 	return false;
 }
 
-// ✅ reCAPTCHA validation for login form
+// ✅ reCAPTCHA validation for the plugin's login form ([d2gc_login_form]).
+// Only logins from that form are checked (marked by the hidden d2gc_login_form field), so wp-login.php
+// and other login forms without a reCAPTCHA widget keep working.
 if ( get_option( 'd2gc_recaptcha_site_key' ) ) {
 	add_filter(
 		'wp_authenticate_user',
@@ -1838,8 +1961,11 @@ if ( get_option( 'd2gc_recaptcha_site_key' ) ) {
         // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$request_method = isset( $_SERVER['REQUEST_METHOD'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_METHOD'] ) ) : '';
 
-			// Only run for POST requests
-			if ( $request_method === 'POST' ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- only a marker which form was used, the login itself is verified by WordPress
+			$is_plugin_login_form = isset( $_POST['d2gc_login_form'] );
+
+			// Only run for POST requests from the plugin's login form
+			if ( $request_method === 'POST' && $is_plugin_login_form && ! is_wp_error( $user ) ) {
 
 				$recaptcha_secret_key = get_option( 'd2gc_recaptcha_secret_key' );
 
@@ -2105,13 +2231,42 @@ function d2gc_load_availability_data() {
 
 
 // Function to generate tariff string
+/**
+ * Prices of the available slots as text: one price "EUR 40", several prices as range per currency "EUR 40 – 60",
+ * different currencies separated by " / ".
+ *
+ * @param array $tariffs price => array( 'payment_currency' => 'EUR' ), see D2G_ProfileData::d2gc_get_tariffs()
+ * @return string
+ */
 function d2gc_get_tariff_string( $tariffs ) {
-
-	$tariffStr = '';
-	foreach ( $tariffs as $tariff => $currency ) {
-		$tariffStr .= '<span class="tariff">' . $currency['payment_currency'] . ' ' . $tariff . '</span>';
+	if ( empty( $tariffs ) || ! is_array( $tariffs ) ) {
+		return '';
 	}
-	return $tariffStr;
+
+	$by_currency = array();
+	foreach ( $tariffs as $tariff => $currency ) {
+		$by_currency[ $currency['payment_currency'] ][] = (float) $tariff;
+	}
+
+	$parts = array();
+	foreach ( $by_currency as $currency => $prices ) {
+		$min   = min( $prices );
+		$max   = max( $prices );
+		$range = ( $min === $max ) ? d2gc_format_price( $min ) : d2gc_format_price( $min ) . ' – ' . d2gc_format_price( $max );
+		$parts[] = '<span class="tariff">' . esc_html( $currency . ' ' . $range ) . '</span>';
+	}
+
+	return implode( ' / ', $parts );
+}
+
+/**
+ * 40 -> "40", 40.5 -> "40.50"
+ *
+ * @param float $price
+ * @return string
+ */
+function d2gc_format_price( $price ) {
+	return ( floor( $price ) == $price ) ? (string) (int) $price : number_format( $price, 2, '.', '' );
 }
 
 /**

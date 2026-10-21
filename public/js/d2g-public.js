@@ -171,7 +171,7 @@ jQuery(document).ready(function ($) {
     var d = (typeof d2gPublicData !== 'undefined') ? d2gPublicData : null;
 
     /* =========================================
-       GENERAL UI: fancybox, select2, toggles
+       GENERAL UI: popups, select2, toggles
     ==========================================*/
 
     // init once when DOM is ready
@@ -184,14 +184,56 @@ jQuery(document).ready(function ($) {
     });
     observer.observe(document.body, { childList: true, subtree: true });
 
-    // Fancybox with Select2 re-init in modal
-    $(".fancybox").fancybox({
-        afterShow: function () {
-            var $modal = $(".fancybox-inner");
-            $modal.find("select").select2({ dropdownParent: $modal });
+    // Popups (Bootstrap modal): a .d2g-modal-trigger link opens the element its href points to (#id).
+    // The element is moved into the modal while open and moved back afterwards, so its event
+    // handlers and entered form values stay intact.
+    var $d2gModal = $('#d2gc_modal');
+    var $d2gModalPlaceholder = null;
+
+    function d2gReinitSelects($scope, $dropdownParent) {
+        $scope.find('select').each(function () {
+            var $select = $(this);
+            if ($select.hasClass('select2-hidden-accessible')) {
+                $select.select2('destroy');
+            }
+            $select.select2($dropdownParent ? { dropdownParent: $dropdownParent } : {});
+        });
+    }
+
+    $(document).on('click', '.d2g-modal-trigger', function (event) {
+        var target = $(this).attr('href');
+        if (!target || target.charAt(0) !== '#' || target.length < 2 || !$(target).length) return;
+
+        event.preventDefault();
+        var $content = $(target);
+
+        // Without Bootstrap JS (disabled in the settings and not loaded by the theme): show the content in place
+        if (!$d2gModal.length || typeof bootstrap === 'undefined' || !bootstrap.Modal) {
+            $content.addClass('d2g-in-modal').css('display', 'block');
+            $('body').scrollTo($content, { duration: 'fast', offset: -120 });
+            return;
         }
+
+        if ($d2gModalPlaceholder) return; // a popup is already open
+
+        // the content is hidden on the page (.simple_hide etc.), the inline display makes it visible inside the popup
+        $d2gModalPlaceholder = $('<span class="d2g-modal-placeholder" hidden></span>').insertBefore($content);
+        $content.addClass('d2g-in-modal').css('display', 'block').appendTo($d2gModal.find('.modal-body'));
+        bootstrap.Modal.getOrCreateInstance($d2gModal[0]).show();
     });
-    $('.fancybox_spec').fancybox();
+
+    $d2gModal.on('shown.bs.modal', function () {
+        d2gReinitSelects($d2gModal.find('.modal-body'), $d2gModal);
+    });
+
+    $d2gModal.on('hidden.bs.modal', function () {
+        if (!$d2gModalPlaceholder) return;
+
+        var $content = $d2gModal.find('.modal-body').children().removeClass('d2g-in-modal').css('display', '');
+        $d2gModalPlaceholder.replaceWith($content);
+        $d2gModalPlaceholder = null;
+        d2gReinitSelects($content);
+    });
 
     //eye toggle for password field
     $('.js-toggle-password').on('click', function () {
@@ -353,13 +395,35 @@ jQuery(document).ready(function ($) {
         return false;
     });
 
+    // Doctor form busy state: block all actions and show a Bootstrap spinner in the clicked button.
+    // Stays active until the page reloads, so slow saves (e.g. image uploads) can not be triggered twice.
+    var docFormActions = '.save_doctor, .publish_doctor, .unpublish_doctor, .del_img_link, #docTab .nav-link';
+
+    function setDoctorFormBusy(busy, $clicked) {
+        var $form = $(".d2g_doctor-form");
+
+        $form.toggleClass('loading', busy).attr('aria-busy', busy ? 'true' : 'false');
+        $form.find(docFormActions).prop('disabled', busy).toggleClass('disabled', busy);
+        $form.find('.d2g-btn-spinner').remove();
+
+        if (busy && $clicked && $clicked.length) {
+            $clicked.prepend('<span class="spinner-border spinner-border-sm me-2 d2g-btn-spinner" role="status" aria-hidden="true"></span>');
+        }
+    }
+
+    function isDoctorFormBusy() {
+        return $(".d2g_doctor-form").attr('aria-busy') === 'true';
+    }
+
     // Save doctor (AJAX)
     $('.save_doctor').click(function (event) {
         if (!d || !d.ajax) return;
 
-        tinymce.triggerSave();
         event.preventDefault();
-        $(".d2g_doctor-form").toggleClass('loading');
+        if (isDoctorFormBusy()) return false;
+
+        tinymce.triggerSave();
+        setDoctorFormBusy(true, $(this));
 
         var myformData = new FormData($("#doctor_post")[0]);
         myformData.append('action', 'd2gc_update_doc');
@@ -371,12 +435,10 @@ jQuery(document).ready(function ($) {
             processData: false,
             contentType: false,
             success: function (response) {
-                $(".d2g_doctor-form").toggleClass('loading');
                 location.reload(true);
-                console.log(response);
             },
             error: function (xhr, textStatus, errorThrown) {
-                $(".d2g_doctor-form").toggleClass('loading');
+                setDoctorFormBusy(false);
                 console.log(errorThrown);
             }
         });
@@ -388,9 +450,11 @@ jQuery(document).ready(function ($) {
     $('#docTab').find('.nav-link').click(function (event) {
         if (!d || !d.ajax) return;
 
-        tinymce.triggerSave();
         event.preventDefault();
-        $(".d2g_doctor-form").toggleClass('loading');
+        if (isDoctorFormBusy()) return false;
+
+        tinymce.triggerSave();
+        setDoctorFormBusy(true);
 
         var myformData = new FormData($("#doctor_post")[0]);
         myformData.append('action', 'd2gc_update_doc');
@@ -402,12 +466,13 @@ jQuery(document).ready(function ($) {
             processData: false,
             contentType: false,
             success: function (response) {
-                $(".d2g_doctor-form").toggleClass('loading');
                 console.log(response);
             },
             error: function (xhr, textStatus, errorThrown) {
-                $(".d2g_doctor-form").toggleClass('loading');
                 console.log(errorThrown);
+            },
+            complete: function () {
+                setDoctorFormBusy(false);
             }
         });
     });
@@ -417,7 +482,9 @@ jQuery(document).ready(function ($) {
         if (!d || !d.ajax) return;
 
         event.preventDefault();
-        $(".d2g_doctor-form").toggleClass('loading');
+        if (isDoctorFormBusy()) return false;
+
+        setDoctorFormBusy(true, $(this));
 
         var data = {
             action: 'd2gc_delete_profile_pic',
@@ -427,10 +494,13 @@ jQuery(document).ready(function ($) {
         };
 
         $.post(d.ajax.url, data, function (response) {
-            $(".d2g_doctor-form").toggleClass('loading');
             if (response.success) {
                 location.reload(true);
+            } else {
+                setDoctorFormBusy(false);
             }
+        }).fail(function () {
+            setDoctorFormBusy(false);
         });
 
         return false;
@@ -440,8 +510,11 @@ jQuery(document).ready(function ($) {
     $('.unpublish_doctor').click(function (event) {
         if (!d || !d.ajax) return;
 
-        tinymce.triggerSave();
         event.preventDefault();
+        if (isDoctorFormBusy()) return false;
+
+        tinymce.triggerSave();
+        setDoctorFormBusy(true, $(this));
 
         $('#post_status').val('draft');
 
@@ -455,9 +528,10 @@ jQuery(document).ready(function ($) {
             processData: false,
             contentType: false,
             success: function (response) {
-                console.log(response);
+                location.reload(true);
             },
             error: function (xhr, textStatus, errorThrown) {
+                setDoctorFormBusy(false);
                 console.log(errorThrown);
             }
         });
@@ -467,9 +541,11 @@ jQuery(document).ready(function ($) {
     $('.publish_doctor').click(function (event) {
         if (!d || !d.ajax || !d.msg) return;
 
-        tinymce.triggerSave();
         event.preventDefault();
-        $(".d2g_doctor-form").toggleClass('loading');
+        if (isDoctorFormBusy()) return false;
+
+        tinymce.triggerSave();
+        setDoctorFormBusy(true, $(this));
 
         $('#post_status').val('publish');
 
@@ -506,16 +582,16 @@ jQuery(document).ready(function ($) {
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                    $(".d2g_doctor-form").toggleClass('loading');
                     location.reload(true);
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    $(".d2g_doctor-form").toggleClass('loading');
+                    setDoctorFormBusy(false);
                     console.log(errorThrown);
                 }
             });
         } else {
-            $(".d2g_doctor-form").toggleClass('loading');
+            setDoctorFormBusy(false);
+            $('#post_status').val('draft');
             alert(checker_message);
             return false;
         }
@@ -655,15 +731,15 @@ jQuery(document).ready(function ($) {
 
             
             var app_id      = $(this).data('app-id');
-            var wcc_user_id = $(this).data('user-id');
             var $btn        = $(this);
             // Turn on loader in this button
             $btn.addClass('btn-loading').addClass('disabled').attr('aria-disabled', 'true');
 
+            // the server checks that the appointment belongs to this patient (logged in, or client_token from the e-mail link)
             $.post(d.ajax.url, {
                 action: 'd2gc_delete_wcc_appointment',
                 app_id: app_id,
-                wcc_user_id: wcc_user_id,
+                client_token: $(this).data('client-token') || '',
                 security: d.ajax.delete_nonce
             }, function (res) {
 
@@ -684,8 +760,9 @@ jQuery(document).ready(function ($) {
     $('.prep_cancellation_email').click(function(e){
         e.preventDefault();
 
-        
-        $('body').scrollTo('#cancellation_form_wrapper', { duration: 'slow', offset: -120 });
+        // the form itself is opened in the popup via the .d2g-modal-trigger class
+        // the appointment id is what the server uses to find doctor, recipients and date (see d2gc_send_ajax_d2g_email)
+        $('#cancellation_form_wrapper').data('app-id', $(this).data('app-id')).data('client-token', $(this).data('client-token') || '');
         $('#app_date').val($(this).data('app-date'));
         $('#doc_name').val($(this).data('doc-name'));
         $('#doc_name_visible').html($(this).data('doc-name'));
@@ -704,22 +781,20 @@ jQuery(document).ready(function ($) {
 
         
 
+        // recipients, date, link and subject are determined on the server from app_id,
+        // the other fields below are only kept for the display in this form
         var baseData = {
             action: 'd2gc_send_ajax_d2g_email',
-            app_date: $('#app_date').val(),
-            app_link: $('#app_link').val(),
+            app_id: $('#cancellation_form_wrapper').data('app-id'),
+            client_token: $('#cancellation_form_wrapper').data('client-token') || '',
+            client_name: $('#client_name').val(),
             comment: $('#comment').val(),
             nonce: d.ajax.mail_nonce
         };
 
         // Mail to patient
         $.post(d.ajax.url, Object.assign({}, baseData, {
-            'e-mail': 'cancellation_patient',
-            from_name: $('#doc_name').val(),
-            from_email: d.mail.sender_email,
-            to_name: $('#client_name').val(),
-            to_email: $('#client_email').val(),
-            title: d.mail.sender_name + ': ' + d.msg.cancel_title + ' (' + $('#doc_name').val() + ')'
+            'e-mail': 'cancellation_patient'
         }), function (res) {
             $('#return1').show().html(res.message === 'mail_send_cancellation_patient'? d.msg.mail_patient_ok: d.msg.mail_patient_err);
             if(d.msg.mail_patient_ok){
@@ -731,12 +806,7 @@ jQuery(document).ready(function ($) {
 
         // Mail to doctor
         $.post(d.ajax.url, Object.assign({}, baseData, {
-            'e-mail': 'cancellation_doctor',
-            to_name: $('#doc_name').val(),
-            to_email: $('#doc_email').val(),
-            from_name: $('#client_name').val(),
-            from_email: $('#client_email').val(),
-            title: d.mail.sender_name + ': ' + d.msg.cancel_title + ' (' + $('#client_name').val() + ')'
+            'e-mail': 'cancellation_doctor'
         }), function (res) {
             $('#return2').show().html(res.message === 'mail_send_cancellation_doctor'? d.msg.mail_doc_ok: d.msg.mail_doc_err);
             if(d.msg.mail_doc_ok){

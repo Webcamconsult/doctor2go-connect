@@ -95,13 +95,7 @@ class D2gConnect_Public {
 			wp_enqueue_style( $this->plugin_name . '-bootstrap', plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css', array(), $this->version, 'all' );
 		}
 		wp_enqueue_style( $this->plugin_name . '-select', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
-		wp_enqueue_style( $this->plugin_name . '-fancybox', plugin_dir_url( __FILE__ ) . 'css/jquery.fancybox.css', array(), $this->version, 'all' );
-		wp_enqueue_style( $this->plugin_name . '-light', plugin_dir_url( __FILE__ ) . 'css/light.css', array(), $this->version, 'all' );
-		//wp_enqueue_style( $this->plugin_name . '-fontello', plugin_dir_url( __FILE__ ) . 'fonts/fontello/css/fontello.css', array(), $this->version, 'all' );
-		//wp_enqueue_style( $this->plugin_name . '-flaticon', plugin_dir_url( __FILE__ ) . 'fonts/flaticon/flaticon_mycollection.css', array(), $this->version, 'all' );
-		//wp_enqueue_style( $this->plugin_name . '-flaticon-derma', plugin_dir_url( __FILE__ ) . 'fonts/wcc-flaticon2/font/flaticon_derma2go.css', array(), $this->version, 'all' );
         wp_enqueue_style( $this->plugin_name . '-custom', plugin_dir_url( __FILE__ ) . 'fonts/d2gc-custom-font/style.css', array(), $this->version, 'all' );
-		wp_enqueue_style( $this->plugin_name . '-cal', plugin_dir_url( __FILE__ ) . 'css/cal-main.min.css', array(), $this->version, 'all' );
 
 		if ( get_option( 'd2gc_theme_css' ) != 'no-style' ) {
 			if ( get_option( 'd2gc_theme_css' ) == 'light' || get_option( 'd2gc_theme_css' ) == '' ) {
@@ -119,7 +113,6 @@ class D2gConnect_Public {
 		if ( get_option( 'd2gc_bootstrap_js' ) != '1' ) {
 			wp_enqueue_script( $this->plugin_name . '-bootstrap', plugin_dir_url( __FILE__ ) . 'js/bootstrap.bundle.min.js', array( 'jquery' ), $this->version, true );
 		}
-		wp_enqueue_script( $this->plugin_name . '-fancybox', plugin_dir_url( __FILE__ ) . 'js/jquery.fancybox.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( $this->plugin_name . '-select', plugin_dir_url( __FILE__ ) . 'js/select2.full.min.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( $this->plugin_name . '-scrollTo', plugin_dir_url( __FILE__ ) . 'js/jquery.scrollTo.min.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( 'moment' );
@@ -159,6 +152,7 @@ class D2gConnect_Public {
                 'ajax' => array(
                     'url'                     => admin_url( 'admin-ajax.php' ),
                     'send_booking_rules_nonce'=> wp_create_nonce( 'send_booking_rules_nonce' ),
+                    'vacation_nonce'          => wp_create_nonce( 'd2gc_vacation_nonce' ),
                 ),
 
                 /* user */
@@ -202,6 +196,11 @@ class D2gConnect_Public {
                     'the'                           => esc_html__( 'the', 'doctor2go-connect' ),
                     'th_day'                        => esc_html__( 'th day', 'doctor2go-connect' ),
                     'custom_rule'                   => esc_html__( 'Custom Rule', 'doctor2go-connect' ),
+                    'vacation_dates_required'       => esc_html__( 'Please choose a start and an end date.', 'doctor2go-connect' ),
+                    'vacation_end_before_start'     => esc_html__( 'The end date cannot be before the start date.', 'doctor2go-connect' ),
+                    'vacation_update'               => esc_html__( 'Update', 'doctor2go-connect' ),
+                    'vacation_add'                  => esc_html__( 'Add', 'doctor2go-connect' ),
+                    'price_required'                => esc_html__( 'Please enter a valid video consultation price and currency first.', 'doctor2go-connect' ),
                     'success_msg'                   => esc_html__( 'Your bookking rules have been saved, it can take up to 24hours to become active.', 'doctor2go-connect' ),
                 ),
             )
@@ -215,7 +214,6 @@ class D2gConnect_Public {
 		$currLang     = explode( '_', get_locale() )[0];
 		$only_cal     = false; // keep your original logic here if needed
 		$patient_meta = get_user_meta( get_current_user_id() );
-		$d2g_profile_data = isset( $GLOBALS['d2g_profile_data'] ) ? $GLOBALS['d2g_profile_data'] : null;
 		$in_tabs      = false; // keep your original logic here if needed
 		$currentDate  = new DateTime();
 
@@ -233,8 +231,8 @@ class D2gConnect_Public {
             'is_user_logged_in'     => is_user_logged_in(),
             'appointments_url'      => $d2gAdmin::d2gc_page_url( $currLang, 'appointments', true )['url'],
             'appointment_conf_url'  => $d2gAdmin::d2gc_page_url( $currLang, 'appointment_confirmation', true )['url'],
-            'start_holiday'         => ( $d2g_profile_data && ! empty( $d2g_profile_data->doctor_meta['start_holiday'][0] ) ) ? $d2g_profile_data->doctor_meta['start_holiday'][0] : '',
-            'end_holiday'           => ( $d2g_profile_data && ! empty( $d2g_profile_data->doctor_meta['end_holiday'][0] ) ) ? $d2g_profile_data->doctor_meta['end_holiday'][0] : '',
+            // active vacation of the doctor on this page (the_post has not run yet here, so the queried post is used)
+            'vacation'              => d2gc_get_vacation_notice_data( is_singular( 'd2g_doctor' ) ? get_queried_object_id() : 0 ),
             'i18n'                  => array(
                 'walk_in_consult'          => esc_html__( 'walk-in consult', 'doctor2go-connect' ),
                 'not_available'            => esc_html__( 'not available', 'doctor2go-connect' ),
@@ -250,7 +248,6 @@ class D2gConnect_Public {
                 'reservation_link_text'    => esc_html__( 'Click here to manage your appointment.', 'doctor2go-connect' ),
                 'pay_now'                  => esc_html__( 'pay now', 'doctor2go-connect' ),
                 'error_general'            => esc_html__( 'There has been an error, please try an other slot or try later. In case of futher issues, please contact the support.', 'doctor2go-connect' ),
-                'holiday_attention'        => esc_html__( 'Attention: I am unavailable in the following periode.', 'doctor2go-connect' ),
                 'more_slots_text'          => esc_html__( 'available', 'doctor2go-connect' ),
                 'legal_check'              => esc_html__( 'You must accept the privacy rules, disclaimer and the terms and conditions.', 'doctor2go-connect' )
             ),
@@ -385,6 +382,8 @@ class D2gConnect_Public {
 		}
 		add_shortcode( 'd2gc_account_settings', array( $this->shortcode_loader, 'd2gc_account_settings' ) );
 		add_shortcode( 'd2gc_patient_appointments', array( $this->shortcode_loader, 'd2gc_patient_appointments' ) );
+		add_shortcode( 'd2gc_patient_dashboard', array( $this->shortcode_loader, 'd2gc_patient_dashbaord' ) );
+		// old misspelled name, kept so existing pages keep working
 		add_shortcode( 'd2gc_patient_dashbaord', array( $this->shortcode_loader, 'd2gc_patient_dashbaord' ) );
 		add_shortcode( 'd2gc_patient_menu', array( $this->shortcode_loader, 'd2gc_patient_menu' ) );
 		add_shortcode( 'd2gc_search_mask', array( $this->shortcode_loader, 'd2gc_search_mask' ) );
@@ -704,26 +703,73 @@ class D2gConnect_Public {
 
 
 
-	// function for all custom e-mails
+	// cancellation request mails (to the patient and to the doctor) from the patient dashboard and the appointment
+	// confirmation page. Only about the patient's own appointment (logged in, or with the client_token from the
+	// appointment e-mail): recipients, appointment date, link and subject are taken from the appointment in WCC,
+	// never from the request (otherwise this could be used to send any mail to anyone).
 	public function d2gc_send_ajax_d2g_email() {
 
 		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
 		if ( ! wp_verify_nonce( $nonce, 'd2gc_send_ajax_d2g_email' ) ) {
-			wp_send_json_error( esc_html__( 'Security check failed.', 'doctor2go-connect' ) );
-			
+			wp_send_json_error( esc_html__( 'Security check failed.', 'doctor2go-connect' ), 403 );
 		}
-		
-		$type       = isset( $_POST['e-mail'] ) ? sanitize_text_field( wp_unslash( $_POST['e-mail'] ) ) : '';
-		$from_email = isset( $_POST['from_email'] ) ? sanitize_email( wp_unslash( $_POST['from_email'] ) ) : '';
-		$from_name  = isset( $_POST['from_name'] ) ? sanitize_text_field( wp_unslash( $_POST['from_name'] ) ) : '';
-		$to_email   = isset( $_POST['to_email'] ) ? sanitize_email( wp_unslash( $_POST['to_email'] ) ) : '';
-		$to_name    = isset( $_POST['to_name'] ) ? sanitize_text_field( wp_unslash( $_POST['to_name'] ) ) : '';
-		$link       = isset( $_POST['app_link'] ) ? esc_url_raw( wp_unslash( $_POST['app_link'] ) ) : '';
-		$title      = isset( $_POST['title'] ) ? sanitize_text_field( wp_unslash( $_POST['title'] ) ) : '';
-		$iban       = isset( $_POST['iban'] ) ? sanitize_text_field( wp_unslash( $_POST['iban'] ) ) : __( 'use IBAN from where the payment was done', 'doctor2go-connect' );
-		$bic        = isset( $_POST['bic'] ) ? sanitize_text_field( wp_unslash( $_POST['bic'] ) ) : __( 'use BIC from where the payment was done', 'doctor2go-connect' );
-		$app_date   = isset( $_POST['app_date'] ) ? sanitize_text_field( wp_unslash( $_POST['app_date'] ) ) : '';
-		$comment    = isset( $_POST['comment'] ) ? sanitize_textarea_field( wp_unslash( $_POST['comment'] ) ) : '';
+
+		$type = isset( $_POST['e-mail'] ) ? sanitize_key( wp_unslash( $_POST['e-mail'] ) ) : '';
+		if ( ! in_array( $type, array( 'cancellation_patient', 'cancellation_doctor' ), true ) ) {
+			wp_send_json( array( 'message' => 'error' ) );
+		}
+
+		$app_id      = isset( $_POST['app_id'] ) ? sanitize_text_field( wp_unslash( $_POST['app_id'] ) ) : '';
+		$appointment = D2G_booking_wcc_user::d2gc_get_own_appointment( $app_id );
+		$docObj      = $appointment ? ( D2G_booking_wcc_user::d2gc_get_doctor_by_wcc_id( $appointment->user_id )[0] ?? null ) : null;
+		if ( ! $docObj ) {
+			wp_send_json( array( 'message' => 'error' ), 403 );
+		}
+
+		// at most one mail of each type per appointment and minute (protects the doctor against repeated clicks/loops)
+		$throttle = 'd2gc_mail_' . md5( $app_id . $type );
+		if ( get_transient( $throttle ) ) {
+			wp_send_json( array( 'message' => 'error' ) );
+		}
+		set_transient( $throttle, 1, MINUTE_IN_SECONDS );
+
+		// people involved: from the logged-in user / the WCC client and the appointment, never from the request
+		$currUser     = wp_get_current_user();
+		$patient_mail = is_user_logged_in() ? $currUser->user_email : D2G_booking_wcc_user::d2gc_get_request_client_email();
+		$patient_name = isset( $_POST['client_name'] ) ? sanitize_text_field( wp_unslash( $_POST['client_name'] ) ) : '';
+		$patient_name = '' !== $patient_name ? $patient_name : $currUser->display_name;
+		$doctor_mail  = sanitize_email( get_post_meta( $docObj->ID, 'd2g_main_email', true ) );
+		$doctor_name  = $docObj->post_title;
+		$site_mail    = $this->d2gc_wp_mail_from( '' );
+		$site_name    = $this->d2gc_wp_mail_from_name( '' );
+
+		// appointment date in the patient's time zone, same format as in the patient dashboard
+		$timezone = ( is_user_logged_in() ? get_user_meta( $currUser->ID, 'p_timezone', true ) : '' ) ?: d2gc_get_user_timezone();
+		$date     = new DateTime( $appointment->date );
+		$date->setTimezone( new DateTimeZone( $timezone ) );
+		$app_date = $date->format( 'd/m/Y' ) . ' ' . __( ' at ', 'doctor2go-connect' ) . ' ' . $date->format( 'H:i' ) . '  (' . $timezone . ')';
+		$link     = get_option( 'd2gc_waiting_room_url' ) . 'admin/appointments/' . $appointment->_id;
+
+		if ( 'cancellation_patient' === $type ) {
+			$to_email = $patient_mail;
+			$to_name  = $patient_name;
+			$from_name  = $doctor_name;
+			$from_email = $site_mail;
+			$reply_to   = $doctor_mail;
+			$title      = $site_name . ': ' . __( 'Cancellation request for appointment.', 'doctor2go-connect' ) . ' (' . $doctor_name . ')';
+		} else {
+			$to_email = $doctor_mail;
+			$to_name  = $doctor_name;
+			$from_name  = $patient_name;
+			$from_email = $site_mail; // sent from the site address, a patient address as sender would fail SPF
+			$reply_to   = $patient_mail;
+			$title      = $site_name . ': ' . __( 'Cancellation request for appointment.', 'doctor2go-connect' ) . ' (' . $patient_name . ')';
+		}
+
+		// free text of the patient
+		$iban    = isset( $_POST['iban'] ) ? sanitize_text_field( wp_unslash( $_POST['iban'] ) ) : __( 'use IBAN from where the payment was done', 'doctor2go-connect' );
+		$bic     = isset( $_POST['bic'] ) ? sanitize_text_field( wp_unslash( $_POST['bic'] ) ) : __( 'use BIC from where the payment was done', 'doctor2go-connect' );
+		$comment = isset( $_POST['comment'] ) ? sanitize_textarea_field( wp_unslash( $_POST['comment'] ) ) : '';
 
 		$args      = array(
 			'post_type'  => 'd2g_emails',
@@ -737,11 +783,15 @@ class D2gConnect_Public {
 		$emailData = get_posts( $args );
 
 
-		$content = str_replace( '%to_name%', $to_name, $emailData[0]->post_content );
-		$content = str_replace( '%from_name%', $from_name, $content );
-		$content = str_replace( '%link%', $link, $content );
-		$content = str_replace( '%from_email%', $from_email, $content );
-		$content = str_replace( '%to_email%', $to_email, $content );
+		if ( empty( $emailData ) || empty( $to_email ) ) {
+			wp_send_json( array( 'message' => 'error' ) );
+		}
+
+		$content = str_replace( '%to_name%', esc_html( $to_name ), $emailData[0]->post_content );
+		$content = str_replace( '%from_name%', esc_html( $from_name ), $content );
+		$content = str_replace( '%link%', esc_url( $link ), $content );
+		$content = str_replace( '%from_email%', esc_html( $reply_to ), $content ); // the address of the other person (sender address is the site)
+		$content = str_replace( '%to_email%', esc_html( $to_email ), $content );
 		$content = str_replace( '%bic%', $bic, $content );
 		$content = str_replace( '%iban%', $iban, $content );
 		$content = str_replace( '%app_date%', $app_date, $content );
@@ -753,9 +803,12 @@ class D2gConnect_Public {
 
 	
 
-		// set header for email and send mail
-		$headers = 'From: ' . $from_name . ' <' . $from_email . '>' . "\r\n";
-		$resp    = wp_mail( $to_email, $title, $msg, $headers );
+		// set header for email and send mail (names/addresses are sanitized, so no header injection)
+		$headers = array( 'From: ' . $from_name . ' <' . $from_email . '>' );
+		if ( is_email( $reply_to ) ) {
+			$headers[] = 'Reply-To: ' . $reply_to;
+		}
+		$resp = wp_mail( $to_email, $title, $msg, $headers );
 
 		if ( $resp == true ) {
 			wp_send_json( array( 'message' => 'mail_send_' . $type ) );
@@ -1009,6 +1062,21 @@ class D2gConnect_Public {
 	}
 
 
+    /**
+     * Price of a booking rule as a JSON number, never a string: whole amounts as integer (50), otherwise max. 2 decimals (40.5).
+     * Returns null when invalid.
+     *
+     * @param mixed $price
+     * @return int|float|null
+     */
+    private function d2gc_clean_rule_price( $price ) {
+        $price = str_replace( ',', '.', trim( (string) $price ) );
+        if ( ! preg_match( '/^\d+(\.\d{1,2})?$/', $price ) || (float) $price <= 0 ) {
+            return null;
+        }
+        return ( floor( (float) $price ) == (float) $price ) ? (int) $price : round( (float) $price, 2 );
+    }
+
     function d2gc_update_booking_rules() {
         check_ajax_referer( 'send_booking_rules_nonce', 'send_booking_rules_nonce' );
 
@@ -1025,6 +1093,15 @@ class D2gConnect_Public {
                 array(
                     'message' => 'Missing or invalid doctor ID.',
                 )
+            );
+        }
+
+        if ( ! D2G_doc_user_profile::d2gc_current_user_can_edit_doctor( $wpDocID ) ) {
+            wp_send_json_error(
+                array(
+                    'message' => __( 'You are not allowed to edit this profile.', 'doctor2go-connect' ),
+                ),
+                403
             );
         }
 
@@ -1049,6 +1126,18 @@ class D2gConnect_Public {
                     'end_time'      => isset( $rule['end_time'] ) ? sanitize_text_field( $rule['end_time'] ) : '',
                     'wdays'         => isset( $rule['wdays'] ) ? absint( $rule['wdays'] ) : 0,
                     'week_interval' => isset( $rule['week_interval'] ) ? absint( $rule['week_interval'] ) : 1,
+                    'price'         => $this->d2gc_clean_rule_price( $rule['price'] ?? null ),
+                    'currency'      => isset( $rule['currency'] ) && preg_match( '/^[A-Z]{3}$/', strtoupper( (string) $rule['currency'] ) ) ? strtoupper( $rule['currency'] ) : null,
+                );
+            }
+        }
+
+        foreach ( $clean_rules as $clean_rule ) {
+            if ( null === $clean_rule['price'] || null === $clean_rule['currency'] ) {
+                wp_send_json_error(
+                    array(
+                        'message' => __( 'Please enter a valid video consultation price and currency first.', 'doctor2go-connect' ),
+                    )
                 );
             }
         }
@@ -1057,9 +1146,6 @@ class D2gConnect_Public {
         $docOrgKey = get_post_meta( $wpDocID, 'organisation_key', true );
         $docWCC_ID = get_post_meta( $wpDocID, 'wcc_user_id', true );
 
-        update_post_meta($wpDocID, 'simple_booking_rules', $clean_rules);
-
-
         if ( empty( $docKey ) ) {
             wp_send_json_error(
                 array(
@@ -1067,6 +1153,8 @@ class D2gConnect_Public {
                 )
             );
         }
+
+        update_post_meta($wpDocID, 'simple_booking_rules', $clean_rules);
 
         $myTime   = new DateTime();
         $unixTime = $myTime->format( 'U' );
@@ -1083,7 +1171,7 @@ class D2gConnect_Public {
                     'hash'  => $myHash,
                     'type'  => 'user',
                 ),
-                'rules_json'               => $rules_json,
+                'rules_json'               => $rules_json, // validated as JSON above
                 'user_id'                  => $docWCC_ID,
                 'is_simple_form'           => false 
             );
@@ -1095,7 +1183,8 @@ class D2gConnect_Public {
                     'hash'  => $myHash,
                     'type'  => 'user',
                 ),
-                'simple_rules_json'        => json_encode($clean_rules),
+                // plain list of rules, the API stores it under "rules" itself (sending {"rules": [...]} nests it twice)
+                'simple_rules_json'        => wp_json_encode( $clean_rules ),
                 'user_id'                  => $docWCC_ID,
                 'is_simple_form'           => true 
             );
@@ -1157,5 +1246,139 @@ class D2gConnect_Public {
                 )
             );
         }
+    }
+
+    /**
+     * Validates vacation periods: dates as Y-m-d, end not before start, sorted by start date, without duplicates.
+     *
+     * @param mixed $periods decoded "periods" array from the editor
+     * @return array|WP_Error list of array( 'start_date' => 'Y-m-d', 'end_date' => 'Y-m-d' )
+     */
+    private function d2gc_clean_vacation_periods( $periods ) {
+        if ( ! is_array( $periods ) ) {
+            return new WP_Error( 'invalid', __( 'Invalid vacation periods.', 'doctor2go-connect' ) );
+        }
+
+        $is_date = function ( $date ) {
+            $d = DateTime::createFromFormat( '!Y-m-d', (string) $date );
+            return $d && $d->format( 'Y-m-d' ) === $date;
+        };
+
+        $clean = array();
+        foreach ( $periods as $period ) {
+            $start = isset( $period['start_date'] ) ? sanitize_text_field( $period['start_date'] ) : '';
+            $end   = isset( $period['end_date'] ) ? sanitize_text_field( $period['end_date'] ) : '';
+
+            if ( ! $is_date( $start ) || ! $is_date( $end ) || $end < $start ) {
+                return new WP_Error( 'invalid', __( 'Every vacation period needs a valid start and end date, the end date cannot be before the start date.', 'doctor2go-connect' ) );
+            }
+            $clean[ $start . '_' . $end ] = array( 'start_date' => $start, 'end_date' => $end );
+        }
+
+        ksort( $clean );
+        return array_values( $clean );
+    }
+
+    /**
+     * Sends the vacation periods of a doctor to WCC (doclisting/update_vacation_period_for_user), same handshake as the booking rules.
+     * vacation_json is the same JSON string the WCC vacation form posts: {"periods":[{"start_date":"Y-m-d","end_date":"Y-m-d"}]}
+     *
+     * @param int   $wpDocID
+     * @param array $periods
+     * @return true|null|WP_Error true when sent, null when no endpoint is set (filter returns ''), WP_Error on failure
+     */
+    private function d2gc_send_vacation_periods_to_wcc( $wpDocID, $periods ) {
+        $endpoint = apply_filters( 'd2gc_vacation_endpoint', 'doclisting/update_vacation_period_for_user' );
+        if ( '' === $endpoint ) {
+            return null;
+        }
+
+        $docKey = get_post_meta( $wpDocID, 'user_key', true );
+        if ( empty( $docKey ) ) {
+            return new WP_Error( 'no_token', __( 'Doctor token not found.', 'doctor2go-connect' ) );
+        }
+
+        $unixTime = (string) time();
+        $body     = array(
+            'handshake'        => array(
+                'time'  => $unixTime,
+                'token' => $docKey,
+                'hash'  => hash( 'sha256', $unixTime . '_' . $docKey . '_' . get_option( 'd2gc_wcc_token' ) ),
+                'type'  => 'user',
+            ),
+            // WCC: vacation_periods = JSON.parse(params[:simple_rules_json]), stored as {"periods"=>[...]}
+            'simple_rules_json' => wp_json_encode( array( 'periods' => $periods ) ),
+            'user_id'           => get_post_meta( $wpDocID, 'wcc_user_id', true ),
+        );
+
+        $response = wp_remote_request(
+            trailingslashit( get_option( 'd2gc_api_url_short' ) ) . ltrim( $endpoint, '/' ),
+            array(
+                'method'      => 'POST',
+                'timeout'     => 30,
+                'headers'     => array( 'Content-Type' => 'application/json' ),
+                'body'        => wp_json_encode( $body ),
+                'data_format' => 'body',
+            )
+        );
+
+        if ( is_wp_error( $response ) ) {
+            return $response;
+        }
+        $response_body = wp_remote_retrieve_body( $response );
+        if ( 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
+            return new WP_Error( 'api_status', __( 'API returned an unexpected status code.', 'doctor2go-connect' ), $response_body );
+        }
+
+        // WCC answers with HTTP 200 in both cases: success {"message":"created N availabilities ...","rules":...},
+        // failure {"message":"could not save vacation periods ...","errors":{...}}
+        $resp = json_decode( $response_body );
+        if ( ! is_object( $resp ) || ! empty( $resp->errors ) ) {
+            return new WP_Error( 'api_message', __( 'The online practice software could not save the vacation periods.', 'doctor2go-connect' ), $response_body );
+        }
+
+        return true;
+    }
+
+    /**
+     * AJAX: save the vacation periods of a doctor in WordPress (meta d2g_vacation_periods) and send them to WCC.
+     * Logged-in only, the user must be allowed to edit this doctor profile.
+     */
+    function d2gc_update_vacation_periods() {
+        check_ajax_referer( 'd2gc_vacation_nonce', 'nonce' );
+
+        $wpDocID = isset( $_POST['wp_doc_id'] ) ? absint( wp_unslash( $_POST['wp_doc_id'] ) ) : 0;
+        if ( ! D2G_doc_user_profile::d2gc_current_user_can_edit_doctor( $wpDocID ) ) {
+            wp_send_json_error( array( 'message' => __( 'You are not allowed to edit this profile.', 'doctor2go-connect' ) ), 403 );
+        }
+
+        $json    = isset( $_POST['vacation_json'] ) ? wp_unslash( $_POST['vacation_json'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON, every value is sanitized in d2gc_clean_vacation_periods()
+        $decoded = json_decode( $json, true );
+        $periods = $this->d2gc_clean_vacation_periods( is_array( $decoded ) && isset( $decoded['periods'] ) ? $decoded['periods'] : null );
+
+        if ( is_wp_error( $periods ) ) {
+            wp_send_json_error( array( 'message' => $periods->get_error_message() ) );
+        }
+
+        update_post_meta( $wpDocID, 'd2g_vacation_periods', $periods );
+
+        $sent = $this->d2gc_send_vacation_periods_to_wcc( $wpDocID, $periods );
+        if ( is_wp_error( $sent ) ) {
+            wp_send_json_error(
+                array(
+                    'message' => __( 'The vacation periods were saved, but could not be sent to the online practice software.', 'doctor2go-connect' ),
+                    'error'   => $sent->get_error_message(),
+                    'periods' => $periods,
+                )
+            );
+        }
+
+        wp_send_json_success(
+            array(
+                'message'      => __( 'Your vacation periods have been saved.', 'doctor2go-connect' ),
+                'periods'      => $periods,
+                'sent_to_wcc'  => ( true === $sent ),
+            )
+        );
     }
 }

@@ -142,8 +142,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
+    // Price and currency of the video consultation, added to every rule.
+    // The currency is read from the <select> (Select2 only renders #select2-video_con_currency-container on top of it).
+    const priceInput = document.getElementById("video_con_price");
+    const currencySelect = document.getElementById("video_con_currency");
+
+    // sent as a JSON number (never a string): 50 or 40.5
+    const getVideoPrice = () => {
+        const raw = priceInput ? String(priceInput.value).trim().replace(",", ".") : "";
+        if (!/^\d+(\.\d{1,2})?$/.test(raw)) return null;
+        const price = Number(raw);
+        return price > 0 ? price : null;
+    };
+
+    const getVideoCurrency = () => {
+        const currency = currencySelect ? String(currencySelect.value).trim().toUpperCase() : "";
+        return /^[A-Z]{3}$/.test(currency) ? currency : null;
+    };
+
     const compileInterfaceToJSON = () => {
         const rulesArray = [];
+        const price = getVideoPrice();
+        const currency = getVideoCurrency();
         const rawDateVal = anchorDateInput ? String(anchorDateInput.value).trim() : "";
         let epochAnchor;
 
@@ -183,7 +203,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         start_time: startVal,
                         end_time: endVal,
                         wdays: wdayValue,
-                        week_interval: 1
+                        week_interval: 1,
+                        price: price,
+                        currency: currency
                     });
                 }
             });
@@ -272,6 +294,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     saveBtn.addEventListener("click", async () => {
         if (!validateAllTimes()) return;
+
+        // every rule needs a price and currency
+        if (getVideoPrice() === null || getVideoCurrency() === null) {
+            jQuery("#simple_book_msg").html('<div class="alert alert-danger">' + (i18n.price_required || "Please enter a valid video consultation price and currency first.") + '</div>');
+            if (priceInput) priceInput.focus();
+            return;
+        }
 
         const finalPayload = compileInterfaceToJSON();
 
@@ -434,6 +463,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!addRuleBtn) return;
 
+    // all lookups inside the advanced card, the simple form above uses the same input classes
+    const advCard = addRuleBtn.closest(".form-builder-section") || document;
+    const advPriceInput = document.getElementById("adv_rule_price");
+    const advCurrencySelect = document.getElementById("adv_rule_currency");
+
+    // price per rule, sent as a JSON number (never a string): 40 or 40.5
+    const getAdvPrice = () => {
+        const raw = advPriceInput ? String(advPriceInput.value).trim().replace(",", ".") : "";
+        if (!/^\d+(\.\d{1,2})?$/.test(raw)) return null;
+        const price = Number(raw);
+        return price > 0 ? price : null;
+    };
+
+    const getAdvCurrency = () => {
+        const currency = advCurrencySelect ? String(advCurrencySelect.value).trim().toUpperCase() : "";
+        return /^[A-Z]{3}$/.test(currency) ? currency : null;
+    };
+
 
     const sections = {
         weekly: document.getElementById("weekly-options"),
@@ -476,8 +523,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     const validateTimes = () => {
-        const startTimeInput = document.querySelector(".start-time-input");
-        const endTimeInput = document.querySelector(".end-time-input");
+        const startTimeInput = advCard.querySelector(".start-time-input");
+        const endTimeInput = advCard.querySelector(".end-time-input");
 
 
         if (!startTimeInput || !endTimeInput) return true;
@@ -501,8 +548,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const compileRuleFromForm = () => {
         const type = typeSelect ? typeSelect.value : "weekly";
-        const startTimeInput = document.querySelector(".start-time-input");
-        const endTimeInput = document.querySelector(".end-time-input");
+        const startTimeInput = advCard.querySelector(".start-time-input");
+        const endTimeInput = advCard.querySelector(".end-time-input");
 
         const anchorDateInput = document.querySelector(".anchor-date-input");
         
@@ -547,6 +594,9 @@ document.addEventListener("DOMContentLoaded", () => {
             rule.month_interval = intervalEl ? parseInt(intervalEl.value, 10) : 1;
         }
 
+        rule.price = getAdvPrice();
+        rule.currency = getAdvCurrency();
+
 
         return rule;
     };
@@ -558,13 +608,20 @@ document.addEventListener("DOMContentLoaded", () => {
         addRuleBtn.style.backgroundColor = "";
 
 
-        const endTimeInput = document.querySelector(".end-time-input");
+        const endTimeInput = advCard.querySelector(".end-time-input");
         if (endTimeInput) endTimeInput.setCustomValidity("");
+        if (advPriceInput) advPriceInput.setCustomValidity("");
     };
 
 
     addRuleBtn.addEventListener("click", () => {
         if (!validateTimes()) return;
+
+        // every rule needs its own price and currency
+        if (advPriceInput) {
+            advPriceInput.setCustomValidity(getAdvPrice() === null || getAdvCurrency() === null ? (i18n.price_required || "Please enter a valid video consultation price and currency first.") : "");
+            if (!advPriceInput.reportValidity()) return;
+        }
 
 
         const compiledRule = compileRuleFromForm();
@@ -602,7 +659,8 @@ document.addEventListener("DOMContentLoaded", () => {
             "4": i18n["4th"] || "4th",
             "-1": i18n.last || "Last"
         };
-        const timeStr = `${i18n.between || "between"} ${rule.start_time} ${i18n.and || "and"} ${rule.end_time}`;
+        const priceStr = (rule.price !== undefined && rule.price !== null) ? ` (${rule.price} ${rule.currency || ""})`.replace(" )", ")") : "";
+        const timeStr = `${i18n.between || "between"} ${rule.start_time} ${i18n.and || "and"} ${rule.end_time}${priceStr}`;
 
 
         if (rule.week_interval !== undefined) {
@@ -658,13 +716,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 addRuleBtn.textContent = i18n.update_rule || "Update Rule";
 
 
-                const startTimeInput = document.querySelector(".start-time-input");
-                const endTimeInput = document.querySelector(".end-time-input");
+                const startTimeInput = advCard.querySelector(".start-time-input");
+                const endTimeInput = advCard.querySelector(".end-time-input");
                 const anchorDateInput = document.querySelector(".anchor-date-input");
 
 
                 if (startTimeInput) startTimeInput.value = rule.start_time;
                 if (endTimeInput) endTimeInput.value = rule.end_time;
+
+                // older rules have no price yet, then the current value stays
+                if (advPriceInput && rule.price !== undefined && rule.price !== null) advPriceInput.value = rule.price;
+                if (advCurrencySelect && rule.currency) jQuery(advCurrencySelect).val(rule.currency).trigger("change"); // trigger: update Select2
 
 
                 if (anchorDateInput) {
@@ -703,11 +765,15 @@ jQuery(document).ready(function($){
     $('#save-adv-rules-btn').click(function(){
         var dsr = typeof d2gBookingRulesData !== "undefined" ? d2gBookingRulesData : null;
         var i18n = dsr && dsr.i18n ? dsr.i18n : {};
+        var $btn = $(this);
+        var $msg = $('#adv_book_msg');
 
 
         if (!dsr || !dsr.ajax || !dsr.ajax.url) {
             throw new Error(i18n.missing_ajax_url || "d2gBookingRulesData.ajax.url is missing");
         }
+
+        if ($btn.prop('disabled')) return; // already saving
 
 
         var data = {
@@ -721,16 +787,197 @@ jQuery(document).ready(function($){
 
 
         console.log("Sending adv rules:", data);
-        
+
+        // loader: same as the simple form
+        $btn.prop('disabled', true);
+        $btn.find('.spinner-border').removeClass('d-none');
+        $btn.find('.btn-label').addClass('opacity-75');
+        $msg.empty();
+
+        var showMsg = function (type, text) {
+            $msg.empty().append($('<div class="alert mb-0"></div>').addClass('alert-' + type).text(text));
+        };
 
 
         jQuery.post(dsr.ajax.url, data, function (response) {
             console.log(response);
             if (response && response.success) {
-                console.log(response);
+                showMsg('success', i18n.success_msg || 'Saved.');
             } else {
-                console.log(response || { error: i18n.request_failed || "Request failed" });
+                showMsg('danger', (response && response.data && response.data.message) || i18n.request_failed || 'Request failed');
             }
-        })
+        }).fail(function (xhr) {
+            var r = xhr && xhr.responseJSON;
+            showMsg('danger', (r && r.data && r.data.message) || i18n.request_failed || 'Request failed');
+        }).always(function () {
+            $btn.prop('disabled', false);
+            $btn.find('.spinner-border').addClass('d-none');
+            $btn.find('.btn-label').removeClass('opacity-75');
+        });
     });
 })
+
+/* ########################################################################## */
+/* VACATION                                                                   */
+/* ########################################################################## */
+// Vacation periods, same JSON as the WCC software: {"periods":[{"start_date":"2026-11-19","end_date":"2026-11-25"}]}
+// Not connected yet: the WCC endpoint for vacations follows, until then "save" only updates #vacation-json-output.
+document.addEventListener("DOMContentLoaded", () => {
+    const addBtn = document.getElementById("add-vacation-btn");
+    if (!addBtn) return;
+
+    const startInput = document.getElementById("vacation-start-date");
+    const endInput = document.getElementById("vacation-end-date");
+    const container = document.getElementById("vacation-container");
+    const emptyText = document.getElementById("vacation-empty");
+    const jsonOutput = document.getElementById("vacation-json-output");
+    const template = document.getElementById("vacation-item-template");
+    const saveBtn = document.getElementById("save-vacation-btn");
+    const i18n = (typeof d2gBookingRulesData !== "undefined" && d2gBookingRulesData.i18n) ? d2gBookingRulesData.i18n : {};
+
+    let periods = [];
+    let editingIndex = null;
+
+    if (jsonOutput && jsonOutput.value) {
+        try {
+            periods = JSON.parse(jsonOutput.value).periods || [];
+        } catch (e) {
+            console.warn("Could not parse vacation periods:", e);
+        }
+    }
+
+    // "2026-11-19" -> "19/11/2026"
+    const formatDate = (iso) => {
+        const [y, m, d] = String(iso).split("-");
+        return `${d}/${m}/${y}`;
+    };
+
+    const syncJson = () => {
+        if (jsonOutput) jsonOutput.value = JSON.stringify({ periods: periods });
+    };
+
+    const resetForm = () => {
+        editingIndex = null;
+        startInput.value = "";
+        endInput.value = "";
+        endInput.setCustomValidity("");
+        addBtn.textContent = i18n.vacation_add || "Add";
+    };
+
+    const render = () => {
+        container.innerHTML = "";
+        if (emptyText) emptyText.classList.toggle("d-none", periods.length > 0);
+        if (!template) return;
+
+        periods.forEach((period, index) => {
+            const clone = template.content.cloneNode(true);
+            const item = clone.querySelector(".vacation-item");
+
+            clone.querySelector(".vacation-text").textContent = `${formatDate(period.start_date)} – ${formatDate(period.end_date)}`;
+            if (editingIndex === index) item.style.borderLeft = "4px solid #3b82f6";
+
+            clone.querySelector(".edit-vacation-btn").addEventListener("click", () => {
+                editingIndex = index;
+                startInput.value = period.start_date;
+                endInput.value = period.end_date;
+                addBtn.textContent = i18n.vacation_update || "Update";
+                render();
+            });
+
+            clone.querySelector(".remove-vacation-btn").addEventListener("click", () => {
+                if (editingIndex === index) resetForm();
+                periods.splice(index, 1);
+                syncJson();
+                render();
+            });
+
+            container.appendChild(clone);
+        });
+    };
+
+    addBtn.addEventListener("click", () => {
+        const start = startInput.value;
+        const end = endInput.value;
+
+        endInput.setCustomValidity("");
+        if (!start || !end) {
+            endInput.setCustomValidity(i18n.vacation_dates_required || "Please choose a start and an end date.");
+            endInput.reportValidity();
+            return;
+        }
+        if (end < start) { // ISO dates compare correctly as strings
+            endInput.setCustomValidity(i18n.vacation_end_before_start || "The end date cannot be before the start date.");
+            endInput.reportValidity();
+            return;
+        }
+
+        const period = { start_date: start, end_date: end };
+        if (editingIndex !== null) {
+            periods[editingIndex] = period;
+        } else {
+            periods.push(period);
+        }
+        periods.sort((a, b) => a.start_date.localeCompare(b.start_date));
+
+        syncJson();
+        resetForm();
+        render();
+    });
+
+    // save in WordPress (meta d2g_vacation_periods) and send to WCC, see D2gConnect_Public::d2gc_update_vacation_periods()
+    if (saveBtn) {
+        const editor = document.getElementById("vacation-editor");
+        const msg = document.getElementById("vacation_msg");
+        const spinner = saveBtn.querySelector(".spinner-border");
+        const label = saveBtn.querySelector(".btn-label");
+        const dsr = typeof d2gBookingRulesData !== "undefined" ? d2gBookingRulesData : null;
+
+        const showMsg = (type, text) => {
+            if (!msg) return;
+            msg.innerHTML = "";
+            const div = document.createElement("div");
+            div.className = "alert mb-0 alert-" + type;
+            div.textContent = text;
+            msg.appendChild(div);
+        };
+
+        const setBusy = (busy) => {
+            saveBtn.disabled = busy;
+            if (spinner) spinner.classList.toggle("d-none", !busy);
+            if (label) label.classList.toggle("opacity-75", busy);
+        };
+
+        saveBtn.addEventListener("click", () => {
+            if (saveBtn.disabled) return;
+            if (!dsr || !dsr.ajax || !dsr.ajax.url) {
+                showMsg("danger", i18n.missing_ajax_url || "d2gBookingRulesData.ajax.url is missing");
+                return;
+            }
+
+            syncJson();
+            setBusy(true);
+            if (msg) msg.innerHTML = "";
+
+            jQuery.post(dsr.ajax.url, {
+                action: "d2gc_update_vacation_periods",
+                nonce: dsr.ajax.vacation_nonce,
+                wp_doc_id: editor ? editor.dataset.docId : "",
+                vacation_json: jsonOutput ? jsonOutput.value : JSON.stringify({ periods: periods })
+            }).done((response) => {
+                if (response && response.success) {
+                    periods = response.data.periods || periods; // the server returns the cleaned, sorted list
+                    syncJson();
+                    render();
+                    showMsg("success", response.data.message);
+                } else {
+                    showMsg("danger", (response && response.data && response.data.message) || i18n.request_failed || "Request failed");
+                }
+            }).fail((xhr) => {
+                const r = xhr && xhr.responseJSON;
+                showMsg("danger", (r && r.data && r.data.message) || i18n.request_failed || "Request failed");
+            }).always(() => setBusy(false));
+        });
+    }
+
+    render();
+});

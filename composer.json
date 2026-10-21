@@ -1,21 +1,26 @@
 {
   "name": "playfield-media/doctor2go-connect",
-  "description" : "Visual composer repo. doctor2go-connect",
-  "type" : "wordpress-plugin",
-  "keywords" : [ "wordpress" ],
-  "license" : "GPL-2.0+",
-  "authors" : [
+  "description": "Doctor2Go Connect: connects WordPress to doctor2go.online (doctor profiles, online booking, e-mail advice, patient dashboard).",
+  "type": "wordpress-plugin",
+  "keywords": [
+    "wordpress",
+    "doctor2go",
+    "telemedicine",
+    "booking"
+  ],
+  "license": "GPL-2.0-or-later",
+  "authors": [
     {
-      "name" : "playfield-media",
-      "email" : "technics@playfield-media.com",
-      "role" : "Lead Developer"
+      "name": "playfield-media",
+      "email": "technics@playfield-media.com",
+      "role": "Lead Developer"
     }
   ],
-  "require" : {
-    "composer/installers" : " ^2.1",
-    "php" : ">=5.2.4"
+  "require": {
+    "composer/installers": "^2.1",
+    "php": ">=7.3"
   },
-  "extra" : {
-    "installer-name" : "doctor2go-connect"
+  "extra": {
+    "installer-name": "doctor2go-connect"
   }
 }

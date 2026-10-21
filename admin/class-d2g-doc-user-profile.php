@@ -13,11 +13,10 @@ class D2G_doc_user_profile {
 		//
 		// ajax functions
 		// update doctor profile post
+		// logged-in only: ownership is checked in the handlers via d2gc_current_user_can_edit_doctor()
 		add_action( 'wp_ajax_d2gc_update_doc', array( __CLASS__, 'd2gc_update_doc' ) );
-		add_action( 'wp_ajax_nopriv_d2gc_update_doc', array( __CLASS__, 'd2gc_update_doc' ) );
 
 		add_action( 'wp_ajax_d2gc_delete_profile_pic', array( __CLASS__, 'd2gc_delete_profile_pic' ) );
-		add_action( 'wp_ajax_nopriv_d2gc_delete_profile_pic', array( __CLASS__, 'd2gc_delete_profile_pic' ) );
 
 		// adds a doctor profile post when creating a user with a doctor role if the option is checked
 		if ( get_option( 'd2gc_local_user' ) == 1 ) {
@@ -42,6 +41,47 @@ class D2G_doc_user_profile {
 		}*/
 	}
 
+
+	/**
+	 * Meta keys that are managed by the WCC sync and may not be changed via the front-end profile form.
+	 */
+	const D2GC_PROTECTED_DOC_META = array(
+		'd2g_user_id',
+		'user_key',
+		'wcc_user_id',
+		'wcc_status',
+		'organisation_key',
+		'organisation_subdomain',
+		'tariffs',
+		'vat_rules',
+		'locations_to_go',
+		'simple_booking_rules',
+		'd2g_vacation_periods',
+		'd2g_edit_url',
+	);
+
+	/**
+	 * Whether the current user may edit the given doctor profile.
+	 * Editors and admins may edit every profile, doctors only the profile linked to them via d2g_user_id.
+	 *
+	 * @param int $post_id
+	 * @return bool
+	 */
+	public static function d2gc_current_user_can_edit_doctor( $post_id ) {
+		$post_id = absint( $post_id );
+
+		if ( ! $post_id || ! is_user_logged_in() || 'd2g_doctor' !== get_post_type( $post_id ) ) {
+			return false;
+		}
+
+		if ( current_user_can( 'edit_others_posts' ) ) {
+			return true;
+		}
+
+		$owner_id = absint( get_post_meta( $post_id, 'd2g_user_id', true ) );
+
+		return $owner_id && get_current_user_id() === $owner_id;
+	}
 
 	/**
 	 * @param $currUserID
@@ -232,13 +272,15 @@ class D2G_doc_user_profile {
 		$post_data = wp_unslash($_POST);
 		$update_id = isset($post_data['update_id']) ? absint($post_data['update_id']) : 0;
 		if (!$update_id) wp_die('Invalid ID');
+		if (!self::d2gc_current_user_can_edit_doctor($update_id)) wp_die(esc_html__('You are not allowed to edit this profile.', 'doctor2go-connect'), 403);
 		$currLang = isset($post_data['d2g_lang']) ? sanitize_key($post_data['d2g_lang']) : '';
 
-		// META (unchanged)
+		// META (sync-managed and private keys can not be changed from the front-end)
 		$doc_data_meta = [];
 		if (isset($post_data['meta']) && is_array($post_data['meta'])) {
 			foreach ($post_data['meta'] as $meta_key => $meta_value) {
 				$meta_key = sanitize_key($meta_key);
+				if ('' === $meta_key || '_' === $meta_key[0] || in_array($meta_key, self::D2GC_PROTECTED_DOC_META, true)) continue;
 				if ('edus' === $meta_key && is_array($meta_value)) {
 					$clean_items = [];
 					foreach ($meta_value as $item) if (is_array($item)) $clean_items[] = [
@@ -276,22 +318,30 @@ class D2G_doc_user_profile {
 			}
 		}
 
-		// TAX (FIXED)
-		$doc_tax = [];
+		// TAX (only the doctor taxonomies shown in the UI, so e.g. the Polylang language can not be changed)
+		$doc_tax     = [];
+		$allowed_tax = array_keys(wp_filter_object_list(get_object_taxonomies('d2g_doctor', 'objects'), ['show_ui' => true]));
 		if (isset($post_data['tax']) && is_array($post_data['tax'])) {
 			foreach ($post_data['tax'] as $tax_key => $tax_value) {
 				$tax_key = sanitize_key($tax_key);
+				if (!in_array($tax_key, $allowed_tax, true)) continue;
 				if (is_array($tax_value)) $doc_tax[$tax_key] = array_map('sanitize_text_field', $tax_value);
 				else $doc_tax[$tax_key] = sanitize_text_field($tax_value);
 			}
 		}
+
+		// STATUS (doctors can not publish a profile that has been deactivated in WCC)
+		$current_status = get_post_status($update_id);
+		$post_status    = sanitize_key($post_data['post_status'] ?? $current_status);
+		if (!in_array($post_status, ['draft', 'pending', 'publish'], true)) $post_status = $current_status;
+		if ('publish' === $post_status && 'publish' !== $current_status && 'inactive' === get_post_meta($update_id, 'wcc_status', true) && !current_user_can('edit_others_posts')) $post_status = $current_status;
 
 		// Prepare Post Update
 		$my_update = [
 			'ID'           => $update_id,
 			'post_title'   => sanitize_text_field($post_data['post_title'] ?? ''),
 			'post_content' => wp_kses_post($post_data['docdesc'] ?? ''),
-			'post_status'  => sanitize_key($post_data['post_status'] ?? 'draft'),
+			'post_status'  => $post_status,
 		];
 		$insertID = wp_update_post($my_update, true);
 		if (is_wp_error($insertID)) { echo 'error'; wp_die(); }
@@ -332,7 +382,7 @@ class D2G_doc_user_profile {
 			wp_die( 'Invalid nonce' );
 		}
 
-		if ( ! current_user_can( 'edit_post', $post_id ) || empty( $_FILES ) || ! is_array( $_FILES ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+		if ( ! self::d2gc_current_user_can_edit_doctor( $post_id ) || empty( $_FILES ) || ! is_array( $_FILES ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 			return;
 		}
 
@@ -441,9 +491,14 @@ class D2G_doc_user_profile {
 		$image_id = absint( wp_unslash( $_POST['image'] ?? 0 ) );
 		$doc_id   = absint( wp_unslash( $_POST['doc_id'] ?? 0 ) );
 
-		if ( $image_id && $doc_id ) {
+		if ( ! self::d2gc_current_user_can_edit_doctor( $doc_id ) ) {
+			wp_send_json_error( null, 403 );
+		}
+
+		// only the profile picture of this doctor may be deleted
+		if ( $image_id && get_post_thumbnail_id( $doc_id ) === $image_id ) {
+			delete_post_thumbnail( $doc_id );
 			wp_delete_attachment( $image_id );
-			update_post_meta( $doc_id, '_thumbnail_id', '' );
 			wp_send_json_success();
 		}
 		wp_send_json_error();

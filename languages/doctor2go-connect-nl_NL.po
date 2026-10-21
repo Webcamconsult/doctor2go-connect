@@ -1052,8 +1052,8 @@ msgstr ""
 "WP Mobile Detect installeren)"
 
 #: admin/partials/d2g-connect-admin-display.php:74
-msgid "Full width (no sidebar, hidden forms in fancybox)"
-msgstr "Volledige breedte (geen zijbalk, verborgen formulieren in fancybox)"
+msgid "Full width (no sidebar, hidden forms in a popup)"
+msgstr "Volledige breedte (geen zijbalk, verborgen formulieren in een pop-up)"
 
 #: public/d2g-connect-shortcodes.php:2358
 #: public/d2g-connect-shortcodes.php:2781 public/template-functions.php:736
@@ -2730,8 +2730,8 @@ msgid "When did you first notice your skin problem?"
 msgstr "Wanneer merkte u uw huidprobleem voor het eerst op?"
 
 #: admin/partials/d2g-connect-admin-display.php:73
-msgid "With sidebar (anchor links, hidden forms in fancybox)"
-msgstr "Met zijbalk (ankers, verborgen formulieren in fancybox)"
+msgid "With sidebar (anchor links, hidden forms in a popup)"
+msgstr "Met zijbalk (ankers, verborgen formulieren in een pop-up)"
 
 #. Description of the plugin
 msgid ""

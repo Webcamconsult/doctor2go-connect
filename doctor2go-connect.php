@@ -14,8 +14,8 @@
  * @wordpress-plugin
  * Plugin Name:       Doctor2Go Connect
  * Plugin URI:        https://demo-plugin.doctor2go.online/
- * Description:       With this plugin you can manage doctor profiles on your website, make a connection with the Webcamconsult software. Patients can book you on your profile page and they can create a patient profile for follow up.
- * Version:           1.0.0
+ * Description:       Connects your website to doctor2go.online: public doctor profiles, online booking of video, physical and walk-in consultations, e-mail advice and a patient dashboard.
+ * Version:           1.0.1
  * Author:            Webcamconsult
  * Author URI:        https://www.webcamconsult.com
  * License:           GPL-2.0+

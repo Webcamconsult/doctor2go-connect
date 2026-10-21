@@ -296,7 +296,7 @@ ul.list-unstyled#doctor_filters li {
                 }
             }
         }
-        .fancybox.link{
+        .d2g-modal-trigger.link{
             display: none;
         }
         ul.icon_list {
@@ -345,7 +345,7 @@ article.doc_details{
         font-size: 20px;
     }
     .sidebar{
-        .consult_buttons > a.fancybox.link {
+        .consult_buttons > a.d2g-modal-trigger.link {
             display: none;
         }
         figure{
@@ -381,7 +381,7 @@ article.doc_details{
     }
     ul.consult_buttons{
         flex-wrap: wrap;
-        > a.fancybox.link {
+        > a.d2g-modal-trigger.link {
             display: none;
         }
         li{
@@ -518,8 +518,7 @@ article.doc_details{
         color:#fff;
     }
     .top {
-        background: #343a40;
-        color:#fff;
+       
         div#intro {
             display: flex;
             align-items: center;

@@ -70,9 +70,11 @@ if ( ! defined( 'WPINC' ) ) {
 			<div class="section_wrapper simple_hide">
 				<h4><?php echo esc_html__( 'Layout', 'doctor2go-connect' ); ?></h4>
 				<select id="d2gc_detail_page_view" name="d2gc_detail_page_view">
-					<option <?php echo ( get_option( 'd2gc_detail_page_view' ) == 'single-v1' || get_option( 'd2gc_detail_page_view' ) == '' ) ? 'selected' : ''; ?> value="single-v1"><?php echo esc_html__( 'With sidebar (anchor links, hidden forms in fancybox)', 'doctor2go-connect' ); ?></option>
-					<option <?php echo ( get_option( 'd2gc_detail_page_view' ) == 'single-v2' ) ? 'selected' : ''; ?> value="single-v2"><?php echo esc_html__( 'Full width (no sidebar, hidden forms in fancybox)', 'doctor2go-connect' ); ?></option>
-					<option <?php echo ( get_option( 'd2gc_detail_page_view' ) == 'single-v3' ) ? 'selected' : ''; ?> value="single-v3"><?php echo esc_html__( 'Full width (no sidebar, consultation tabs, for this template you will need to install WP Mobile Detect)', 'doctor2go-connect' ); ?></option>
+					<?php /* single-v1 (sidebar layout) is no longer offered, existing v1 settings fall back to v2, see d2gc_get_detail_page_view()
+					<option <?php echo ( get_option( 'd2gc_detail_page_view' ) == 'single-v1' || get_option( 'd2gc_detail_page_view' ) == '' ) ? 'selected' : ''; ?> value="single-v1"><?php echo esc_html__( 'With sidebar (anchor links, hidden forms in a popup)', 'doctor2go-connect' ); ?></option>
+					*/ ?>
+					<option <?php echo ( d2gc_get_detail_page_view() == 'single-v2' ) ? 'selected' : ''; ?> value="single-v2"><?php echo esc_html__( 'Full width (no sidebar, hidden forms in a popup)', 'doctor2go-connect' ); ?></option>
+					<option <?php echo ( d2gc_get_detail_page_view() == 'single-v3' ) ? 'selected' : ''; ?> value="single-v3"><?php echo esc_html__( 'Full width (no sidebar, consultation tabs, for this template you will need to install WP Mobile Detect)', 'doctor2go-connect' ); ?></option>
 				</select>
 				<h4><?php echo esc_html__( 'Header & footer', 'doctor2go-connect' ); ?></h4>
 				<p><?php echo esc_html__( 'If you are using a base file in your theme, where you load the footer and header, than you can deactivate loading those in youre single-d2g_doctor.php file.', 'doctor2go-connect' ); ?></p>

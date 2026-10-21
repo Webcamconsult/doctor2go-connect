@@ -69,14 +69,21 @@ class D2gConnect_Shortcodes {
 		$currUser  = wp_get_current_user();
 		$permalink = esc_url( get_permalink() . '?edit=' . ( isset( $_GET['edit'] ) ? absint( $_GET['edit'] ) : 0 ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-		if ( is_user_logged_in() && ( in_array( 'editor', (array) $currUser->roles ) || in_array( 'administrator', (array) $currUser->roles ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce not required for this internal action.
+		if ( ! is_user_logged_in() ) {
+			return '<p class="d2g-notice">' . esc_html__( 'Please log in to edit your profile.', 'doctor2go-connect' ) . '</p>';
+		}
+
+		if ( current_user_can( 'edit_others_posts' ) ) {
 			$pubProfileID = isset( $_GET['edit'] ) ? absint( wp_unslash( $_GET['edit'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- load-only for logged in users, no form processing.
 			$pubProfile   = get_post( $pubProfileID );
 		} else {
+			$pubProfiles  = $d2gAdmin::d2gc_get_pub_profile( $currUser->ID );
+			$pubProfile   = $pubProfiles[0] ?? null;
+			$pubProfileID = $pubProfile ? (int) $pubProfile->ID : 0;
+		}
 
-			$currUserID   = $currUser->data->ID;
-			$pubProfile   = $d2gAdmin::d2gc_get_pub_profile( $currUserID )[0];
-			$pubProfileID = (int) $pubProfile->ID;
+		if ( ! $pubProfile || ! $d2gAdmin::d2gc_current_user_can_edit_doctor( $pubProfileID ) ) {
+			return '<p class="d2g-notice">' . esc_html__( 'No doctor profile found that you are allowed to edit.', 'doctor2go-connect' ) . '</p>';
 		}
 
 		$profileStatus = $pubProfile->post_status;
@@ -216,6 +223,11 @@ class D2gConnect_Shortcodes {
 								<button class="nav-link booking_button" id="booking-tab" data-bs-toggle="tab" data-bs-target="#booking-tab-pane" type="button" role="tab" aria-controls="booking-tab-pane" aria-selected="false">
 									<strong><?php echo esc_html( __( 'Booking rules (availibilities & prices)', 'doctor2go-connect' ) ); ?></strong>
 								</button>
+							</li>
+                            <li class="nav-item" role="presentation">
+								<a href="https://app.derm2check.com" target="_blank" class="nav-link">
+                                    <strong><?php echo esc_html( __( 'back to dashbaord', 'doctor2go-connect' ) ); ?></strong>    
+                                </a>
 							</li>
 						</ul>
 
@@ -400,7 +412,7 @@ class D2gConnect_Shortcodes {
                                                         <?php esc_html_e( 'Before you can upload a new image, please first delete the old one.', 'doctor2go-connect' ); ?>
                                                     </p>
                                                     <div class="profile_pic_wrapper" style="max-width:400px">
-                                                        <a class="del_img_link btn btn-outline-danger flaticon-dustbin mb-2" data-doc-id="<?php echo esc_html( $pubProfileID ); ?>" data-image-id="<?php echo esc_html( $img_ID ); ?>" href="#"></a>
+                                                        <a class="del_img_link btn btn-outline-danger flaticon-dustbin mb-2" data-doc-id="<?php echo esc_html( $pubProfileID ); ?>" data-image-id="<?php echo esc_html( $img_ID ); ?>" href="#">x</a>
                                                         <img class="img-fluid" src="<?php echo esc_html( $feat_pic_full ); ?>">
                                                     </div>
                                                 <?php } ?>
@@ -841,19 +853,48 @@ class D2gConnect_Shortcodes {
                                                         <?php echo esc_html__( 'Enter your next holiday here to block e-mail consults and to show a notice on your detail page during your absence.', 'doctor2go-connect' ); ?>
                                                     </strong>
                                                 </p>
-                                                <div class="row g-3">
-                                                    <div class="col-12 col-md-6">
-                                                        <label class="form-label small">
-                                                            <?php echo esc_html__( 'Start date', 'doctor2go-connect' ); ?>
-                                                        </label>
-                                                        <input type="date" class="form-control" name="meta[start_holiday]" value="<?php echo esc_html( $doctor_meta['start_holiday'][0] ); ?>">
+                                                <!-- Vacation periods (same structure as in the WCC software). The fields have no name attribute,
+                                                     so they are not saved with the profile; the JSON in #vacation-json-output is sent to WCC separately. -->
+                                                <?php $vacation_periods = get_post_meta( $pubProfileID, 'd2g_vacation_periods', true ); ?>
+                                                <div class="vacation-editor mt-4" id="vacation-editor" data-doc-id="<?php echo esc_attr( $pubProfileID ); ?>">
+                                                    <input type="hidden" id="vacation-json-output" value="<?php echo esc_attr( wp_json_encode( array( 'periods' => is_array( $vacation_periods ) ? $vacation_periods : array() ) ) ); ?>">
+
+                                                    <h4 class="h5"><?php echo esc_html__( 'Add vacation period', 'doctor2go-connect' ); ?></h4>
+                                                    <div class="row g-2 align-items-end mb-3">
+                                                        <div class="col-12 col-md-5">
+                                                            <label class="form-label small" for="vacation-start-date"><?php echo esc_html__( 'Start date', 'doctor2go-connect' ); ?></label>
+                                                            <input class="form-control" id="vacation-start-date" type="date">
+                                                        </div>
+                                                        <div class="col-12 col-md-5">
+                                                            <label class="form-label small" for="vacation-end-date"><?php echo esc_html__( 'End date', 'doctor2go-connect' ); ?></label>
+                                                            <input class="form-control" id="vacation-end-date" type="date">
+                                                        </div>
+                                                        <div class="col-12 col-md-2">
+                                                            <button class="btn btn-success w-100" id="add-vacation-btn" type="button"><?php echo esc_html__( 'Add', 'doctor2go-connect' ); ?></button>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-12 col-md-6">
-                                                        <label class="form-label small">
-                                                            <?php echo esc_html__( 'End date', 'doctor2go-connect' ); ?>
-                                                        </label>
-                                                        <input type="date" class="form-control" name="meta[end_holiday]" value="<?php echo esc_html( $doctor_meta['end_holiday'][0] ); ?>">
+
+                                                    <h4 class="h5"><?php echo esc_html__( 'Vacation periods', 'doctor2go-connect' ); ?></h4>
+                                                    <ul class="list-group mb-3" id="vacation-container"></ul>
+                                                    <p class="text-muted small" id="vacation-empty"><?php echo esc_html__( 'No vacation periods added yet.', 'doctor2go-connect' ); ?></p>
+
+                                                    <div id="vacation_msg" class="mb-3" role="status" aria-live="polite"></div>
+                                                    <div class="text-end">
+                                                        <button class="btn btn-primary" id="save-vacation-btn" type="button">
+                                                            <span class="btn-label"><?php echo esc_html__( 'Save vacation periods', 'doctor2go-connect' ); ?></span>
+                                                            <span class="spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
+                                                        </button>
                                                     </div>
+
+                                                    <template id="vacation-item-template">
+                                                        <li class="list-group-item vacation-item d-flex justify-content-between align-items-center">
+                                                            <span class="vacation-text"></span>
+                                                            <div class="btn-group btn-group-sm vacation-actions" role="group">
+                                                                <button class="btn btn-outline-secondary edit-vacation-btn" type="button"><?php echo esc_html__( 'Edit', 'doctor2go-connect' ); ?></button>
+                                                                <button class="btn btn-danger remove-vacation-btn" type="button"><?php echo esc_html__( 'Remove', 'doctor2go-connect' ); ?></button>
+                                                            </div>
+                                                        </li>
+                                                    </template>
                                                 </div>
                                             </div>
                                         </div>
@@ -971,7 +1012,7 @@ class D2gConnect_Shortcodes {
                                                                 </div>
 
                                                                 <div class="card-footer">
-                                                                    <p class="alert alert-info mb-3"><strong><?php esc_html_e('Updates are processed overnight and active the next day.', 'doctor2go-connect')?><strong></p>
+                                                                    <p class="alert alert-info mb-3"><strong><?php esc_html_e('Updates are processed overnight and active the next day.', 'doctor2go-connect')?></strong></p>
                                                                     <button id="save-simple-rules-btn" class="btn btn-primary" type="button">
                                                                         <span class="btn-label"><?php echo esc_html__( 'Update availabilites', 'doctor2go-connect' ); ?></span>
                                                                         <span class="spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
@@ -1106,7 +1147,27 @@ class D2gConnect_Shortcodes {
                                                                                     <input class="form-control end-time-input" type="time" value="15:00">
                                                                                 </div>
                                                                             </div>
-                                                                            
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- price & currency per rule (own ids, prefilled with the standard video consultation price) -->
+                                                                    <div class="row">
+                                                                        <div class="col-8">
+                                                                            <div class="mb-3">
+                                                                                <label class="form-label" for="adv_rule_price"><?php echo esc_html__( 'Price', 'doctor2go-connect' ); ?></label>
+                                                                                <input class="form-control" type="text" inputmode="decimal" id="adv_rule_price" value="<?php echo esc_attr( $doctor_meta['video_con_price'][0] ?? '' ); ?>" placeholder="<?php echo esc_attr__( 'e.g. 40 or 40.50', 'doctor2go-connect' ); ?>">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-4">
+                                                                            <div class="mb-3">
+                                                                                <label class="form-label" for="adv_rule_currency"><?php echo esc_html__( 'Currency', 'doctor2go-connect' ); ?></label>
+                                                                                <select class="form-select" id="adv_rule_currency">
+                                                                                    <?php foreach ( $currencies as $currency ) { ?>
+                                                                                        <option <?php selected( $currency, $doctor_meta['video_con_currency'][0] ?? '' ); ?> value="<?php echo esc_attr( $currency ); ?>"><?php echo esc_html( $currency ); ?></option>
+                                                                                    <?php } ?>
+                                                                                </select>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1142,7 +1203,8 @@ class D2gConnect_Shortcodes {
                                                                 </div>
 
                                                                 <div class="card-footer">
-                                                                    <p class="alert alert-info mb-3"><strong><?php esc_html_e('Updates are processed overnight and active the next day.', 'doctor2go-connect')?><strong></p>
+                                                                    <p class="alert alert-info mb-3"><strong><?php esc_html_e('Updates are processed overnight and active the next day.', 'doctor2go-connect')?></strong></p>
+                                                                    <div id="adv_book_msg" class="mb-3" role="status" aria-live="polite"></div>
                                                                     <button id="save-adv-rules-btn" class="btn btn-primary" type="button">
                                                                         <span class="btn-label"><?php echo esc_html__( 'Update availabilites', 'doctor2go-connect' ); ?></span>
                                                                         <span class="spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
@@ -2006,6 +2068,8 @@ class D2gConnect_Shortcodes {
 				<div class="mb-3">
 					<div class="g-recaptcha" data-sitekey="<?php echo esc_attr( $recaptcha_site_key ); ?>"></div>
 					<div id="captcha_login"></div>
+					<!-- marks this login as coming from this form, only then reCAPTCHA is verified (not on wp-login.php) -->
+					<input type="hidden" name="d2gc_login_form" value="1">
 				</div>
 			<?php } ?>
 

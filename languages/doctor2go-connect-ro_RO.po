@@ -766,8 +766,8 @@ msgstr ""
 "va trebui să instalați WP Mobile Detect)"
 
 #: admin/partials/d2g-connect-admin-display.php:74
-msgid "Full width (no sidebar, hidden forms in fancybox)"
-msgstr "Lățime completă (fără bară laterală, formulare ascunse în fancybox)"
+msgid "Full width (no sidebar, hidden forms in a popup)"
+msgstr "Lățime completă (fără bară laterală, formulare ascunse într-un pop-up)"
 
 #: public/template-functions.php:908
 #: public/templates/generic-medofenic-email-form.php:110
@@ -1923,8 +1923,8 @@ msgid "When did you first notice this spot?"
 msgstr "Când ați observat prima dată această pată?"
 
 #: admin/partials/d2g-connect-admin-display.php:73
-msgid "With sidebar (anchor links, hidden forms in fancybox)"
-msgstr "Cu bară laterală (linkuri ancoră, formulare ascunse în fancybox)"
+msgid "With sidebar (anchor links, hidden forms in a popup)"
+msgstr "Cu bară laterală (linkuri ancoră, formulare ascunse într-un pop-up)"
 
 #. Description of the plugin
 msgid ""
