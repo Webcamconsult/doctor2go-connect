@@ -66,6 +66,16 @@ function d2gc_get_detail_page_view() {
 }
 
 /**
+ * Whether doctors edit their booking rules (availabilities & prices) and vacation periods in the profile editor
+ * on the website. Off when the admin chose to let doctors do this in the doctor2go.online software.
+ *
+ * @return bool
+ */
+function d2gc_booking_rules_editor_enabled() {
+	return '1' !== (string) get_option( 'd2gc_disable_booking_rules_editor' );
+}
+
+/**
  * The questionnaire types a doctor can choose: for the e-mail advice (written_con_type) and for the
  * intake of video consultations (intake_type, which also has "no intake").
  *

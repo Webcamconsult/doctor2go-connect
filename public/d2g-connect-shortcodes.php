@@ -219,11 +219,13 @@ class D2gConnect_Shortcodes {
 									<strong><?php echo esc_html( __( 'Education & working experience', 'doctor2go-connect' ) ); ?></strong>
 								</button>
 							</li>
+                            <?php if ( d2gc_booking_rules_editor_enabled() ) { ?>
                             <li class="nav-item" role="presentation">
 								<button class="nav-link booking_button" id="booking-tab" data-bs-toggle="tab" data-bs-target="#booking-tab-pane" type="button" role="tab" aria-controls="booking-tab-pane" aria-selected="false">
 									<strong><?php echo esc_html( __( 'Booking rules (availibilities & prices)', 'doctor2go-connect' ) ); ?></strong>
 								</button>
 							</li>
+                            <?php } ?>
                             <li class="nav-item" role="presentation">
 								<a href="https://app.derm2check.com?locale=<?php echo $currLang; ?>" target="_blank" class="nav-link">
                                     <strong><?php echo esc_html( __( 'Dashbaord', 'doctor2go-connect' ) ); ?></strong>    
@@ -448,6 +450,35 @@ class D2gConnect_Shortcodes {
                                                 <?php wp_editor( $pubProfile->post_content, 'docdesc' ); ?>
                                             </div>
                                         </div>
+
+                                        <?php // questionnaires: the only settings of the booking tab that are not managed by WCC, so always editable here ?>
+                                        <?php if ( get_option( 'd2gc_local_user' ) != 1 ) { ?>
+                                        <div class="form-table card mt-5">
+                                            <div class="card-body">
+                                                <h3><?php echo esc_html__( 'Questionnaires', 'doctor2go-connect' ); ?></h3>
+                                                <div>
+                                                    <label class="small"><?php echo esc_html__( 'E-mail consult questionnaire', 'doctor2go-connect' ); ?>*</label>
+                                                    <select class="form-control" name="meta[written_con_type]" id="written_con_type">
+                                                        <?php 
+                                                        $types	  = d2gc_get_questionnaire_types();
+                                                        foreach ( $types as $type => $label ) { ?>
+                                                            <option <?php echo ( $type == $doctor_meta['written_con_type'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $type ); ?>"><?php echo esc_html( $label ); ?></option>    
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+
+                                                <div class="mt-3">
+                                                    <label class="small" for="intake_type"><?php echo esc_html__( 'Intake for video consultations', 'doctor2go-connect' ); ?></label>
+                                                    <select class="form-control" name="meta[intake_type]" id="intake_type">
+                                                        <?php $current_intake = d2gc_get_doctor_intake_type( $doctor_meta ); ?>
+                                                        <?php foreach ( d2gc_get_questionnaire_types( true ) as $type => $label ) { ?>
+                                                            <option <?php selected( $type, $current_intake ); ?> value="<?php echo esc_attr( $type ); ?>"><?php echo esc_html( $label ); ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php } ?>
 										
 									</div>
 								</div>
@@ -740,6 +771,7 @@ class D2gConnect_Shortcodes {
                                     </div>
 								</div>
 							</div>
+                            <?php if ( d2gc_booking_rules_editor_enabled() ) { ?>
                             <div class="tab-pane fade pm_d2g_tab_content booking" id="booking-tab-pane" role="tabpanel" aria-labelledby="booking-tab" tabindex="0">
                                 <div class="row">
                                     <div class="col-sm-12 col-lg-6">
@@ -820,26 +852,6 @@ class D2gConnect_Shortcodes {
                                                         </div>
                                                     </div>
 
-                                                    <div class="mt-3">
-                                                        <label class="small"><?php echo esc_html__( 'E-mail consult questionnaire', 'doctor2go-connect' ); ?>*</label>
-                                                        <select class="form-control" name="meta[written_con_type]" id="written_con_type">
-                                                            <?php 
-                                                            $types	  = d2gc_get_questionnaire_types();
-                                                            foreach ( $types as $type => $label ) { ?>
-                                                                <option <?php echo ( $type == $doctor_meta['written_con_type'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $type ); ?>"><?php echo esc_html( $label ); ?></option>    
-                                                            <?php } ?>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="mt-3">
-                                                        <label class="small" for="intake_type"><?php echo esc_html__( 'Intake for video consultations', 'doctor2go-connect' ); ?></label>
-                                                        <select class="form-control" name="meta[intake_type]" id="intake_type">
-                                                            <?php $current_intake = d2gc_get_doctor_intake_type( $doctor_meta ); ?>
-                                                            <?php foreach ( d2gc_get_questionnaire_types( true ) as $type => $label ) { ?>
-                                                                <option <?php selected( $type, $current_intake ); ?> value="<?php echo esc_attr( $type ); ?>"><?php echo esc_html( $label ); ?></option>
-                                                            <?php } ?>
-                                                        </select>
-                                                    </div>
                                                     
 
                                                     <p class="mt-3 mb-4 simple_hide">
@@ -1241,6 +1253,7 @@ class D2gConnect_Shortcodes {
                                     </div>
                                 </div>
                             </div>
+                            <?php } ?>
                         </div>
 
 						<input type="hidden" name="doc_action" value="doc_update" />

@@ -141,70 +141,72 @@ class D2gConnect_Public {
 		//load doctors
 		wp_enqueue_script( 'd2g-load-doctors', plugin_dir_url( __FILE__ ) . 'js/load-doctors.js', array( 'jquery' ), $this->version, true );
 
-        //edit booking rules doctors
-		wp_enqueue_script( 'd2gc-booking-editor', plugin_dir_url( __FILE__ ) . 'js/booking-editor.js', array( 'jquery' ), $this->version, true );
-        wp_localize_script(
-            'd2gc-booking-editor',
-            'd2gBookingRulesData',
-            array(
+        //edit booking rules doctors (not when the admin lets doctors do this in doctor2go.online)
+		if ( d2gc_booking_rules_editor_enabled() ) {
+			wp_enqueue_script( 'd2gc-booking-editor', plugin_dir_url( __FILE__ ) . 'js/booking-editor.js', array( 'jquery' ), $this->version, true );
+	        wp_localize_script(
+	            'd2gc-booking-editor',
+	            'd2gBookingRulesData',
+	            array(
 
-                /* AJAX + security */
-                'ajax' => array(
-                    'url'                     => admin_url( 'admin-ajax.php' ),
-                    'send_booking_rules_nonce'=> wp_create_nonce( 'send_booking_rules_nonce' ),
-                    'vacation_nonce'          => wp_create_nonce( 'd2gc_vacation_nonce' ),
-                ),
+	                /* AJAX + security */
+	                'ajax' => array(
+	                    'url'                     => admin_url( 'admin-ajax.php' ),
+	                    'send_booking_rules_nonce'=> wp_create_nonce( 'send_booking_rules_nonce' ),
+	                    'vacation_nonce'          => wp_create_nonce( 'd2gc_vacation_nonce' ),
+	                ),
 
-                /* user */
-                'user' => array(
-                    'role'         => ! empty( $current_user->roles ) ? $current_user->roles[0] : null,
-                    'is_logged_in' => is_user_logged_in(),
-                ),
+	                /* user */
+	                'user' => array(
+	                    'role'         => ! empty( $current_user->roles ) ? $current_user->roles[0] : null,
+	                    'is_logged_in' => is_user_logged_in(),
+	                ),
 
-                /* i18n */
-                'i18n' => array(
-                    'unavailable'                   => esc_html__( 'Unavailable', 'doctor2go-connect' ),
-                    'end_time_after_start'          => esc_html__( 'End time must be after the start time.', 'doctor2go-connect' ),
-                    'time_window_overlap'           => esc_html__( 'This time window overlaps with an existing slot on this day.', 'doctor2go-connect' ),
-                    'missing_ajax_url'              => esc_html__( 'd2gBookingRulesData.ajax.url is missing', 'doctor2go-connect' ),
-                    'request_failed'                => esc_html__( 'Request failed', 'doctor2go-connect' ),
-                    'parse_incoming_rules_error'    => esc_html__( 'Could not parse incoming rules data for simple layout:', 'doctor2go-connect' ),
-                    'parse_existing_rules_error'    => esc_html__( 'Could not parse existing rules:', 'doctor2go-connect' ),
-                    'add_rule_to_list'              => esc_html__( 'Add Rule to List', 'doctor2go-connect' ),
-                    'update_rule'                   => esc_html__( 'Update Rule', 'doctor2go-connect' ),
-                    'sunday'                        => esc_html__( 'Sunday', 'doctor2go-connect' ),
-                    'monday'                        => esc_html__( 'Monday', 'doctor2go-connect' ),
-                    'tuesday'                       => esc_html__( 'Tuesday', 'doctor2go-connect' ),
-                    'wednesday'                     => esc_html__( 'Wednesday', 'doctor2go-connect' ),
-                    'thursday'                      => esc_html__( 'Thursday', 'doctor2go-connect' ),
-                    'friday'                        => esc_html__( 'Friday', 'doctor2go-connect' ),
-                    'saturday'                      => esc_html__( 'Saturday', 'doctor2go-connect' ),
-                    '1st'                           => esc_html__( '1st', 'doctor2go-connect' ),
-                    '2nd'                           => esc_html__( '2nd', 'doctor2go-connect' ),
-                    '3rd'                           => esc_html__( '3rd', 'doctor2go-connect' ),
-                    '4th'                           => esc_html__( '4th', 'doctor2go-connect' ),
-                    'last'                          => esc_html__( 'Last', 'doctor2go-connect' ),
-                    'between'                       => esc_html__( 'between', 'doctor2go-connect' ),
-                    'and'                           => esc_html__( 'and', 'doctor2go-connect' ),
-                    'every'                         => esc_html__( 'Every', 'doctor2go-connect' ),
-                    'week'                          => esc_html__( 'week', 'doctor2go-connect' ),
-                    'weeks'                         => esc_html__( 'weeks', 'doctor2go-connect' ),
-                    'on'                            => esc_html__( 'on', 'doctor2go-connect' ),
-                    'of_the_month'                  => esc_html__( 'of the month', 'doctor2go-connect' ),
-                    'month'                         => esc_html__( 'month', 'doctor2go-connect' ),
-                    'months'                        => esc_html__( 'months', 'doctor2go-connect' ),
-                    'the'                           => esc_html__( 'the', 'doctor2go-connect' ),
-                    'th_day'                        => esc_html__( 'th day', 'doctor2go-connect' ),
-                    'custom_rule'                   => esc_html__( 'Custom Rule', 'doctor2go-connect' ),
-                    'vacation_dates_required'       => esc_html__( 'Please choose a start and an end date.', 'doctor2go-connect' ),
-                    'vacation_end_before_start'     => esc_html__( 'The end date cannot be before the start date.', 'doctor2go-connect' ),
-                    'vacation_update'               => esc_html__( 'Update', 'doctor2go-connect' ),
-                    'vacation_add'                  => esc_html__( 'Add', 'doctor2go-connect' ),
-                    'price_required'                => esc_html__( 'Please enter a valid video consultation price and currency first.', 'doctor2go-connect' ),
-                    'success_msg'                   => esc_html__( 'Your bookking rules have been saved, it can take up to 24hours to become active.', 'doctor2go-connect' ),
-                ),
-            )
-        );
+	                /* i18n */
+	                'i18n' => array(
+	                    'unavailable'                   => esc_html__( 'Unavailable', 'doctor2go-connect' ),
+	                    'end_time_after_start'          => esc_html__( 'End time must be after the start time.', 'doctor2go-connect' ),
+	                    'time_window_overlap'           => esc_html__( 'This time window overlaps with an existing slot on this day.', 'doctor2go-connect' ),
+	                    'missing_ajax_url'              => esc_html__( 'd2gBookingRulesData.ajax.url is missing', 'doctor2go-connect' ),
+	                    'request_failed'                => esc_html__( 'Request failed', 'doctor2go-connect' ),
+	                    'parse_incoming_rules_error'    => esc_html__( 'Could not parse incoming rules data for simple layout:', 'doctor2go-connect' ),
+	                    'parse_existing_rules_error'    => esc_html__( 'Could not parse existing rules:', 'doctor2go-connect' ),
+	                    'add_rule_to_list'              => esc_html__( 'Add Rule to List', 'doctor2go-connect' ),
+	                    'update_rule'                   => esc_html__( 'Update Rule', 'doctor2go-connect' ),
+	                    'sunday'                        => esc_html__( 'Sunday', 'doctor2go-connect' ),
+	                    'monday'                        => esc_html__( 'Monday', 'doctor2go-connect' ),
+	                    'tuesday'                       => esc_html__( 'Tuesday', 'doctor2go-connect' ),
+	                    'wednesday'                     => esc_html__( 'Wednesday', 'doctor2go-connect' ),
+	                    'thursday'                      => esc_html__( 'Thursday', 'doctor2go-connect' ),
+	                    'friday'                        => esc_html__( 'Friday', 'doctor2go-connect' ),
+	                    'saturday'                      => esc_html__( 'Saturday', 'doctor2go-connect' ),
+	                    '1st'                           => esc_html__( '1st', 'doctor2go-connect' ),
+	                    '2nd'                           => esc_html__( '2nd', 'doctor2go-connect' ),
+	                    '3rd'                           => esc_html__( '3rd', 'doctor2go-connect' ),
+	                    '4th'                           => esc_html__( '4th', 'doctor2go-connect' ),
+	                    'last'                          => esc_html__( 'Last', 'doctor2go-connect' ),
+	                    'between'                       => esc_html__( 'between', 'doctor2go-connect' ),
+	                    'and'                           => esc_html__( 'and', 'doctor2go-connect' ),
+	                    'every'                         => esc_html__( 'Every', 'doctor2go-connect' ),
+	                    'week'                          => esc_html__( 'week', 'doctor2go-connect' ),
+	                    'weeks'                         => esc_html__( 'weeks', 'doctor2go-connect' ),
+	                    'on'                            => esc_html__( 'on', 'doctor2go-connect' ),
+	                    'of_the_month'                  => esc_html__( 'of the month', 'doctor2go-connect' ),
+	                    'month'                         => esc_html__( 'month', 'doctor2go-connect' ),
+	                    'months'                        => esc_html__( 'months', 'doctor2go-connect' ),
+	                    'the'                           => esc_html__( 'the', 'doctor2go-connect' ),
+	                    'th_day'                        => esc_html__( 'th day', 'doctor2go-connect' ),
+	                    'custom_rule'                   => esc_html__( 'Custom Rule', 'doctor2go-connect' ),
+	                    'vacation_dates_required'       => esc_html__( 'Please choose a start and an end date.', 'doctor2go-connect' ),
+	                    'vacation_end_before_start'     => esc_html__( 'The end date cannot be before the start date.', 'doctor2go-connect' ),
+	                    'vacation_update'               => esc_html__( 'Update', 'doctor2go-connect' ),
+	                    'vacation_add'                  => esc_html__( 'Add', 'doctor2go-connect' ),
+	                    'price_required'                => esc_html__( 'Please enter a valid video consultation price and currency first.', 'doctor2go-connect' ),
+	                    'success_msg'                   => esc_html__( 'Your bookking rules have been saved, it can take up to 24hours to become active.', 'doctor2go-connect' ),
+	                ),
+	            )
+	        );
+		}
 
 		//booking via calendar
 		wp_enqueue_script( $this->plugin_name . '-booking', plugin_dir_url( __FILE__ ) . 'js/doctor2go-booking.js', array( 'jquery' ), $this->version, true );
@@ -1078,6 +1080,9 @@ class D2gConnect_Public {
 
     function d2gc_update_booking_rules() {
         check_ajax_referer( 'send_booking_rules_nonce', 'send_booking_rules_nonce' );
+        if ( ! d2gc_booking_rules_editor_enabled() ) {
+            wp_send_json_error( array( 'message' => esc_html__( 'Booking rules are managed in doctor2go.online.', 'doctor2go-connect' ) ) );
+        }
 
         $wpDocID        = isset( $_POST['wp_doc_id'] ) ? absint( wp_unslash( $_POST['wp_doc_id'] ) ) : 0;
         $rules_json     = isset( $_POST['simple_rules_json'] ) ? wp_unslash( $_POST['simple_rules_json'] ) : '';
@@ -1348,6 +1353,9 @@ class D2gConnect_Public {
      */
     function d2gc_update_vacation_periods() {
         check_ajax_referer( 'd2gc_vacation_nonce', 'nonce' );
+        if ( ! d2gc_booking_rules_editor_enabled() ) {
+            wp_send_json_error( array( 'message' => esc_html__( 'Booking rules are managed in doctor2go.online.', 'doctor2go-connect' ) ) );
+        }
 
         $wpDocID = isset( $_POST['wp_doc_id'] ) ? absint( wp_unslash( $_POST['wp_doc_id'] ) ) : 0;
         if ( ! D2G_doc_user_profile::d2gc_current_user_can_edit_doctor( $wpDocID ) ) {

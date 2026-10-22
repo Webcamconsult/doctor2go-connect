@@ -627,6 +627,7 @@ class D2gConnect_Admin {
 			'd2gc_activate_sso' => 'absint',
 			'd2gc_activate_custom_password_mail' => 'absint',
 			'd2gc_activate_custom_login_registration' => 'absint',
+			'd2gc_disable_booking_rules_editor' => 'absint',
 			'd2g_debug' => 'absint',
 		);
 

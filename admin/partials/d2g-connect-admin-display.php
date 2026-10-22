@@ -65,6 +65,7 @@ $d2gc_has_translations = '' !== D2GC_Translations::provider();
 $d2gc_tabs = array(
 	'connection' => __( 'Connection', 'doctor2go-connect' ),
 	'display'    => __( 'Display', 'doctor2go-connect' ),
+	'doctors'    => __( 'Doctors', 'doctor2go-connect' ),
 	'patients'   => __( 'Patients', 'doctor2go-connect' ),
 	'email'      => __( 'E-mail', 'doctor2go-connect' ),
 	'security'   => __( 'Security', 'doctor2go-connect' ),
@@ -104,20 +105,6 @@ if ( $d2gc_has_translations ) {
 						$d2gc_field( 'd2gc_api_url_short', __( 'URL used for API', 'doctor2go-connect' ), '', 'url' );
 						$d2gc_field( 'd2gc_waiting_room_url', __( 'URL used for waiting room from the Doctor2go software', 'doctor2go-connect' ), '', 'url' );
 						$d2gc_field( 'd2gc_wcc_base_url', __( 'Base URL from the Doctor2go software', 'doctor2go-connect' ) );
-						?>
-					</div>
-				</section>
-
-				<section class="d2gc-card">
-					<header class="d2gc-card__header">
-						<h2><?php echo esc_html__( 'Doctor accounts', 'doctor2go-connect' ); ?></h2>
-						<p><?php echo esc_html__( 'How doctor users and their public profiles are created and how doctors log in.', 'doctor2go-connect' ); ?></p>
-					</header>
-					<div class="d2gc-card__body">
-						<?php
-						$d2gc_toggle( 'd2gc_local_user', __( 'Create doctor user and profile locally', 'doctor2go-connect' ), __( 'If you create the user account and profile locally you will not need to set the API connection', 'doctor2go-connect' ) );
-						$d2gc_toggle( 'd2gc_admin_access', __( 'Give doctor access to wp-admin', 'doctor2go-connect' ) );
-						$d2gc_toggle( 'd2gc_activate_sso', __( 'Activate Single Sign On Login for doctors', 'doctor2go-connect' ), __( 'Doctors can log in to your site directly from doctor2go.online.', 'doctor2go-connect' ) );
 						?>
 					</div>
 				</section>
@@ -164,7 +151,41 @@ if ( $d2gc_has_translations ) {
 						<?php $d2gc_toggle( 'd2gc_single_header_footer', __( 'Deactivate header and footer in single-d2g_doctor.php', 'doctor2go-connect' ), __( 'If you are using a base file in your theme, where you load the footer and header, than you can deactivate loading those in youre single-d2g_doctor.php file.', 'doctor2go-connect' ) ); ?>
 					</div>
 				</section>
+			</div>
+		</div>
 
+		<?php /* ##########  DOCTORS  ########## */ ?>
+		<div class="d2gc-panel" id="d2gc-panel-doctors" role="tabpanel" data-tab="doctors">
+			<div class="d2gc-grid">
+				<section class="d2gc-card">
+					<header class="d2gc-card__header">
+						<h2><?php echo esc_html__( 'Doctor accounts', 'doctor2go-connect' ); ?></h2>
+						<p><?php echo esc_html__( 'How doctor users and their public profiles are created and how doctors log in.', 'doctor2go-connect' ); ?></p>
+					</header>
+					<div class="d2gc-card__body">
+						<?php
+						$d2gc_toggle( 'd2gc_local_user', __( 'Create doctor user and profile locally', 'doctor2go-connect' ), __( 'If you create the user account and profile locally you will not need to set the API connection', 'doctor2go-connect' ) );
+						$d2gc_toggle( 'd2gc_admin_access', __( 'Give doctor access to wp-admin', 'doctor2go-connect' ) );
+						$d2gc_toggle( 'd2gc_activate_sso', __( 'Activate Single Sign On Login for doctors', 'doctor2go-connect' ), __( 'Doctors can log in to your site directly from doctor2go.online.', 'doctor2go-connect' ) );
+						?>
+					</div>
+				</section>
+
+				<section class="d2gc-card">
+					<header class="d2gc-card__header">
+						<h2><?php echo esc_html__( 'Profile editor', 'doctor2go-connect' ); ?></h2>
+						<p><?php echo esc_html__( 'What doctors can edit in the profile editor on the website.', 'doctor2go-connect' ); ?></p>
+					</header>
+					<div class="d2gc-card__body">
+						<?php
+						$d2gc_toggle(
+							'd2gc_disable_booking_rules_editor',
+							__( 'Deactivate the "Booking rules (availabilities & prices)" tab', 'doctor2go-connect' ),
+							__( 'Doctors can also set their availabilities, prices and vacation periods in the doctor2go.online software. Turn this on if they should do that there: the tab is hidden in the profile editor and nothing is sent from the website. The questionnaires are on the first tab of the profile editor and stay editable.', 'doctor2go-connect' )
+						);
+						?>
+					</div>
+				</section>
 				<section class="d2gc-card">
 					<header class="d2gc-card__header">
 						<h2><?php echo esc_html__( 'Placeholder image for doctors', 'doctor2go-connect' ); ?></h2>

@@ -84,7 +84,13 @@ function d2gc_meta_box_prices_cb( $post ) {
 				<input type="text" readonly value="<?php echo esc_attr( $values['video_con_price'][0] ?? '' ); ?>" aria-label="<?php echo esc_attr__( 'Price', 'doctor2go-connect' ); ?>">
 				<input type="text" readonly value="<?php echo esc_attr( $values['video_con_currency'][0] ?? '' ); ?>" aria-label="<?php echo esc_attr__( 'Currency', 'doctor2go-connect' ); ?>" class="d2gc-currency">
 			</div>
-			<p class="description"><?php echo esc_html__( 'Set in the profile editor together with the booking rules (availabilities), a different price can be set per booking rule.', 'doctor2go-connect' ); ?></p>
+			<p class="description">
+				<?php
+				echo d2gc_booking_rules_editor_enabled()
+					? esc_html__( 'Set in the profile editor together with the booking rules (availabilities), a different price can be set per booking rule.', 'doctor2go-connect' )
+					: esc_html__( 'Set in the doctor2go.online software together with the booking rules (availabilities).', 'doctor2go-connect' );
+				?>
+			</p>
 		</div>
 	</div>
 	<?php
@@ -142,10 +148,16 @@ function d2gc_meta_box_availability_cb( $post ) {
 	$tz      = wp_timezone();
 	$edit    = D2G_doc_user_profile::d2gc_page_url() . '?edit=' . $post->ID;
 	?>
-	<p>
-		<?php echo esc_html__( 'The availabilities (booking rules, incl. the video consultation prices) and the vacation periods of a doctor are set in the profile editor on the website, because they are sent to doctor2go.online when they are saved.', 'doctor2go-connect' ); ?>
-	</p>
-	<p><a class="button button-primary" href="<?php echo esc_url( $edit ); ?>" target="_blank"><?php echo esc_html__( 'Open profile editor', 'doctor2go-connect' ); ?></a></p>
+	<?php if ( d2gc_booking_rules_editor_enabled() ) { ?>
+		<p>
+			<?php echo esc_html__( 'The availabilities (booking rules, incl. the video consultation prices) and the vacation periods of a doctor are set in the profile editor on the website, because they are sent to doctor2go.online when they are saved.', 'doctor2go-connect' ); ?>
+		</p>
+		<p><a class="button button-primary" href="<?php echo esc_url( $edit ); ?>" target="_blank"><?php echo esc_html__( 'Open profile editor', 'doctor2go-connect' ); ?></a></p>
+	<?php } else { ?>
+		<p>
+			<?php echo esc_html__( 'The availabilities (booking rules, incl. the video consultation prices) and the vacation periods of a doctor are set in the doctor2go.online software (see Doctor2Go Connect settings, Doctors tab).', 'doctor2go-connect' ); ?>
+		</p>
+	<?php } ?>
 	<h4><?php echo esc_html__( 'Vacation periods', 'doctor2go-connect' ); ?></h4>
 	<?php if ( empty( $periods ) ) { ?>
 		<p><?php echo esc_html__( 'No vacation periods.', 'doctor2go-connect' ); ?></p>
