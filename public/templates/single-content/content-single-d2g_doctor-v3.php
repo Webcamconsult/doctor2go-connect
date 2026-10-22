@@ -30,11 +30,11 @@ $post_ID		 = $d2g_profile_data->doctor_profile_ID;
 
 <article id="doctor_wrapper_v3" class="doctor_detail_v3 type-d2g_doctor  doc_details">
 	<div id="content_wrapper">
-		<div class="top mb-<?php echo (wpmd_is_notphone()) ? '5' : '2'; ?> <?= esc_attr(apply_filters('bootscore/class/container', 'container', 'single')); ?>">
+		<div class="top mb-2 mb-md-5 <?= esc_attr(apply_filters('bootscore/class/container', 'container', 'single')); ?>">
             <div id="top_content" class="site-content card ">
                 <div class="card-body">
-                    <?php if(wpmd_is_phone()){ ?>
-                        <header>
+                    <?php // phone header (above the picture); the desktop header sits next to it in #intro ?>
+                        <header class="d-md-none">
                             <h1 class="entry-title text-primary"><?php the_title(); ?> <?php do_action('d2g_like_button', $post_ID);?></h1>
                             <?php if ( $d2g_profile_data->specialties !== false ) { ?>
                                 <h2 class="specialties text-primary">
@@ -44,16 +44,14 @@ $post_ID		 = $d2g_profile_data->doctor_profile_ID;
                                 </h2>
                             <?php } ?>
                         </header>
-                    <?php } ?>
-                    <div class="<?php echo (wpmd_is_phone()) ? 'd-flex flex-row' : ''; ?><?php echo (wpmd_is_notphone()) ? 'row' : ''; ?>">
-                        <div class="col-sm-3">
-                            <figure><img class="profile_pic" src="<?php echo esc_html( $d2g_profile_data->feat_pic_full ); ?><?php echo (wpmd_is_notphone()) ? '&w=230&h=230&fit=crop&crop=faces' : '&w=120&h=120&fit=crop&crop=faces'; ?>" alt="<?php the_title(); ?>"></figure>
+                    <div class="row">
+                        <div class="col-4 col-sm-3">
+                            <figure><img class="profile_pic" src="<?php echo esc_html( $d2g_profile_data->feat_pic_full ); ?>&w=230&h=230&fit=crop&crop=faces" alt="<?php the_title(); ?>"></figure>
                         </div>
-                        <div class="col-sm-9" id="intro">
+                        <div class="col-8 col-sm-9" id="intro">
                             <div class="inner_wrapper">
                                 <?php do_action('d2g_like_button', $post_ID);?>
-                                <?php if(wpmd_is_notphone()){ ?>
-                                    <header>
+                                    <header class="d-none d-md-block">
                                         <h1 class="entry-title text-primary"><?php the_title(); ?></h1>
                                         <?php if ( $d2g_profile_data->specialties !== false ) { ?>
                                             <h2 class="specialties text-primary">
@@ -63,8 +61,6 @@ $post_ID		 = $d2g_profile_data->doctor_profile_ID;
                                             </h2>
                                         <?php } ?>
                                     </header>
-                                    
-                                <?php } ?>
                                 <div id="short_info">
                                     <?php do_action( 'd2g_info_box', 'detail', 'col-2', '', 'top' ); ?>
                                 </div>
@@ -87,13 +83,20 @@ $post_ID		 = $d2g_profile_data->doctor_profile_ID;
                 </div>
             </div>
         </div>
-		<div class="entry-wrapper"> 
+		<div class="entry-wrapper">
 			<div id="main_content" class="site-content <?php echo esc_attr(apply_filters('bootscore/class/container', 'container', 'single')); ?> <?php echo esc_attr(apply_filters('bootscore/class/content/spacer', 'pt-3 pb-5', 'single')); ?>">
-				<!--ACTION HOOK CONSULTANCY TABS-->
-				<?php do_action( 'd2g_doctor_consultancy_tabs' ); ?>  
+				<h2 class="text-primary d-flex mb-3">
+					<?php echo esc_html__( 'Consultation offers', 'doctor2go-connect' ); ?>&nbsp;&nbsp;
+					<a href="#info_content" class="d2g-modal-trigger info_link text-decoration-none" aria-label="<?php echo esc_attr__( 'More info about the consultation types', 'doctor2go-connect' ); ?>">
+						<span class="d2cif-Info-line icon"></span>
+					</a>
+				</h2>
+				<!--ACTION HOOK CONSULTANCY TABS (?consult=video|email|walkin opens that tab, see d2g-public.js)-->
+				<?php do_action( 'd2g_doctor_consultancy_tabs' ); ?>
 			</div>
-		</div>  
+		</div>
 	</div>
+	<?php do_action( 'd2g_back_to_overview' ); ?>
 </article>
 <?php
 $d2g_physician_schema = function_exists( 'd2gc_get_doctor_physician_schema' ) ? d2gc_get_doctor_physician_schema( $d2g_profile_data ) : false;

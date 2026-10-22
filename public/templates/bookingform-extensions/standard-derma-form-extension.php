@@ -2,7 +2,6 @@
 // Intake fields of the booking form, per intake type of the doctor ($form_type, see d2gc_get_doctor_intake_type()):
 // short = images + complaint, medofenic_advice = + medical history, derma_email_advice = all derma fields.
 global $d2g_profile_data, $currUser, $userMeta, $form_type;
-$d2gc_is_phone = function_exists( 'wpmd_is_phone' ) && wpmd_is_phone(); // WP Mobile Detect is optional
 if ( is_user_logged_in() ) {
     $currUser = wp_get_current_user();
     $userMeta = get_user_meta( $currUser->data->ID );
@@ -32,13 +31,14 @@ if ( is_user_logged_in() ) {
                             <input class="form-control simple_hide" type="file" name="booking_image_1" id="booking_image_1" accept="image/*,android/allowCamera" placeholder="<?php echo esc_attr__( 'Choose image 1', 'doctor2go-connect' ); ?>">
                         </div>
                     </div>
-                    <?php if ( $d2gc_is_phone ) { ?>
-                        <p class="text-primary text-decoration-underline mb-3 opener">
-                            <?php echo esc_html__('Upload / make more photos', 'doctor2go-connect')?>
-                        </p>
-                        <div class="simple_hide">
-                    <?php } ?>
-                    <div class="col-md-4">
+<!-- photos 2 + 3: collapsed on phones (Bootstrap collapse), always visible from md -->
+                                <p class="d-md-none mb-3">
+                                    <a class="text-primary text-decoration-underline" data-bs-toggle="collapse" href="#d2gc-more-photos-booking" role="button" aria-expanded="false" aria-controls="d2gc-more-photos-booking">
+                                        <?php echo esc_html__('Upload / make more photos', 'doctor2go-connect') ?>
+                                    </a>
+                                </p>
+                                <div class="col-md-8 collapse d-md-block" id="d2gc-more-photos-booking">
+                                    <div class="row g-3">                    <div class="col-md-6">
                         <div class="mb-3">
                             <img src="<?php echo esc_url( plugins_url( 'images/picture-side.svg', dirname(__FILE__) ) ); ?>" alt="<?php echo esc_attr__('Photo of the skin condition (side)', 'doctor2go-connect')?>" class="img-fluid mb-2">
                             <label for="booking_image_2" class="form-label btn btn-outline-primary">
@@ -48,7 +48,7 @@ if ( is_user_logged_in() ) {
                             <input class="form-control simple_hide" type="file" name="booking_image_2" id="booking_image_2" accept="image/*,android/allowCamera" placeholder="<?php echo esc_attr__( 'Choose image 2', 'doctor2go-connect' ); ?>">
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="mb-3">
                             <img src="<?php echo esc_url( plugins_url( 'images/Picture-scaled-up-additional.svg', dirname(__FILE__) ) ); ?>" alt="<?php echo esc_attr__('Photo of the skin condition (extra)', 'doctor2go-connect')?>" class="img-fluid mb-2">
                             <label for="booking_image_3" class="form-label btn btn-outline-primary">
@@ -58,9 +58,8 @@ if ( is_user_logged_in() ) {
                             <input class="form-control simple_hide" type="file" name="booking_image_3" id="booking_image_3" accept="image/*,android/allowCamera" placeholder="<?php echo esc_attr__( 'Choose image 3', 'doctor2go-connect' ); ?>">
                         </div>
                     </div>
-                    <?php if ( $d2gc_is_phone ) { ?>
-                        </div>
-                    <?php } ?>
+    </div>
+                                </div>
                 </div>
                 
                 

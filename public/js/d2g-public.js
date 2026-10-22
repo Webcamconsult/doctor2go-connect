@@ -291,6 +291,25 @@ jQuery(document).ready(function ($) {
         }
     }
 
+    // Consultancy tabs (v3): ?consult=video|email|walkin opens that tab (links of the consult buttons).
+    // The video and walk-in tab buttons only appear after the availability check, so wait until the button is visible.
+    (function () {
+        var consult = new URLSearchParams(window.location.search).get('consult');
+        var tabs    = { video: '#calendar-tab', email: '#email-tab', walkin: '#walkin-tab' };
+        if (!consult || !tabs[consult] || !$('#myTab').length) return;
+
+        var tries = 0;
+        var openTab = function () {
+            var $btn = $(tabs[consult]);
+            if ($btn.length && $btn.closest('.nav-item').is(':visible')) {
+                $btn.trigger('click');
+            } else if (++tries < 50) { // max. 15 s
+                setTimeout(openTab, 300);
+            }
+        };
+        openTab();
+    })();
+
     // Sidebar sticky behaviour on doctor pages
     var screenWidth = $(window).width();
     if (

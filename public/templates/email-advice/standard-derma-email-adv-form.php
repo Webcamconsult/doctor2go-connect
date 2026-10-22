@@ -104,13 +104,14 @@ if (is_user_logged_in()) {
                                         <input type="file" class="form-control simple_hide" id="image_upload_1" name="skin_photo[]" accept="image/*,android/allowCamera">
                                     </div>
                                 </div>
-                                <?php if (wpmd_is_phone()) { ?>
-                                    <p class="text-primary text-decoration-underline mb-3 opener">
+<!-- photos 2 + 3: collapsed on phones (Bootstrap collapse), always visible from md -->
+                                <p class="d-md-none mb-3">
+                                    <a class="text-primary text-decoration-underline" data-bs-toggle="collapse" href="#d2gc-more-photos-email" role="button" aria-expanded="false" aria-controls="d2gc-more-photos-email">
                                         <?php echo esc_html__('Upload / make more photos', 'doctor2go-connect') ?>
-                                    </p>
-                                    <div class="simple_hide">
-                                    <?php } ?>
-                                    <div class="col-md-4">
+                                    </a>
+                                </p>
+                                <div class="col-md-8 collapse d-md-block" id="d2gc-more-photos-email">
+                                    <div class="row g-3">                                    <div class="col-md-6">
                                         <div class="mb-3">
                                             <img src="<?php echo esc_url(plugins_url('images/picture-side.svg', dirname(__FILE__))); ?>" alt="<?php echo esc_attr__('Photo of the skin condition (side)', 'doctor2go-connect') ?>" class="img-fluid mb-2">
                                             <label for="image_upload_2" class="form-label btn btn-outline-primary">
@@ -120,7 +121,7 @@ if (is_user_logged_in()) {
                                             <input type="file" class="form-control simple_hide " id="image_upload_2" name="skin_photo[]" accept="image/*,android/allowCamera">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="mb-3">
                                             <img src="<?php echo esc_url(plugins_url('images/Picture-scaled-up-additional.svg', dirname(__FILE__))); ?>" alt="<?php echo esc_attr__('Photo of the skin condition (extra)', 'doctor2go-connect') ?>" class="img-fluid mb-2">
                                             <label for="image_upload_3" class="form-label btn btn-outline-primary">
@@ -130,9 +131,8 @@ if (is_user_logged_in()) {
                                             <input type="file" class="form-control simple_hide " id="image_upload_3" name="skin_photo[]" accept="image/*,android/allowCamera">
                                         </div>
                                     </div>
-                                    <?php if (wpmd_is_phone()) { ?>
-                                    </div>
-                                <?php } ?>
+    </div>
+                                </div>
                             </div>
 
 

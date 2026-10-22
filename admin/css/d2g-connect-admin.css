@@ -188,6 +188,22 @@ input[type="date"] {
 	gap: 24px;
 	align-items: start;
 }
+.d2gc-settings .d2gc-card--wide {
+	grid-column: 1 / -1;
+}
+.d2gc-settings .d2gc-info {
+	padding: 12px 16px;
+	background: #f0f6fc;
+	border-left: 4px solid #72aee6;
+}
+.d2gc-settings .d2gc-info p {
+	margin: 0 0 8px;
+}
+.d2gc-settings .d2gc-info ul {
+	margin: 0;
+	padding-left: 18px;
+	list-style: disc;
+}
 .d2gc-settings .d2gc-card {
 	background: #fff;
 	border: 1px solid var(--d2gc-border);

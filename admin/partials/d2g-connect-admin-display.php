@@ -65,7 +65,8 @@ $d2gc_has_translations = '' !== D2GC_Translations::provider();
 $d2gc_tabs = array(
 	'connection' => __( 'Connection', 'doctor2go-connect' ),
 	'display'    => __( 'Display', 'doctor2go-connect' ),
-	'patients'   => __( 'Patients & e-mail', 'doctor2go-connect' ),
+	'patients'   => __( 'Patients', 'doctor2go-connect' ),
+	'email'      => __( 'E-mail', 'doctor2go-connect' ),
 	'security'   => __( 'Security', 'doctor2go-connect' ),
 	'advanced'   => __( 'Advanced', 'doctor2go-connect' ),
 );
@@ -157,7 +158,7 @@ if ( $d2gc_has_translations ) {
 							<select id="d2gc_detail_page_view" name="d2gc_detail_page_view">
 								<?php // single-v1 (sidebar layout) is no longer offered, existing v1 settings fall back to v2, see d2gc_get_detail_page_view() ?>
 								<option <?php selected( d2gc_get_detail_page_view(), 'single-v2' ); ?> value="single-v2"><?php echo esc_html__( 'Full width (no sidebar, hidden forms in a popup)', 'doctor2go-connect' ); ?></option>
-								<option <?php selected( d2gc_get_detail_page_view(), 'single-v3' ); ?> value="single-v3"><?php echo esc_html__( 'Full width (no sidebar, consultation tabs, for this template you will need to install WP Mobile Detect)', 'doctor2go-connect' ); ?></option>
+								<option <?php selected( d2gc_get_detail_page_view(), 'single-v3' ); ?> value="single-v3"><?php echo esc_html__( 'Full width (no sidebar, consultation tabs)', 'doctor2go-connect' ); ?></option>
 							</select>
 						</div>
 						<?php $d2gc_toggle( 'd2gc_single_header_footer', __( 'Deactivate header and footer in single-d2g_doctor.php', 'doctor2go-connect' ), __( 'If you are using a base file in your theme, where you load the footer and header, than you can deactivate loading those in youre single-d2g_doctor.php file.', 'doctor2go-connect' ) ); ?>
@@ -182,22 +183,26 @@ if ( $d2gc_has_translations ) {
 			</div>
 		</div>
 
-		<?php /* ##########  PATIENTS & E-MAIL  ########## */ ?>
+		<?php /* ##########  PATIENTS  ########## */ ?>
 		<div class="d2gc-panel" id="d2gc-panel-patients" role="tabpanel" data-tab="patients">
 			<div class="d2gc-grid">
 				<section class="d2gc-card">
 					<header class="d2gc-card__header">
 						<h2><?php echo esc_html__( 'Patient accounts', 'doctor2go-connect' ); ?></h2>
-						<p><?php echo esc_html__( 'Registration, login and password reset for patients.', 'doctor2go-connect' ); ?></p>
+						<p><?php echo esc_html__( 'Registration and login for patients.', 'doctor2go-connect' ); ?></p>
 					</header>
 					<div class="d2gc-card__body">
 						<?php
 						$d2gc_toggle( 'd2gc_activate_custom_login_registration', __( 'Activate custom login and registration for patients', 'doctor2go-connect' ) );
-						$d2gc_toggle( 'd2gc_activate_custom_password_mail', __( 'Activate custom password reset email', 'doctor2go-connect' ) );
 						?>
 					</div>
 				</section>
+			</div>
+		</div>
 
+		<?php /* ##########  E-MAIL  ########## */ ?>
+		<div class="d2gc-panel" id="d2gc-panel-email" role="tabpanel" data-tab="email">
+			<div class="d2gc-grid">
 				<section class="d2gc-card">
 					<header class="d2gc-card__header">
 						<h2><?php echo esc_html__( 'E-mail settings', 'doctor2go-connect' ); ?></h2>
@@ -208,6 +213,7 @@ if ( $d2gc_has_translations ) {
 						$d2gc_field( 'd2gc_sender_address', __( 'sender address', 'doctor2go-connect' ), '', 'email' );
 						$d2gc_field( 'd2gc_sender_name', __( 'sender name', 'doctor2go-connect' ) );
 						$d2gc_field( 'd2gc_recipient_address', __( 'recipient address', 'doctor2go-connect' ), '', 'email' );
+						$d2gc_toggle( 'd2gc_activate_custom_password_mail', __( 'Activate custom password reset email', 'doctor2go-connect' ) );
 						?>
 						<div class="d2gc-setting d2gc-media">
 							<span class="d2gc-setting__title"><?php echo esc_html__( 'logo used in e-mail', 'doctor2go-connect' ); ?></span>
@@ -219,27 +225,40 @@ if ( $d2gc_has_translations ) {
 						</div>
 					</div>
 				</section>
-
 			</div>
 		</div>
 
 		<?php /* ##########  SECURITY  ########## */ ?>
 		<div class="d2gc-panel" id="d2gc-panel-security" role="tabpanel" data-tab="security">
 			<div class="d2gc-grid">
-				<section class="d2gc-card">
+				<section class="d2gc-card d2gc-card--wide">
 					<header class="d2gc-card__header">
-						<h2><?php echo esc_html__( 'Two-factor authentication', 'doctor2go-connect' ); ?></h2>
-						<p><?php echo esc_html__( '1. Install the "Solid Security Basic" plugin and configure two-factor authentication (2FA) for all individuals with access to the user accounts. This is can be crucial to ensure the highest level of security for sensitive patient data.', 'doctor2go-connect' ); ?></p>
+						<h2><?php echo esc_html__( 'ALTCHA spam protection', 'doctor2go-connect' ); ?></h2>
+						<p><?php echo esc_html__( 'This plugin is compatible with ALTCHA, a privacy-friendly alternative to Google reCAPTCHA.', 'doctor2go-connect' ); ?></p>
 					</header>
 					<div class="d2gc-card__body">
-						<?php $d2gc_toggle( 'd2gc_activate_2fa_link', __( 'I have installed "Solid Security Basic" and I have activated 2FA', 'doctor2go-connect' ) ); ?>
+						<div class="d2gc-info">
+							<p>
+								<strong><?php echo esc_html__( 'Status:', 'doctor2go-connect' ); ?></strong>
+								<?php
+								echo shortcode_exists( 'altcha' )
+									? esc_html__( 'ALTCHA is active.', 'doctor2go-connect' )
+									: esc_html__( 'ALTCHA is not installed or not active.', 'doctor2go-connect' );
+								?>
+							</p>
+							<ul>
+								<li><?php echo esc_html__( 'You only need the settings of the ALTCHA plugin itself, nothing has to be set here. The login, registration and password reset forms of this plugin show the ALTCHA widget automatically.', 'doctor2go-connect' ); ?></li>
+								<li><?php echo esc_html__( 'Depending on your theme, different ALTCHA settings might be needed (for example which forms or pages are protected).', 'doctor2go-connect' ); ?></li>
+								<li><strong><?php echo esc_html__( 'Recommended: always protect the doctor detail pages with ALTCHA, they contain many forms (booking, e-mail advice, walk-in).', 'doctor2go-connect' ); ?></strong></li>
+							</ul>
+						</div>
 					</div>
 				</section>
 
 				<section class="d2gc-card">
 					<header class="d2gc-card__header">
 						<h2><?php echo esc_html__( 'Google reCAPTCHA', 'doctor2go-connect' ); ?></h2>
-						<p><?php echo esc_html__( '2. Create a Google reCAPTCHA account specifically for your website and enter the generated keys into the appropriate settings within your site’s configuration.', 'doctor2go-connect' ); ?></p>
+						<p><?php echo esc_html__( 'Create a Google reCAPTCHA account specifically for your website and enter the generated keys into the appropriate settings within your site’s configuration.', 'doctor2go-connect' ); ?></p>
 					</header>
 					<div class="d2gc-card__body">
 						<?php
@@ -247,6 +266,16 @@ if ( $d2gc_has_translations ) {
 						$d2gc_field( 'd2gc_recaptcha_secret_key', __( 'secret key', 'doctor2go-connect' ), '', 'password' );
 						$d2gc_toggle( 'd2gc_deactivate_recapctha_script', __( 'Deactivate loading google recaptcha script', 'doctor2go-connect' ), __( 'You can deactivate the loading from the Google recaptcha script  if necessary, particularly if it is already being loaded from another source.', 'doctor2go-connect' ) );
 						?>
+					</div>
+				</section>
+
+				<section class="d2gc-card">
+					<header class="d2gc-card__header">
+						<h2><?php echo esc_html__( 'Two-factor authentication', 'doctor2go-connect' ); ?></h2>
+						<p><?php echo esc_html__( 'Install the "Solid Security Basic" plugin and configure two-factor authentication (2FA) for all individuals with access to the user accounts. This is can be crucial to ensure the highest level of security for sensitive patient data.', 'doctor2go-connect' ); ?></p>
+					</header>
+					<div class="d2gc-card__body">
+						<?php $d2gc_toggle( 'd2gc_activate_2fa_link', __( 'I have installed "Solid Security Basic" and I have activated 2FA', 'doctor2go-connect' ) ); ?>
 					</div>
 				</section>
 			</div>

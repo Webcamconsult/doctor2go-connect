@@ -1077,7 +1077,8 @@ function d2gc_show_booking_calendar( $post = '', $only_cal = false, $in_tabs = f
                 global $form_type;
                 $form_type = d2gc_get_doctor_intake_type( $d2g_profile_data->doctor_meta );
                 if ( 'none' !== $form_type ) {
-                    include D2GC_PLUGIN_DIR . 'public/templates/bookingform-extensions/standard-derma-form-extension.php';
+                    // overridable in the theme like the other templates: <theme>/d2g/bookingform-extensions/...
+                    include d2gc_locate_template( 'bookingform-extensions/standard-derma-form-extension.php' );
                 }
                 ?>
                 <input type="hidden" id="intake_type" value="<?php echo esc_attr( $form_type ); ?>">
