@@ -358,6 +358,9 @@ class D2G_doc_user_profile {
 		// Handle File Uploads
 		if (!empty($_FILES)) self::d2gc_set_doc_images($update_id, $nonce);
 
+		// copy the language independent fields, the profile picture and the status to the other languages
+		D2GC_Doctor_Sync::sync($update_id);
+
 		$success = true;
 		do_action('breeze_clear_all_cache');
 		echo 'updated'; wp_die();
@@ -497,7 +500,12 @@ class D2G_doc_user_profile {
 
 		// only the profile picture of this doctor may be deleted
 		if ( $image_id && get_post_thumbnail_id( $doc_id ) === $image_id ) {
-			delete_post_thumbnail( $doc_id );
+			// remove the picture in all languages (the sync only copies fields that exist, not removed ones)
+			foreach ( D2GC_Translations::get_post_translation_ids( $doc_id ) as $translation_id ) {
+				if ( get_post_thumbnail_id( $translation_id ) === $image_id ) {
+					delete_post_thumbnail( $translation_id );
+				}
+			}
 			wp_delete_attachment( $image_id );
 			wp_send_json_success();
 		}

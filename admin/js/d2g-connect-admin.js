@@ -185,3 +185,192 @@ jQuery(document).ready(function($){
 	});      
 });
 
+
+
+/* ########################################################################## */
+/* SETTINGS PAGE: TRANSLATIONS OF DOCTOR PROFILES                             */
+/* ########################################################################## */
+// Check: D2GC_Doctor_Sync::ajax_check (read-only). Align: D2GC_Doctor_Sync::ajax_align in batches of 10.
+jQuery(function ($) {
+	var $box = $('#d2gc-translations');
+	if (!$box.length || typeof myStrData === 'undefined') return;
+
+	var s        = myStrData;
+	var nonce    = $box.data('nonce');
+	var $check   = $('#d2gc-translations-check');
+	var $align   = $('#d2gc-translations-align');
+	var $spinner = $('#d2gc-translations-spinner');
+	var $result  = $('#d2gc-translations-result');
+	var pending  = []; // sources of the doctors with differences
+
+	var format = function (str) {
+		var args = Array.prototype.slice.call(arguments, 1);
+		return String(str).replace(/%(\d)\$d/g, function (m, i) { return args[i - 1]; }).replace(/%d/, args[0]);
+	};
+
+	var setBusy = function (busy) {
+		$check.prop('disabled', busy);
+		$align.prop('disabled', busy || !pending.length);
+		$spinner.toggleClass('is-active', busy);
+	};
+
+	var showError = function () {
+		$result.empty().append($('<div class="notice notice-error inline"><p></p></div>').find('p').text(s.tr_error).end());
+	};
+
+	var render = function (data) {
+		pending = $.map(data.doctors, function (d) { return d.source; });
+		$result.empty();
+
+		if (!pending.length) {
+			$result.append($('<div class="notice notice-success inline"><p></p></div>').find('p').text(s.tr_none).end());
+			return;
+		}
+
+		$result.append($('<p><strong></strong></p>').find('strong').text(format(s.tr_summary, pending.length, data.total)).end());
+		var $list = $('<ul class="d2gc-translations-list"></ul>');
+		$.each(data.doctors, function (i, d) {
+			var $li = $('<li></li>');
+			$li.append($('<a target="_blank"></a>').attr('href', d.edit_link).text(d.title));
+			$li.append(document.createTextNode(' (' + d.language + ', ' + format(s.tr_languages, d.languages) + ') ' + s.tr_differs_in + ' ' + d.differences.join(', ') + ' '));
+			$li.append($('<a href="#" class="d2gc-translations-align-one"></a>').attr('data-source', d.source).text(s.tr_align_one));
+			$list.append($li);
+		});
+		$result.append($list);
+	};
+
+	var check = function () {
+		setBusy(true);
+		return $.post(s.ajax_url, { action: 'd2gc_translations_check', nonce: nonce })
+			.done(function (r) { if (r && r.success) { render(r.data); } else { showError(); } })
+			.fail(showError)
+			.always(function () { setBusy(false); });
+	};
+
+	// align the given sources in batches of 10, then check again
+	var align = function (sources) {
+		var total = sources.length, done = 0, queue = sources.slice();
+		setBusy(true);
+
+		var next = function () {
+			if (!queue.length) { check(); return; }
+			var batch = queue.splice(0, 10);
+			$result.empty().append($('<p></p>').text(format(s.tr_progress, done, total)));
+			$.post(s.ajax_url, { action: 'd2gc_translations_align', nonce: nonce, sources: batch })
+				.done(function (r) {
+					if (!r || !r.success) { showError(); setBusy(false); return; }
+					done += batch.length;
+					next();
+				})
+				.fail(function () { showError(); setBusy(false); });
+		};
+		next();
+	};
+
+	$check.on('click', check);
+	$align.on('click', function () { if (pending.length) align(pending); });
+	$result.on('click', '.d2gc-translations-align-one', function (e) {
+		e.preventDefault();
+		align([parseInt($(this).data('source'), 10)]);
+	});
+});
+
+
+/* ########################################################################## */
+/* SETTINGS PAGE: TABS                                                        */
+/* ########################################################################## */
+// The tabs only show/hide panels of ONE form, so "Save" always saves every setting (options.php empties options
+// that are missing in the form). The active tab is remembered, because options.php redirects without the #hash.
+jQuery(function ($) {
+	var $wrap = $('.d2gc-settings');
+	if (!$wrap.length) return;
+
+	var $tabs   = $wrap.find('.d2gc-tabs .nav-tab');
+	var key     = 'd2gc_settings_tab';
+	var store   = {
+		get: function () { try { return window.localStorage.getItem(key); } catch (e) { return null; } },
+		set: function (v) { try { window.localStorage.setItem(key, v); } catch (e) {} }
+	};
+
+	var show = function (tab) {
+		if (!$tabs.filter('[data-tab="' + tab + '"]').length) tab = $tabs.first().data('tab');
+		$tabs.removeClass('nav-tab-active').attr('aria-selected', 'false')
+			.filter('[data-tab="' + tab + '"]').addClass('nav-tab-active').attr('aria-selected', 'true');
+		$wrap.find('.d2gc-panel').removeClass('is-active').filter('[data-tab="' + tab + '"]').addClass('is-active');
+		// nothing to save on the translations tab (AJAX tool outside the form)
+		$wrap.toggleClass('d2gc-no-save', 'translations' === tab);
+		store.set(tab);
+	};
+
+	$wrap.addClass('d2gc-js');
+	show((window.location.hash || '').replace('#', '') || store.get());
+
+	$tabs.on('click', function (e) {
+		e.preventDefault();
+		var tab = $(this).data('tab');
+		show(tab);
+		if (window.history && window.history.replaceState) window.history.replaceState(null, '', '#' + tab);
+	});
+});
+
+
+/* ########################################################################## */
+/* DOCTOR EDIT SCREEN: TABS                                                   */
+/* ########################################################################## */
+// Tab bar from D2gConnect_Admin::d2gc_doctor_edit_tabs(). Only shows/hides the boxes and the editor of the one post
+// form, so "Update" always saves everything. Boxes of other plugins and the side column are not part of a tab.
+jQuery(function ($) {
+	var $nav = $('.d2gc-doctor-tabs');
+	if (!$nav.length) return;
+
+	var map = {
+		personal:       ['#personal-info'],
+		bio:            ['#postdivrich', '#postexcerpt'],
+		experience:     ['#education', '#work', '#publication'],
+		prices:         ['#d2gc-prices'],
+		questionnaires: ['#d2gc-questionnaires'],
+		availability:   ['#d2gc-availability']
+	};
+	var all     = $.map(map, function (ids) { return ids; }).join(',');
+	var key     = 'd2gc_doctor_tab';
+	var current = null;
+	var loaded  = false; // the editor is only hidden after window load, so TinyMCE initialises with the right size
+
+	var store = {
+		get: function () { try { return window.localStorage.getItem(key); } catch (e) { return null; } },
+		set: function (v) { try { window.localStorage.setItem(key, v); } catch (e) {} }
+	};
+
+	var show = function (tab) {
+		if (!map[tab]) tab = 'personal';
+		current = tab;
+
+		$(all).not(loaded ? '' : '#postdivrich').addClass('d2gc-tab-hidden');
+		$(map[tab].join(',')).removeClass('d2gc-tab-hidden');
+
+		$nav.find('.nav-tab').removeClass('nav-tab-active').attr('aria-selected', 'false')
+			.filter('[data-tab="' + tab + '"]').addClass('nav-tab-active').attr('aria-selected', 'true');
+		store.set(tab);
+
+		if ('bio' === tab) {
+			// the editor was hidden: let WordPress/TinyMCE recalculate its size
+			setTimeout(function () {
+				$(window).trigger('resize');
+				if (window.tinymce && window.tinymce.get('content')) {
+					window.tinymce.get('content').execCommand('mceRepaint');
+				}
+			}, 0);
+		}
+	};
+
+	$nav.on('click', '.nav-tab', function (e) {
+		e.preventDefault();
+		show($(this).data('tab'));
+	});
+
+	show(store.get());
+	$(window).on('load', function () {
+		loaded = true;
+		show(current);
+	});
+});

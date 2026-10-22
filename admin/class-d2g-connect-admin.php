@@ -112,6 +112,18 @@ class D2gConnect_Admin {
 			'str_author' 				=> esc_html__( 'author', 'doctor2go-connect' ),
 			'str_publication_date' 		=> esc_html__( 'publication date', 'doctor2go-connect' ),
 
+			// settings page: translations of doctor profiles
+			'tr_none'          => esc_html__( 'All translations are aligned.', 'doctor2go-connect' ),
+			/* translators: 1: doctors with differences, 2: doctors with translations */
+			'tr_summary'       => esc_html__( '%1$d of %2$d doctors with translations have differences.', 'doctor2go-connect' ),
+			/* translators: %d: number of languages */
+			'tr_languages'     => esc_html__( '%d languages', 'doctor2go-connect' ),
+			'tr_differs_in'    => esc_html__( 'differs in:', 'doctor2go-connect' ),
+			'tr_align_one'     => esc_html__( 'align', 'doctor2go-connect' ),
+			/* translators: 1: aligned doctors, 2: total */
+			'tr_progress'      => esc_html__( 'Aligning… %1$d of %2$d', 'doctor2go-connect' ),
+			'tr_error'         => esc_html__( 'Something went wrong, please try again.', 'doctor2go-connect' ),
+			'ajax_url'         => admin_url( 'admin-ajax.php' ),
 		]);
 	}
 
@@ -610,8 +622,6 @@ class D2gConnect_Admin {
 			'd2gc_sender_name' => 'sanitize_text_field',
 			'd2gc_pseudo_translations' => 'absint',
 			'd2gc_use_imgix' => 'absint',
-			'd2gc_use_default_questionnaire' => 'absint',
-            'd2gc_use_derma_questionnaire' => 'absint',
 			'd2gc_load_availability_info' => 'absint',
 			'd2gc_bootstrap_js' => 'absint',
 			'd2gc_activate_sso' => 'absint',
@@ -692,11 +702,60 @@ class D2gConnect_Admin {
 	public function d2gc_meta_box_add() {
 		require_once 'partials/metaboxes.php';
 		add_meta_box( 'personal-info', 'Personal information', 'd2gc_meta_box_personal_cb', 'd2g_doctor', 'normal', 'high' );
+		add_meta_box( 'd2gc-prices', __( 'Prices', 'doctor2go-connect' ), 'd2gc_meta_box_prices_cb', 'd2g_doctor', 'normal', 'high' );
+		add_meta_box( 'd2gc-questionnaires', __( 'Questionnaires', 'doctor2go-connect' ), 'd2gc_meta_box_questionnaires_cb', 'd2g_doctor', 'normal', 'high' );
 		add_meta_box( 'education', 'Education', 'd2gc_meta_box_education_cb', 'd2g_doctor', 'normal', 'high' );
 		add_meta_box( 'work', 'Work experience', 'd2gc_meta_box_work_cb', 'd2g_doctor', 'normal', 'high' );
 		add_meta_box( 'publication', 'Publications', 'd2gc_meta_box_publications_cb', 'd2g_doctor', 'normal', 'high' );
+		add_meta_box( 'd2gc-availability', __( 'Availability & holiday', 'doctor2go-connect' ), 'd2gc_meta_box_availability_cb', 'd2g_doctor', 'normal', 'high' );
 		add_meta_box( 'page_type', 'Page type', 'd2gc_meta_box_page_type_cb', 'page', 'normal', 'high' );
 		add_meta_box( 'email_type', 'E-mail', 'd2gc_meta_box_email_type_cb', 'd2g_emails', 'normal', 'high' );
+	}
+
+	/**
+	 * Boxes on the doctor edit screen that are shown/hidden by the tabs (see d2gc_doctor_edit_tabs()).
+	 *
+	 * @var string[]
+	 */
+	private $doctor_tab_boxes = array( 'personal-info', 'd2gc-prices', 'd2gc-questionnaires', 'education', 'work', 'publication', 'd2gc-availability', 'postexcerpt' );
+
+	/**
+	 * The tab boxes are never "hidden" via Screen Options: WordPress saves every box that is invisible at that moment
+	 * as hidden (postboxes.save_state), which would hide the boxes of the other tabs for good. The tabs decide alone.
+	 *
+	 * @param mixed $hidden metaboxhidden_d2g_doctor user option
+	 * @return mixed
+	 */
+	public function d2gc_doctor_never_hide_tab_boxes( $hidden ) {
+		return is_array( $hidden ) ? array_values( array_diff( $hidden, $this->doctor_tab_boxes ) ) : $hidden;
+	}
+
+	/**
+	 * Tab bar on the doctor edit screen (below the title). The tabs only show/hide the boxes and the editor of the
+	 * one post form, so "Update" always saves everything (see "DOCTOR EDIT SCREEN: TABS" in d2g-connect-admin.js).
+	 * Boxes of other plugins stay visible below the tabs.
+	 *
+	 * @param WP_Post $post
+	 */
+	public function d2gc_doctor_edit_tabs( $post ) {
+		if ( 'd2g_doctor' !== $post->post_type ) {
+			return;
+		}
+		$tabs = array(
+			'personal'       => __( 'Personal information', 'doctor2go-connect' ),
+			'bio'            => __( 'Bio', 'doctor2go-connect' ),
+			'experience'     => __( 'Education & experience', 'doctor2go-connect' ),
+			'prices'         => __( 'Prices', 'doctor2go-connect' ),
+			'questionnaires' => __( 'Questionnaires', 'doctor2go-connect' ),
+			'availability'   => __( 'Availability & holiday', 'doctor2go-connect' ),
+		);
+		?>
+		<nav class="nav-tab-wrapper d2gc-doctor-tabs" role="tablist">
+			<?php foreach ( $tabs as $tab => $label ) { ?>
+				<a href="#<?php echo esc_attr( $tab ); ?>" class="nav-tab" role="tab" data-tab="<?php echo esc_attr( $tab ); ?>"><?php echo esc_html( $label ); ?></a>
+			<?php } ?>
+		</nav>
+		<?php
 	}
 
 	// function saves the metaboxes
@@ -704,6 +763,11 @@ class D2gConnect_Admin {
 
 		// Bail if we're doing an auto save
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+
+		// Bail for the translations the doctor sync updates itself: the submitted form belongs to the edited post only
+		if ( D2GC_Doctor_Sync::is_syncing() ) {
 			return;
 		}
 
@@ -743,18 +807,37 @@ class D2gConnect_Admin {
 
 			);
 
-			// Update personal fields (fixes lines 632 & 653).
+			// Update personal fields. Saved whenever the field was submitted, also when empty, so a value can be
+			// cleared in wp-admin. Not submitted (pages, e-mail templates use the same save) = left untouched.
 			foreach ( $personalFields as $key => $name ) {
-				$value = d2gc_get_post_text( $key );
-				if ( ! empty( $value ) ) {
-					update_post_meta( $post_id, $key, $value );
+				if ( isset( $_POST[ $key ] ) ) {
+					update_post_meta( $post_id, $key, d2gc_get_post_text( $key ) );
 				}
 			}
 
 			$postMetaArr = isset( $_POST['meta'] ) ? map_deep( wp_unslash( $_POST['meta'] ), 'sanitize_text_field' ) : array();
 
+			// Only the plugin's own fields from the meta boxes (admin/partials/metaboxes.php).
+			// WordPress' "Custom Fields" box posts under the same name (meta[<meta_id>][key|value]); saving
+			// everything stored those as junk meta with numeric keys ("20936" => array( key, value )) on every save.
+			$allowed_meta = array(
+				'edus',
+				'exps',
+				'pubs',
+				'walk_in_price',
+				'walk_in_currency',
+				'written_con_price',
+				'written_con_currency',
+				'written_con_type',
+				'intake_type',
+				'd2g_page_identifier',
+				'd2g_email_identifier',
+			);
+
 			foreach ( $postMetaArr as $meta_key => $meta_value ) {
-				update_post_meta( $post_id, $meta_key, $meta_value );
+				if ( in_array( (string) $meta_key, $allowed_meta, true ) ) {
+					update_post_meta( $post_id, $meta_key, $meta_value );
+				}
 			}
 		}
 	}

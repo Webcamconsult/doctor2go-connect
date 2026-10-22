@@ -66,9 +66,42 @@ function d2gc_get_detail_page_view() {
 }
 
 /**
+ * The questionnaire types a doctor can choose: for the e-mail advice (written_con_type) and for the
+ * intake of video consultations (intake_type, which also has "no intake").
+ *
+ * @param bool $with_none include 'none' (intake only)
+ * @return string[] type => label
+ */
+function d2gc_get_questionnaire_types( $with_none = false ) {
+	$types = array(
+		'short'              => __( 'Short generic', 'doctor2go-connect' ),
+		'medofenic_advice'   => __( 'Long generic (by Medofenic)', 'doctor2go-connect' ),
+		'derma_email_advice' => __( 'Dermatology', 'doctor2go-connect' ),
+	);
+	return $with_none ? array( 'none' => __( 'No intake', 'doctor2go-connect' ) ) + $types : $types;
+}
+
+/**
+ * Intake form of a doctor for video consultation bookings.
+ * Not set yet: the same type as the e-mail consult questionnaire (the behaviour before the intake setting existed).
+ *
+ * @param array $doctor_meta get_post_meta( $doctor_id ) of the doctor
+ * @return string none|short|medofenic_advice|derma_email_advice
+ */
+function d2gc_get_doctor_intake_type( $doctor_meta ) {
+	$types  = d2gc_get_questionnaire_types( true );
+	$intake = $doctor_meta['intake_type'][0] ?? '';
+	if ( isset( $types[ $intake ] ) ) {
+		return $intake;
+	}
+	$written = $doctor_meta['written_con_type'][0] ?? '';
+	return ( isset( $types[ $written ] ) && 'none' !== $written ) ? $written : 'short';
+}
+
+/**
  * The vacation period of a doctor that is active on $date, or null.
  * The periods (meta d2g_vacation_periods) are saved on the doctor post that is edited in the front end,
- * with Polylang the translations of the post are checked as well.
+ * the translations of the post (Polylang, WPML) are checked as well.
  *
  * @param int    $doctor_id
  * @param string $date Y-m-d, default today in the site timezone
@@ -81,12 +114,7 @@ function d2gc_get_active_vacation( $doctor_id, $date = '' ) {
 	}
 	$date = $date ? $date : wp_date( 'Y-m-d' );
 
-	$ids = array( $doctor_id );
-	if ( function_exists( 'pll_get_post_translations' ) ) {
-		$ids = array_unique( array_merge( $ids, array_map( 'intval', pll_get_post_translations( $doctor_id ) ) ) );
-	}
-
-	foreach ( $ids as $id ) {
+	foreach ( D2GC_Translations::get_post_translation_ids( $doctor_id ) as $id ) {
 		$periods = get_post_meta( $id, 'd2g_vacation_periods', true );
 		if ( ! is_array( $periods ) ) {
 			continue;
@@ -1045,16 +1073,14 @@ function d2gc_show_booking_calendar( $post = '', $only_cal = false, $in_tabs = f
                     </div>
                 </div>        
                 <?php
-                global $form_type; 
-                $form_type = $d2g_profile_data->doctor_meta['written_con_type'][0];
-                if($form_type !== 'medofenic_advice'){
-                    $template_path = D2GC_PLUGIN_DIR . 'public/templates/bookingform-extensions/standard-derma-form-extension.php';
-                } 
-
-                if ( file_exists( $template_path ) ) {
-                    include $template_path;
+                // intake fields per intake type of the doctor, nothing for "no intake"
+                global $form_type;
+                $form_type = d2gc_get_doctor_intake_type( $d2g_profile_data->doctor_meta );
+                if ( 'none' !== $form_type ) {
+                    include D2GC_PLUGIN_DIR . 'public/templates/bookingform-extensions/standard-derma-form-extension.php';
                 }
                 ?>
+                <input type="hidden" id="intake_type" value="<?php echo esc_attr( $form_type ); ?>">
                 <div class="card mt-5 mb-5">
                     <div class="card-body">
                         <legend class="fs-5 mb-3">
@@ -1088,7 +1114,6 @@ function d2gc_show_booking_calendar( $post = '', $only_cal = false, $in_tabs = f
                             <input readonly type="text" id="hourly_price" class="form-control mb-2" value="">
                             <input readonly type="text" id="vat" class="form-control mb-2" value="">
                             <input readonly type="text" id="currency" class="form-control mb-2" value="">
-                            <input readonly type="text" id="questionnaire" class="form-control mb-2" value="">
                         </div>
                         <?php if ( get_option( 'd2gc_recaptcha_site_key' ) ) { ?>
                             <div class="g-recaptcha my-3" data-sitekey="<?php echo esc_attr( $site_key ); ?>"></div>
@@ -1375,14 +1400,15 @@ function d2gc_show_written_con_form() {
 
 
 
-	if($type == 'medofenic_advice'){
-        $template_path = d2gc_locate_template( 'email-advice/generic-medofenic-email-form.php' );					
+	// e-mail advice form per "E-mail consult questionnaire" of the doctor (written_con_type)
+	if ( 'medofenic_advice' === $type ) {
+		$template_path = d2gc_locate_template( 'email-advice/generic-medofenic-email-form.php' );
+	} elseif ( 'short' === $type ) {
+		$template_path = d2gc_locate_template( 'email-advice/generic-short-email-form.php' );
 	} else {
-        $template_path = d2gc_locate_template( 'email-advice/standard-derma-email-adv-form.php' );
-		
+		$template_path = d2gc_locate_template( 'email-advice/standard-derma-email-adv-form.php' );
 	}
-	// Path to your template file
-    
+
 
     if ( file_exists( $template_path ) ) {
         include $template_path;
@@ -1629,13 +1655,9 @@ function d2gc_single_appointment($appointment, $docObj, $client_token, $timezone
 	$delBtn             = '';
 	$payment_link		= '';
 	$payment_info		= '';
-    $questionnaireLink 	= '';
 	$pageAppConf 		= $d2gAdmin::d2gc_page_url( $currLang, 'appointment_confirmation', false );
 	$termsPageURL 		= $d2gAdmin::d2gc_page_url( $currLang, 'd2g_policies', false );
 	$termsLink			= '<a href=\"'.$termsPageURL.'\">'. esc_html__( 'View terms & conditions.', 'doctor2go-connect' ) . '</a>';
-	if ( isset( $appointment->answer_set_id ) && $show_intake == true ) {
-		$questionnaireLink = '<a class="btn btn-outline-primary payment_btn w-100 mb-2" target="_blank" href="'.$pageAppConf.'?app='.$appointment->_id.'&client_token='.$client_token.'"><span class="flaticon-medical-information"></span> '.esc_html__( 'intake quesionnaire', 'doctor2go-connect' ).'</a>';
-	}
 	$consultLink 		= '<a class="button btn-primary btn invert mb-2 w-100" target="_blank" href="' . get_option( 'd2gc_waiting_room_url' ) . 'wachtkamer/' . $appointment->token . '?locale=' . explode( '_', get_locale() )[0] . '">' . esc_html__( 'go to consultation', 'doctor2go-connect' ) . '</a>';
 	$contactBtn      	= '<a class="prep_cancellation_email contact_link w-100 d2g-modal-trigger" href="#cancellation_form_wrapper" data-app-id="'.esc_attr( $appointment->_id ).'" data-client-token="'.esc_attr( $client_token ).'" data-app-date="'.$date->format("d/m/Y").' '. esc_html__(' at ', 'doctor2go-connect').' ' .$date->format("H:i").'  ('.$timezone.')" data-app-link="'.get_option('d2gc_waiting_room_url').'admin/appointments/'.$appointment->_id.'" data-doc-email="'.$doc_email.'" data-doc-name="'.$docObj->post_title.'"><span class="d2cif-mail icon"></span> '. esc_html__('contact doctor', 'doctor2go-connect').'</a>';
 	
@@ -1680,7 +1702,7 @@ function d2gc_single_appointment($appointment, $docObj, $client_token, $timezone
                     ' . $contactBtn . '
 				</div> 
 			</div>
-			<div class="btn_wrap p-3 ms-auto">'. $payment_link . $delBtn . $questionnaireLink . '</div>
+			<div class="btn_wrap p-3 ms-auto">'. $payment_link . $delBtn . '</div>
 			</div></div>';
 	} else {
 		$structuredAppointments[ $appointment->date ] = '<div class="outer_app_wrapper card mb-5">'.$payment_info.'<div id="app-' . $appointment->_id . '" class="app_row d-flex justify-content-between">
@@ -1693,7 +1715,7 @@ function d2gc_single_appointment($appointment, $docObj, $client_token, $timezone
                     ' . $contactBtn . '
 				</div> 	
 			</div>
-			<div class="btn_wrap p-3 ms-auto">'. $payment_link  . $consultLink  . $delBtn . $questionnaireLink . '</div>
+			<div class="btn_wrap p-3 ms-auto">'. $payment_link  . $consultLink  . $delBtn . '</div>
 			</div></div>';
 	}
 

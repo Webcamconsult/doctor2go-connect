@@ -82,24 +82,6 @@ class D2gConnect_Worker {
      * @return int[]
      */
     private function get_doctor_translation_ids( $doctor_id ) {
-        $ids = array( absint( $doctor_id ) );
-
-        if ( function_exists( 'pll_languages_list' ) && function_exists( 'pll_get_post' ) ) {
-            $languages = pll_languages_list();
-
-            if ( is_array( $languages ) ) {
-                foreach ( $languages as $lang ) {
-                    $translated_id = pll_get_post( $doctor_id, $lang );
-
-                    if ( ! empty( $translated_id ) ) {
-                        $ids[] = absint( $translated_id );
-                    }
-                }
-            }
-        }
-
-        $ids = array_filter( array_unique( $ids ) );
-
-        return $ids;
+        return \D2GC_Translations::get_post_translation_ids( $doctor_id );
     }
 }

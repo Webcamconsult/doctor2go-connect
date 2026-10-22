@@ -146,3 +146,270 @@ input[type="date"] {
 #personal-info .row.holiday .col-sm-4{
 	display: initial!important;
 }
+/* ==========================================================================
+   SETTINGS PAGE (admin/partials/d2g-connect-admin-display.php)
+   tabs + cards + toggle switches, scoped to .d2gc-settings
+   ========================================================================== */
+.d2gc-settings {
+	--d2gc-accent: var(--wp-admin-theme-color, #2271b1);
+	--d2gc-border: #dcdcde;
+	--d2gc-muted: #50575e;
+	max-width: 1280px;
+}
+.d2gc-settings .d2gc-settings__title {
+	font-size: 23px;
+	font-weight: 400;
+	margin: 0 0 4px;
+	padding: 9px 0 0;
+}
+.d2gc-settings .d2gc-settings__subtitle {
+	color: var(--d2gc-muted);
+	margin: 0 0 16px;
+}
+.d2gc-settings .d2gc-tabs {
+	margin-bottom: 24px;
+}
+.d2gc-settings .d2gc-tabs .nav-tab:focus {
+	box-shadow: none;
+}
+
+/* panels: only the active one is shown (d2g-connect-admin.js), without JS all are visible */
+.d2gc-settings.d2gc-js .d2gc-panel {
+	display: none;
+}
+.d2gc-settings.d2gc-js .d2gc-panel.is-active {
+	display: block;
+}
+
+/* cards */
+.d2gc-settings .d2gc-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+	gap: 24px;
+	align-items: start;
+}
+.d2gc-settings .d2gc-card {
+	background: #fff;
+	border: 1px solid var(--d2gc-border);
+	border-radius: 8px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+}
+.d2gc-settings .d2gc-card__header {
+	padding: 20px 24px 16px;
+	border-bottom: 1px solid #f0f0f1;
+}
+.d2gc-settings .d2gc-card__header h2 {
+	font-size: 16px;
+	font-weight: 600;
+	margin: 0 0 6px;
+}
+.d2gc-settings .d2gc-card__header p {
+	color: var(--d2gc-muted);
+	margin: 0;
+	font-size: 13px;
+	line-height: 1.6;
+}
+.d2gc-settings .d2gc-card__body {
+	padding: 8px 24px 16px;
+}
+
+/* setting rows */
+.d2gc-settings .d2gc-setting {
+	padding: 14px 0;
+	border-bottom: 1px solid #f0f0f1;
+}
+.d2gc-settings .d2gc-setting:last-child {
+	border-bottom: 0;
+}
+.d2gc-settings .d2gc-setting__title {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 6px;
+	color: #1d2327;
+}
+.d2gc-settings .d2gc-setting__description {
+	color: var(--d2gc-muted);
+	margin: 4px 0 0;
+	font-size: 13px;
+	line-height: 1.5;
+}
+.d2gc-settings .d2gc-setting input.d2gc-input,
+.d2gc-settings .d2gc-setting select {
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+}
+.d2gc-settings .d2gc-media__preview {
+	display: block;
+	max-width: 240px;
+	max-height: 160px;
+	width: auto;
+	margin: 6px 0 10px;
+	border: 1px solid var(--d2gc-border);
+	border-radius: 6px;
+}
+.d2gc-settings .hide {
+	display: none;
+}
+
+/* toggle switch (a styled checkbox, the input keeps its name/value) */
+.d2gc-settings .d2gc-setting--toggle {
+	display: flex;
+	gap: 14px;
+	align-items: flex-start;
+}
+.d2gc-settings .d2gc-setting--toggle .d2gc-setting__title {
+	margin-bottom: 0;
+	cursor: pointer;
+}
+.d2gc-settings .d2gc-toggle {
+	position: relative;
+	flex: 0 0 auto;
+	width: 40px;
+	height: 22px;
+	margin-top: 1px;
+}
+.d2gc-settings .d2gc-toggle input {
+	position: absolute;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	cursor: pointer;
+	z-index: 1;
+}
+.d2gc-settings .d2gc-toggle__slider {
+	position: absolute;
+	inset: 0;
+	background: #c3c4c7;
+	border-radius: 22px;
+	transition: background .15s ease;
+}
+.d2gc-settings .d2gc-toggle__slider::before {
+	content: "";
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	left: 3px;
+	top: 3px;
+	background: #fff;
+	border-radius: 50%;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	transition: transform .15s ease;
+}
+.d2gc-settings .d2gc-toggle input:checked + .d2gc-toggle__slider {
+	background: var(--d2gc-accent);
+}
+.d2gc-settings .d2gc-toggle input:checked + .d2gc-toggle__slider::before {
+	transform: translateX(18px);
+}
+.d2gc-settings .d2gc-toggle input:focus-visible + .d2gc-toggle__slider {
+	box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--d2gc-accent);
+}
+
+/* save bar, sticks to the bottom of the screen */
+.d2gc-settings .d2gc-savebar {
+	position: sticky;
+	bottom: 0;
+	margin-top: 24px;
+	padding: 12px 0;
+	background: #f0f0f1;
+	border-top: 1px solid var(--d2gc-border);
+	z-index: 5;
+}
+.d2gc-settings.d2gc-js.d2gc-no-save .d2gc-savebar {
+	display: none;
+}
+
+/* translations tool */
+.d2gc-settings .d2gc-actions {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+.d2gc-settings .d2gc-actions .spinner {
+	float: none;
+	margin: 0;
+}
+.d2gc-settings .d2gc-translations-list li {
+	padding: 6px 0;
+	border-bottom: 1px solid #f0f0f1;
+}
+
+@media (max-width: 782px) {
+	.d2gc-settings .d2gc-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* ==========================================================================
+   DOCTOR EDIT SCREEN: TABS (D2gConnect_Admin::d2gc_doctor_edit_tabs)
+   ========================================================================== */
+.d2gc-doctor-tabs {
+	margin: 16px 0 16px;
+	padding-top: 0;
+}
+.d2gc-doctor-tabs .nav-tab:focus {
+	box-shadow: none;
+}
+.d2gc-tab-hidden {
+	display: none !important;
+}
+#d2gc-availability .d2gc-vacation-list {
+	margin: 0 0 0 1.2em;
+	list-style: disc;
+}
+
+/* fields in the doctor boxes (Prices, Questionnaires): label above, clear spacing, price + currency side by side */
+.d2gc-box-fields {
+	display: grid;
+	gap: 20px;
+	padding: 8px 0 4px;
+	max-width: 760px;
+}
+.d2gc-box-fields--2 {
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 20px 32px;
+}
+.d2gc-box-field label,
+.d2gc-box-field .d2gc-box-field__label {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 6px;
+}
+.d2gc-box-field select {
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+}
+.d2gc-box-field .description {
+	margin: 6px 0 0;
+}
+.d2gc-price-input {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+.d2gc-price-input input[type="text"] {
+	width: 140px;
+	min-width: 0;
+	margin: 0;
+}
+.d2gc-price-input select,
+.d2gc-price-input input.d2gc-currency {
+	width: 100px;
+	min-width: 0;
+	margin: 0;
+}
+.d2gc-price-input--readonly input {
+	background: #f6f7f7;
+	color: #50575e;
+}
+
+/* tabs (doctor edit screen + settings page): spacing on the right instead of WordPress' left margin,
+   so the first tab lines up with the content */
+.d2gc-doctor-tabs .nav-tab,
+.d2gc-settings .d2gc-tabs .nav-tab {
+	margin-left: 0;
+	margin-right: .5em;
+}

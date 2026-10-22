@@ -824,9 +824,19 @@ class D2gConnect_Shortcodes {
                                                         <label class="small"><?php echo esc_html__( 'E-mail consult questionnaire', 'doctor2go-connect' ); ?>*</label>
                                                         <select class="form-control" name="meta[written_con_type]" id="written_con_type">
                                                             <?php 
-                                                            $types	  = array( 'short' => 'Short generic Email Advice', 'derma_email_advice' => 'Dermatology Email Advice' );
+                                                            $types	  = d2gc_get_questionnaire_types();
                                                             foreach ( $types as $type => $label ) { ?>
                                                                 <option <?php echo ( $type == $doctor_meta['written_con_type'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $type ); ?>"><?php echo esc_html( $label ); ?></option>    
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="mt-3">
+                                                        <label class="small" for="intake_type"><?php echo esc_html__( 'Intake for video consultations', 'doctor2go-connect' ); ?></label>
+                                                        <select class="form-control" name="meta[intake_type]" id="intake_type">
+                                                            <?php $current_intake = d2gc_get_doctor_intake_type( $doctor_meta ); ?>
+                                                            <?php foreach ( d2gc_get_questionnaire_types( true ) as $type => $label ) { ?>
+                                                                <option <?php selected( $type, $current_intake ); ?> value="<?php echo esc_attr( $type ); ?>"><?php echo esc_html( $label ); ?></option>
                                                             <?php } ?>
                                                         </select>
                                                     </div>
@@ -2729,10 +2739,6 @@ class D2gConnect_Shortcodes {
 								$orgKey       = get_post_meta( $docObj->ID, 'organisation_key', true );
 								$client_token = $tokensAssArray[ $orgKey ];
 
-								if ( isset( $appointment->answer_set_id ) ) {
-									// url to load in iframe
-									$questionnaireURLSimple = get_option( 'd2gc_waiting_room_url' ) . 'answer_set/' . $appointment->answer_set_id . '?client_auth=' . $client_token;
-								}
 
 								$d2gc_single_appointment = d2gc_single_appointment($appointment, $docObj, $client_token, $timezone, $currLang, $d2gAdmin, true, $doc_email);
 
@@ -2802,10 +2808,6 @@ class D2gConnect_Shortcodes {
 								$d2gc_single_appointment    = d2gc_single_appointment($appointment, $docObj, $client_token, $timezone, $currLang, $d2gAdmin, false, $doc_email);
 								$structuredAppointments     += $d2gc_single_appointment;
 
-								if ( isset( $appointment->answer_set_id ) ) {
-									// url to load in iframe
-									$questionnaireURLSimple = get_option( 'd2gc_waiting_room_url' ) . 'answer_set/' . $appointment->answer_set_id . '?client_auth=' . $client_token;
-								}
 
 								$app_id = isset( $_GET['app'] ) ? sanitize_text_field( wp_unslash( $_GET['app'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query param, no state change.
 								

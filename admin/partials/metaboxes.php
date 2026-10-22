@@ -29,9 +29,8 @@ function d2gc_meta_box_personal_cb( $post ) {
 		'reg_country'      => esc_html__( 'Country of registration', 'doctor2go-connect' )
 
 	);
-	$currencies = array( 'EUR', 'USD', 'GBP', 'ALL', 'MXN', 'AUD', 'INR', 'AZN', 'BYN', 'BGN', 'HRK', 'CZK', 'DKK', 'GEL', 'HUF', 'ISK', 'CHF', 'MKD', 'MDL', 'NOK', 'PLN', 'RON', 'RUB', 'RSD', 'SEK', 'CHF', 'TRY', 'UAH', 'CAD', 'NZD', 'BRL', 'ZAR' );
-	$types	  = array( 'short' => 'Short generic Email Advice', 'medofenic_advice' => 'Long generic Email Advice (by Medofenic)', 'derma_email_advice' => 'Dermatology Email Advice' );
 
+	// one nonce for all doctor boxes (verified in D2gConnect_Admin::d2gc_meta_box_save())
 	wp_nonce_field( 'd2g_meta_box_nonce', 'meta_box_nonce' );
 	?>
 	<div class="row">
@@ -48,59 +47,126 @@ function d2gc_meta_box_personal_cb( $post ) {
 		}
 		?>
 	</div>
-	<div class="row">
-		<div class="col-sm-4 no-flex">
-			<label class="small"><?php echo esc_html__( 'Walk-in price', 'doctor2go-connect' ); ?>*</label>
-			<input class="required" type="text" class="" id="walk_in_price" value="<?php echo esc_html( $values['walk_in_price'][0] ); ?>" tabindex="1" size="40" name="meta[walk_in_price]"  placeholder="<?php echo esc_html__( 'Walk-In price', 'doctor2go-connect' ); ?>*"/> 
-		</div>
-		<div class="col-sm-4 no-flex">
-			<label class="small"><?php echo esc_html__( 'Walk-in currency', 'doctor2go-connect' ); ?>*</label>
-			<select class="form-control" name="meta[walk_in_currency]" id="avg_price_currency">
-				<?php foreach ( $currencies as $currency ) { ?>
-					<option <?php echo ( $currency == $values['walk_in_currency'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $currency ); ?>"><?php echo esc_html( $currency ); ?></option>    
-				<?php } ?>
-			</select>
-		</div>
-		<div class="col-sm-4">
-		   
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-sm-4 no-flex">
-			<label class="small"><?php echo esc_html__( 'E-mail consult price', 'doctor2go-connect' ); ?>*</label>
-			<input class="required" type="text" class="" id="written_con_price" value="<?php echo esc_html( $values['written_con_price'][0] ); ?>" tabindex="1" size="40" name="meta[written_con_price]"  placeholder="<?php echo esc_html__( 'E-mail consult price', 'doctor2go-connect' ); ?>*"/> 
-		</div>
-		<div class="col-sm-4 no-flex">
-			<label class="small"><?php echo esc_html__( 'E-mail consult currency', 'doctor2go-connect' ); ?>*</label>
-			<select class="form-control" name="meta[written_con_currency]" id="written_con_currency">
-				<?php foreach ( $currencies as $currency ) { ?>
-					<option <?php echo ( $currency == $values['written_con_currency'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $currency ); ?>"><?php echo esc_html( $currency ); ?></option>    
-				<?php } ?>
-			</select>
-		</div>
-		<div class="col-sm-4 no-flex">
-			<label class="small"><?php echo esc_html__( 'E-mail consult questionnaire', 'doctor2go-connect' ); ?>*</label>
-			<select class="form-control" name="meta[written_con_type]" id="written_con_type">
-				<?php foreach ( $types as $type => $label ) { ?>
-					<option <?php echo ( $type == $values['written_con_type'][0] ) ? 'selected' : ''; ?> value="<?php echo esc_html( $type ); ?>"><?php echo esc_html( $label ); ?></option>    
-				<?php } ?>
-			</select>
-		</div>
-	</div>
-	<h3><?php echo esc_html__( 'Holiday settings', 'doctor2go-connect' ); ?></h3>
-	<div class="row holiday">
-		<div class="col-sm-4">
-			<label class="small">Start date</label>
-			<input type="date" name="meta[start_holiday]" value="">
-		</div>
-		<div class="col-sm-4">
-			<label class="small">End date</label>
-			<input type="date" name="meta[end_holiday]" value="">
-		</div>
-		<div class="col-sm-4">
-		   
+	<?php
+}
+
+/**
+ * Prices box: price and currency per consultation type.
+ *
+ * @param WP_Post $post
+ */
+function d2gc_meta_box_prices_cb( $post ) {
+	$values     = get_post_meta( $post->ID );
+	$currencies = array( 'EUR', 'USD', 'GBP', 'ALL', 'MXN', 'AUD', 'INR', 'AZN', 'BYN', 'BGN', 'HRK', 'CZK', 'DKK', 'GEL', 'HUF', 'ISK', 'CHF', 'MKD', 'MDL', 'NOK', 'PLN', 'RON', 'RUB', 'RSD', 'SEK', 'TRY', 'UAH', 'CAD', 'NZD', 'BRL', 'ZAR' );
+	$prices     = array(
+		'walk_in'     => __( 'Walk-in consultation', 'doctor2go-connect' ),
+		'written_con' => __( 'E-mail advice', 'doctor2go-connect' ),
+	);
+	?>
+	<div class="d2gc-box-fields">
+		<?php foreach ( $prices as $prefix => $label ) { ?>
+			<div class="d2gc-box-field">
+				<label for="<?php echo esc_attr( $prefix ); ?>_price"><?php echo esc_html( $label ); ?></label>
+				<div class="d2gc-price-input">
+					<input type="text" inputmode="decimal" id="<?php echo esc_attr( $prefix ); ?>_price" name="meta[<?php echo esc_attr( $prefix ); ?>_price]" value="<?php echo esc_attr( $values[ $prefix . '_price' ][0] ?? '' ); ?>" placeholder="<?php echo esc_attr__( 'Price', 'doctor2go-connect' ); ?>">
+					<select name="meta[<?php echo esc_attr( $prefix ); ?>_currency]" id="<?php echo esc_attr( $prefix ); ?>_currency" aria-label="<?php echo esc_attr__( 'Currency', 'doctor2go-connect' ); ?>">
+						<?php foreach ( $currencies as $currency ) { ?>
+							<option <?php selected( $currency, $values[ $prefix . '_currency' ][0] ?? '' ); ?> value="<?php echo esc_attr( $currency ); ?>"><?php echo esc_html( $currency ); ?></option>
+						<?php } ?>
+					</select>
+				</div>
+			</div>
+		<?php } ?>
+		<?php // video consultation: read-only, it belongs to the booking rules (availabilities) in the profile editor ?>
+		<div class="d2gc-box-field">
+			<span class="d2gc-box-field__label"><?php echo esc_html__( 'Video consultation (standard price)', 'doctor2go-connect' ); ?></span>
+			<div class="d2gc-price-input d2gc-price-input--readonly">
+				<input type="text" readonly value="<?php echo esc_attr( $values['video_con_price'][0] ?? '' ); ?>" aria-label="<?php echo esc_attr__( 'Price', 'doctor2go-connect' ); ?>">
+				<input type="text" readonly value="<?php echo esc_attr( $values['video_con_currency'][0] ?? '' ); ?>" aria-label="<?php echo esc_attr__( 'Currency', 'doctor2go-connect' ); ?>" class="d2gc-currency">
+			</div>
+			<p class="description"><?php echo esc_html__( 'Set in the profile editor together with the booking rules (availabilities), a different price can be set per booking rule.', 'doctor2go-connect' ); ?></p>
 		</div>
 	</div>
+	<?php
+}
+
+/**
+ * Questionnaires box: e-mail advice questionnaire and intake for video consultations.
+ *
+ * @param WP_Post $post
+ */
+function d2gc_meta_box_questionnaires_cb( $post ) {
+	$values = get_post_meta( $post->ID );
+	?>
+	<div class="d2gc-box-fields d2gc-box-fields--2">
+		<div class="d2gc-box-field">
+			<label for="written_con_type"><?php echo esc_html__( 'E-mail consult questionnaire', 'doctor2go-connect' ); ?></label>
+			<select name="meta[written_con_type]" id="written_con_type">
+				<?php foreach ( d2gc_get_questionnaire_types() as $type => $label ) { ?>
+					<option <?php selected( $type, $values['written_con_type'][0] ?? '' ); ?> value="<?php echo esc_attr( $type ); ?>"><?php echo esc_html( $label ); ?></option>
+				<?php } ?>
+			</select>
+			<p class="description"><?php echo esc_html__( 'The form patients fill in when they request e-mail advice.', 'doctor2go-connect' ); ?></p>
+		</div>
+		<div class="d2gc-box-field">
+			<label for="intake_type"><?php echo esc_html__( 'Intake for video consultations', 'doctor2go-connect' ); ?></label>
+			<select name="meta[intake_type]" id="intake_type">
+				<?php $current_intake = d2gc_get_doctor_intake_type( $values ); ?>
+				<?php foreach ( d2gc_get_questionnaire_types( true ) as $type => $label ) { ?>
+					<option <?php selected( $type, $current_intake ); ?> value="<?php echo esc_attr( $type ); ?>"><?php echo esc_html( $label ); ?></option>
+				<?php } ?>
+			</select>
+			<p class="description"><?php echo esc_html__( 'The questions in the booking form of a video consultation.', 'doctor2go-connect' ); ?></p>
+		</div>
+	</div>
+	<?php
+}
+
+/**
+ * Availability & holiday box: booking rules and vacation periods are edited in the front-end profile editor
+ * (they are sent to WCC there); here only an explanation, a link and the vacation periods read-only.
+ *
+ * @param WP_Post $post
+ */
+function d2gc_meta_box_availability_cb( $post ) {
+	$periods = array();
+	foreach ( D2GC_Translations::get_post_translation_ids( $post->ID ) as $id ) {
+		$periods = get_post_meta( $id, 'd2g_vacation_periods', true );
+		if ( is_array( $periods ) && $periods ) {
+			break;
+		}
+	}
+	$periods = is_array( $periods ) ? $periods : array();
+	$today   = wp_date( 'Y-m-d' );
+	$format  = get_option( 'date_format' );
+	$tz      = wp_timezone();
+	$edit    = D2G_doc_user_profile::d2gc_page_url() . '?edit=' . $post->ID;
+	?>
+	<p>
+		<?php echo esc_html__( 'The availabilities (booking rules, incl. the video consultation prices) and the vacation periods of a doctor are set in the profile editor on the website, because they are sent to doctor2go.online when they are saved.', 'doctor2go-connect' ); ?>
+	</p>
+	<p><a class="button button-primary" href="<?php echo esc_url( $edit ); ?>" target="_blank"><?php echo esc_html__( 'Open profile editor', 'doctor2go-connect' ); ?></a></p>
+	<h4><?php echo esc_html__( 'Vacation periods', 'doctor2go-connect' ); ?></h4>
+	<?php if ( empty( $periods ) ) { ?>
+		<p><?php echo esc_html__( 'No vacation periods.', 'doctor2go-connect' ); ?></p>
+	<?php } else { ?>
+		<ul class="d2gc-vacation-list">
+			<?php
+			foreach ( $periods as $period ) {
+				$start = ( new DateTimeImmutable( $period['start_date'], $tz ) )->getTimestamp();
+				$end   = ( new DateTimeImmutable( $period['end_date'], $tz ) )->getTimestamp();
+				if ( $period['end_date'] < $today ) {
+					$state = __( 'past', 'doctor2go-connect' );
+				} elseif ( $period['start_date'] <= $today ) {
+					$state = __( 'active now', 'doctor2go-connect' );
+				} else {
+					$state = __( 'upcoming', 'doctor2go-connect' );
+				}
+				?>
+				<li><?php echo esc_html( wp_date( $format, $start ) . ' – ' . wp_date( $format, $end ) ); ?> <em>(<?php echo esc_html( $state ); ?>)</em></li>
+			<?php } ?>
+		</ul>
+	<?php } ?>
 	<?php
 }
 

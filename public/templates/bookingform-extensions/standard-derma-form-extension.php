@@ -1,5 +1,8 @@
-<?php if ( ! defined( 'ABSPATH' ) ) exit; 
+<?php if ( ! defined( 'ABSPATH' ) ) exit;
+// Intake fields of the booking form, per intake type of the doctor ($form_type, see d2gc_get_doctor_intake_type()):
+// short = images + complaint, medofenic_advice = + medical history, derma_email_advice = all derma fields.
 global $d2g_profile_data, $currUser, $userMeta, $form_type;
+$d2gc_is_phone = function_exists( 'wpmd_is_phone' ) && wpmd_is_phone(); // WP Mobile Detect is optional
 if ( is_user_logged_in() ) {
     $currUser = wp_get_current_user();
     $userMeta = get_user_meta( $currUser->data->ID );
@@ -16,7 +19,7 @@ if ( is_user_logged_in() ) {
         <?php } else { ?>
             <p class="opener"><strong><?php echo esc_html__('Click here to provide / update your complaint information', 'doctor2go-connect')?></strong><span class="icon d2cif-Arrow-small-down"></span></p> 
         <?php } ?>
-        <div id="booking_complaint_form_wrapper" class=" <?php echo ($_GET['use_ai_info'] === '1') ? 'simple_hide' : 'show'; ?>">
+        <div id="booking_complaint_form_wrapper" class=" <?php echo ( isset( $_GET['use_ai_info'] ) && '1' === $_GET['use_ai_info'] ) ? 'simple_hide' : 'show'; ?>">
             <fieldset class="mb-4">
                 <div class="row g-3 mb-3">
                     <div class="col-md-4">
@@ -29,7 +32,7 @@ if ( is_user_logged_in() ) {
                             <input class="form-control simple_hide" type="file" name="booking_image_1" id="booking_image_1" accept="image/*,android/allowCamera" placeholder="<?php echo esc_attr__( 'Choose image 1', 'doctor2go-connect' ); ?>">
                         </div>
                     </div>
-                    <?php if ( wpmd_is_phone() ) { ?>
+                    <?php if ( $d2gc_is_phone ) { ?>
                         <p class="text-primary text-decoration-underline mb-3 opener">
                             <?php echo esc_html__('Upload / make more photos', 'doctor2go-connect')?>
                         </p>
@@ -55,7 +58,7 @@ if ( is_user_logged_in() ) {
                             <input class="form-control simple_hide" type="file" name="booking_image_3" id="booking_image_3" accept="image/*,android/allowCamera" placeholder="<?php echo esc_attr__( 'Choose image 3', 'doctor2go-connect' ); ?>">
                         </div>
                     </div>
-                    <?php if ( wpmd_is_phone() ) { ?>
+                    <?php if ( $d2gc_is_phone ) { ?>
                         </div>
                     <?php } ?>
                 </div>
@@ -93,7 +96,8 @@ if ( is_user_logged_in() ) {
                         </label>
                         <textarea id="booking_treatment_history" name="treatment_history" class="form-control" rows="3" placeholder="<?php echo esc_attr__('If applicable...', 'doctor2go-connect')?>"></textarea>
                     </div>
-
+                <?php } ?>
+                <?php if ( in_array( $form_type, array( 'derma_email_advice', 'medofenic_advice' ), true ) ) { ?>
                     <div class="mb-3">
                         <label for="history" class="form-label">
                             <?php echo ($form_type == 'derma_email_advice') ? esc_html__('Medical history (other relevant medical conditions and medications)', 'doctor2go-connect') : esc_html__('Medical history (other relevant medical conditions and medications)', 'doctor2go-connect')?>

@@ -126,6 +126,11 @@ class D2gConnect {
 		// this is the class responsible for handling the worker functions of the plugin
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-d2g-connect-worker.php';
 
+		// translations of doctor posts (Polylang / WPML), used to sync language independent data
+		require_once D2GC_PLUGIN_DIR . 'includes/class-d2g-connect-translations.php';
+		require_once D2GC_PLUGIN_DIR . 'includes/class-d2g-connect-doctor-sync.php';
+		D2GC_Doctor_Sync::init();
+
 		$this->loader = new \D2gConnect_Loader();
 	}
 
@@ -185,6 +190,8 @@ class D2gConnect {
 		// metaboxes
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'd2gc_meta_box_add' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'd2gc_meta_box_save' );
+		$this->loader->add_action( 'edit_form_after_title', $plugin_admin, 'd2gc_doctor_edit_tabs' );
+		$this->loader->add_filter( 'get_user_option_metaboxhidden_d2g_doctor', $plugin_admin, 'd2gc_doctor_never_hide_tab_boxes' );
 
 		add_action(
 			'admin_enqueue_scripts',

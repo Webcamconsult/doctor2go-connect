@@ -128,7 +128,6 @@
             $('#pay_cur').html(localStorage.getItem('payment_currency'));
             $('#location').html(localStorage.getItem('location'));
             $('#location_id').val(localStorage.getItem('doc_location_id'));
-            $('#questionnaire').val(localStorage.getItem('questionnaire'));
         }
     }
 
@@ -401,7 +400,6 @@
                 var payment_price = info.event._def.extendedProps.payment_price;
                 var payment_currency = info.event._def.extendedProps.payment_currency;
                 var payment_vat = info.event._def.extendedProps.payment_vat;
-                var questionnaire = info.event._def.extendedProps.questionnaire;
 
                 console.log(info.event._def.extendedProps);
 
@@ -458,9 +456,6 @@
 
                 $('#location_id').val(doc_location_id);
                 localStorage.setItem('doc_location_id', doc_location_id);
-
-                $('#questionnaire').val(questionnaire);
-                localStorage.setItem('questionnaire', questionnaire);
 
                 localStorage.setItem('booking_date', stDate);
                 localStorage.setItem('booking_time', part1Time);
@@ -575,7 +570,7 @@
 
                 d2gPrepareBookingImages().then(function(){
                     var data = {
-                        action: d2gBookingVars.use_derma_questionnaire ? 'd2gc_create_wcc_appointment' : 'd2gc_create_wcc_appointment_no_intake',
+                        action: 'd2gc_create_wcc_appointment',
                         start: $('#start_str').val(),
                         end: $('#end_str').val(),
                         vat: $('#vat').val(),
@@ -595,7 +590,7 @@
                         currency: $('#currency').val(),
                         bday: $('#booking_option_bday').val(),
                         gender: $('#booking_option_aanhef').val(),
-                        questionnaire_id: $('#questionnaire').val(),
+                        intake_type: $('#intake_type').val() || '', // intake of the doctor (none|short|medofenic_advice|derma_email_advice)
                         complaint_description: $('#booking_beschrijf_de_klacht').val() || '',
                         first_noticed: $('#booking_opgemerkt').val() || '',
                         medical_history: $('#booking_history').val() || '',

@@ -113,7 +113,8 @@ if (is_user_logged_in()) {
                         <div class="col-sm-4">
                             <div>
                                 <label class="form-label" for="option_bday"><?php echo esc_html__( 'Date of Birth: month/year  ', 'doctor2go-connect' ); ?></label>
-                                <input class="form-control" max="2012-12-31" type="month" name="option_bday" id="option_bday" value="<?php echo esc_html($userMeta['p_bday'][0]); ?>" placeholder="<?php echo esc_attr__('Select your date of birth', 'doctor2go-connect'); ?>">
+                                <input class="form-control" max="2012-12-31" type="month" name="option_bday" id="option_bday" value="<?php echo esc_html( $userMeta['p_bday'][0] ); ?>" placeholder="<?php echo esc_attr__( 'Select your date of birth', 'doctor2go-connect' ); ?>">
+                                
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -180,5 +181,4 @@ if (is_user_logged_in()) {
             </div>
         </form>
     </div>
-    <p><?php echo esc_html__( '* required fields.', 'doctor2go-connect' ); ?></p>
 </div>

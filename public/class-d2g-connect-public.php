@@ -225,7 +225,6 @@ class D2gConnect_Public {
             'only_cal'              => (bool) $only_cal,
             'in_tabs'               => (bool) $in_tabs,
             'd2gc_waiting_room_url' => get_option( 'd2gc_waiting_room_url' ),
-            'use_derma_questionnaire' => (bool) get_option( 'd2gc_use_derma_questionnaire' ),
             'recaptcha_site_key'    => (string) $site_key,
             'd2g_timezone'          => ! empty( $patient_meta['p_timezone'][0] ) ? $patient_meta['p_timezone'][0] : '',
             'is_user_logged_in'     => is_user_logged_in(),
@@ -1155,6 +1154,7 @@ class D2gConnect_Public {
         }
 
         update_post_meta($wpDocID, 'simple_booking_rules', $clean_rules);
+        D2GC_Doctor_Sync::sync( $wpDocID, array( 'simple_booking_rules' ), false ); // same rules in all languages
 
         $myTime   = new DateTime();
         $unixTime = $myTime->format( 'U' );
@@ -1363,6 +1363,7 @@ class D2gConnect_Public {
         }
 
         update_post_meta( $wpDocID, 'd2g_vacation_periods', $periods );
+        D2GC_Doctor_Sync::sync( $wpDocID, array( 'd2g_vacation_periods' ), false ); // same periods in all languages
 
         $sent = $this->d2gc_send_vacation_periods_to_wcc( $wpDocID, $periods );
         if ( is_wp_error( $sent ) ) {
