@@ -42,7 +42,7 @@ class D2GC_Doctor_Sync {
 	public static function init() {
 		// wp_after_insert_post, not save_post: it fires after the meta boxes (d2gc_meta_box_save on save_post) and the
 		// terms are saved, so the new values are synced and not the old ones (classic and block editor)
-		add_action( 'wp_after_insert_post', array( __CLASS__, 'on_save_post' ), 100, 2 );
+		add_action( 'wp_after_insert_post', array( __CLASS__, 'on_save_post' ), 100, 4 );
 
 		// "Translations" section on the settings page: check and align existing doctors
 		add_action( 'wp_ajax_d2gc_translations_check', array( __CLASS__, 'ajax_check' ) );
@@ -246,13 +246,16 @@ class D2GC_Doctor_Sync {
 
 	/**
 	 * Save of a doctor post: a new translation takes over the data of the existing translations, an existing
-	 * translation passes its data on to the others. The post status is not synced here (a translator saving a draft
-	 * must not take the other languages offline); that only happens in the profile editor and the WCC sync.
+	 * translation passes its data on to the others. The post status only follows when this save changed it (publish,
+	 * draft, quick/bulk edit in wp-admin), so a translator saving an unchanged draft does not take the other
+	 * languages offline. The profile editor and the WCC sync handle the status themselves.
 	 *
-	 * @param int     $post_id
-	 * @param WP_Post $post
+	 * @param int          $post_id
+	 * @param WP_Post      $post
+	 * @param bool         $update
+	 * @param WP_Post|null $post_before the post before this save (null for a new post)
 	 */
-	public static function on_save_post( $post_id, $post ) {
+	public static function on_save_post( $post_id, $post, $update = false, $post_before = null ) {
 		if ( ! $post instanceof WP_Post || 'd2g_doctor' !== $post->post_type ) {
 			return;
 		}
@@ -275,7 +278,8 @@ class D2GC_Doctor_Sync {
 			return;
 		}
 
-		self::sync( $post_id, null, false );
+		$status_changed = $post_before instanceof WP_Post && $post_before->post_status !== $post->post_status;
+		self::sync( $post_id, null, $status_changed );
 	}
 
 	/**
