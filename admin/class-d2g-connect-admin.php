@@ -776,9 +776,8 @@ class D2gConnect_Admin {
 
 		if ( in_array( get_post_type( $post_id ), $included_cpts ) ) {
 
-			$currLang = get_locale();
-			$d2gAdmin = new \D2G_doc_user_profile();
-			$new_url  = $d2gAdmin::d2gc_page_url();
+			// the profile editor in the language of this post (not of the current request, e.g. a REST call from WCC)
+			$new_url = D2G_doc_user_profile::d2gc_page_url( (string) D2GC_Translations::get_post_language( $post_id ) );
 
 			update_post_meta( $post_id, 'd2g_edit_url', '<a target="_blank" href="' . $new_url . '?edit=' . $post_id . '">edit</a>' );
 

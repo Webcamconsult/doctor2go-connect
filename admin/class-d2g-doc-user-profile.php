@@ -163,11 +163,11 @@ class D2G_doc_user_profile {
 	*/
 	public static function d2gc_create_doc_user( $user_data ) {
 
-		$user_login = self::d2gc_clean_name( $user_data['user_title'] . $user_data['user_initials'] . $user_data['user_last_name'] . time() );
+		$user_login = self::d2gc_clean_name( ( $user_data['user_title'] ?? '' ) . ( $user_data['user_initials'] ?? '' ) . ( $user_data['user_last_name'] ?? '' ) . time() );
 
 		$user_input = array(
 			'user_login'   => $user_login,
-			'user_pass'    => $user_data['pass'] ?: 'wcc_' . $user_login,
+			'user_pass'    => ! empty( $user_data['pass'] ) ? $user_data['pass'] : wp_generate_password( 24 ),
 			'user_email'   => $user_data['user_email'],
 			'first_name'   => $user_data['user_first_name'],
 			'last_name'    => $user_data['user_last_name'],
@@ -202,7 +202,7 @@ class D2G_doc_user_profile {
 	 * @return int
 	 * this function crates a doc profile and is called via the WCC api
 	 */
-	public static function d2gc_create_doc_profile( $doc_data = array(), $doc_data_meta = array(), $user_id ) {
+	public static function d2gc_create_doc_profile( $doc_data, $doc_data_meta, $user_id ) {
 
 		$doc_id      = '';
 		$error_check = false;
@@ -225,7 +225,7 @@ class D2G_doc_user_profile {
 				}
 			}
 
-			$new_url = self::d2gc_page_url();
+			$new_url = self::d2gc_page_url( (string) D2GC_Translations::get_post_language( $doc_id ) );
 			update_post_meta( $doc_id, 'd2g_edit_url', '<a target="_blank" href="' . $new_url . '?edit=' . $doc_id . '">edit</a>' );
 
 			do_action( 'breeze_clear_all_cache' );
@@ -260,6 +260,109 @@ class D2G_doc_user_profile {
 
 		);
 		return $doc_meta;
+	}
+
+	/**
+	 * Creates or updates a doctor with the data WCC sends to the REST route (D2GC_Rest, the request is verified there).
+	 * New e-mail address: WordPress user + doctor profile (draft). Known e-mail address: the profile with this WCC user id
+	 * (in all languages) gets the new name, prices and locations; organisation_state inactive/active takes it offline/online.
+	 *
+	 * @param array $user_data the JSON body
+	 * @return array|WP_Error { message, user_id?, doctor_id? }
+	 */
+	public static function d2gc_sync_doctor_from_wcc( $user_data ) {
+		if ( empty( $user_data['user_email'] ) || ! is_email( $user_data['user_email'] ) ) {
+			return new WP_Error( 'd2gc_missing_email', 'A valid user_email is required.', array( 'status' => 400 ) );
+		}
+
+		if ( ! email_exists( $user_data['user_email'] ) ) {
+			$user_id = self::d2gc_create_doc_user( $user_data );
+			if ( is_wp_error( $user_id ) ) {
+				$user_id->add_data( array( 'status' => 400 ) );
+				return $user_id;
+			}
+
+			update_user_meta( $user_id, 'wcc_user_id', $user_data['user_id'] ?? '' );
+			update_user_meta( $user_id, 'user_key', $user_data['user_key'] ?? '' );
+			update_user_meta( $user_id, 'organisation_key', $user_data['organisation_key'] ?? '' );
+
+			$doc_id = self::d2gc_create_doc_profile( $user_data, self::d2gc_set_doc_meta( $user_id, $user_data ), $user_id );
+
+			return array(
+				'message'   => 'The user and the public profile have been created.',
+				'user_id'   => (int) $user_id,
+				'doctor_id' => (int) $doc_id,
+			);
+		}
+
+		if ( empty( $user_data['user_id'] ) ) {
+			return new WP_Error( 'd2gc_missing_user_id', 'This e-mail address already exists, user_id is required to update the doctor.', array( 'status' => 400 ) );
+		}
+
+		$docs = get_posts(
+			array(
+				'post_type'      => 'd2g_doctor',
+				'post_status'    => 'any',
+				'posts_per_page' => -1,
+				'lang'           => '', // all languages (Polylang)
+				'meta_query'     => array(
+					array(
+						'key'   => 'wcc_user_id',
+						'value' => $user_data['user_id'],
+					),
+				),
+			)
+		);
+		if ( empty( $docs ) ) {
+			return new WP_Error( 'd2gc_doctor_not_found', 'No doctor profile found for this user_id.', array( 'status' => 404 ) );
+		}
+
+		$doc_id     = $docs[0]->ID;
+		$wcc_status = get_post_meta( $doc_id, 'wcc_status', true );
+		$state      = $user_data['organisation_state'] ?? '';
+		$status     = $docs[0]->post_status;
+		if ( 'inactive' === $state ) {
+			$status     = 'draft';
+			$wcc_status = 'inactive';
+		} elseif ( 'active' === $state && 'inactive' === $wcc_status ) {
+			$status     = 'publish';
+			$wcc_status = 'active';
+		}
+
+		$meta = array(
+			'tariffs'         => $user_data['tariffs'] ?? null,
+			'locations_to_go' => $user_data['locations'] ?? null,
+			'd2g_first_name'  => $user_data['user_first_name'] ?? null,
+			'd2g_last_name'   => $user_data['user_last_name'] ?? null,
+			'd2g_main_email'  => $user_data['user_email'],
+		);
+
+		// the same data for every translation (title, status and wcc_status are not part of the meta sync)
+		foreach ( $docs as $doc ) {
+			foreach ( $meta as $key => $value ) {
+				if ( null !== $value ) {
+					update_post_meta( $doc->ID, $key, $value );
+				}
+			}
+			if ( $wcc_status ) {
+				update_post_meta( $doc->ID, 'wcc_status', $wcc_status );
+			}
+			$update = array(
+				'ID'          => $doc->ID,
+				'post_status' => $status,
+			);
+			if ( ! empty( $user_data['user_full_name'] ) ) {
+				$update['post_title'] = $user_data['user_full_name'];
+			}
+			wp_update_post( $update );
+		}
+
+		do_action( 'breeze_clear_all_cache' );
+
+		return array(
+			'message'   => 'The doctor has been updated.',
+			'doctor_id' => (int) $doc_id,
+		);
 	}
 
 	/**

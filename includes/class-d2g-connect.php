@@ -131,6 +131,10 @@ class D2gConnect {
 		require_once D2GC_PLUGIN_DIR . 'includes/class-d2g-connect-doctor-sync.php';
 		D2GC_Doctor_Sync::init();
 
+		// REST route doctor2go.online calls to create/update doctors (replaces endpoints/doctor.php)
+		require_once D2GC_PLUGIN_DIR . 'includes/class-d2g-connect-rest.php';
+		D2GC_Rest::init();
+
 		$this->loader = new \D2gConnect_Loader();
 	}
 

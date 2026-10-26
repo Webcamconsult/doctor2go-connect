@@ -106,6 +106,11 @@ if ( $d2gc_has_translations ) {
 						$d2gc_field( 'd2gc_waiting_room_url', __( 'URL used for waiting room from the Doctor2go software', 'doctor2go-connect' ), '', 'url' );
 						$d2gc_field( 'd2gc_wcc_base_url', __( 'Base URL from the Doctor2go software', 'doctor2go-connect' ) );
 						?>
+						<div class="d2gc-setting">
+							<label for="d2gc_doctor_sync_url" class="d2gc-setting__title"><?php echo esc_html__( 'Doctor sync URL', 'doctor2go-connect' ); ?></label>
+							<input class="regular-text d2gc-input" type="text" id="d2gc_doctor_sync_url" value="<?php echo esc_attr( D2GC_Rest::get_doctor_sync_url() ); ?>" readonly onclick="this.select();">
+							<p class="d2gc-setting__description"><?php echo esc_html__( 'doctor2go.online sends new and changed doctors to this address.', 'doctor2go-connect' ); ?></p>
+						</div>
 					</div>
 				</section>
 			</div>
