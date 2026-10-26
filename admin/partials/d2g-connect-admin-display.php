@@ -333,6 +333,53 @@ if ( $d2gc_has_translations ) {
 						<?php $d2gc_toggle( 'd2g_debug', __( 'Activate debug logging', 'doctor2go-connect' ), __( 'Writes extra details to the PHP error log when a request fails (e.g. the written consultation form). Only enable temporarily while investigating an issue.', 'doctor2go-connect' ) ); ?>
 					</div>
 				</section>
+
+				<section class="d2gc-card d2gc-card--wide">
+					<header class="d2gc-card__header">
+						<h2><?php echo esc_html__( 'Doctor sync log', 'doctor2go-connect' ); ?></h2>
+						<p><?php echo esc_html__( 'The last 50 requests from doctor2go.online to the doctor sync URL, newest first. With "Activate debug logging" on, the full request is stored too (hash, keys and passwords shortened).', 'doctor2go-connect' ); ?></p>
+					</header>
+					<div class="d2gc-card__body">
+						<?php $d2gc_sync_log = D2GC_Rest::get_log(); ?>
+						<?php if ( empty( $d2gc_sync_log ) ) { ?>
+							<p><?php echo esc_html__( 'No requests yet.', 'doctor2go-connect' ); ?></p>
+						<?php } else { ?>
+							<div class="d2gc-log">
+								<table class="widefat striped">
+									<thead>
+										<tr>
+											<th><?php echo esc_html__( 'Time', 'doctor2go-connect' ); ?></th>
+											<th><?php echo esc_html__( 'Status', 'doctor2go-connect' ); ?></th>
+											<th><?php echo esc_html__( 'Result', 'doctor2go-connect' ); ?></th>
+											<th><?php echo esc_html__( 'Doctor', 'doctor2go-connect' ); ?></th>
+											<th><?php echo esc_html__( 'Request', 'doctor2go-connect' ); ?></th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach ( $d2gc_sync_log as $d2gc_entry ) { ?>
+											<tr>
+												<td><?php echo esc_html( $d2gc_entry['time'] ?? '' ); ?></td>
+												<td><strong><?php echo esc_html( $d2gc_entry['status'] ?? '' ); ?></strong><br><code><?php echo esc_html( $d2gc_entry['code'] ?? '' ); ?></code></td>
+												<td><?php echo esc_html( $d2gc_entry['result'] ?? '' ); ?></td>
+												<td><?php echo esc_html( $d2gc_entry['user_email'] ?? '' ); ?><br><code><?php echo esc_html( $d2gc_entry['wcc_user_id'] ?? '' ); ?></code></td>
+												<td>
+													<?php echo esc_html( ( $d2gc_entry['method'] ?? '' ) . ' · ' . ( $d2gc_entry['content_type'] ?: '-' ) . ' · ' . ( $d2gc_entry['body_bytes'] ?? 0 ) . ' bytes · IP ' . ( $d2gc_entry['ip'] ?? '' ) ); ?><br>
+													<span class="description"><?php echo esc_html( $d2gc_entry['keys'] ?? '' ); ?></span>
+													<?php if ( isset( $d2gc_entry['payload'] ) ) { ?>
+														<details>
+															<summary><?php echo esc_html__( 'Request and response', 'doctor2go-connect' ); ?></summary>
+															<pre><?php echo esc_html( wp_json_encode( array( 'request' => $d2gc_entry['payload'], 'response' => $d2gc_entry['response'] ?? null ), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) ); ?></pre>
+														</details>
+													<?php } ?>
+												</td>
+											</tr>
+										<?php } ?>
+									</tbody>
+								</table>
+							</div>
+						<?php } ?>
+					</div>
+				</section>
 			</div>
 		</div>
 
