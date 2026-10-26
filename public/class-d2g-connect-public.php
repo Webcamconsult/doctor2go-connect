@@ -1070,7 +1070,7 @@ class D2gConnect_Public {
      * @param mixed $price
      * @return int|float|null
      */
-    private function d2gc_clean_rule_price( $price ) {
+    public static function d2gc_clean_rule_price( $price ) {
         $price = str_replace( ',', '.', trim( (string) $price ) );
         if ( ! preg_match( '/^\d+(\.\d{1,2})?$/', $price ) || (float) $price <= 0 ) {
             return null;
@@ -1261,7 +1261,7 @@ class D2gConnect_Public {
      * @param mixed $periods decoded "periods" array from the editor
      * @return array|WP_Error list of array( 'start_date' => 'Y-m-d', 'end_date' => 'Y-m-d' )
      */
-    private function d2gc_clean_vacation_periods( $periods ) {
+    public static function d2gc_clean_vacation_periods( $periods ) {
         if ( ! is_array( $periods ) ) {
             return new WP_Error( 'invalid', __( 'Invalid vacation periods.', 'doctor2go-connect' ) );
         }

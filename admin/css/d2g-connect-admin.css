@@ -447,3 +447,18 @@ input[type="date"] {
 	background: #f6f7f7;
 	padding: 8px;
 }
+
+/* Availability sync status (Doctors tab) */
+.d2gc-settings .d2gc-status {
+	border-collapse: collapse;
+	margin-bottom: 12px;
+}
+.d2gc-settings .d2gc-status th {
+	text-align: left;
+	font-weight: 600;
+	padding: 4px 16px 4px 0;
+	vertical-align: top;
+}
+.d2gc-settings .d2gc-status td {
+	padding: 4px 0;
+}

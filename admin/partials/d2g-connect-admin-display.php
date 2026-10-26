@@ -206,6 +206,48 @@ if ( $d2gc_has_translations ) {
 						</div>
 					</div>
 				</section>
+				<?php
+				$d2gc_sync = D2gConnect_Cron::get_status();
+				$d2gc_when = function ( $timestamp ) {
+					return $timestamp ? wp_date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $timestamp ) : __( 'never', 'doctor2go-connect' );
+				};
+				?>
+				<section class="d2gc-card" id="d2gc-availability-sync" data-nonce="<?php echo esc_attr( wp_create_nonce( 'd2gc_availability_sync' ) ); ?>">
+					<header class="d2gc-card__header">
+						<h2><?php echo esc_html__( 'Availability sync', 'doctor2go-connect' ); ?></h2>
+						<p><?php echo esc_html__( 'Every 15 minutes the plugin fetches the free slots and the walk-in status of each doctor from doctor2go.online (via WP-Cron). Here you can see when that last happened and run it right away.', 'doctor2go-connect' ); ?></p>
+					</header>
+					<div class="d2gc-card__body">
+						<table class="d2gc-status">
+							<tr>
+								<th><?php echo esc_html__( 'Next automatic run', 'doctor2go-connect' ); ?></th>
+								<td><?php echo $d2gc_sync['next_run'] ? esc_html( $d2gc_when( $d2gc_sync['next_run'] ) ) : '<strong>' . esc_html__( 'not scheduled', 'doctor2go-connect' ) . '</strong>'; ?></td>
+							</tr>
+							<tr>
+								<th><?php echo esc_html__( 'Last automatic run', 'doctor2go-connect' ); ?></th>
+								<td><?php echo esc_html( $d2gc_when( $d2gc_sync['last_run'] ) ); ?></td>
+							</tr>
+							<tr>
+								<th><?php echo esc_html__( 'Most recently synced doctor', 'doctor2go-connect' ); ?></th>
+								<td id="d2gc-sync-newest"><?php echo esc_html( $d2gc_sync['newest'] ? $d2gc_sync['newest'] : __( 'never', 'doctor2go-connect' ) ); ?></td>
+							</tr>
+							<tr>
+								<th><?php echo esc_html__( 'Longest not synced doctor', 'doctor2go-connect' ); ?></th>
+								<td id="d2gc-sync-oldest"><?php echo esc_html( $d2gc_sync['oldest'] ? $d2gc_sync['oldest'] : __( 'never', 'doctor2go-connect' ) ); ?></td>
+							</tr>
+						</table>
+						<p class="d2gc-actions">
+							<button type="button" class="button button-primary" id="d2gc-availability-sync-run">
+								<?php
+								/* translators: %d: number of doctors */
+								echo esc_html( sprintf( __( 'Sync all doctors now (%d)', 'doctor2go-connect' ), $d2gc_sync['doctors'] ) );
+								?>
+							</button>
+							<span class="spinner" id="d2gc-availability-sync-spinner"></span>
+						</p>
+						<div id="d2gc-availability-sync-result" aria-live="polite"></div>
+					</div>
+				</section>
 			</div>
 		</div>
 

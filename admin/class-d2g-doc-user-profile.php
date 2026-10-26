@@ -212,7 +212,7 @@ class D2G_doc_user_profile {
 			$post = array(
 				'post_content' => '',
 				'post_status'  => 'draft',
-				'post_title'   => $doc_data['user_title'] . ' ' . $doc_data['user_first_name'] . ' ' . $doc_data['user_last_name'],
+				'post_title'   => self::d2gc_get_wcc_title( $doc_data ),
 				'post_type'    => 'd2g_doctor',
 				'post_author'  => $user_id,
 			);
@@ -245,18 +245,18 @@ class D2G_doc_user_profile {
 	public static function d2gc_set_doc_meta( $user_id, $user_data ) {
 		$doc_meta = array(
 			'd2g_user_id'            => (string) $user_id,
-			'tariffs'                => $user_data['tariffs'],
-			'vat_rules'              => $user_data['vat_rules'],
-			'user_key'               => $user_data['user_key'],
-			'wcc_user_id'            => $user_data['user_id'],
-			'organisation_key'       => $user_data['organisation_key'],
-			'd2g_emp_title'          => $user_data['user_title'],
-			'd2g_first_name'         => $user_data['user_first_name'],
-			'd2g_last_name'          => $user_data['user_last_name'],
-			'd2g_organisation'       => $user_data['organisation_name'],
-			'd2g_main_email'         => $user_data['user_email'],
-			'organisation_subdomain' => $user_data['organisation_subdomain'],
-			'locations_to_go'        => $user_data['locations'],
+			'tariffs'                => $user_data['tariffs'] ?? '',
+			'vat_rules'              => $user_data['vat_rules'] ?? '',
+			'user_key'               => $user_data['user_key'] ?? '',
+			'wcc_user_id'            => $user_data['user_id'] ?? '',
+			'organisation_key'       => $user_data['organisation_key'] ?? '',
+			'd2g_emp_title'          => $user_data['user_title'] ?? '',
+			'd2g_first_name'         => $user_data['user_first_name'] ?? '',
+			'd2g_last_name'          => $user_data['user_last_name'] ?? '',
+			'd2g_organisation'       => $user_data['organisation_name'] ?? '',
+			'd2g_main_email'         => $user_data['user_email'] ?? '',
+			'organisation_subdomain' => $user_data['organisation_subdomain'] ?? '',
+			'locations_to_go'        => $user_data['locations'] ?? '',
 
 		);
 		return $doc_meta;
@@ -264,29 +264,51 @@ class D2G_doc_user_profile {
 
 	/**
 	 * Creates or updates a doctor with the data WCC sends to the REST route (D2GC_Rest, the request is verified there).
-	 * New e-mail address: WordPress user + doctor profile (draft). Known e-mail address: the profile with this WCC user id
-	 * (in all languages) gets the new name, prices and locations; organisation_state inactive/active takes it offline/online.
+	 *
+	 * The doctor is found by the WCC user_id (all languages). Unknown user_id + unknown e-mail address: a WordPress user
+	 * and a doctor profile (draft) are created. Known doctor: profile data, booking rules, vacation periods and prices
+	 * are updated in all translations; organisation_state inactive/active takes the profile offline/online.
+	 * A block that is not sent is left as it is, an empty list removes everything (see d2gc_get_wcc_doctor_meta()).
 	 *
 	 * @param array $user_data the JSON body
-	 * @return array|WP_Error { message, user_id?, doctor_id? }
+	 * @return array|WP_Error { message, user_id?, doctor_id }
 	 */
 	public static function d2gc_sync_doctor_from_wcc( $user_data ) {
+		if ( empty( $user_data['user_id'] ) || ! is_scalar( $user_data['user_id'] ) ) {
+			return new WP_Error( 'd2gc_missing_user_id', 'user_id (the WCC user id) is required.', array( 'status' => 400 ) );
+		}
 		if ( empty( $user_data['user_email'] ) || ! is_email( $user_data['user_email'] ) ) {
 			return new WP_Error( 'd2gc_missing_email', 'A valid user_email is required.', array( 'status' => 400 ) );
 		}
 
-		if ( ! email_exists( $user_data['user_email'] ) ) {
+		// validate everything before anything is written
+		$meta = self::d2gc_get_wcc_doctor_meta( $user_data );
+		if ( is_wp_error( $meta ) ) {
+			return $meta;
+		}
+
+		$docs = self::d2gc_get_doctors_by_wcc_id( $user_data['user_id'] );
+
+		/* ---------- create ---------- */
+		if ( empty( $docs ) ) {
+			if ( email_exists( $user_data['user_email'] ) ) {
+				return new WP_Error( 'd2gc_email_in_use', 'No doctor with this user_id exists, but the e-mail address belongs to an existing WordPress user. Remove or change that user first.', array( 'status' => 409 ) );
+			}
+
 			$user_id = self::d2gc_create_doc_user( $user_data );
 			if ( is_wp_error( $user_id ) ) {
 				$user_id->add_data( array( 'status' => 400 ) );
 				return $user_id;
 			}
 
-			update_user_meta( $user_id, 'wcc_user_id', $user_data['user_id'] ?? '' );
+			update_user_meta( $user_id, 'wcc_user_id', $user_data['user_id'] );
 			update_user_meta( $user_id, 'user_key', $user_data['user_key'] ?? '' );
 			update_user_meta( $user_id, 'organisation_key', $user_data['organisation_key'] ?? '' );
 
 			$doc_id = self::d2gc_create_doc_profile( $user_data, self::d2gc_set_doc_meta( $user_id, $user_data ), $user_id );
+			foreach ( $meta as $key => $value ) {
+				update_post_meta( $doc_id, $key, $value );
+			}
 
 			return array(
 				'message'   => 'The user and the public profile have been created.',
@@ -295,28 +317,7 @@ class D2G_doc_user_profile {
 			);
 		}
 
-		if ( empty( $user_data['user_id'] ) ) {
-			return new WP_Error( 'd2gc_missing_user_id', 'This e-mail address already exists, user_id is required to update the doctor.', array( 'status' => 400 ) );
-		}
-
-		$docs = get_posts(
-			array(
-				'post_type'      => 'd2g_doctor',
-				'post_status'    => 'any',
-				'posts_per_page' => -1,
-				'lang'           => '', // all languages (Polylang)
-				'meta_query'     => array(
-					array(
-						'key'   => 'wcc_user_id',
-						'value' => $user_data['user_id'],
-					),
-				),
-			)
-		);
-		if ( empty( $docs ) ) {
-			return new WP_Error( 'd2gc_doctor_not_found', 'No doctor profile found for this user_id.', array( 'status' => 404 ) );
-		}
-
+		/* ---------- update ---------- */
 		$doc_id     = $docs[0]->ID;
 		$wcc_status = get_post_meta( $doc_id, 'wcc_status', true );
 		$state      = $user_data['organisation_state'] ?? '';
@@ -328,21 +329,12 @@ class D2G_doc_user_profile {
 			$status     = 'publish';
 			$wcc_status = 'active';
 		}
-
-		$meta = array(
-			'tariffs'         => $user_data['tariffs'] ?? null,
-			'locations_to_go' => $user_data['locations'] ?? null,
-			'd2g_first_name'  => $user_data['user_first_name'] ?? null,
-			'd2g_last_name'   => $user_data['user_last_name'] ?? null,
-			'd2g_main_email'  => $user_data['user_email'],
-		);
+		$title = self::d2gc_get_wcc_title( $user_data );
 
 		// the same data for every translation (title, status and wcc_status are not part of the meta sync)
 		foreach ( $docs as $doc ) {
 			foreach ( $meta as $key => $value ) {
-				if ( null !== $value ) {
-					update_post_meta( $doc->ID, $key, $value );
-				}
+				update_post_meta( $doc->ID, $key, $value );
 			}
 			if ( $wcc_status ) {
 				update_post_meta( $doc->ID, 'wcc_status', $wcc_status );
@@ -351,11 +343,13 @@ class D2G_doc_user_profile {
 				'ID'          => $doc->ID,
 				'post_status' => $status,
 			);
-			if ( ! empty( $user_data['user_full_name'] ) ) {
-				$update['post_title'] = $user_data['user_full_name'];
+			if ( '' !== $title ) {
+				$update['post_title'] = $title;
 			}
 			wp_update_post( $update );
 		}
+
+		self::d2gc_update_wp_user_from_wcc( (int) get_post_meta( $doc_id, 'd2g_user_id', true ), $user_data );
 
 		do_action( 'breeze_clear_all_cache' );
 
@@ -363,6 +357,190 @@ class D2G_doc_user_profile {
 			'message'   => 'The doctor has been updated.',
 			'doctor_id' => (int) $doc_id,
 		);
+	}
+
+	/**
+	 * All doctor posts (every language and status) linked to a WCC user id.
+	 *
+	 * @param string $wcc_user_id
+	 * @return WP_Post[]
+	 */
+	public static function d2gc_get_doctors_by_wcc_id( $wcc_user_id ) {
+		return get_posts(
+			array(
+				'post_type'      => 'd2g_doctor',
+				'post_status'    => 'any',
+				'posts_per_page' => -1,
+				'lang'           => '', // all languages (Polylang)
+				'meta_query'     => array(
+					array(
+						'key'   => 'wcc_user_id',
+						'value' => (string) $wcc_user_id,
+					),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Post title from the WCC data: user_full_name without double spaces, otherwise title + first + last name.
+	 *
+	 * @param array $user_data
+	 * @return string
+	 */
+	public static function d2gc_get_wcc_title( $user_data ) {
+		$squash = function ( $text ) {
+			return trim( preg_replace( '/\s+/', ' ', (string) $text ) );
+		};
+		$title = $squash( $user_data['user_full_name'] ?? '' );
+		if ( '' === $title ) {
+			$title = $squash( ( $user_data['user_title'] ?? '' ) . ' ' . ( $user_data['user_first_name'] ?? '' ) . ' ' . ( $user_data['user_last_name'] ?? '' ) );
+		}
+		return sanitize_text_field( $title );
+	}
+
+	/**
+	 * The doctor meta from the WCC data, validated. Only what WCC sent: a missing field or block is not changed,
+	 * an empty list (booking_rules, vacation_periods) removes everything.
+	 *
+	 * - booking_rules {"rules":[...]} (or advanced_booking_rules, or a plain list) -> simple_booking_rules, the list
+	 *   both booking rule editors and the profile read
+	 * - vacation_periods {"periods":[...]} (or a plain list) -> d2g_vacation_periods (vacation notice, consult buttons)
+	 * - prices video / walkin / email -> video_con_*, walk_in_*, written_con_* (consult buttons, payment requests)
+	 *
+	 * @param array $user_data
+	 * @return array|WP_Error meta key => value
+	 */
+	public static function d2gc_get_wcc_doctor_meta( $user_data ) {
+		$fields = array(
+			'user_key'               => 'user_key',
+			'organisation_key'       => 'organisation_key',
+			'organisation_subdomain' => 'organisation_subdomain',
+			'organisation_name'      => 'd2g_organisation',
+			'user_title'             => 'd2g_emp_title',
+			'user_first_name'        => 'd2g_first_name',
+			'user_last_name'         => 'd2g_last_name',
+			'user_email'             => 'd2g_main_email',
+			'tariffs'                => 'tariffs',
+			'vat_rules'              => 'vat_rules',
+			'locations'              => 'locations_to_go',
+		);
+		$meta = array();
+		foreach ( $fields as $field => $key ) {
+			if ( ! array_key_exists( $field, $user_data ) || null === $user_data[ $field ] ) {
+				continue;
+			}
+			$meta[ $key ] = is_scalar( $user_data[ $field ] ) ? sanitize_text_field( (string) $user_data[ $field ] ) : $user_data[ $field ];
+		}
+
+		/* booking rules */
+		$rules = null;
+		foreach ( array( 'booking_rules', 'advanced_booking_rules' ) as $field ) {
+			if ( isset( $user_data[ $field ] ) && is_array( $user_data[ $field ] ) ) {
+				$rules = $user_data[ $field ];
+				break;
+			}
+		}
+		if ( null !== $rules ) {
+			$list = isset( $rules['rules'] ) ? $rules['rules'] : $rules;
+			if ( ! is_array( $list ) ) {
+				return new WP_Error( 'd2gc_invalid_booking_rules', 'booking_rules.rules must be a list.', array( 'status' => 400 ) );
+			}
+			$clean = array();
+			foreach ( $list as $rule ) {
+				if ( ! is_array( $rule ) ) {
+					continue;
+				}
+				$currency    = strtoupper( (string) ( $rule['currency'] ?? '' ) );
+				$clean_rule  = array(
+					'anchor_date'   => isset( $rule['anchor_date'] ) && null !== $rule['anchor_date'] ? absint( $rule['anchor_date'] ) : null,
+					'start_time'    => sanitize_text_field( (string) ( $rule['start_time'] ?? '' ) ),
+					'end_time'      => sanitize_text_field( (string) ( $rule['end_time'] ?? '' ) ),
+					'wdays'         => absint( $rule['wdays'] ?? 0 ),
+					'week_interval' => isset( $rule['week_interval'] ) ? absint( $rule['week_interval'] ) : 1,
+					'price'         => D2gConnect_Public::d2gc_clean_rule_price( $rule['price'] ?? null ),
+					'currency'      => preg_match( '/^[A-Z]{3}$/', $currency ) ? $currency : null,
+				);
+				// kept as WCC sends it (questionnaire of the rule)
+				if ( isset( $rule['questionnaire'] ) && is_scalar( $rule['questionnaire'] ) && '' !== (string) $rule['questionnaire'] ) {
+					$clean_rule['questionnaire'] = sanitize_text_field( (string) $rule['questionnaire'] );
+				}
+				$clean[] = $clean_rule;
+			}
+			$meta['simple_booking_rules'] = $clean;
+		}
+
+		/* vacation periods */
+		if ( isset( $user_data['vacation_periods'] ) && is_array( $user_data['vacation_periods'] ) ) {
+			$periods = isset( $user_data['vacation_periods']['periods'] ) ? $user_data['vacation_periods']['periods'] : $user_data['vacation_periods'];
+			$periods = D2gConnect_Public::d2gc_clean_vacation_periods( $periods );
+			if ( is_wp_error( $periods ) ) {
+				return new WP_Error( 'd2gc_invalid_vacation_periods', 'vacation_periods: every period needs start_date and end_date as YYYY-MM-DD, end not before start.', array( 'status' => 400 ) );
+			}
+			$meta['d2g_vacation_periods'] = $periods;
+		}
+
+		/* prices */
+		if ( isset( $user_data['prices'] ) && is_array( $user_data['prices'] ) ) {
+			$targets = array(
+				'video'  => 'video_con',
+				'walkin' => 'walk_in',
+				'email'  => 'written_con',
+			);
+			foreach ( $targets as $type => $prefix ) {
+				if ( ! isset( $user_data['prices'][ $type ] ) || ! is_array( $user_data['prices'][ $type ] ) ) {
+					continue;
+				}
+				$entry = $user_data['prices'][ $type ];
+				if ( array_key_exists( 'price', $entry ) && null !== $entry['price'] && '' !== $entry['price'] ) {
+					$price = str_replace( ',', '.', trim( (string) $entry['price'] ) );
+					if ( ! preg_match( '/^\d+(\.\d{1,2})?$/', $price ) ) {
+						return new WP_Error( 'd2gc_invalid_price', 'prices.' . $type . '.price must be a number (0 or more, max. 2 decimals).', array( 'status' => 400 ) );
+					}
+					$meta[ $prefix . '_price' ] = $price;
+				}
+				if ( ! empty( $entry['currency'] ) ) {
+					$currency = strtoupper( (string) $entry['currency'] );
+					if ( ! preg_match( '/^[A-Z]{3}$/', $currency ) ) {
+						return new WP_Error( 'd2gc_invalid_currency', 'prices.' . $type . '.currency must be a 3 letter code (e.g. EUR).', array( 'status' => 400 ) );
+					}
+					$meta[ $prefix . '_currency' ] = $currency;
+				}
+			}
+		}
+
+		return $meta;
+	}
+
+	/**
+	 * Name (and e-mail, when it is not used by another user) of the doctor's WordPress user from the WCC data.
+	 *
+	 * @param int   $user_id
+	 * @param array $user_data
+	 */
+	private static function d2gc_update_wp_user_from_wcc( $user_id, $user_data ) {
+		if ( ! $user_id || ! get_userdata( $user_id ) ) {
+			return;
+		}
+		$update = array( 'ID' => $user_id );
+		if ( isset( $user_data['user_first_name'] ) ) {
+			$update['first_name'] = sanitize_text_field( (string) $user_data['user_first_name'] );
+		}
+		if ( isset( $user_data['user_last_name'] ) ) {
+			$update['last_name'] = sanitize_text_field( (string) $user_data['user_last_name'] );
+		}
+		$title = self::d2gc_get_wcc_title( $user_data );
+		if ( '' !== $title ) {
+			$update['display_name'] = $title;
+		}
+		$owner = email_exists( $user_data['user_email'] );
+		if ( ! $owner ) {
+			$update['user_email'] = $user_data['user_email'];
+		}
+		if ( count( $update ) > 1 ) {
+			wp_update_user( $update );
+		}
+		update_user_meta( $user_id, 'user_key', $user_data['user_key'] ?? get_user_meta( $user_id, 'user_key', true ) );
 	}
 
 	/**

@@ -123,6 +123,11 @@ class D2gConnect_Admin {
 			/* translators: 1: aligned doctors, 2: total */
 			'tr_progress'      => esc_html__( 'Aligning… %1$d of %2$d', 'doctor2go-connect' ),
 			'tr_error'         => esc_html__( 'Something went wrong, please try again.', 'doctor2go-connect' ),
+			// manual availability sync (Doctors tab)
+			'as_progress'      => esc_html__( 'Syncing… %1$d of %2$d doctors', 'doctor2go-connect' ),
+			'as_done'          => esc_html__( '%d doctors synced.', 'doctor2go-connect' ),
+			'as_failed'        => esc_html__( 'Not synced (no answer from doctor2go.online or no doctor key):', 'doctor2go-connect' ),
+			'as_none'          => esc_html__( 'No doctors linked to doctor2go.online found.', 'doctor2go-connect' ),
 			'ajax_url'         => admin_url( 'admin-ajax.php' ),
 		]);
 	}

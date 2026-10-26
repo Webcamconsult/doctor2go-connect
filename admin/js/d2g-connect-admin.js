@@ -374,3 +374,68 @@ jQuery(function ($) {
 		show(current);
 	});
 });
+
+
+/* ########################################################################## */
+/* SETTINGS PAGE: MANUAL AVAILABILITY SYNC (Doctors tab)                      */
+/* ########################################################################## */
+// D2gConnect_Cron::ajax_list, then D2gConnect_Cron::ajax_run in batches of 3 (each doctor is one call to doctor2go.online).
+jQuery(function ($) {
+	var $box = $('#d2gc-availability-sync');
+	if (!$box.length || typeof myStrData === 'undefined') return;
+
+	var s        = myStrData;
+	var nonce    = $box.data('nonce');
+	var $run     = $('#d2gc-availability-sync-run');
+	var $spinner = $('#d2gc-availability-sync-spinner');
+	var $result  = $('#d2gc-availability-sync-result');
+
+	var format = function (str) {
+		var args = Array.prototype.slice.call(arguments, 1);
+		return String(str).replace(/%(\d)\$d/g, function (m, i) { return args[i - 1]; }).replace(/%d/, args[0]);
+	};
+	var notice = function (type, text) {
+		return $('<div class="notice inline"><p></p></div>').addClass('notice-' + type).find('p').text(text).end();
+	};
+	var setBusy = function (busy) {
+		$run.prop('disabled', busy);
+		$spinner.toggleClass('is-active', busy);
+	};
+	var fail = function () { $result.empty().append(notice('error', s.tr_error)); setBusy(false); };
+
+	$run.on('click', function () {
+		setBusy(true);
+		$result.empty();
+		$.post(s.ajax_url, { action: 'd2gc_availability_sync_list', nonce: nonce })
+			.done(function (r) {
+				if (!r || !r.success) { fail(); return; }
+				var queue = r.data.doctors.slice(), total = queue.length, done = 0, failed = [];
+				if (!total) { $result.append(notice('warning', s.as_none)); setBusy(false); return; }
+
+				var next = function () {
+					if (!queue.length) {
+						$result.empty().append(notice(failed.length ? 'warning' : 'success', format(s.as_done, total - failed.length)));
+						if (failed.length) {
+							$result.append($('<p></p>').text(s.as_failed + ' ' + failed.join(', ')));
+						}
+						setBusy(false);
+						return;
+					}
+					var batch = queue.splice(0, 3);
+					$result.empty().append($('<p></p>').text(format(s.as_progress, done, total)));
+					$.post(s.ajax_url, { action: 'd2gc_availability_sync_run', nonce: nonce, doctors: batch })
+						.done(function (r2) {
+							if (!r2 || !r2.success) { fail(); return; }
+							done += batch.length;
+							failed = failed.concat(r2.data.failed);
+							$('#d2gc-sync-newest').text(r2.data.status.newest || '');
+							$('#d2gc-sync-oldest').text(r2.data.status.oldest || '');
+							next();
+						})
+						.fail(fail);
+				};
+				next();
+			})
+			.fail(fail);
+	});
+});

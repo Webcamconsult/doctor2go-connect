@@ -31,5 +31,6 @@ class D2gConnect_Deactivator {
 	 */
 	public static function deactivate() {
 		unregister_post_type( 'd2g_doctor' );
+		wp_clear_scheduled_hook( 'd2g_sync_doctors' );
 	}
 }

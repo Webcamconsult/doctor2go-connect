@@ -280,6 +280,13 @@ class D2gConnect {
 
 		// Background worker: 1 doctor = 1 job
 		$this->loader->add_action('d2g_sync_single_doctor', $worker, 'sync_single_doctor', 10, 1);
+
+		// Reschedule the main cron when it got lost (it used to be scheduled on activation only)
+		$this->loader->add_action('init', $cron, 'ensure_scheduled');
+
+		// Manual "Sync all doctors now" on the settings page (Doctors tab)
+		$this->loader->add_action('wp_ajax_d2gc_availability_sync_list', $cron, 'ajax_list');
+		$this->loader->add_action('wp_ajax_d2gc_availability_sync_run', $cron, 'ajax_run');
 	}
 
 	/**
