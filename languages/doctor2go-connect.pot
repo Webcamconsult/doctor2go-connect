@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doctor2Go Connect\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-02 11:41+0100\n"
+"POT-Creation-Date: 2026-11-02 12:19+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -632,7 +632,7 @@ msgid "Doctor status URL"
 msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:117
-msgid "doctor2go.online reads the status of a doctor profile and its translations from this address."
+msgid "doctor2go.online reads the status of a doctor profile and its translations from this address, and takes the profile online or offline."
 msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:129

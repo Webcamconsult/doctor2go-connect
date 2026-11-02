@@ -114,7 +114,7 @@ if ( $d2gc_has_translations ) {
 						<div class="d2gc-setting">
 							<label for="d2gc_doctor_status_url" class="d2gc-setting__title"><?php echo esc_html__( 'Doctor status URL', 'doctor2go-connect' ); ?></label>
 							<input class="regular-text d2gc-input" type="text" id="d2gc_doctor_status_url" value="<?php echo esc_attr( D2GC_Rest::get_doctor_status_url() ); ?>" readonly onclick="this.select();">
-							<p class="d2gc-setting__description"><?php echo esc_html__( 'doctor2go.online reads the status of a doctor profile and its translations from this address.', 'doctor2go-connect' ); ?></p>
+							<p class="d2gc-setting__description"><?php echo esc_html__( 'doctor2go.online reads the status of a doctor profile and its translations from this address, and takes the profile online or offline.', 'doctor2go-connect' ); ?></p>
 						</div>
 					</div>
 				</section>

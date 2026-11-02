@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doctor2Go Connect\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-02 11:41+0100\n"
+"POT-Creation-Date: 2026-11-02 12:19+0100\n"
 "PO-Revision-Date: 2026-10-22 16:37+0000\n"
 "Last-Translator: Thomas Wiese\n"
 "Language-Team: Spanish (Spain)\n"
@@ -631,8 +631,8 @@ msgid "Doctor status URL"
 msgstr "URL de estado de doctores"
 
 #: admin/partials/d2g-connect-admin-display.php:117
-msgid "doctor2go.online reads the status of a doctor profile and its translations from this address."
-msgstr "doctor2go.online consulta en esta dirección el estado de un perfil de doctor y de sus traducciones."
+msgid "doctor2go.online reads the status of a doctor profile and its translations from this address, and takes the profile online or offline."
+msgstr "doctor2go.online consulta en esta dirección el estado de un perfil de doctor y de sus traducciones, y pone el perfil en línea o fuera de línea."
 
 #: admin/partials/d2g-connect-admin-display.php:129
 msgid "CSS & JS"
@@ -3148,114 +3148,3 @@ msgstr "iniciar una consulta"
 #: public/templates/single-content/content-single-d2g_doctor-v3.php:71
 msgid "About this doctor"
 msgstr "Sobre este médico"
-
-#~ msgid "an unknown error has occurred"
-#~ msgstr "se ha producido un error desconocido"
-
-#~ msgid "The user + public profile have been created. User ID: "
-#~ msgstr "El usuario y el perfil público han sido creados. ID de usuario:"
-
-#~ msgid "1. Install the \"Solid Security Basic\" plugin and configure two-factor authentication (2FA) for all individuals with access to the user accounts. This is can be crucial to ensure the highest level of security for sensitive patient data."
-#~ msgstr "1. Instale el plugin \"Solid Security Basic\" y configure la autenticación de dos factores (2FA) para todas las personas con acceso a las cuentas de usuario. Esto puede ser crucial para garantizar el máximo nivel de seguridad para los datos sensibles de los pacientes."
-
-#~ msgid "2. Create a Google reCAPTCHA account specifically for your website and enter the generated keys into the appropriate settings within your site’s configuration."
-#~ msgstr "2. Cree una cuenta de Google reCAPTCHA específicamente para su sitio web e introduzca las claves generadas en la configuración apropiada dentro de la configuración de su sitio."
-
-#~ msgid "A video consultation enables you to have a remote appointment with the doctor via a secure video platform. This option provides convenience and flexibility, allowing you to discuss your skin concerns from the comfort of your own home."
-#~ msgstr "Una videoconsulta le permite tener una cita remota con el médico a través de una plataforma de vídeo segura. Esta opción proporciona comodidad y flexibilidad, permitiéndole discutir sus problemas de piel desde la comodidad de su hogar."
-
-#~ msgid "A walk-in consultation allows you to have a real-time video consultation with the doctor without a prior appointment. You will enter a virtual waiting room and the doctor will attend to you as soon as they are available."
-#~ msgstr "Una consulta sin cita previa le permite tener una consulta por video en tiempo real con el médico sin necesidad de una cita previa. Entrará en una sala de espera virtual y el médico le atenderá tan pronto como esté disponible."
-
-#~ msgid "An email advice allows you to receive a professional assessment from a certified dermatologist via email within two working days. You will complete a questionnaire describing your skin concern, and the doctor will provide their evaluation and recommendations in writing."
-#~ msgstr "Un consejo por correo electrónico le permite recibir una evaluación profesional de un dermatólogo certificado por correo electrónico en un plazo de dos días laborables. Deberá completar un cuestionario que describa su problema de piel y el médico le proporcionará su evaluación y recomendaciones por escrito."
-
-#~ msgid "An unknown error has occurred"
-#~ msgstr "Ha ocurrido un error desconocido"
-
-#~ msgid "API connection"
-#~ msgstr "Conexión API"
-
-#~ msgid "Attention: I am unavailable in the following periode."
-#~ msgstr "Atención: No estaré disponible en el siguiente período."
-
-#~ msgid "Comment (optional)"
-#~ msgstr "Comentario (opcional)"
-
-#~ msgid "Consultation fee:"
-#~ msgstr "Tarifa de consulta:"
-
-#~ msgid "E-mail consult currency"
-#~ msgstr "Consultar moneda por correo electrónico"
-
-#~ msgid "E-mail consult price"
-#~ msgstr "Precio de consulta por correo electrónico"
-
-#~ msgid "Full width (no sidebar, consultation tabs, for this template you will need to install WP Mobile Detect)"
-#~ msgstr "Ancho completo (sin barra lateral, pestañas de consulta, para esta plantilla necesitará instalar WP Mobile Detect)"
-
-#~ msgid "Header & footer"
-#~ msgstr "Encabezado y pie de página"
-
-#~ msgid "https://demo-plugin.doctor2go.online/"
-#~ msgstr "https://demo-plugin.doctor2go.online/"
-
-#~ msgid "https://www.webcamconsult.com"
-#~ msgstr "https://www.webcamconsult.com"
-
-#~ msgid "I confirm that my request is not a medical emergency and I understand that if my symptoms or rapid worsening, I must seek direct medical care or emergency services."
-#~ msgstr "Confirmo que mi solicitud no es una emergencia médica y entiendo que si mis síntomas empeoran rápidamente, debo buscar atención médica directa o servicios de emergencia."
-
-#~ msgid "intake quesionnaire"
-#~ msgstr "cuestionario de admisión"
-
-#~ msgid "No doctor has been selected yet. Please choose one to proceed."
-#~ msgstr "Aún no se ha seleccionado ningún médico. Por favor, elija uno para continuar."
-
-#~ msgid "No user ID has been sent"
-#~ msgstr "No se ha enviado ningún ID de usuario"
-
-#~ msgid "Password (your password needs to be minimum 8 characters long and it must contain minimum one special character.)"
-#~ msgstr "Contraseña (tu contraseña debe tener un mínimo de 8 caracteres y debe contener al menos un carácter especial.)"
-
-#~ msgid "Patient portal:"
-#~ msgstr "Portal del paciente:"
-
-#~ msgid "Security (Google Recaptcha V2 / Solid Security Basic) "
-#~ msgstr "Seguridad (Google Recaptcha V2 / Solid Security Basic)"
-
-#~ msgid "The questinonaire will be fetched in the WCC software based on langauge and on type default."
-#~ msgstr "El cuestionario se obtendrá en el software WCC basándose en el idioma y en el tipo predeterminado."
-
-#~ msgid "This secure portal lets you send and receive messages from your doctor and access any documents they've shared with you."
-#~ msgstr "Este portal seguro le permite enviar y recibir mensajes de su médico y acceder a cualquier documento que le hayan compartido."
-
-#~ msgid "Update was a success"
-#~ msgstr "La actualización fue un éxito"
-
-#~ msgid "Use default questionnaire as intake form for appointments."
-#~ msgstr "Usar el cuestionario predeterminado como formulario de admisión para las citas."
-
-#~ msgid "User / profile settings for doctors"
-#~ msgstr "Configuración de usuario / perfil para médicos"
-
-#~ msgid "User does not exist"
-#~ msgstr "El usuario no existe"
-
-#~ msgid "Walk-in currency"
-#~ msgstr "Moneda en efectivo"
-
-#~ msgid "We advise you following:"
-#~ msgstr "Le aconsejamos lo siguiente:"
-
-#~ msgid "Webcamconsult"
-#~ msgstr "Videoconsulta"
-
-#~ msgid "With sidebar (anchor links, hidden forms in a popup)"
-#~ msgstr "Con barra lateral (enlaces de anclaje, formularios ocultos en una ventana emergente)"
-
-#~ msgid "With this plugin you can manage doctor profiles on your website, make a connection with the Webcamconsult software. Patients can book you on your profile page and they can create a patient profile for follow up."
-#~ msgstr "Con este plugin puede gestionar perfiles de médicos en su sitio web, establecer una conexión con el software Webcamconsult. Los pacientes pueden reservarle en su página de perfil y pueden crear un perfil de paciente para seguimiento."
-
-#~ msgid "You don't have access to a patient portal at this time. This usually means you haven't booked a consultation yet. Once you've booked and paid for a consultation with a doctor, your patient portal will become available."
-#~ msgstr "No tiene acceso a un portal del paciente en este momento. Esto generalmente significa que aún no ha reservado una consulta. Una vez que haya reservado y pagado una consulta con un médico, su portal del paciente estará disponible."

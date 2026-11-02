@@ -11,6 +11,10 @@
  * The status of the doctor post and its translations. Same handshake, in the query string; user_key has to be the
  * one of that doctor.
  *
+ * POST /wp-json/d2gc/v1/doctor-status/{wcc_user_id}
+ * Body (JSON): timestamp, user_key, hash and status "publish" or "draft". Takes the doctor online or offline in every
+ * translation and answers with the new status (same as the GET).
+ *
  * Response (JSON): { "message": "..." } on success, { "errors": [ "..." ] } on failure, with a matching HTTP status.
  *
  * @package d2g-connect
@@ -177,9 +181,16 @@ class D2GC_Rest {
 			self::REST_NAMESPACE,
 			'/doctor-status/(?P<wcc_user_id>[A-Za-z0-9_-]+)',
 			array(
-				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => array( __CLASS__, 'doctor_status' ),
-				'permission_callback' => array( __CLASS__, 'check_doctor_status_request' ),
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( __CLASS__, 'doctor_status' ),
+					'permission_callback' => array( __CLASS__, 'check_doctor_status_request' ),
+				),
+				array(
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => array( __CLASS__, 'set_doctor_status' ),
+					'permission_callback' => array( __CLASS__, 'check_doctor_status_request' ),
+				),
 			)
 		);
 	}
@@ -322,8 +333,59 @@ class D2GC_Rest {
 	 * @return WP_REST_Response
 	 */
 	public static function doctor_status( $request ) {
+		return self::get_status_response( (string) $request->get_param( 'wcc_user_id' ) );
+	}
+
+	/**
+	 * Takes the doctor online (publish, wcc_status active) or offline (draft, wcc_status inactive: the doctor cannot
+	 * publish the profile again in the profile editor), always in every translation. Answers with the new status, like the GET.
+	 *
+	 * @param WP_REST_Request $request
+	 * @return WP_REST_Response
+	 */
+	public static function set_doctor_status( $request ) {
 		$wcc_user_id = (string) $request->get_param( 'wcc_user_id' );
+		$status      = self::get_payload( $request )['status'] ?? '';
 		$docs        = D2G_doc_user_profile::d2gc_get_doctors_by_wcc_id( $wcc_user_id );
+
+		if ( ! in_array( $status, array( 'publish', 'draft' ), true ) ) {
+			return new WP_REST_Response(
+				array(
+					'code'   => 'd2gc_invalid_status',
+					'errors' => array( 'status has to be "publish" or "draft".' ),
+				),
+				400
+			);
+		}
+
+		if ( $docs ) {
+			$wcc_status = 'publish' === $status ? 'active' : 'inactive';
+			// meta first: the status change of the first post is synced to the translations right away
+			foreach ( $docs as $doc ) {
+				update_post_meta( $doc->ID, 'wcc_status', $wcc_status );
+			}
+			foreach ( $docs as $doc ) {
+				if ( get_post_status( $doc->ID ) !== $status ) {
+					wp_update_post(
+						array(
+							'ID'          => $doc->ID,
+							'post_status' => $status,
+						)
+					);
+				}
+			}
+			do_action( 'breeze_clear_all_cache' );
+		}
+
+		return self::get_status_response( $wcc_user_id );
+	}
+
+	/**
+	 * @param string $wcc_user_id
+	 * @return WP_REST_Response the status of all translations, 404 if there is no doctor with this id
+	 */
+	private static function get_status_response( $wcc_user_id ) {
+		$docs = D2G_doc_user_profile::d2gc_get_doctors_by_wcc_id( $wcc_user_id );
 
 		if ( ! $docs ) {
 			$response = new WP_REST_Response(
