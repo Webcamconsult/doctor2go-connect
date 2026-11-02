@@ -31,7 +31,8 @@ class D2G_ProfileData {
 	 */
 	function __construct( $post = null, $single = false ) {
 
-		$this->doctor = is_null( $post ) ? get_post( get_the_ID() ) : $post;
+		// accepts a WP_Post or a post ID
+		$this->doctor = get_post( is_null( $post ) ? get_the_ID() : $post );
 
 		if ( is_object( $this->doctor ) && isset( $this->doctor->ID ) ) {
 			$this->doctor_profile_ID = $this->doctor->ID;
