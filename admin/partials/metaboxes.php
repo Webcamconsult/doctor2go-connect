@@ -51,6 +51,20 @@ function d2gc_meta_box_personal_cb( $post ) {
 }
 
 /**
+ * Button to the doctor2go.online dashboard ("URL used for waiting room from the Doctor2go software" on the settings
+ * page). Nothing when that URL is not set.
+ */
+function d2gc_wcc_dashboard_button() {
+	$url = get_option( 'd2gc_waiting_room_url' );
+	if ( ! $url ) {
+		return;
+	}
+	?>
+	<p><a class="button" href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener"><?php echo esc_html__( 'Open doctor2go.online dashboard', 'doctor2go-connect' ); ?></a></p>
+	<?php
+}
+
+/**
  * Prices box: price and currency per consultation type.
  *
  * @param WP_Post $post
@@ -62,6 +76,26 @@ function d2gc_meta_box_prices_cb( $post ) {
 		'walk_in'     => __( 'Walk-in consultation', 'doctor2go-connect' ),
 		'written_con' => __( 'E-mail advice', 'doctor2go-connect' ),
 	);
+	// editor off: all prices come from doctor2go.online (doctor sync), here read-only
+	if ( ! d2gc_booking_rules_editor_enabled() ) {
+		$prices['video_con'] = __( 'Video consultation (standard price)', 'doctor2go-connect' );
+		?>
+		<p><?php echo esc_html__( 'The prices of a doctor are set in the doctor2go.online software and sent to this website automatically.', 'doctor2go-connect' ); ?></p>
+		<?php d2gc_wcc_dashboard_button(); ?>
+		<div class="d2gc-box-fields">
+			<?php foreach ( $prices as $prefix => $label ) { ?>
+				<div class="d2gc-box-field">
+					<span class="d2gc-box-field__label"><?php echo esc_html( $label ); ?></span>
+					<div class="d2gc-price-input d2gc-price-input--readonly">
+						<input type="text" readonly value="<?php echo esc_attr( $values[ $prefix . '_price' ][0] ?? '' ); ?>" aria-label="<?php echo esc_attr__( 'Price', 'doctor2go-connect' ); ?>">
+						<input type="text" readonly value="<?php echo esc_attr( $values[ $prefix . '_currency' ][0] ?? '' ); ?>" aria-label="<?php echo esc_attr__( 'Currency', 'doctor2go-connect' ); ?>" class="d2gc-currency">
+					</div>
+				</div>
+			<?php } ?>
+		</div>
+		<?php
+		return;
+	}
 	?>
 	<div class="d2gc-box-fields">
 		<?php foreach ( $prices as $prefix => $label ) { ?>
@@ -84,13 +118,7 @@ function d2gc_meta_box_prices_cb( $post ) {
 				<input type="text" readonly value="<?php echo esc_attr( $values['video_con_price'][0] ?? '' ); ?>" aria-label="<?php echo esc_attr__( 'Price', 'doctor2go-connect' ); ?>">
 				<input type="text" readonly value="<?php echo esc_attr( $values['video_con_currency'][0] ?? '' ); ?>" aria-label="<?php echo esc_attr__( 'Currency', 'doctor2go-connect' ); ?>" class="d2gc-currency">
 			</div>
-			<p class="description">
-				<?php
-				echo d2gc_booking_rules_editor_enabled()
-					? esc_html__( 'Set in the profile editor together with the booking rules (availabilities), a different price can be set per booking rule.', 'doctor2go-connect' )
-					: esc_html__( 'Set in the doctor2go.online software together with the booking rules (availabilities).', 'doctor2go-connect' );
-				?>
-			</p>
+			<p class="description"><?php echo esc_html__( 'Set in the profile editor together with the booking rules (availabilities), a different price can be set per booking rule.', 'doctor2go-connect' ); ?></p>
 		</div>
 	</div>
 	<?php
@@ -129,6 +157,54 @@ function d2gc_meta_box_questionnaires_cb( $post ) {
 }
 
 /**
+ * Filters box: the doctor taxonomies (country, languages, fields of study, body parts) as searchable multi-selects
+ * (select2). Saved by WordPress itself via tax_input; the hidden 0 makes sure an emptied box removes all terms.
+ * Required taxonomies (D2gConnect_Admin::d2gc_get_required_taxonomies()) are checked in d2g-connect-admin.js.
+ *
+ * @param WP_Post $post
+ */
+function d2gc_meta_box_filters_cb( $post ) {
+	$required = D2gConnect_Admin::d2gc_get_required_taxonomies();
+	// translated taxonomies (Polylang): the terms in the language of this post
+	$lang = D2GC_Translations::get_post_language( $post->ID );
+	wp_nonce_field( 'd2gc_filters', 'd2gc_filters_nonce' );
+	?>
+	<div class="notice notice-error inline d2gc-filters-error" hidden><p></p></div>
+	<div class="d2gc-box-fields d2gc-box-fields--2">
+		<?php
+		foreach ( get_object_taxonomies( 'd2g_doctor', 'objects' ) as $taxonomy ) {
+			if ( ! $taxonomy->show_ui || false !== $taxonomy->meta_box_cb ) {
+				continue;
+			}
+			$args = array(
+				'taxonomy'   => $taxonomy->name,
+				'hide_empty' => false,
+				'orderby'    => 'name',
+			);
+			if ( $lang ) {
+				$args['lang'] = $lang;
+			}
+			$terms       = get_terms( $args );
+			$selected    = wp_get_object_terms( $post->ID, $taxonomy->name, array( 'fields' => 'ids' ) );
+			$is_required = in_array( $taxonomy->name, $required, true );
+			$field_id    = 'd2gc-tax-' . $taxonomy->name;
+			?>
+			<div class="d2gc-box-field">
+				<label for="<?php echo esc_attr( $field_id ); ?>"><?php echo esc_html( $taxonomy->labels->name . ( $is_required ? ' *' : '' ) ); ?></label>
+				<input type="hidden" name="tax_input[<?php echo esc_attr( $taxonomy->name ); ?>][]" value="0">
+				<select id="<?php echo esc_attr( $field_id ); ?>" name="tax_input[<?php echo esc_attr( $taxonomy->name ); ?>][]" multiple class="d2gc-select2" data-label="<?php echo esc_attr( $taxonomy->labels->name ); ?>"<?php echo $is_required ? ' data-required="1"' : ''; ?> data-placeholder="<?php echo esc_attr( $taxonomy->labels->search_items ); ?>">
+					<?php foreach ( is_array( $terms ) ? $terms : array() as $term ) { ?>
+						<option value="<?php echo esc_attr( $term->term_id ); ?>" <?php selected( in_array( $term->term_id, $selected, true ) ); ?>><?php echo esc_html( $term->name ); ?></option>
+					<?php } ?>
+				</select>
+			</div>
+		<?php } ?>
+	</div>
+	<p class="description"><?php echo esc_html__( 'Fields marked with * need at least one value before the profile can be published.', 'doctor2go-connect' ); ?></p>
+	<?php
+}
+
+/**
  * Availability & holiday box: booking rules and vacation periods are edited in the front-end profile editor
  * (they are sent to WCC there); here only an explanation, a link and the vacation periods read-only.
  *
@@ -157,6 +233,7 @@ function d2gc_meta_box_availability_cb( $post ) {
 		<p>
 			<?php echo esc_html__( 'The availabilities (booking rules, incl. the video consultation prices) and the vacation periods of a doctor are set in the doctor2go.online software (see Doctor2Go Connect settings, Doctors tab).', 'doctor2go-connect' ); ?>
 		</p>
+		<?php d2gc_wcc_dashboard_button(); ?>
 	<?php } ?>
 	<h4><?php echo esc_html__( 'Vacation periods', 'doctor2go-connect' ); ?></h4>
 	<?php if ( empty( $periods ) ) { ?>

@@ -194,8 +194,11 @@ class D2gConnect {
 		// metaboxes
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'd2gc_meta_box_add' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'd2gc_meta_box_save' );
+		$this->loader->add_filter( 'wp_insert_post_data', $plugin_admin, 'd2gc_check_required_filters', 10, 2 );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'd2gc_required_filters_notice' );
 		$this->loader->add_action( 'edit_form_after_title', $plugin_admin, 'd2gc_doctor_edit_tabs' );
 		$this->loader->add_filter( 'get_user_option_metaboxhidden_d2g_doctor', $plugin_admin, 'd2gc_doctor_never_hide_tab_boxes' );
+		$this->loader->add_filter( 'get_user_option_meta-box-order_d2g_doctor', $plugin_admin, 'd2gc_doctor_meta_box_order' );
 
 		add_action(
 			'admin_enqueue_scripts',

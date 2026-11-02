@@ -75,6 +75,19 @@ class D2gConnect_Admin {
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/d2g-connect-admin.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name . '-grid', plugin_dir_url( __FILE__ ) . 'css/d2g-grid.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name . '-fontello', plugin_dir_url( __FILE__ ) . 'fonts/fontello/css/fontello.css', array(), $this->version, 'all' );
+
+		// select2 for the Filters box on the doctor edit screen (the copy the public side uses)
+		if ( $this->d2gc_is_doctor_edit_screen() ) {
+			wp_enqueue_style( $this->plugin_name . '-select', plugins_url( 'public/css/select2.min.css', __DIR__ ), array(), $this->version, 'all' );
+		}
+	}
+
+	/**
+	 * @return bool whether the current admin screen is the add / edit screen of a doctor
+	 */
+	private function d2gc_is_doctor_edit_screen() {
+		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		return $screen && 'post' === $screen->base && 'd2g_doctor' === $screen->post_type;
 	}
 
 	/**
@@ -95,7 +108,12 @@ class D2gConnect_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/d2g-connect-admin.js', array( 'jquery' ), $this->version, false );
+		$deps = array( 'jquery' );
+		if ( $this->d2gc_is_doctor_edit_screen() ) {
+			wp_register_script( $this->plugin_name . '-select', plugins_url( 'public/js/select2.full.min.js', __DIR__ ), array( 'jquery' ), $this->version, false );
+			$deps[] = $this->plugin_name . '-select';
+		}
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/d2g-connect-admin.js', $deps, $this->version, false );
 		wp_localize_script( $this->plugin_name, 'myStrData', [
 			'str_start' 				=> esc_html__( 'start date', 'doctor2go-connect' ),
 			'str_end' 					=> esc_html__( 'end date', 'doctor2go-connect' ),
@@ -128,7 +146,10 @@ class D2gConnect_Admin {
 			'as_done'          => esc_html__( '%d doctors synced.', 'doctor2go-connect' ),
 			'as_failed'        => esc_html__( 'Not synced (no answer from doctor2go.online or no doctor key):', 'doctor2go-connect' ),
 			'as_none'          => esc_html__( 'No doctors linked to doctor2go.online found.', 'doctor2go-connect' ),
-			'ajax_url'         => admin_url( 'admin-ajax.php' ),
+			// Filters tab on the doctor edit screen
+			/* translators: %s: list of filters, e.g. "Countries, Languages" */
+			'filters_missing'  => esc_html__( 'Please choose at least one value for: %s', 'doctor2go-connect' ),
+			'ajax_url'        => admin_url( 'admin-ajax.php' ),
 		]);
 	}
 
@@ -257,6 +278,7 @@ class D2gConnect_Admin {
 				'show_ui'               => true,
 				'show_in_rest'          => true,
 				'show_admin_column'     => true,
+				'meta_box_cb'           => false, // edited as select boxes in the "Filters" box (d2gc_meta_box_filters_cb)
 				'update_count_callback' => '_update_post_term_count',
 				'query_var'             => true,
 				'rewrite'               => array(
@@ -284,6 +306,75 @@ class D2gConnect_Admin {
 			'doctor-specialty',
 			'body-part',
 		);
+	}
+
+	/**
+	 * The doctor taxonomies that need at least one term before a profile can be published in wp-admin.
+	 *
+	 * @return string[]
+	 */
+	public static function d2gc_get_required_taxonomies() {
+		/**
+		 * Filters the doctor taxonomies that need at least one term (wp-admin, "Filters" tab).
+		 *
+		 * @param string[] $taxonomies
+		 */
+		return (array) apply_filters( 'd2gc_required_doctor_taxonomies', array( 'country-origin', 'doctor-language', 'doctor-specialty' ) );
+	}
+
+	/**
+	 * (wp_insert_post_data) Second line of defence behind the check in d2g-connect-admin.js: a doctor saved from the
+	 * wp-admin form without the required filters is not published (stays / becomes draft), a notice says why.
+	 * Profiles that are already online stay online.
+	 *
+	 * @param array $data
+	 * @param array $postarr
+	 * @return array
+	 */
+	public function d2gc_check_required_filters( $data, $postarr ) {
+		if ( 'd2g_doctor' !== $data['post_type'] || 'publish' !== $data['post_status'] || empty( $postarr['ID'] ) ) {
+			return $data;
+		}
+		// only the wp-admin form (the Filters box sends its own nonce); WCC, the profile editor, quick edit: unchanged
+		$nonce = isset( $_POST['d2gc_filters_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['d2gc_filters_nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'd2gc_filters' ) || 'publish' === get_post_status( $postarr['ID'] ) ) {
+			return $data;
+		}
+
+		$missing = array();
+		foreach ( self::d2gc_get_required_taxonomies() as $taxonomy ) {
+			$terms = isset( $postarr['tax_input'][ $taxonomy ] ) ? array_filter( (array) $postarr['tax_input'][ $taxonomy ] ) : array();
+			if ( ! $terms && taxonomy_exists( $taxonomy ) ) {
+				$missing[] = get_taxonomy( $taxonomy )->labels->name;
+			}
+		}
+		if ( $missing ) {
+			$data['post_status'] = 'draft';
+			set_transient( 'd2gc_filters_missing_' . get_current_user_id(), $missing, MINUTE_IN_SECONDS );
+		}
+		return $data;
+	}
+
+	/**
+	 * (admin_notices) Why a doctor was not published, see d2gc_check_required_filters().
+	 */
+	public function d2gc_required_filters_notice() {
+		$key     = 'd2gc_filters_missing_' . get_current_user_id();
+		$missing = get_transient( $key );
+		if ( ! $missing ) {
+			return;
+		}
+		delete_transient( $key );
+		?>
+		<div class="notice notice-error is-dismissible">
+			<p>
+				<?php
+				/* translators: %s: list of filters, e.g. "Countries, Languages" */
+				echo esc_html( sprintf( __( 'The profile was saved as draft and not published: please choose at least one value for %s (Filters tab).', 'doctor2go-connect' ), implode( ', ', $missing ) ) );
+				?>
+			</p>
+		</div>
+		<?php
 	}
 
 	private function d2gc_get_tax_label( $taxonomy ) {
@@ -714,6 +805,7 @@ class D2gConnect_Admin {
 		add_meta_box( 'work', 'Work experience', 'd2gc_meta_box_work_cb', 'd2g_doctor', 'normal', 'high' );
 		add_meta_box( 'publication', 'Publications', 'd2gc_meta_box_publications_cb', 'd2g_doctor', 'normal', 'high' );
 		add_meta_box( 'd2gc-availability', __( 'Availability & holiday', 'doctor2go-connect' ), 'd2gc_meta_box_availability_cb', 'd2g_doctor', 'normal', 'high' );
+		add_meta_box( 'd2gc-filters', __( 'Filters', 'doctor2go-connect' ), 'd2gc_meta_box_filters_cb', 'd2g_doctor', 'normal', 'high' );
 		add_meta_box( 'page_type', 'Page type', 'd2gc_meta_box_page_type_cb', 'page', 'normal', 'high' );
 		add_meta_box( 'email_type', 'E-mail', 'd2gc_meta_box_email_type_cb', 'd2g_emails', 'normal', 'high' );
 	}
@@ -723,7 +815,7 @@ class D2gConnect_Admin {
 	 *
 	 * @var string[]
 	 */
-	private $doctor_tab_boxes = array( 'personal-info', 'd2gc-prices', 'd2gc-questionnaires', 'education', 'work', 'publication', 'd2gc-availability', 'postexcerpt' );
+	private $doctor_tab_boxes = array( 'personal-info', 'd2gc-prices', 'd2gc-questionnaires', 'education', 'work', 'publication', 'd2gc-availability', 'd2gc-filters', 'postexcerpt' );
 
 	/**
 	 * The tab boxes are never "hidden" via Screen Options: WordPress saves every box that is invisible at that moment
@@ -734,6 +826,29 @@ class D2gConnect_Admin {
 	 */
 	public function d2gc_doctor_never_hide_tab_boxes( $hidden ) {
 		return is_array( $hidden ) ? array_values( array_diff( $hidden, $this->doctor_tab_boxes ) ) : $hidden;
+	}
+
+	/**
+	 * (get_user_option_meta-box-order_d2g_doctor) The same box order on the doctor edit screen for every user, whatever
+	 * was dragged before. Boxes that do not exist on a site are skipped by WordPress, boxes not listed (other plugins)
+	 * follow below in their own order. Dragging is switched off in d2g-connect-admin.js.
+	 *
+	 * @return array context => comma separated box ids
+	 */
+	public function d2gc_doctor_meta_box_order() {
+		/**
+		 * Filters the fixed order of the boxes on the doctor edit screen.
+		 *
+		 * @param array $order context (side, normal, advanced) => comma separated box ids
+		 */
+		return apply_filters(
+			'd2gc_doctor_meta_box_order',
+			array(
+				'side'     => 'submitdiv,ml_box,d2gc_ai_translate_into_current,postimagediv,tagsdiv-post_tag,dynwid,authordiv',
+				'normal'   => 'd2gc-prices,d2gc-questionnaires,d2gc-availability,d2gc-filters,personal-info,education,work,publication,postexcerpt,slugdiv,revisionsdiv,postcustom',
+				'advanced' => '',
+			)
+		);
 	}
 
 	/**
@@ -751,6 +866,7 @@ class D2gConnect_Admin {
 			'personal'       => __( 'Personal information', 'doctor2go-connect' ),
 			'bio'            => __( 'Bio', 'doctor2go-connect' ),
 			'experience'     => __( 'Education & experience', 'doctor2go-connect' ),
+			'filters'        => __( 'Filters', 'doctor2go-connect' ),
 			'prices'         => __( 'Prices', 'doctor2go-connect' ),
 			'questionnaires' => __( 'Questionnaires', 'doctor2go-connect' ),
 			'availability'   => __( 'Availability & holiday', 'doctor2go-connect' ),
@@ -838,6 +954,10 @@ class D2gConnect_Admin {
 				'd2g_page_identifier',
 				'd2g_email_identifier',
 			);
+			// editor off: the prices come from doctor2go.online, the box shows them read-only
+			if ( ! d2gc_booking_rules_editor_enabled() ) {
+				$allowed_meta = array_diff( $allowed_meta, array( 'walk_in_price', 'walk_in_currency', 'written_con_price', 'written_con_currency' ) );
+			}
 
 			foreach ( $postMetaArr as $meta_key => $meta_value ) {
 				if ( in_array( (string) $meta_key, $allowed_meta, true ) ) {

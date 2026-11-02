@@ -10,7 +10,7 @@
 	height:100%;
 }
 .d2g-settings-wrap input[type="text"],
-select{
+.d2g-settings-wrap select{
 	min-width: 300px;
 }
 table.info td{
@@ -209,6 +209,7 @@ input[type="date"] {
 	border: 1px solid var(--d2gc-border);
 	border-radius: 8px;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+    height: 100%;
 }
 .d2gc-settings .d2gc-card__header {
 	padding: 20px 24px 16px;
@@ -370,6 +371,106 @@ input[type="date"] {
 }
 .d2gc-tab-hidden {
 	display: none !important;
+}
+/* fixed box order on the doctor edit screen: no move up / down arrows, no drag cursor */
+.post-type-d2g_doctor .postbox .handle-order-higher,
+.post-type-d2g_doctor .postbox .handle-order-lower {
+	display: none;
+}
+.post-type-d2g_doctor .postbox .hndle {
+	cursor: default;
+}
+/* Filters box: select2 multi-selects in the wp-admin look. Self-contained on purpose: the WordPress button / input
+   styles (and other plugins' select2 copies) would otherwise move the remove "x" over the text. */
+#d2gc-filters .select2-container .select2-selection--multiple {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 4px;
+	min-height: 36px;
+	padding: 4px 6px;
+	border: 1px solid #8c8f94;
+	border-radius: 4px;
+	background: #fff;
+	cursor: text;
+}
+#d2gc-filters .select2-container--focus .select2-selection--multiple {
+	border-color: #2271b1;
+	box-shadow: 0 0 0 1px #2271b1;
+}
+#d2gc-filters .select2-selection--multiple .select2-selection__rendered {
+	display: contents; /* the chosen terms and the search field wrap as one row */
+}
+#d2gc-filters .select2-selection--multiple .select2-selection__choice {
+	display: inline-flex;
+	align-items: center;
+	position: static;
+	float: none;
+	max-width: 100%;
+	margin: 0;
+	padding: 0 8px 0 0;
+	border: 1px solid #c3c4c7;
+	border-radius: 3px;
+	background: #f0f0f1;
+	color: #1d2327;
+	font-size: 13px;
+	line-height: 24px;
+}
+#d2gc-filters .select2-selection--multiple .select2-selection__choice__remove {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	position: static;
+	flex: 0 0 auto;
+	width: 22px;
+	height: 24px;
+	min-height: 0;
+	margin: 0 6px 0 0;
+	padding: 0;
+	border: 0;
+	border-right: 1px solid #c3c4c7;
+	border-radius: 3px 0 0 3px;
+	background: transparent;
+	box-shadow: none;
+	color: #787c82;
+	font-size: 15px;
+	line-height: 1;
+}
+#d2gc-filters .select2-selection--multiple .select2-selection__choice__remove:hover,
+#d2gc-filters .select2-selection--multiple .select2-selection__choice__remove:focus {
+	background: #dcdcde;
+	color: #d63638;
+	outline: none;
+}
+#d2gc-filters .select2-selection--multiple .select2-selection__choice__display {
+	padding: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+#d2gc-filters .select2-selection--multiple .select2-search--inline {
+	display: inline-flex;
+	flex: 1 1 60px;
+	min-width: 60px;
+}
+#d2gc-filters .select2-selection--multiple .select2-search--inline .select2-search__field {
+	width: 100% !important; /* select2 sets a pixel width inline */
+	height: 24px;
+	min-height: 0;
+	margin: 0;
+	padding: 0 2px;
+	border: 0;
+	background: transparent;
+	box-shadow: none;
+	font-size: 13px;
+	line-height: 24px;
+}
+#d2gc-filters .d2gc-select2--error .select2-selection--multiple {
+	border-color: #d63638;
+	box-shadow: 0 0 0 1px #d63638;
+}
+#d2gc-filters .d2gc-filters-error {
+	margin: 0 0 12px;
 }
 #d2gc-availability .d2gc-vacation-list {
 	margin: 0 0 0 1.2em;

@@ -327,6 +327,7 @@ jQuery(function ($) {
 		personal:       ['#personal-info'],
 		bio:            ['#postdivrich', '#postexcerpt'],
 		experience:     ['#education', '#work', '#publication'],
+		filters:        ['#d2gc-filters'],
 		prices:         ['#d2gc-prices'],
 		questionnaires: ['#d2gc-questionnaires'],
 		availability:   ['#d2gc-availability']
@@ -372,6 +373,61 @@ jQuery(function ($) {
 	$(window).on('load', function () {
 		loaded = true;
 		show(current);
+		// fixed box order for everybody (D2gConnect_Admin::d2gc_doctor_meta_box_order()): no dragging
+		$('.meta-box-sortables').each(function () {
+			if ($(this).sortable('instance')) $(this).sortable('option', 'disabled', true);
+		});
+	});
+});
+
+
+/* ########################################################################## */
+/* DOCTOR EDIT SCREEN: FILTERS (taxonomies)                                   */
+/* ########################################################################## */
+// Searchable multi-selects (select2) from d2gc_meta_box_filters_cb(). "Publish" / "Update" is stopped as long as a
+// required filter (data-required) is empty; "Save Draft" and "Preview" always work.
+// Server side: D2gConnect_Admin::d2gc_check_required_filters().
+jQuery(function ($) {
+	var $box = $('#d2gc-filters');
+	if (!$box.length) return;
+
+	var $selects = $box.find('select.d2gc-select2');
+	var $error   = $box.find('.d2gc-filters-error');
+
+	if ($.fn.select2) {
+		$selects.each(function () {
+			$(this).select2({ width: '100%', placeholder: $(this).data('placeholder') || '' });
+		});
+	}
+
+	var missing = function () {
+		var labels = [];
+		$selects.filter('[data-required]').each(function () {
+			var $s = $(this);
+			var empty = !($s.val() && $s.val().length);
+			$s.next('.select2').toggleClass('d2gc-select2--error', empty);
+			if (empty) labels.push($s.data('label'));
+		});
+		return labels;
+	};
+
+	$selects.on('change', function () {
+		if (!$error.prop('hidden')) {
+			var labels = missing();
+			if (!labels.length) $error.prop('hidden', true);
+		}
+	});
+
+	$('#publish').on('click', function (e) {
+		var labels = missing();
+		if (!labels.length) return;
+
+		e.preventDefault();
+		e.stopImmediatePropagation();
+		var text = (typeof myStrData !== 'undefined' && myStrData.filters_missing) ? myStrData.filters_missing : 'Please choose at least one value for: %s';
+		$error.prop('hidden', false).find('p').text(text.replace('%s', labels.join(', ')));
+		$('.d2gc-doctor-tabs .nav-tab[data-tab="filters"]').trigger('click');
+		$('html, body').animate({ scrollTop: $box.offset().top - 60 }, 200);
 	});
 });
 

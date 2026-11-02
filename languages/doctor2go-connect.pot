@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doctor2Go Connect\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-02 12:19+0100\n"
+"POT-Creation-Date: 2026-11-02 12:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,352 +39,364 @@ msgstr ""
 msgid "There has been an error."
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:100 admin/partials/metaboxes.php:201
-#: admin/partials/metaboxes.php:227 admin/partials/metaboxes.php:251
-#: admin/partials/metaboxes.php:290 admin/partials/metaboxes.php:316
-#: admin/partials/metaboxes.php:340 public/class-d2g-connect-public.php:338
+#: admin/class-d2g-connect-admin.php:118 admin/partials/metaboxes.php:278
+#: admin/partials/metaboxes.php:304 admin/partials/metaboxes.php:328
+#: admin/partials/metaboxes.php:367 admin/partials/metaboxes.php:393
+#: admin/partials/metaboxes.php:417 public/class-d2g-connect-public.php:338
 #: public/d2g-connect-shortcodes.php:524 public/d2g-connect-shortcodes.php:551
 #: public/d2g-connect-shortcodes.php:618 public/d2g-connect-shortcodes.php:645
 msgid "start date"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:101 admin/partials/metaboxes.php:204
-#: admin/partials/metaboxes.php:230 admin/partials/metaboxes.php:254
-#: admin/partials/metaboxes.php:293 admin/partials/metaboxes.php:319
-#: admin/partials/metaboxes.php:343 public/class-d2g-connect-public.php:339
+#: admin/class-d2g-connect-admin.php:119 admin/partials/metaboxes.php:281
+#: admin/partials/metaboxes.php:307 admin/partials/metaboxes.php:331
+#: admin/partials/metaboxes.php:370 admin/partials/metaboxes.php:396
+#: admin/partials/metaboxes.php:420 public/class-d2g-connect-public.php:339
 #: public/d2g-connect-shortcodes.php:527 public/d2g-connect-shortcodes.php:554
 #: public/d2g-connect-shortcodes.php:621 public/d2g-connect-shortcodes.php:648
 msgid "end date"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:102 admin/partials/metaboxes.php:298
-#: admin/partials/metaboxes.php:324 admin/partials/metaboxes.php:348
+#: admin/class-d2g-connect-admin.php:120 admin/partials/metaboxes.php:375
+#: admin/partials/metaboxes.php:401 admin/partials/metaboxes.php:425
 #: public/class-d2g-connect-public.php:340
 #: public/d2g-connect-shortcodes.php:500 public/d2g-connect-shortcodes.php:533
 #: public/d2g-connect-shortcodes.php:560
 msgid "study area"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:103 admin/partials/metaboxes.php:301
-#: admin/partials/metaboxes.php:327 admin/partials/metaboxes.php:351
+#: admin/class-d2g-connect-admin.php:121 admin/partials/metaboxes.php:378
+#: admin/partials/metaboxes.php:404 admin/partials/metaboxes.php:428
 #: public/class-d2g-connect-public.php:341
 #: public/d2g-connect-shortcodes.php:503 public/d2g-connect-shortcodes.php:537
 #: public/d2g-connect-shortcodes.php:564
 msgid "degree"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:104 admin/partials/metaboxes.php:304
-#: admin/partials/metaboxes.php:330 admin/partials/metaboxes.php:354
+#: admin/class-d2g-connect-admin.php:122 admin/partials/metaboxes.php:381
+#: admin/partials/metaboxes.php:407 admin/partials/metaboxes.php:431
 #: public/class-d2g-connect-public.php:342
 #: public/d2g-connect-shortcodes.php:506 public/d2g-connect-shortcodes.php:541
 #: public/d2g-connect-shortcodes.php:568
 msgid "institution"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:105 admin/partials/metaboxes.php:209
+#: admin/class-d2g-connect-admin.php:123 admin/partials/metaboxes.php:286
 #: public/class-d2g-connect-public.php:343
 #: public/d2g-connect-shortcodes.php:594
 msgid "expertise"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:106 admin/partials/metaboxes.php:212
-#: admin/partials/metaboxes.php:238 public/class-d2g-connect-public.php:344
+#: admin/class-d2g-connect-admin.php:124 admin/partials/metaboxes.php:289
+#: admin/partials/metaboxes.php:315 public/class-d2g-connect-public.php:344
 #: public/d2g-connect-shortcodes.php:597 public/d2g-connect-shortcodes.php:631
 msgid "position"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:107
+#: admin/class-d2g-connect-admin.php:125
 #: public/class-d2g-connect-public.php:345
 msgid "organisation / company"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:108 admin/partials/metaboxes.php:262
-#: admin/partials/metaboxes.php:377 admin/partials/metaboxes.php:402
-#: admin/partials/metaboxes.php:425 public/class-d2g-connect-public.php:346
+#: admin/class-d2g-connect-admin.php:126 admin/partials/metaboxes.php:339
+#: admin/partials/metaboxes.php:454 admin/partials/metaboxes.php:479
+#: admin/partials/metaboxes.php:502 public/class-d2g-connect-public.php:346
 #: public/d2g-connect-shortcodes.php:658 public/d2g-connect-shortcodes.php:685
 #: public/d2g-connect-shortcodes.php:714 public/d2g-connect-shortcodes.php:742
 #: public/template-functions.php:903
 msgid "title"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:109 admin/partials/metaboxes.php:380
-#: admin/partials/metaboxes.php:405 admin/partials/metaboxes.php:428
+#: admin/class-d2g-connect-admin.php:127 admin/partials/metaboxes.php:457
+#: admin/partials/metaboxes.php:482 admin/partials/metaboxes.php:505
 #: public/class-d2g-connect-public.php:347
 #: public/d2g-connect-shortcodes.php:688 public/d2g-connect-shortcodes.php:718
 #: public/d2g-connect-shortcodes.php:746
 msgid "web link"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:110 admin/partials/metaboxes.php:383
-#: admin/partials/metaboxes.php:408 admin/partials/metaboxes.php:431
+#: admin/class-d2g-connect-admin.php:128 admin/partials/metaboxes.php:460
+#: admin/partials/metaboxes.php:485 admin/partials/metaboxes.php:508
 #: public/class-d2g-connect-public.php:348
 #: public/d2g-connect-shortcodes.php:691 public/d2g-connect-shortcodes.php:722
 #: public/d2g-connect-shortcodes.php:750
 msgid "journal"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:111 admin/partials/metaboxes.php:386
-#: admin/partials/metaboxes.php:411 admin/partials/metaboxes.php:434
+#: admin/class-d2g-connect-admin.php:129 admin/partials/metaboxes.php:463
+#: admin/partials/metaboxes.php:488 admin/partials/metaboxes.php:511
 #: public/class-d2g-connect-public.php:349
 #: public/d2g-connect-shortcodes.php:694 public/d2g-connect-shortcodes.php:726
 #: public/d2g-connect-shortcodes.php:754 public/template-functions.php:909
 msgid "type of publication"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:112 admin/partials/metaboxes.php:389
-#: admin/partials/metaboxes.php:414 admin/partials/metaboxes.php:437
+#: admin/class-d2g-connect-admin.php:130 admin/partials/metaboxes.php:466
+#: admin/partials/metaboxes.php:491 admin/partials/metaboxes.php:514
 #: public/class-d2g-connect-public.php:350
 #: public/d2g-connect-shortcodes.php:697 public/d2g-connect-shortcodes.php:730
 #: public/d2g-connect-shortcodes.php:758
 msgid "author"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:113 admin/partials/metaboxes.php:417
+#: admin/class-d2g-connect-admin.php:131 admin/partials/metaboxes.php:494
 #: public/class-d2g-connect-public.php:351
 #: public/d2g-connect-shortcodes.php:734
 msgid "publication date"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:116
+#: admin/class-d2g-connect-admin.php:134
 msgid "All translations are aligned."
 msgstr ""
 
 #. translators: 1: doctors with differences, 2: doctors with translations
-#: admin/class-d2g-connect-admin.php:118
+#: admin/class-d2g-connect-admin.php:136
 #, php-format
 msgid "%1$d of %2$d doctors with translations have differences."
 msgstr ""
 
 #. translators: %d: number of languages
-#: admin/class-d2g-connect-admin.php:120
+#: admin/class-d2g-connect-admin.php:138
 #, php-format
 msgid "%d languages"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:121
+#: admin/class-d2g-connect-admin.php:139
 msgid "differs in:"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:122
+#: admin/class-d2g-connect-admin.php:140
 msgid "align"
 msgstr ""
 
 #. translators: 1: aligned doctors, 2: total
-#: admin/class-d2g-connect-admin.php:124
+#: admin/class-d2g-connect-admin.php:142
 #, php-format
 msgid "Aligning… %1$d of %2$d"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:125
+#: admin/class-d2g-connect-admin.php:143
 msgid "Something went wrong, please try again."
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:127
+#: admin/class-d2g-connect-admin.php:145
 #, php-format
 msgid "Syncing… %1$d of %2$d doctors"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:128
+#: admin/class-d2g-connect-admin.php:146
 #, php-format
 msgid "%d doctors synced."
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:129
+#: admin/class-d2g-connect-admin.php:147
 msgid "Not synced (no answer from doctor2go.online or no doctor key):"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:130
+#: admin/class-d2g-connect-admin.php:148
 msgid "No doctors linked to doctor2go.online found."
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:197
+#. translators: %s: list of filters, e.g. "Countries, Languages"
+#: admin/class-d2g-connect-admin.php:151
+#, php-format
+msgid "Please choose at least one value for: %s"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:218
 #: admin/partials/d2g-connect-admin-display.php:68
 msgid "Doctors"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:221
+#: admin/class-d2g-connect-admin.php:242
 msgid "D2GC E-mail"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:293
+#. translators: %s: list of filters, e.g. "Countries, Languages"
+#: admin/class-d2g-connect-admin.php:373
+#, php-format
+msgid "The profile was saved as draft and not published: please choose at least one value for %s (Filters tab)."
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:384
 msgctxt "taxonomy general name"
 msgid "Counytries of operations"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:294
+#: admin/class-d2g-connect-admin.php:385
 msgctxt "taxonomy singular name"
 msgid "Counytry of operations"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:295 admin/class-d2g-connect-admin.php:309
-#: admin/class-d2g-connect-admin.php:323 admin/class-d2g-connect-admin.php:337
-#: admin/class-d2g-connect-admin.php:351 admin/class-d2g-connect-admin.php:365
-#: admin/class-d2g-connect-admin.php:379 public/d2g-connect-shortcodes.php:1814
+#: admin/class-d2g-connect-admin.php:386 admin/class-d2g-connect-admin.php:400
+#: admin/class-d2g-connect-admin.php:414 admin/class-d2g-connect-admin.php:428
+#: admin/class-d2g-connect-admin.php:442 admin/class-d2g-connect-admin.php:456
+#: admin/class-d2g-connect-admin.php:470 public/d2g-connect-shortcodes.php:1814
 msgid "Search"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:296 admin/class-d2g-connect-admin.php:310
-#: admin/class-d2g-connect-admin.php:324 admin/class-d2g-connect-admin.php:338
-#: admin/class-d2g-connect-admin.php:352 admin/class-d2g-connect-admin.php:366
-#: admin/class-d2g-connect-admin.php:380
+#: admin/class-d2g-connect-admin.php:387 admin/class-d2g-connect-admin.php:401
+#: admin/class-d2g-connect-admin.php:415 admin/class-d2g-connect-admin.php:429
+#: admin/class-d2g-connect-admin.php:443 admin/class-d2g-connect-admin.php:457
+#: admin/class-d2g-connect-admin.php:471
 msgid "All"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:297 admin/class-d2g-connect-admin.php:311
-#: admin/class-d2g-connect-admin.php:325 admin/class-d2g-connect-admin.php:339
-#: admin/class-d2g-connect-admin.php:353 admin/class-d2g-connect-admin.php:367
-#: admin/class-d2g-connect-admin.php:381
+#: admin/class-d2g-connect-admin.php:388 admin/class-d2g-connect-admin.php:402
+#: admin/class-d2g-connect-admin.php:416 admin/class-d2g-connect-admin.php:430
+#: admin/class-d2g-connect-admin.php:444 admin/class-d2g-connect-admin.php:458
+#: admin/class-d2g-connect-admin.php:472
 msgid "Parent"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:298 admin/class-d2g-connect-admin.php:312
-#: admin/class-d2g-connect-admin.php:326 admin/class-d2g-connect-admin.php:340
-#: admin/class-d2g-connect-admin.php:354 admin/class-d2g-connect-admin.php:368
-#: admin/class-d2g-connect-admin.php:382
+#: admin/class-d2g-connect-admin.php:389 admin/class-d2g-connect-admin.php:403
+#: admin/class-d2g-connect-admin.php:417 admin/class-d2g-connect-admin.php:431
+#: admin/class-d2g-connect-admin.php:445 admin/class-d2g-connect-admin.php:459
+#: admin/class-d2g-connect-admin.php:473
 msgid "Parent:"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:299 admin/class-d2g-connect-admin.php:313
-#: admin/class-d2g-connect-admin.php:327 admin/class-d2g-connect-admin.php:341
-#: admin/class-d2g-connect-admin.php:355 admin/class-d2g-connect-admin.php:369
-#: admin/class-d2g-connect-admin.php:383 public/d2g-connect-shortcodes.php:915
+#: admin/class-d2g-connect-admin.php:390 admin/class-d2g-connect-admin.php:404
+#: admin/class-d2g-connect-admin.php:418 admin/class-d2g-connect-admin.php:432
+#: admin/class-d2g-connect-admin.php:446 admin/class-d2g-connect-admin.php:460
+#: admin/class-d2g-connect-admin.php:474 public/d2g-connect-shortcodes.php:915
 msgid "Edit"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:300 admin/class-d2g-connect-admin.php:314
-#: admin/class-d2g-connect-admin.php:328 admin/class-d2g-connect-admin.php:342
-#: admin/class-d2g-connect-admin.php:356 admin/class-d2g-connect-admin.php:370
-#: admin/class-d2g-connect-admin.php:384
+#: admin/class-d2g-connect-admin.php:391 admin/class-d2g-connect-admin.php:405
+#: admin/class-d2g-connect-admin.php:419 admin/class-d2g-connect-admin.php:433
+#: admin/class-d2g-connect-admin.php:447 admin/class-d2g-connect-admin.php:461
+#: admin/class-d2g-connect-admin.php:475
 #: public/class-d2g-connect-public.php:202
 msgid "Update"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:301 admin/class-d2g-connect-admin.php:315
-#: admin/class-d2g-connect-admin.php:329 admin/class-d2g-connect-admin.php:343
-#: admin/class-d2g-connect-admin.php:357 admin/class-d2g-connect-admin.php:371
-#: admin/class-d2g-connect-admin.php:385
+#: admin/class-d2g-connect-admin.php:392 admin/class-d2g-connect-admin.php:406
+#: admin/class-d2g-connect-admin.php:420 admin/class-d2g-connect-admin.php:434
+#: admin/class-d2g-connect-admin.php:448 admin/class-d2g-connect-admin.php:462
+#: admin/class-d2g-connect-admin.php:476
 msgid "Add New"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:302 admin/class-d2g-connect-admin.php:316
-#: admin/class-d2g-connect-admin.php:330 admin/class-d2g-connect-admin.php:344
-#: admin/class-d2g-connect-admin.php:358 admin/class-d2g-connect-admin.php:372
-#: admin/class-d2g-connect-admin.php:386
+#: admin/class-d2g-connect-admin.php:393 admin/class-d2g-connect-admin.php:407
+#: admin/class-d2g-connect-admin.php:421 admin/class-d2g-connect-admin.php:435
+#: admin/class-d2g-connect-admin.php:449 admin/class-d2g-connect-admin.php:463
+#: admin/class-d2g-connect-admin.php:477
 msgid "New"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:303
+#: admin/class-d2g-connect-admin.php:394
 msgid "Counytry of operations"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:307
+#: admin/class-d2g-connect-admin.php:398
 msgctxt "taxonomy general name"
 msgid "Country of origin"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:308
+#: admin/class-d2g-connect-admin.php:399
 msgctxt "taxonomy singular name"
 msgid "Country of origin"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:317
+#: admin/class-d2g-connect-admin.php:408
 msgid "Country of origin"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:321
+#: admin/class-d2g-connect-admin.php:412
 msgctxt "taxonomy general name"
 msgid "Languages"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:322
+#: admin/class-d2g-connect-admin.php:413
 msgctxt "taxonomy singular name"
 msgid "Language"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:331 public/d2g-connect-shortcodes.php:335
+#: admin/class-d2g-connect-admin.php:422 public/d2g-connect-shortcodes.php:335
 msgid "Languages"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:335
+#: admin/class-d2g-connect-admin.php:426
 msgctxt "taxonomy general name"
 msgid "Diseases"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:336
+#: admin/class-d2g-connect-admin.php:427
 msgctxt "taxonomy singular name"
 msgid "Disease"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:345
+#: admin/class-d2g-connect-admin.php:436
 msgid "Diseases"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:349
+#: admin/class-d2g-connect-admin.php:440
 msgctxt "taxonomy general name"
 msgid "Degrees"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:350
+#: admin/class-d2g-connect-admin.php:441
 msgctxt "taxonomy singular name"
 msgid "Degree"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:359
+#: admin/class-d2g-connect-admin.php:450
 msgid "Degrees"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:363
+#: admin/class-d2g-connect-admin.php:454
 msgctxt "taxonomy general name"
 msgid "Specialties"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:364
+#: admin/class-d2g-connect-admin.php:455
 msgctxt "taxonomy singular name"
 msgid "Specialty"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:373
+#: admin/class-d2g-connect-admin.php:464
 msgid "Specialties"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:377
+#: admin/class-d2g-connect-admin.php:468
 msgctxt "taxonomy general name"
 msgid "Body parts"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:378
+#: admin/class-d2g-connect-admin.php:469
 msgctxt "taxonomy singular name"
 msgid "Body part"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:387
+#: admin/class-d2g-connect-admin.php:478
 msgid "Body parts"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:409
+#: admin/class-d2g-connect-admin.php:500
 msgid "Profile ID"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:410
+#: admin/class-d2g-connect-admin.php:501
 msgid "WP user ID"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:411
+#: admin/class-d2g-connect-admin.php:502
 msgid "Image"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:412 admin/class-d2g-connect-admin.php:524
-#: admin/class-d2g-connect-admin.php:555 admin/class-d2g-connect-admin.php:801
+#: admin/class-d2g-connect-admin.php:503 admin/class-d2g-connect-admin.php:615
+#: admin/class-d2g-connect-admin.php:646 admin/class-d2g-connect-admin.php:894
 #: admin/partials/metaboxes.php:20
 #: includes/class-d2g-connect-doctor-sync.php:169
 msgid "Title"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:413
+#: admin/class-d2g-connect-admin.php:504
 msgid "Fist name"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:414 admin/class-d2g-connect-admin.php:800
+#: admin/class-d2g-connect-admin.php:505 admin/class-d2g-connect-admin.php:893
 #: admin/partials/metaboxes.php:19
 #: includes/class-d2g-connect-doctor-sync.php:168
 #: public/d2g-connect-shortcodes.php:2482
@@ -395,8 +407,8 @@ msgstr ""
 msgid "Last name"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:415 admin/class-d2g-connect-admin.php:556
-#: admin/class-d2g-connect-admin.php:807
+#: admin/class-d2g-connect-admin.php:506 admin/class-d2g-connect-admin.php:647
+#: admin/class-d2g-connect-admin.php:900
 #: admin/partials/d2g-connect-admin-display.php:70
 #: admin/partials/metaboxes.php:26
 #: includes/class-d2g-connect-doctor-sync.php:176
@@ -407,92 +419,96 @@ msgstr ""
 msgid "E-mail"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:416 public/d2g-connect-shortcodes.php:292
+#: admin/class-d2g-connect-admin.php:507 public/d2g-connect-shortcodes.php:292
 #: public/template-functions.php:1304 public/template-functions.php:1306
 msgid "Country"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:417
+#: admin/class-d2g-connect-admin.php:508
 msgid "Language"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:418
+#: admin/class-d2g-connect-admin.php:509
 msgid "Specialisation"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:419
+#: admin/class-d2g-connect-admin.php:510
 msgid "D2G domain"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:420
+#: admin/class-d2g-connect-admin.php:511
 msgid "D2G org. key"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:421
+#: admin/class-d2g-connect-admin.php:512
 msgid "D2G user ID"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:422
+#: admin/class-d2g-connect-admin.php:513
 msgid "D2G user key"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:423 admin/class-d2g-connect-admin.php:527
+#: admin/class-d2g-connect-admin.php:514 admin/class-d2g-connect-admin.php:618
 msgid "Author"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:424
+#: admin/class-d2g-connect-admin.php:515
 msgid "Action"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:523
+#: admin/class-d2g-connect-admin.php:614
 msgid "Page ID"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:525
+#: admin/class-d2g-connect-admin.php:616
 msgid "Access"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:526
+#: admin/class-d2g-connect-admin.php:617
 msgid "Identifier"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:650
+#: admin/class-d2g-connect-admin.php:741
 msgid "API token cannot be empty."
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:662
+#: admin/class-d2g-connect-admin.php:753
 msgid "This field cannot be empty."
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:711 admin/class-d2g-connect-admin.php:754
+#: admin/class-d2g-connect-admin.php:802 admin/class-d2g-connect-admin.php:847
 msgid "Prices"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:712 admin/class-d2g-connect-admin.php:755
+#: admin/class-d2g-connect-admin.php:803 admin/class-d2g-connect-admin.php:848
 #: public/d2g-connect-shortcodes.php:458
 msgid "Questionnaires"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:716 admin/class-d2g-connect-admin.php:756
+#: admin/class-d2g-connect-admin.php:807 admin/class-d2g-connect-admin.php:849
 msgid "Availability & holiday"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:751 public/d2g-connect-shortcodes.php:245
+#: admin/class-d2g-connect-admin.php:808 admin/class-d2g-connect-admin.php:846
+msgid "Filters"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:843 public/d2g-connect-shortcodes.php:245
 #: public/templates/email-advice/generic-medofenic-email-form.php:90
 #: public/templates/email-advice/generic-short-email-form.php:62
 #: public/templates/email-advice/standard-derma-email-adv-form.php:35
 msgid "Personal information"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:752
+#: admin/class-d2g-connect-admin.php:844
 msgid "Bio"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:753
+#: admin/class-d2g-connect-admin.php:845
 msgid "Education & experience"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:799 admin/partials/metaboxes.php:18
+#: admin/class-d2g-connect-admin.php:892 admin/partials/metaboxes.php:18
 #: includes/class-d2g-connect-doctor-sync.php:167
 #: public/d2g-connect-shortcodes.php:2477
 #: public/d2g-connect-shortcodes.php:2922 public/template-functions.php:1053
@@ -502,54 +518,54 @@ msgstr ""
 msgid "First name"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:802 admin/partials/metaboxes.php:21
+#: admin/class-d2g-connect-admin.php:895 admin/partials/metaboxes.php:21
 #: includes/class-d2g-connect-doctor-sync.php:171
 #: public/d2g-connect-shortcodes.php:273 public/d2g-connect-shortcodes.php:275
 #: public/template-functions.php:800
 msgid "Address"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:803 admin/partials/metaboxes.php:22
+#: admin/class-d2g-connect-admin.php:896 admin/partials/metaboxes.php:22
 #: includes/class-d2g-connect-doctor-sync.php:172
 #: public/d2g-connect-shortcodes.php:280
 msgid "Zip code"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:804 admin/partials/metaboxes.php:23
+#: admin/class-d2g-connect-admin.php:897 admin/partials/metaboxes.php:23
 msgid "city"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:805 admin/partials/metaboxes.php:24
+#: admin/class-d2g-connect-admin.php:898 admin/partials/metaboxes.php:24
 #: includes/class-d2g-connect-doctor-sync.php:174
 #: public/d2g-connect-shortcodes.php:2492
 #: public/d2g-connect-shortcodes.php:2937
 msgid "Phone"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:806 admin/partials/metaboxes.php:25
+#: admin/class-d2g-connect-admin.php:899 admin/partials/metaboxes.php:25
 #: includes/class-d2g-connect-doctor-sync.php:175
 msgid "Mobile"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:808 admin/partials/metaboxes.php:27
+#: admin/class-d2g-connect-admin.php:901 admin/partials/metaboxes.php:27
 #: includes/class-d2g-connect-doctor-sync.php:170
 #: public/d2g-connect-shortcodes.php:248 public/d2g-connect-shortcodes.php:250
 msgid "Organisation"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:809 admin/partials/metaboxes.php:28
+#: admin/class-d2g-connect-admin.php:902 admin/partials/metaboxes.php:28
 #: includes/class-d2g-connect-doctor-sync.php:177
 #: public/d2g-connect-shortcodes.php:430
 msgid "Registration number"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:810 admin/partials/metaboxes.php:29
+#: admin/class-d2g-connect-admin.php:903 admin/partials/metaboxes.php:29
 #: includes/class-d2g-connect-doctor-sync.php:178
 #: public/d2g-connect-shortcodes.php:435 public/d2g-connect-shortcodes.php:437
 msgid "Country of registration"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:811
+#: admin/class-d2g-connect-admin.php:904
 msgid "Average price"
 msgstr ""
 
@@ -1183,11 +1199,15 @@ msgstr ""
 msgid "Use this shortcode to display the patient portal where the patient can chat with doctors and receive medical documents from, where he/she has a connection with. No parameters are required."
 msgstr ""
 
-#: admin/partials/metaboxes.php:62 public/template-functions.php:1254
+#: admin/partials/metaboxes.php:63
+msgid "Open doctor2go.online dashboard"
+msgstr ""
+
+#: admin/partials/metaboxes.php:76 public/template-functions.php:1254
 msgid "Walk-in consultation"
 msgstr ""
 
-#: admin/partials/metaboxes.php:63 public/template-functions.php:665
+#: admin/partials/metaboxes.php:77 public/template-functions.php:665
 #: public/template-functions.php:1447 public/template-functions.php:1546
 #: public/template-functions.php:1826
 #: public/templates/email-advice/generic-medofenic-email-form.php:153
@@ -1196,121 +1216,125 @@ msgstr ""
 msgid "E-mail advice"
 msgstr ""
 
-#: admin/partials/metaboxes.php:71 admin/partials/metaboxes.php:84
-#: public/d2g-connect-shortcodes.php:1180
-msgid "Price"
-msgstr ""
-
-#: admin/partials/metaboxes.php:72 admin/partials/metaboxes.php:85
-#: public/d2g-connect-shortcodes.php:1186
-msgid "Currency"
-msgstr ""
-
-#: admin/partials/metaboxes.php:82
+#: admin/partials/metaboxes.php:81 admin/partials/metaboxes.php:116
 msgid "Video consultation (standard price)"
 msgstr ""
 
-#: admin/partials/metaboxes.php:90
+#: admin/partials/metaboxes.php:83
+msgid "The prices of a doctor are set in the doctor2go.online software and sent to this website automatically."
+msgstr ""
+
+#: admin/partials/metaboxes.php:90 admin/partials/metaboxes.php:105
+#: admin/partials/metaboxes.php:118 public/d2g-connect-shortcodes.php:1180
+msgid "Price"
+msgstr ""
+
+#: admin/partials/metaboxes.php:91 admin/partials/metaboxes.php:106
+#: admin/partials/metaboxes.php:119 public/d2g-connect-shortcodes.php:1186
+msgid "Currency"
+msgstr ""
+
+#: admin/partials/metaboxes.php:121
 msgid "Set in the profile editor together with the booking rules (availabilities), a different price can be set per booking rule."
 msgstr ""
 
-#: admin/partials/metaboxes.php:91
-msgid "Set in the doctor2go.online software together with the booking rules (availabilities)."
-msgstr ""
-
-#: admin/partials/metaboxes.php:109 public/d2g-connect-shortcodes.php:460
+#: admin/partials/metaboxes.php:137 public/d2g-connect-shortcodes.php:460
 msgid "E-mail consult questionnaire"
 msgstr ""
 
-#: admin/partials/metaboxes.php:115
+#: admin/partials/metaboxes.php:143
 msgid "The form patients fill in when they request e-mail advice."
 msgstr ""
 
-#: admin/partials/metaboxes.php:118 public/d2g-connect-shortcodes.php:471
+#: admin/partials/metaboxes.php:146 public/d2g-connect-shortcodes.php:471
 msgid "Intake for video consultations"
 msgstr ""
 
-#: admin/partials/metaboxes.php:125
+#: admin/partials/metaboxes.php:153
 msgid "The questions in the booking form of a video consultation."
 msgstr ""
 
-#: admin/partials/metaboxes.php:153
+#: admin/partials/metaboxes.php:203
+msgid "Fields marked with * need at least one value before the profile can be published."
+msgstr ""
+
+#: admin/partials/metaboxes.php:229
 msgid "The availabilities (booking rules, incl. the video consultation prices) and the vacation periods of a doctor are set in the profile editor on the website, because they are sent to doctor2go.online when they are saved."
 msgstr ""
 
-#: admin/partials/metaboxes.php:155
+#: admin/partials/metaboxes.php:231
 msgid "Open profile editor"
 msgstr ""
 
-#: admin/partials/metaboxes.php:158
+#: admin/partials/metaboxes.php:234
 msgid "The availabilities (booking rules, incl. the video consultation prices) and the vacation periods of a doctor are set in the doctor2go.online software (see Doctor2Go Connect settings, Doctors tab)."
 msgstr ""
 
-#: admin/partials/metaboxes.php:161
+#: admin/partials/metaboxes.php:238
 #: includes/class-d2g-connect-doctor-sync.php:183
 #: public/d2g-connect-shortcodes.php:899
 msgid "Vacation periods"
 msgstr ""
 
-#: admin/partials/metaboxes.php:163
+#: admin/partials/metaboxes.php:240
 msgid "No vacation periods."
 msgstr ""
 
-#: admin/partials/metaboxes.php:171
+#: admin/partials/metaboxes.php:248
 msgid "past"
 msgstr ""
 
-#: admin/partials/metaboxes.php:173
+#: admin/partials/metaboxes.php:250
 msgid "active now"
 msgstr ""
 
-#: admin/partials/metaboxes.php:175
+#: admin/partials/metaboxes.php:252
 msgid "upcoming"
 msgstr ""
 
-#: admin/partials/metaboxes.php:215 admin/partials/metaboxes.php:241
-#: admin/partials/metaboxes.php:265 public/d2g-connect-shortcodes.php:600
+#: admin/partials/metaboxes.php:292 admin/partials/metaboxes.php:318
+#: admin/partials/metaboxes.php:342 public/d2g-connect-shortcodes.php:600
 #: public/d2g-connect-shortcodes.php:635 public/d2g-connect-shortcodes.php:662
 msgid "company"
 msgstr ""
 
-#: admin/partials/metaboxes.php:235 admin/partials/metaboxes.php:259
+#: admin/partials/metaboxes.php:312 admin/partials/metaboxes.php:336
 #: public/d2g-connect-shortcodes.php:627 public/d2g-connect-shortcodes.php:654
 msgid "exptertise"
 msgstr ""
 
-#: admin/partials/metaboxes.php:392 admin/partials/metaboxes.php:440
+#: admin/partials/metaboxes.php:469 admin/partials/metaboxes.php:517
 #: public/d2g-connect-shortcodes.php:700 public/d2g-connect-shortcodes.php:762
 #: public/template-functions.php:912
 msgid "publication Date"
 msgstr ""
 
-#: admin/partials/metaboxes.php:445 public/d2g-connect-shortcodes.php:768
+#: admin/partials/metaboxes.php:522 public/d2g-connect-shortcodes.php:768
 msgid "add an extra publication"
 msgstr ""
 
-#: admin/partials/metaboxes.php:479
+#: admin/partials/metaboxes.php:556
 msgid "All pages used by the D2G connect plugin need a page type! Otherwise links in the front end might be broken!"
 msgstr ""
 
-#: admin/partials/metaboxes.php:481 admin/partials/metaboxes.php:508
+#: admin/partials/metaboxes.php:558 admin/partials/metaboxes.php:585
 #: public/d2g-connect-shortcodes.php:2959
 msgid "make a selection"
 msgstr ""
 
-#: admin/partials/metaboxes.php:501
+#: admin/partials/metaboxes.php:578
 msgid "Cancellation for doctor"
 msgstr ""
 
-#: admin/partials/metaboxes.php:502
+#: admin/partials/metaboxes.php:579
 msgid "Cancellation for patient"
 msgstr ""
 
-#: admin/partials/metaboxes.php:503
+#: admin/partials/metaboxes.php:580
 msgid "Confirmation for patient registration"
 msgstr ""
 
-#: admin/partials/metaboxes.php:506
+#: admin/partials/metaboxes.php:583
 msgid "Define which email this template is for."
 msgstr ""
 
