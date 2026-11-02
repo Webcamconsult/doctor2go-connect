@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doctor2Go Connect\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-22 16:37+0000\n"
+"POT-Creation-Date: 2026-11-02 11:41+0100\n"
 "PO-Revision-Date: 2026-10-22 17:06+0000\n"
 "Last-Translator: Thomas Wiese\n"
 "Language-Team: Romanian\n"
@@ -16,11 +16,14 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.8.2; wp-6.9.1; php-8.3.21\n"
 
-#: admin/class-d2g-booking-patient.php:70 public/d2g-connect-shortcodes.php:2369
+#: admin/class-d2g-booking-patient.php:70
+#: public/d2g-connect-shortcodes.php:2369
 msgid "CAPTCHA verification failed. Please try again."
 msgstr "Verificarea CAPTCHA a eșuat. Vă rugăm să încercați din nou."
 
-#: admin/class-d2g-booking-patient.php:384 admin/class-d2g-booking-patient.php:418 admin/class-d2g-booking-patient.php:429
+#: admin/class-d2g-booking-patient.php:384
+#: admin/class-d2g-booking-patient.php:418
+#: admin/class-d2g-booking-patient.php:429
 msgid "Your appointment cloud not be canceled. Please contact your doctor."
 msgstr "Programarea dumneavoastră nu a putut fi anulată. Vă rugăm să contactați medicul dumneavoastră."
 
@@ -28,63 +31,116 @@ msgstr "Programarea dumneavoastră nu a putut fi anulată. Vă rugăm să contac
 msgid "Your appointment has been canceled."
 msgstr "Programarea dumneavoastră a fost anulată."
 
-#: admin/class-d2g-booking-patient.php:526 admin/class-d2g-booking-patient.php:562 admin/class-d2g-booking-patient.php:749 admin/class-d2g-booking-patient.php:792
+#: admin/class-d2g-booking-patient.php:526
+#: admin/class-d2g-booking-patient.php:562
+#: admin/class-d2g-booking-patient.php:749
+#: admin/class-d2g-booking-patient.php:792
 msgid "There has been an error."
 msgstr "A apărut o eroare."
 
-#: admin/class-d2g-connect-admin.php:100 admin/partials/metaboxes.php:201 admin/partials/metaboxes.php:227 admin/partials/metaboxes.php:251 admin/partials/metaboxes.php:290 admin/partials/metaboxes.php:316 admin/partials/metaboxes.php:340 public/class-d2g-connect-public.php:338 public/d2g-connect-shortcodes.php:524 public/d2g-connect-shortcodes.php:551 public/d2g-connect-shortcodes.php:618 public/d2g-connect-shortcodes.php:645
+#: admin/class-d2g-connect-admin.php:100 admin/partials/metaboxes.php:201
+#: admin/partials/metaboxes.php:227 admin/partials/metaboxes.php:251
+#: admin/partials/metaboxes.php:290 admin/partials/metaboxes.php:316
+#: admin/partials/metaboxes.php:340 public/class-d2g-connect-public.php:338
+#: public/d2g-connect-shortcodes.php:524 public/d2g-connect-shortcodes.php:551
+#: public/d2g-connect-shortcodes.php:618 public/d2g-connect-shortcodes.php:645
 msgid "start date"
 msgstr "data de începere"
 
-#: admin/class-d2g-connect-admin.php:101 admin/partials/metaboxes.php:204 admin/partials/metaboxes.php:230 admin/partials/metaboxes.php:254 admin/partials/metaboxes.php:293 admin/partials/metaboxes.php:319 admin/partials/metaboxes.php:343 public/class-d2g-connect-public.php:339 public/d2g-connect-shortcodes.php:527 public/d2g-connect-shortcodes.php:554 public/d2g-connect-shortcodes.php:621 public/d2g-connect-shortcodes.php:648
+#: admin/class-d2g-connect-admin.php:101 admin/partials/metaboxes.php:204
+#: admin/partials/metaboxes.php:230 admin/partials/metaboxes.php:254
+#: admin/partials/metaboxes.php:293 admin/partials/metaboxes.php:319
+#: admin/partials/metaboxes.php:343 public/class-d2g-connect-public.php:339
+#: public/d2g-connect-shortcodes.php:527 public/d2g-connect-shortcodes.php:554
+#: public/d2g-connect-shortcodes.php:621 public/d2g-connect-shortcodes.php:648
 msgid "end date"
 msgstr "data de sfârșit"
 
-#: admin/class-d2g-connect-admin.php:102 admin/partials/metaboxes.php:298 admin/partials/metaboxes.php:324 admin/partials/metaboxes.php:348 public/class-d2g-connect-public.php:340 public/d2g-connect-shortcodes.php:500 public/d2g-connect-shortcodes.php:533 public/d2g-connect-shortcodes.php:560
+#: admin/class-d2g-connect-admin.php:102 admin/partials/metaboxes.php:298
+#: admin/partials/metaboxes.php:324 admin/partials/metaboxes.php:348
+#: public/class-d2g-connect-public.php:340
+#: public/d2g-connect-shortcodes.php:500 public/d2g-connect-shortcodes.php:533
+#: public/d2g-connect-shortcodes.php:560
 msgid "study area"
 msgstr "zonă de studiu"
 
-#: admin/class-d2g-connect-admin.php:103 admin/partials/metaboxes.php:301 admin/partials/metaboxes.php:327 admin/partials/metaboxes.php:351 public/class-d2g-connect-public.php:341 public/d2g-connect-shortcodes.php:503 public/d2g-connect-shortcodes.php:537 public/d2g-connect-shortcodes.php:564
+#: admin/class-d2g-connect-admin.php:103 admin/partials/metaboxes.php:301
+#: admin/partials/metaboxes.php:327 admin/partials/metaboxes.php:351
+#: public/class-d2g-connect-public.php:341
+#: public/d2g-connect-shortcodes.php:503 public/d2g-connect-shortcodes.php:537
+#: public/d2g-connect-shortcodes.php:564
 msgid "degree"
 msgstr "grad"
 
-#: admin/class-d2g-connect-admin.php:104 admin/partials/metaboxes.php:304 admin/partials/metaboxes.php:330 admin/partials/metaboxes.php:354 public/class-d2g-connect-public.php:342 public/d2g-connect-shortcodes.php:506 public/d2g-connect-shortcodes.php:541 public/d2g-connect-shortcodes.php:568
+#: admin/class-d2g-connect-admin.php:104 admin/partials/metaboxes.php:304
+#: admin/partials/metaboxes.php:330 admin/partials/metaboxes.php:354
+#: public/class-d2g-connect-public.php:342
+#: public/d2g-connect-shortcodes.php:506 public/d2g-connect-shortcodes.php:541
+#: public/d2g-connect-shortcodes.php:568
 msgid "institution"
 msgstr "instituție"
 
-#: admin/class-d2g-connect-admin.php:105 admin/partials/metaboxes.php:209 public/class-d2g-connect-public.php:343 public/d2g-connect-shortcodes.php:594
+#: admin/class-d2g-connect-admin.php:105 admin/partials/metaboxes.php:209
+#: public/class-d2g-connect-public.php:343
+#: public/d2g-connect-shortcodes.php:594
 msgid "expertise"
 msgstr "expertiză"
 
-#: admin/class-d2g-connect-admin.php:106 admin/partials/metaboxes.php:212 admin/partials/metaboxes.php:238 public/class-d2g-connect-public.php:344 public/d2g-connect-shortcodes.php:597 public/d2g-connect-shortcodes.php:631
+#: admin/class-d2g-connect-admin.php:106 admin/partials/metaboxes.php:212
+#: admin/partials/metaboxes.php:238 public/class-d2g-connect-public.php:344
+#: public/d2g-connect-shortcodes.php:597 public/d2g-connect-shortcodes.php:631
 msgid "position"
 msgstr "poziție"
 
-#: admin/class-d2g-connect-admin.php:107 public/class-d2g-connect-public.php:345
+#: admin/class-d2g-connect-admin.php:107
+#: public/class-d2g-connect-public.php:345
 msgid "organisation / company"
 msgstr "organizație / companie"
 
-#: admin/class-d2g-connect-admin.php:108 admin/partials/metaboxes.php:262 admin/partials/metaboxes.php:377 admin/partials/metaboxes.php:402 admin/partials/metaboxes.php:425 public/class-d2g-connect-public.php:346 public/d2g-connect-shortcodes.php:658 public/d2g-connect-shortcodes.php:685 public/d2g-connect-shortcodes.php:714 public/d2g-connect-shortcodes.php:742 public/template-functions.php:903
+#: admin/class-d2g-connect-admin.php:108 admin/partials/metaboxes.php:262
+#: admin/partials/metaboxes.php:377 admin/partials/metaboxes.php:402
+#: admin/partials/metaboxes.php:425 public/class-d2g-connect-public.php:346
+#: public/d2g-connect-shortcodes.php:658 public/d2g-connect-shortcodes.php:685
+#: public/d2g-connect-shortcodes.php:714 public/d2g-connect-shortcodes.php:742
+#: public/template-functions.php:903
 msgid "title"
 msgstr "titlu"
 
-#: admin/class-d2g-connect-admin.php:109 admin/partials/metaboxes.php:380 admin/partials/metaboxes.php:405 admin/partials/metaboxes.php:428 public/class-d2g-connect-public.php:347 public/d2g-connect-shortcodes.php:688 public/d2g-connect-shortcodes.php:718 public/d2g-connect-shortcodes.php:746
+#: admin/class-d2g-connect-admin.php:109 admin/partials/metaboxes.php:380
+#: admin/partials/metaboxes.php:405 admin/partials/metaboxes.php:428
+#: public/class-d2g-connect-public.php:347
+#: public/d2g-connect-shortcodes.php:688 public/d2g-connect-shortcodes.php:718
+#: public/d2g-connect-shortcodes.php:746
 msgid "web link"
 msgstr "legătură web"
 
-#: admin/class-d2g-connect-admin.php:110 admin/partials/metaboxes.php:383 admin/partials/metaboxes.php:408 admin/partials/metaboxes.php:431 public/class-d2g-connect-public.php:348 public/d2g-connect-shortcodes.php:691 public/d2g-connect-shortcodes.php:722 public/d2g-connect-shortcodes.php:750
+#: admin/class-d2g-connect-admin.php:110 admin/partials/metaboxes.php:383
+#: admin/partials/metaboxes.php:408 admin/partials/metaboxes.php:431
+#: public/class-d2g-connect-public.php:348
+#: public/d2g-connect-shortcodes.php:691 public/d2g-connect-shortcodes.php:722
+#: public/d2g-connect-shortcodes.php:750
 msgid "journal"
 msgstr "jurnal"
 
-#: admin/class-d2g-connect-admin.php:111 admin/partials/metaboxes.php:386 admin/partials/metaboxes.php:411 admin/partials/metaboxes.php:434 public/class-d2g-connect-public.php:349 public/d2g-connect-shortcodes.php:694 public/d2g-connect-shortcodes.php:726 public/d2g-connect-shortcodes.php:754 public/template-functions.php:909
+#: admin/class-d2g-connect-admin.php:111 admin/partials/metaboxes.php:386
+#: admin/partials/metaboxes.php:411 admin/partials/metaboxes.php:434
+#: public/class-d2g-connect-public.php:349
+#: public/d2g-connect-shortcodes.php:694 public/d2g-connect-shortcodes.php:726
+#: public/d2g-connect-shortcodes.php:754 public/template-functions.php:909
 msgid "type of publication"
 msgstr "tip de publicație"
 
-#: admin/class-d2g-connect-admin.php:112 admin/partials/metaboxes.php:389 admin/partials/metaboxes.php:414 admin/partials/metaboxes.php:437 public/class-d2g-connect-public.php:350 public/d2g-connect-shortcodes.php:697 public/d2g-connect-shortcodes.php:730 public/d2g-connect-shortcodes.php:758
+#: admin/class-d2g-connect-admin.php:112 admin/partials/metaboxes.php:389
+#: admin/partials/metaboxes.php:414 admin/partials/metaboxes.php:437
+#: public/class-d2g-connect-public.php:350
+#: public/d2g-connect-shortcodes.php:697 public/d2g-connect-shortcodes.php:730
+#: public/d2g-connect-shortcodes.php:758
 msgid "author"
 msgstr "autor"
 
-#: admin/class-d2g-connect-admin.php:113 admin/partials/metaboxes.php:417 public/class-d2g-connect-public.php:351 public/d2g-connect-shortcodes.php:734
+#: admin/class-d2g-connect-admin.php:113 admin/partials/metaboxes.php:417
+#: public/class-d2g-connect-public.php:351
+#: public/d2g-connect-shortcodes.php:734
 msgid "publication date"
 msgstr "data publicării"
 
@@ -122,297 +178,387 @@ msgstr "Se aliniază… %1$d din %2$d"
 msgid "Something went wrong, please try again."
 msgstr "Ceva nu a funcționat, vă rugăm să încercați din nou."
 
-#: admin/class-d2g-connect-admin.php:192 admin/partials/d2g-connect-admin-display.php:68
+#: admin/class-d2g-connect-admin.php:127
+#, php-format
+msgid "Syncing… %1$d of %2$d doctors"
+msgstr "Se sincronizează… %1$d din %2$d doctori"
+
+#: admin/class-d2g-connect-admin.php:128
+#, php-format
+msgid "%d doctors synced."
+msgstr "%d doctori sincronizați."
+
+#: admin/class-d2g-connect-admin.php:129
+msgid "Not synced (no answer from doctor2go.online or no doctor key):"
+msgstr "Nesincronizat (niciun răspuns de la doctor2go.online sau lipsește cheia doctorului):"
+
+#: admin/class-d2g-connect-admin.php:130
+msgid "No doctors linked to doctor2go.online found."
+msgstr "Nu s-au găsit doctori conectați la doctor2go.online."
+
+#: admin/class-d2g-connect-admin.php:197
+#: admin/partials/d2g-connect-admin-display.php:68
 msgid "Doctors"
 msgstr "Doctori"
 
-#: admin/class-d2g-connect-admin.php:216
+#: admin/class-d2g-connect-admin.php:221
 msgid "D2GC E-mail"
 msgstr "E-mail D2GC"
 
-#: admin/class-d2g-connect-admin.php:288
+#: admin/class-d2g-connect-admin.php:293
 msgctxt "taxonomy general name"
 msgid "Counytries of operations"
 msgstr "Țări de operare"
 
-#: admin/class-d2g-connect-admin.php:289
+#: admin/class-d2g-connect-admin.php:294
 msgctxt "taxonomy singular name"
 msgid "Counytry of operations"
 msgstr "Țara de operare"
 
-#: admin/class-d2g-connect-admin.php:290 admin/class-d2g-connect-admin.php:304 admin/class-d2g-connect-admin.php:318 admin/class-d2g-connect-admin.php:332 admin/class-d2g-connect-admin.php:346 admin/class-d2g-connect-admin.php:360 admin/class-d2g-connect-admin.php:374 public/d2g-connect-shortcodes.php:1814
+#: admin/class-d2g-connect-admin.php:295 admin/class-d2g-connect-admin.php:309
+#: admin/class-d2g-connect-admin.php:323 admin/class-d2g-connect-admin.php:337
+#: admin/class-d2g-connect-admin.php:351 admin/class-d2g-connect-admin.php:365
+#: admin/class-d2g-connect-admin.php:379 public/d2g-connect-shortcodes.php:1814
 msgid "Search"
 msgstr "Caută"
 
-#: admin/class-d2g-connect-admin.php:291 admin/class-d2g-connect-admin.php:305 admin/class-d2g-connect-admin.php:319 admin/class-d2g-connect-admin.php:333 admin/class-d2g-connect-admin.php:347 admin/class-d2g-connect-admin.php:361 admin/class-d2g-connect-admin.php:375
+#: admin/class-d2g-connect-admin.php:296 admin/class-d2g-connect-admin.php:310
+#: admin/class-d2g-connect-admin.php:324 admin/class-d2g-connect-admin.php:338
+#: admin/class-d2g-connect-admin.php:352 admin/class-d2g-connect-admin.php:366
+#: admin/class-d2g-connect-admin.php:380
 msgid "All"
 msgstr "Toate"
 
-#: admin/class-d2g-connect-admin.php:292 admin/class-d2g-connect-admin.php:306 admin/class-d2g-connect-admin.php:320 admin/class-d2g-connect-admin.php:334 admin/class-d2g-connect-admin.php:348 admin/class-d2g-connect-admin.php:362 admin/class-d2g-connect-admin.php:376
+#: admin/class-d2g-connect-admin.php:297 admin/class-d2g-connect-admin.php:311
+#: admin/class-d2g-connect-admin.php:325 admin/class-d2g-connect-admin.php:339
+#: admin/class-d2g-connect-admin.php:353 admin/class-d2g-connect-admin.php:367
+#: admin/class-d2g-connect-admin.php:381
 msgid "Parent"
 msgstr "Părinte"
 
-#: admin/class-d2g-connect-admin.php:293 admin/class-d2g-connect-admin.php:307 admin/class-d2g-connect-admin.php:321 admin/class-d2g-connect-admin.php:335 admin/class-d2g-connect-admin.php:349 admin/class-d2g-connect-admin.php:363 admin/class-d2g-connect-admin.php:377
+#: admin/class-d2g-connect-admin.php:298 admin/class-d2g-connect-admin.php:312
+#: admin/class-d2g-connect-admin.php:326 admin/class-d2g-connect-admin.php:340
+#: admin/class-d2g-connect-admin.php:354 admin/class-d2g-connect-admin.php:368
+#: admin/class-d2g-connect-admin.php:382
 msgid "Parent:"
 msgstr "Părinte:"
 
-#: admin/class-d2g-connect-admin.php:294 admin/class-d2g-connect-admin.php:308 admin/class-d2g-connect-admin.php:322 admin/class-d2g-connect-admin.php:336 admin/class-d2g-connect-admin.php:350 admin/class-d2g-connect-admin.php:364 admin/class-d2g-connect-admin.php:378 public/d2g-connect-shortcodes.php:915
+#: admin/class-d2g-connect-admin.php:299 admin/class-d2g-connect-admin.php:313
+#: admin/class-d2g-connect-admin.php:327 admin/class-d2g-connect-admin.php:341
+#: admin/class-d2g-connect-admin.php:355 admin/class-d2g-connect-admin.php:369
+#: admin/class-d2g-connect-admin.php:383 public/d2g-connect-shortcodes.php:915
 msgid "Edit"
 msgstr "Editează"
 
-#: admin/class-d2g-connect-admin.php:295 admin/class-d2g-connect-admin.php:309 admin/class-d2g-connect-admin.php:323 admin/class-d2g-connect-admin.php:337 admin/class-d2g-connect-admin.php:351 admin/class-d2g-connect-admin.php:365 admin/class-d2g-connect-admin.php:379 public/class-d2g-connect-public.php:202
+#: admin/class-d2g-connect-admin.php:300 admin/class-d2g-connect-admin.php:314
+#: admin/class-d2g-connect-admin.php:328 admin/class-d2g-connect-admin.php:342
+#: admin/class-d2g-connect-admin.php:356 admin/class-d2g-connect-admin.php:370
+#: admin/class-d2g-connect-admin.php:384
+#: public/class-d2g-connect-public.php:202
 msgid "Update"
 msgstr "Actualizare"
 
-#: admin/class-d2g-connect-admin.php:296 admin/class-d2g-connect-admin.php:310 admin/class-d2g-connect-admin.php:324 admin/class-d2g-connect-admin.php:338 admin/class-d2g-connect-admin.php:352 admin/class-d2g-connect-admin.php:366 admin/class-d2g-connect-admin.php:380
+#: admin/class-d2g-connect-admin.php:301 admin/class-d2g-connect-admin.php:315
+#: admin/class-d2g-connect-admin.php:329 admin/class-d2g-connect-admin.php:343
+#: admin/class-d2g-connect-admin.php:357 admin/class-d2g-connect-admin.php:371
+#: admin/class-d2g-connect-admin.php:385
 msgid "Add New"
 msgstr "Adaugă Nou"
 
-#: admin/class-d2g-connect-admin.php:297 admin/class-d2g-connect-admin.php:311 admin/class-d2g-connect-admin.php:325 admin/class-d2g-connect-admin.php:339 admin/class-d2g-connect-admin.php:353 admin/class-d2g-connect-admin.php:367 admin/class-d2g-connect-admin.php:381
+#: admin/class-d2g-connect-admin.php:302 admin/class-d2g-connect-admin.php:316
+#: admin/class-d2g-connect-admin.php:330 admin/class-d2g-connect-admin.php:344
+#: admin/class-d2g-connect-admin.php:358 admin/class-d2g-connect-admin.php:372
+#: admin/class-d2g-connect-admin.php:386
 msgid "New"
 msgstr "Nou"
 
-#: admin/class-d2g-connect-admin.php:298
+#: admin/class-d2g-connect-admin.php:303
 msgid "Counytry of operations"
 msgstr "Țara de operare"
 
-#: admin/class-d2g-connect-admin.php:302
+#: admin/class-d2g-connect-admin.php:307
 msgctxt "taxonomy general name"
 msgid "Country of origin"
 msgstr "Țara de origine"
 
-#: admin/class-d2g-connect-admin.php:303
+#: admin/class-d2g-connect-admin.php:308
 msgctxt "taxonomy singular name"
 msgid "Country of origin"
 msgstr "Țara de origine"
 
-#: admin/class-d2g-connect-admin.php:312
+#: admin/class-d2g-connect-admin.php:317
 msgid "Country of origin"
 msgstr "Țara de origine"
 
-#: admin/class-d2g-connect-admin.php:316
+#: admin/class-d2g-connect-admin.php:321
 msgctxt "taxonomy general name"
 msgid "Languages"
 msgstr "Limbi"
 
-#: admin/class-d2g-connect-admin.php:317
+#: admin/class-d2g-connect-admin.php:322
 msgctxt "taxonomy singular name"
 msgid "Language"
 msgstr "Limbă"
 
-#: admin/class-d2g-connect-admin.php:326 public/d2g-connect-shortcodes.php:335
+#: admin/class-d2g-connect-admin.php:331 public/d2g-connect-shortcodes.php:335
 msgid "Languages"
 msgstr "Limbi"
 
-#: admin/class-d2g-connect-admin.php:330
+#: admin/class-d2g-connect-admin.php:335
 msgctxt "taxonomy general name"
 msgid "Diseases"
 msgstr "Boli"
 
-#: admin/class-d2g-connect-admin.php:331
+#: admin/class-d2g-connect-admin.php:336
 msgctxt "taxonomy singular name"
 msgid "Disease"
 msgstr "Boală"
 
-#: admin/class-d2g-connect-admin.php:340
+#: admin/class-d2g-connect-admin.php:345
 msgid "Diseases"
 msgstr "Boli"
 
-#: admin/class-d2g-connect-admin.php:344
+#: admin/class-d2g-connect-admin.php:349
 msgctxt "taxonomy general name"
 msgid "Degrees"
 msgstr "Grade"
 
-#: admin/class-d2g-connect-admin.php:345
+#: admin/class-d2g-connect-admin.php:350
 msgctxt "taxonomy singular name"
 msgid "Degree"
 msgstr "Grad"
 
-#: admin/class-d2g-connect-admin.php:354
+#: admin/class-d2g-connect-admin.php:359
 msgid "Degrees"
 msgstr "Grade"
 
-#: admin/class-d2g-connect-admin.php:358
+#: admin/class-d2g-connect-admin.php:363
 msgctxt "taxonomy general name"
 msgid "Specialties"
 msgstr "Specialități"
 
-#: admin/class-d2g-connect-admin.php:359
+#: admin/class-d2g-connect-admin.php:364
 msgctxt "taxonomy singular name"
 msgid "Specialty"
 msgstr "Specialitate"
 
-#: admin/class-d2g-connect-admin.php:368
+#: admin/class-d2g-connect-admin.php:373
 msgid "Specialties"
 msgstr "Specialități"
 
-#: admin/class-d2g-connect-admin.php:372
+#: admin/class-d2g-connect-admin.php:377
 msgctxt "taxonomy general name"
 msgid "Body parts"
 msgstr "Părți ale corpului"
 
-#: admin/class-d2g-connect-admin.php:373
+#: admin/class-d2g-connect-admin.php:378
 msgctxt "taxonomy singular name"
 msgid "Body part"
 msgstr "Parte a corpului"
 
-#: admin/class-d2g-connect-admin.php:382
+#: admin/class-d2g-connect-admin.php:387
 msgid "Body parts"
 msgstr "Părți ale corpului"
 
-#: admin/class-d2g-connect-admin.php:404
+#: admin/class-d2g-connect-admin.php:409
 msgid "Profile ID"
 msgstr "ID Profil"
 
-#: admin/class-d2g-connect-admin.php:405
+#: admin/class-d2g-connect-admin.php:410
 msgid "WP user ID"
 msgstr "ID utilizator WP"
 
-#: admin/class-d2g-connect-admin.php:406
+#: admin/class-d2g-connect-admin.php:411
 msgid "Image"
 msgstr "Imagine"
 
-#: admin/class-d2g-connect-admin.php:407 admin/class-d2g-connect-admin.php:519 admin/class-d2g-connect-admin.php:550 admin/class-d2g-connect-admin.php:797 admin/partials/metaboxes.php:20 includes/class-d2g-connect-doctor-sync.php:169
+#: admin/class-d2g-connect-admin.php:412 admin/class-d2g-connect-admin.php:524
+#: admin/class-d2g-connect-admin.php:555 admin/class-d2g-connect-admin.php:801
+#: admin/partials/metaboxes.php:20
+#: includes/class-d2g-connect-doctor-sync.php:169
 msgid "Title"
 msgstr "Titlu"
 
-#: admin/class-d2g-connect-admin.php:408
+#: admin/class-d2g-connect-admin.php:413
 msgid "Fist name"
 msgstr "Prenume"
 
-#: admin/class-d2g-connect-admin.php:409 admin/class-d2g-connect-admin.php:796 admin/partials/metaboxes.php:19 includes/class-d2g-connect-doctor-sync.php:168 public/d2g-connect-shortcodes.php:2482 public/d2g-connect-shortcodes.php:2927 public/template-functions.php:1057 public/templates/email-advice/generic-medofenic-email-form.php:101 public/templates/email-advice/generic-short-email-form.php:73 public/templates/email-advice/standard-derma-email-adv-form.php:46
+#: admin/class-d2g-connect-admin.php:414 admin/class-d2g-connect-admin.php:800
+#: admin/partials/metaboxes.php:19
+#: includes/class-d2g-connect-doctor-sync.php:168
+#: public/d2g-connect-shortcodes.php:2482
+#: public/d2g-connect-shortcodes.php:2927 public/template-functions.php:1057
+#: public/templates/email-advice/generic-medofenic-email-form.php:101
+#: public/templates/email-advice/generic-short-email-form.php:73
+#: public/templates/email-advice/standard-derma-email-adv-form.php:46
 msgid "Last name"
 msgstr "Nume de familie"
 
-#: admin/class-d2g-connect-admin.php:410 admin/class-d2g-connect-admin.php:551 admin/class-d2g-connect-admin.php:803 admin/partials/d2g-connect-admin-display.php:70 admin/partials/metaboxes.php:26 includes/class-d2g-connect-doctor-sync.php:176 public/d2g-connect-shortcodes.php:2196 public/template-functions.php:1061 public/templates/email-advice/generic-medofenic-email-form.php:107 public/templates/email-advice/generic-short-email-form.php:79 public/templates/email-advice/standard-derma-email-adv-form.php:52
+#: admin/class-d2g-connect-admin.php:415 admin/class-d2g-connect-admin.php:556
+#: admin/class-d2g-connect-admin.php:807
+#: admin/partials/d2g-connect-admin-display.php:70
+#: admin/partials/metaboxes.php:26
+#: includes/class-d2g-connect-doctor-sync.php:176
+#: public/d2g-connect-shortcodes.php:2196 public/template-functions.php:1061
+#: public/templates/email-advice/generic-medofenic-email-form.php:107
+#: public/templates/email-advice/generic-short-email-form.php:79
+#: public/templates/email-advice/standard-derma-email-adv-form.php:52
 msgid "E-mail"
 msgstr "E-mail"
 
-#: admin/class-d2g-connect-admin.php:411 public/d2g-connect-shortcodes.php:292 public/template-functions.php:1304 public/template-functions.php:1306
+#: admin/class-d2g-connect-admin.php:416 public/d2g-connect-shortcodes.php:292
+#: public/template-functions.php:1304 public/template-functions.php:1306
 msgid "Country"
 msgstr "Țară"
 
-#: admin/class-d2g-connect-admin.php:412
+#: admin/class-d2g-connect-admin.php:417
 msgid "Language"
 msgstr "Limbă"
 
-#: admin/class-d2g-connect-admin.php:413
+#: admin/class-d2g-connect-admin.php:418
 msgid "Specialisation"
 msgstr "Specializare"
 
-#: admin/class-d2g-connect-admin.php:414
+#: admin/class-d2g-connect-admin.php:419
 msgid "D2G domain"
 msgstr "Domeniul D2G"
 
-#: admin/class-d2g-connect-admin.php:415
+#: admin/class-d2g-connect-admin.php:420
 msgid "D2G org. key"
 msgstr "D2G org. cheie"
 
-#: admin/class-d2g-connect-admin.php:416
+#: admin/class-d2g-connect-admin.php:421
 msgid "D2G user ID"
 msgstr "ID utilizator D2G"
 
-#: admin/class-d2g-connect-admin.php:417
+#: admin/class-d2g-connect-admin.php:422
 msgid "D2G user key"
 msgstr "Cheie utilizator D2G"
 
-#: admin/class-d2g-connect-admin.php:418 admin/class-d2g-connect-admin.php:522
+#: admin/class-d2g-connect-admin.php:423 admin/class-d2g-connect-admin.php:527
 msgid "Author"
 msgstr "Autor"
 
-#: admin/class-d2g-connect-admin.php:419
+#: admin/class-d2g-connect-admin.php:424
 msgid "Action"
 msgstr "Acțiune"
 
-#: admin/class-d2g-connect-admin.php:518
+#: admin/class-d2g-connect-admin.php:523
 msgid "Page ID"
 msgstr "ID pagină"
 
-#: admin/class-d2g-connect-admin.php:520
+#: admin/class-d2g-connect-admin.php:525
 msgid "Access"
 msgstr "Accesare"
 
-#: admin/class-d2g-connect-admin.php:521
+#: admin/class-d2g-connect-admin.php:526
 msgid "Identifier"
 msgstr "Identificator"
 
-#: admin/class-d2g-connect-admin.php:645
+#: admin/class-d2g-connect-admin.php:650
 msgid "API token cannot be empty."
 msgstr "Tokenul API nu poate fi gol."
 
-#: admin/class-d2g-connect-admin.php:657
+#: admin/class-d2g-connect-admin.php:662
 msgid "This field cannot be empty."
 msgstr "Acest câmp nu poate fi gol."
 
-#: admin/class-d2g-connect-admin.php:706 admin/class-d2g-connect-admin.php:749
+#: admin/class-d2g-connect-admin.php:711 admin/class-d2g-connect-admin.php:754
 msgid "Prices"
 msgstr "Prețuri"
 
-#: admin/class-d2g-connect-admin.php:707 admin/class-d2g-connect-admin.php:750 public/d2g-connect-shortcodes.php:458
+#: admin/class-d2g-connect-admin.php:712 admin/class-d2g-connect-admin.php:755
+#: public/d2g-connect-shortcodes.php:458
 msgid "Questionnaires"
 msgstr "Chestionare"
 
-#: admin/class-d2g-connect-admin.php:711 admin/class-d2g-connect-admin.php:751
+#: admin/class-d2g-connect-admin.php:716 admin/class-d2g-connect-admin.php:756
 msgid "Availability & holiday"
 msgstr "Disponibilitate și concediu"
 
-#: admin/class-d2g-connect-admin.php:746 public/d2g-connect-shortcodes.php:245 public/templates/email-advice/generic-medofenic-email-form.php:90 public/templates/email-advice/generic-short-email-form.php:62 public/templates/email-advice/standard-derma-email-adv-form.php:35
+#: admin/class-d2g-connect-admin.php:751 public/d2g-connect-shortcodes.php:245
+#: public/templates/email-advice/generic-medofenic-email-form.php:90
+#: public/templates/email-advice/generic-short-email-form.php:62
+#: public/templates/email-advice/standard-derma-email-adv-form.php:35
 msgid "Personal information"
 msgstr "Informații personale"
 
-#: admin/class-d2g-connect-admin.php:747
+#: admin/class-d2g-connect-admin.php:752
 msgid "Bio"
 msgstr "Biografie"
 
-#: admin/class-d2g-connect-admin.php:748
+#: admin/class-d2g-connect-admin.php:753
 msgid "Education & experience"
 msgstr "Educație și experiență"
 
-#: admin/class-d2g-connect-admin.php:795 admin/partials/metaboxes.php:18 includes/class-d2g-connect-doctor-sync.php:167 public/d2g-connect-shortcodes.php:2477 public/d2g-connect-shortcodes.php:2922 public/template-functions.php:1053 public/templates/email-advice/generic-medofenic-email-form.php:95 public/templates/email-advice/generic-short-email-form.php:67 public/templates/email-advice/standard-derma-email-adv-form.php:40
+#: admin/class-d2g-connect-admin.php:799 admin/partials/metaboxes.php:18
+#: includes/class-d2g-connect-doctor-sync.php:167
+#: public/d2g-connect-shortcodes.php:2477
+#: public/d2g-connect-shortcodes.php:2922 public/template-functions.php:1053
+#: public/templates/email-advice/generic-medofenic-email-form.php:95
+#: public/templates/email-advice/generic-short-email-form.php:67
+#: public/templates/email-advice/standard-derma-email-adv-form.php:40
 msgid "First name"
 msgstr "Prenume"
 
-#: admin/class-d2g-connect-admin.php:798 admin/partials/metaboxes.php:21 includes/class-d2g-connect-doctor-sync.php:171 public/d2g-connect-shortcodes.php:273 public/d2g-connect-shortcodes.php:275 public/template-functions.php:800
+#: admin/class-d2g-connect-admin.php:802 admin/partials/metaboxes.php:21
+#: includes/class-d2g-connect-doctor-sync.php:171
+#: public/d2g-connect-shortcodes.php:273 public/d2g-connect-shortcodes.php:275
+#: public/template-functions.php:800
 msgid "Address"
 msgstr "Adresă"
 
-#: admin/class-d2g-connect-admin.php:799 admin/partials/metaboxes.php:22 includes/class-d2g-connect-doctor-sync.php:172 public/d2g-connect-shortcodes.php:280
+#: admin/class-d2g-connect-admin.php:803 admin/partials/metaboxes.php:22
+#: includes/class-d2g-connect-doctor-sync.php:172
+#: public/d2g-connect-shortcodes.php:280
 msgid "Zip code"
 msgstr "Cod poștal"
 
-#: admin/class-d2g-connect-admin.php:800 admin/partials/metaboxes.php:23
+#: admin/class-d2g-connect-admin.php:804 admin/partials/metaboxes.php:23
 msgid "city"
 msgstr "oraș"
 
-#: admin/class-d2g-connect-admin.php:801 admin/partials/metaboxes.php:24 includes/class-d2g-connect-doctor-sync.php:174 public/d2g-connect-shortcodes.php:2492 public/d2g-connect-shortcodes.php:2937
+#: admin/class-d2g-connect-admin.php:805 admin/partials/metaboxes.php:24
+#: includes/class-d2g-connect-doctor-sync.php:174
+#: public/d2g-connect-shortcodes.php:2492
+#: public/d2g-connect-shortcodes.php:2937
 msgid "Phone"
 msgstr "Telefon"
 
-#: admin/class-d2g-connect-admin.php:802 admin/partials/metaboxes.php:25 includes/class-d2g-connect-doctor-sync.php:175
+#: admin/class-d2g-connect-admin.php:806 admin/partials/metaboxes.php:25
+#: includes/class-d2g-connect-doctor-sync.php:175
 msgid "Mobile"
 msgstr "Mobil"
 
-#: admin/class-d2g-connect-admin.php:804 admin/partials/metaboxes.php:27 includes/class-d2g-connect-doctor-sync.php:170 public/d2g-connect-shortcodes.php:248 public/d2g-connect-shortcodes.php:250
+#: admin/class-d2g-connect-admin.php:808 admin/partials/metaboxes.php:27
+#: includes/class-d2g-connect-doctor-sync.php:170
+#: public/d2g-connect-shortcodes.php:248 public/d2g-connect-shortcodes.php:250
 msgid "Organisation"
 msgstr "Organizație"
 
-#: admin/class-d2g-connect-admin.php:805 admin/partials/metaboxes.php:28 includes/class-d2g-connect-doctor-sync.php:177 public/d2g-connect-shortcodes.php:430
+#: admin/class-d2g-connect-admin.php:809 admin/partials/metaboxes.php:28
+#: includes/class-d2g-connect-doctor-sync.php:177
+#: public/d2g-connect-shortcodes.php:430
 msgid "Registration number"
 msgstr "Număr de înregistrare"
 
-#: admin/class-d2g-connect-admin.php:806 admin/partials/metaboxes.php:29 includes/class-d2g-connect-doctor-sync.php:178 public/d2g-connect-shortcodes.php:435 public/d2g-connect-shortcodes.php:437
+#: admin/class-d2g-connect-admin.php:810 admin/partials/metaboxes.php:29
+#: includes/class-d2g-connect-doctor-sync.php:178
+#: public/d2g-connect-shortcodes.php:435 public/d2g-connect-shortcodes.php:437
 msgid "Country of registration"
 msgstr "Țara de înregistrare"
 
-#: admin/class-d2g-connect-admin.php:807
+#: admin/class-d2g-connect-admin.php:811
 msgid "Average price"
 msgstr "Preț mediu"
 
-#: admin/class-d2g-doc-user-profile.php:275 public/class-d2g-connect-public.php:1106 public/class-d2g-connect-public.php:1362
+#: admin/class-d2g-doc-user-profile.php:556
+#: public/class-d2g-connect-public.php:1106
+#: public/class-d2g-connect-public.php:1362
 msgid "You are not allowed to edit this profile."
 msgstr "Nu aveți permisiunea de a edita acest profil."
 
-#: admin/class-d2g-doc-user-profile.php:353
+#: admin/class-d2g-doc-user-profile.php:634
 msgid "edit"
 msgstr "editează"
 
@@ -472,299 +618,394 @@ msgstr "URL utilizată pentru sala de așteptare din software-ul Doctor2go"
 msgid "Base URL from the Doctor2go software"
 msgstr "URL de bază de la software-ul Doctor2go"
 
-#: admin/partials/d2g-connect-admin-display.php:119
+#: admin/partials/d2g-connect-admin-display.php:110
+msgid "Doctor sync URL"
+msgstr "URL pentru sincronizarea doctorilor"
+
+#: admin/partials/d2g-connect-admin-display.php:112
+msgid "doctor2go.online sends new and changed doctors to this address."
+msgstr "doctor2go.online trimite doctorii noi și modificați la această adresă."
+
+#: admin/partials/d2g-connect-admin-display.php:115
+msgid "Doctor status URL"
+msgstr "URL pentru starea doctorului"
+
+#: admin/partials/d2g-connect-admin-display.php:117
+msgid "doctor2go.online reads the status of a doctor profile and its translations from this address."
+msgstr "doctor2go.online citește de la această adresă starea unui profil de doctor și a traducerilor sale."
+
+#: admin/partials/d2g-connect-admin-display.php:129
 msgid "CSS & JS"
 msgstr "CSS și JS"
 
-#: admin/partials/d2g-connect-admin-display.php:120
+#: admin/partials/d2g-connect-admin-display.php:130
 msgid "You can Choose to load the custom doctor styling or not, it is an extension to the bootstarp 5 styles."
 msgstr "Puteți alege să încărcați stilizarea personalizată a medicului sau nu, este o extensie a stilurilor Bootstrap 5."
 
-#: admin/partials/d2g-connect-admin-display.php:124
+#: admin/partials/d2g-connect-admin-display.php:134
 msgid "Doctor styling"
 msgstr "Stilizare medici"
 
-#: admin/partials/d2g-connect-admin-display.php:126
+#: admin/partials/d2g-connect-admin-display.php:136
 msgid "load extra custom styles (light)"
 msgstr "încarcă stiluri personalizate suplimentare (luminos)"
 
-#: admin/partials/d2g-connect-admin-display.php:127
+#: admin/partials/d2g-connect-admin-display.php:137
 msgid "no extra styling"
 msgstr "fără stil suplimentar"
 
-#: admin/partials/d2g-connect-admin-display.php:131
+#: admin/partials/d2g-connect-admin-display.php:141
 msgid "Deactivate bootstrap css"
 msgstr "Dezactivați stilurile CSS bootstrap"
 
-#: admin/partials/d2g-connect-admin-display.php:131
+#: admin/partials/d2g-connect-admin-display.php:141
 msgid "You can deactivate the following css file if your theme already contains a bootstrap css."
 msgstr "Puteți dezactiva următorul fișier css dacă tema dvs. conține deja un css bootstrap."
 
-#: admin/partials/d2g-connect-admin-display.php:132
+#: admin/partials/d2g-connect-admin-display.php:142
 msgid "Deactivate bootstrap JS"
 msgstr "Dezactivați bootstrap JS"
 
-#: admin/partials/d2g-connect-admin-display.php:132
+#: admin/partials/d2g-connect-admin-display.php:142
 msgid "You can deactivate the following JS file if your theme already contains a bootstrap5 JS file."
 msgstr "Puteți dezactiva acest fișier JS dacă tema dvs. conține deja un fișier JS bootstrap5."
 
-#: admin/partials/d2g-connect-admin-display.php:139
+#: admin/partials/d2g-connect-admin-display.php:149
 msgid "Detail page settings"
 msgstr "Setări pagină detaliu"
 
-#: admin/partials/d2g-connect-admin-display.php:140
+#: admin/partials/d2g-connect-admin-display.php:150
 msgid "Layout of the doctor profile pages."
 msgstr "Aspectul paginilor de profil ale medicilor."
 
-#: admin/partials/d2g-connect-admin-display.php:144
+#: admin/partials/d2g-connect-admin-display.php:154
 msgid "Layout"
 msgstr "Aspect"
 
-#: admin/partials/d2g-connect-admin-display.php:147
+#: admin/partials/d2g-connect-admin-display.php:157
 msgid "Full width (no sidebar, hidden forms in a popup)"
 msgstr "Lățime completă (fără bară laterală, formulare ascunse într-un pop-up)"
 
-#: admin/partials/d2g-connect-admin-display.php:148
+#: admin/partials/d2g-connect-admin-display.php:158
 msgid "Full width (no sidebar, consultation tabs)"
 msgstr "Lățime completă (fără bară laterală, file de consultații)"
 
-#: admin/partials/d2g-connect-admin-display.php:151
+#: admin/partials/d2g-connect-admin-display.php:161
 msgid "Deactivate header and footer in single-d2g_doctor.php"
 msgstr "Dezactivați antetul și subsolul în single-d2g_doctor.php"
 
-#: admin/partials/d2g-connect-admin-display.php:151
+#: admin/partials/d2g-connect-admin-display.php:161
 msgid "If you are using a base file in your theme, where you load the footer and header, than you can deactivate loading those in youre single-d2g_doctor.php file."
 msgstr "Dacă utilizați un fișier de bază în tema dvs., unde încărcați subsolul și antetul, atunci puteți dezactiva încărcarea acestora în fișierul dvs. single-d2g_doctor.php."
 
-#: admin/partials/d2g-connect-admin-display.php:162
+#: admin/partials/d2g-connect-admin-display.php:172
 msgid "Doctor accounts"
 msgstr "Conturi medici"
 
-#: admin/partials/d2g-connect-admin-display.php:163
+#: admin/partials/d2g-connect-admin-display.php:173
 msgid "How doctor users and their public profiles are created and how doctors log in."
 msgstr "Cum sunt create conturile medicilor și profilurile lor publice și cum se autentifică medicii."
 
-#: admin/partials/d2g-connect-admin-display.php:167
+#: admin/partials/d2g-connect-admin-display.php:177
 msgid "Create doctor user and profile locally"
 msgstr "Creați utilizatorul și profilul de medic local"
 
-#: admin/partials/d2g-connect-admin-display.php:167
+#: admin/partials/d2g-connect-admin-display.php:177
 msgid "If you create the user account and profile locally you will not need to set the API connection"
 msgstr "Dacă creați contul de utilizator și profilul local, nu va trebui să setați conexiunea API"
 
-#: admin/partials/d2g-connect-admin-display.php:168
+#: admin/partials/d2g-connect-admin-display.php:178
 msgid "Give doctor access to wp-admin"
 msgstr "Oferă acces de doctor la wp-admin"
 
-#: admin/partials/d2g-connect-admin-display.php:169
+#: admin/partials/d2g-connect-admin-display.php:179
 msgid "Activate Single Sign On Login for doctors"
 msgstr "Activați Autentificarea Unică (Single Sign On) pentru medici"
 
-#: admin/partials/d2g-connect-admin-display.php:169
+#: admin/partials/d2g-connect-admin-display.php:179
 msgid "Doctors can log in to your site directly from doctor2go.online."
 msgstr "Medicii se pot autentifica pe site-ul dumneavoastră direct din doctor2go.online."
 
-#: admin/partials/d2g-connect-admin-display.php:176
+#: admin/partials/d2g-connect-admin-display.php:186
 msgid "Profile editor"
 msgstr "Editor de profil"
 
-#: admin/partials/d2g-connect-admin-display.php:177
+#: admin/partials/d2g-connect-admin-display.php:187
 msgid "What doctors can edit in the profile editor on the website."
 msgstr "Ce pot edita medicii în editorul de profil de pe site."
 
-#: admin/partials/d2g-connect-admin-display.php:183
+#: admin/partials/d2g-connect-admin-display.php:193
 msgid "Deactivate the \"Booking rules (availabilities & prices)\" tab"
 msgstr "Dezactivați fila „Reguli de rezervare (disponibilități și prețuri)”"
 
-#: admin/partials/d2g-connect-admin-display.php:184
+#: admin/partials/d2g-connect-admin-display.php:194
 msgid "Doctors can also set their availabilities, prices and vacation periods in the doctor2go.online software. Turn this on if they should do that there: the tab is hidden in the profile editor and nothing is sent from the website. The questionnaires are on the first tab of the profile editor and stay editable."
 msgstr "Medicii își pot seta disponibilitățile, prețurile și perioadele de concediu și în software-ul doctor2go.online. Activați această opțiune dacă trebuie să facă acest lucru acolo: fila este ascunsă în editorul de profil și nu se trimite nimic de pe site. Chestionarele se află în prima filă a editorului de profil și rămân editabile."
 
-#: admin/partials/d2g-connect-admin-display.php:191
+#: admin/partials/d2g-connect-admin-display.php:201
 msgid "Placeholder image for doctors"
 msgstr "Imagine de rezervă pentru medici"
 
-#: admin/partials/d2g-connect-admin-display.php:192
+#: admin/partials/d2g-connect-admin-display.php:202
 msgid "Shown for doctors without a profile picture."
 msgstr "Afișată pentru medicii fără fotografie de profil."
 
-#: admin/partials/d2g-connect-admin-display.php:200 admin/partials/d2g-connect-admin-display.php:245
+#: admin/partials/d2g-connect-admin-display.php:210
+#: admin/partials/d2g-connect-admin-display.php:297
 msgid "Upload"
 msgstr "Încarcă"
 
-#: admin/partials/d2g-connect-admin-display.php:212
+#: admin/partials/d2g-connect-admin-display.php:217
+#: admin/partials/d2g-connect-admin-display.php:237
+#: admin/partials/d2g-connect-admin-display.php:241
+msgid "never"
+msgstr "niciodată"
+
+#: admin/partials/d2g-connect-admin-display.php:222
+msgid "Availability sync"
+msgstr "Sincronizarea disponibilității"
+
+#: admin/partials/d2g-connect-admin-display.php:223
+msgid "Every 15 minutes the plugin fetches the free slots and the walk-in status of each doctor from doctor2go.online (via WP-Cron). Here you can see when that last happened and run it right away."
+msgstr "La fiecare 15 minute, pluginul preia de la doctor2go.online intervalele libere și starea consultației fără programare pentru fiecare doctor (prin WP-Cron). Aici puteți vedea când s-a întâmplat ultima dată și îl puteți rula imediat."
+
+#: admin/partials/d2g-connect-admin-display.php:228
+msgid "Next automatic run"
+msgstr "Următoarea rulare automată"
+
+#: admin/partials/d2g-connect-admin-display.php:229
+msgid "not scheduled"
+msgstr "neprogramat"
+
+#: admin/partials/d2g-connect-admin-display.php:232
+msgid "Last automatic run"
+msgstr "Ultima rulare automată"
+
+#: admin/partials/d2g-connect-admin-display.php:236
+msgid "Most recently synced doctor"
+msgstr "Cel mai recent doctor sincronizat"
+
+#: admin/partials/d2g-connect-admin-display.php:240
+msgid "Longest not synced doctor"
+msgstr "Doctorul nesincronizat de cel mai mult timp"
+
+#. translators: %d: number of doctors
+#: admin/partials/d2g-connect-admin-display.php:248
+#, php-format
+msgid "Sync all doctors now (%d)"
+msgstr "Sincronizați acum toți doctorii (%d)"
+
+#: admin/partials/d2g-connect-admin-display.php:264
 msgid "Patient accounts"
 msgstr "Conturi pacienți"
 
-#: admin/partials/d2g-connect-admin-display.php:213
+#: admin/partials/d2g-connect-admin-display.php:265
 msgid "Registration and login for patients."
 msgstr "Înregistrare și autentificare pentru pacienți."
 
-#: admin/partials/d2g-connect-admin-display.php:217
+#: admin/partials/d2g-connect-admin-display.php:269
 msgid "Activate custom login and registration for patients"
 msgstr "Activează autentificarea și înregistrarea personalizate pentru pacienți"
 
-#: admin/partials/d2g-connect-admin-display.php:229
+#: admin/partials/d2g-connect-admin-display.php:281
 msgid "E-mail settings"
 msgstr "Setări e-mail"
 
-#: admin/partials/d2g-connect-admin-display.php:230
+#: admin/partials/d2g-connect-admin-display.php:282
 msgid "Sender and layout of the e-mails the plugin sends."
 msgstr "Expeditorul și aspectul e-mailurilor trimise de plugin."
 
-#: admin/partials/d2g-connect-admin-display.php:234
+#: admin/partials/d2g-connect-admin-display.php:286
 msgid "sender address"
 msgstr "adresa expeditorului"
 
-#: admin/partials/d2g-connect-admin-display.php:235
+#: admin/partials/d2g-connect-admin-display.php:287
 msgid "sender name"
 msgstr "nume expeditor"
 
-#: admin/partials/d2g-connect-admin-display.php:236
+#: admin/partials/d2g-connect-admin-display.php:288
 msgid "recipient address"
 msgstr "adresa destinatarului"
 
-#: admin/partials/d2g-connect-admin-display.php:237
+#: admin/partials/d2g-connect-admin-display.php:289
 msgid "Activate custom password reset email"
 msgstr "Activează email-ul personalizat de resetare a parolei"
 
-#: admin/partials/d2g-connect-admin-display.php:240
+#: admin/partials/d2g-connect-admin-display.php:292
 msgid "logo used in e-mail"
 msgstr "logo utilizat în e-mail"
 
-#: admin/partials/d2g-connect-admin-display.php:257
+#: admin/partials/d2g-connect-admin-display.php:309
 msgid "ALTCHA spam protection"
 msgstr "Protecție anti-spam ALTCHA"
 
-#: admin/partials/d2g-connect-admin-display.php:258
+#: admin/partials/d2g-connect-admin-display.php:310
 msgid "This plugin is compatible with ALTCHA, a privacy-friendly alternative to Google reCAPTCHA."
 msgstr "Acest plugin este compatibil cu ALTCHA, o alternativă la Google reCAPTCHA care respectă confidențialitatea."
 
-#: admin/partials/d2g-connect-admin-display.php:263
+#: admin/partials/d2g-connect-admin-display.php:315
 msgid "Status:"
 msgstr "Stare:"
 
-#: admin/partials/d2g-connect-admin-display.php:266
+#: admin/partials/d2g-connect-admin-display.php:318
 msgid "ALTCHA is active."
 msgstr "ALTCHA este activ."
 
-#: admin/partials/d2g-connect-admin-display.php:267
+#: admin/partials/d2g-connect-admin-display.php:319
 msgid "ALTCHA is not installed or not active."
 msgstr "ALTCHA nu este instalat sau nu este activ."
 
-#: admin/partials/d2g-connect-admin-display.php:271
+#: admin/partials/d2g-connect-admin-display.php:323
 msgid "You only need the settings of the ALTCHA plugin itself, nothing has to be set here. The login, registration and password reset forms of this plugin show the ALTCHA widget automatically."
 msgstr "Aveți nevoie doar de setările pluginului ALTCHA, aici nu trebuie setat nimic. Formularele de autentificare, înregistrare și resetare a parolei ale acestui plugin afișează automat widgetul ALTCHA."
 
-#: admin/partials/d2g-connect-admin-display.php:272
+#: admin/partials/d2g-connect-admin-display.php:324
 msgid "Depending on your theme, different ALTCHA settings might be needed (for example which forms or pages are protected)."
 msgstr "În funcție de temă, pot fi necesare alte setări ALTCHA (de exemplu, ce formulare sau pagini sunt protejate)."
 
-#: admin/partials/d2g-connect-admin-display.php:273
+#: admin/partials/d2g-connect-admin-display.php:325
 msgid "Recommended: always protect the doctor detail pages with ALTCHA, they contain many forms (booking, e-mail advice, walk-in)."
 msgstr "Recomandat: protejați întotdeauna paginile de detaliu ale medicilor cu ALTCHA, acestea conțin multe formulare (rezervare, consultanță prin e-mail, consultație fără programare)."
 
-#: admin/partials/d2g-connect-admin-display.php:281
+#: admin/partials/d2g-connect-admin-display.php:333
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
-#: admin/partials/d2g-connect-admin-display.php:282
+#: admin/partials/d2g-connect-admin-display.php:334
 msgid "Create a Google reCAPTCHA account specifically for your website and enter the generated keys into the appropriate settings within your site’s configuration."
 msgstr "Creați un cont Google reCAPTCHA special pentru site-ul dumneavoastră și introduceți cheile generate în setările corespunzătoare."
 
-#: admin/partials/d2g-connect-admin-display.php:286
+#: admin/partials/d2g-connect-admin-display.php:338
 msgid "site key"
 msgstr "cheie site"
 
-#: admin/partials/d2g-connect-admin-display.php:287
+#: admin/partials/d2g-connect-admin-display.php:339
 msgid "secret key"
 msgstr "cheie secretă"
 
-#: admin/partials/d2g-connect-admin-display.php:288
+#: admin/partials/d2g-connect-admin-display.php:340
 msgid "Deactivate loading google recaptcha script"
 msgstr "Dezactivați încărcarea scriptului google recaptcha"
 
-#: admin/partials/d2g-connect-admin-display.php:288
+#: admin/partials/d2g-connect-admin-display.php:340
 msgid "You can deactivate the loading from the Google recaptcha script  if necessary, particularly if it is already being loaded from another source."
 msgstr "Puteți dezactiva încărcarea scriptului Google recaptcha dacă este necesar, în special dacă este deja încărcat dintr-o altă sursă."
 
-#: admin/partials/d2g-connect-admin-display.php:295
+#: admin/partials/d2g-connect-admin-display.php:347
 msgid "Two-factor authentication"
 msgstr "Autentificare în doi pași"
 
-#: admin/partials/d2g-connect-admin-display.php:296
+#: admin/partials/d2g-connect-admin-display.php:348
 msgid "Install the \"Solid Security Basic\" plugin and configure two-factor authentication (2FA) for all individuals with access to the user accounts. This is can be crucial to ensure the highest level of security for sensitive patient data."
 msgstr "Instalați pluginul „Solid Security Basic” și configurați autentificarea în doi pași (2FA) pentru toate persoanele cu acces la conturile de utilizator. Acest lucru poate fi esențial pentru a asigura cel mai înalt nivel de securitate al datelor sensibile ale pacienților."
 
-#: admin/partials/d2g-connect-admin-display.php:299
+#: admin/partials/d2g-connect-admin-display.php:351
 msgid "I have installed \"Solid Security Basic\" and I have activated 2FA"
 msgstr "Am instalat „Solid Security Basic” și am activat 2FA"
 
-#: admin/partials/d2g-connect-admin-display.php:310
+#: admin/partials/d2g-connect-admin-display.php:362
 msgid "Special settings"
 msgstr "Setări speciale"
 
-#: admin/partials/d2g-connect-admin-display.php:311
+#: admin/partials/d2g-connect-admin-display.php:363
 msgid "Site wide options, use with care."
 msgstr "Opțiuni pentru întregul site, folosiți-le cu grijă."
 
-#: admin/partials/d2g-connect-admin-display.php:315
+#: admin/partials/d2g-connect-admin-display.php:367
 msgid "Activate under construction"
 msgstr "Activează în construcție"
 
-#: admin/partials/d2g-connect-admin-display.php:315
+#: admin/partials/d2g-connect-admin-display.php:367
 msgid "Block all pages for not logged in users and redirect to the under construction page"
 msgstr "Blochează toate paginile pentru utilizatorii care nu sunt autentificați și redirecționează către pagina de lucrări în curs de execuție"
 
-#: admin/partials/d2g-connect-admin-display.php:316
-msgid "Please find more info's about imigix on their website."
-msgstr "Vă rugăm să găsiți mai multe informații despre imigix pe site-ul lor."
-
-#: admin/partials/d2g-connect-admin-display.php:316
+#: admin/partials/d2g-connect-admin-display.php:368
 msgid "Use imgix image processing"
 msgstr "Utiliza el procesamiento de imágenes de imgix"
 
-#: admin/partials/d2g-connect-admin-display.php:317
-msgid "Doctors will be translated via meta values in the post and in the meta values in the connected taxonomies."
-msgstr "Medicii vor fi traduși prin valori meta în postare și în valorile meta din taxonomiile conectate."
+#: admin/partials/d2g-connect-admin-display.php:368
+msgid "Please find more info's about imigix on their website."
+msgstr "Vă rugăm să găsiți mai multe informații despre imigix pe site-ul lor."
 
-#: admin/partials/d2g-connect-admin-display.php:317
+#: admin/partials/d2g-connect-admin-display.php:369
 msgid "Use pseudo translations."
 msgstr "Folosește pseudo-traduceri."
 
-#: admin/partials/d2g-connect-admin-display.php:324
+#: admin/partials/d2g-connect-admin-display.php:369
+msgid "Doctors will be translated via meta values in the post and in the meta values in the connected taxonomies."
+msgstr "Medicii vor fi traduși prin valori meta în postare și în valorile meta din taxonomiile conectate."
+
+#: admin/partials/d2g-connect-admin-display.php:376
 msgid "Troubleshooting"
 msgstr "Depanare"
 
-#: admin/partials/d2g-connect-admin-display.php:325
+#: admin/partials/d2g-connect-admin-display.php:377
 msgid "Only enable while investigating an issue."
 msgstr "Activați doar în timp ce investigați o problemă."
 
-#: admin/partials/d2g-connect-admin-display.php:328
+#: admin/partials/d2g-connect-admin-display.php:380
 msgid "Activate debug logging"
 msgstr "Activați jurnalizarea pentru depanare"
 
-#: admin/partials/d2g-connect-admin-display.php:328
+#: admin/partials/d2g-connect-admin-display.php:380
 msgid "Writes extra details to the PHP error log when a request fails (e.g. the written consultation form). Only enable temporarily while investigating an issue."
 msgstr "Scrie detalii suplimentare în jurnalul de erori PHP când o cerere eșuează (de ex. formularul de consultație scrisă). Activați doar temporar, în timp ce investigați o problemă."
 
-#: admin/partials/d2g-connect-admin-display.php:344
+#: admin/partials/d2g-connect-admin-display.php:386
+msgid "Doctor sync log"
+msgstr "Jurnalul sincronizării doctorilor"
+
+#: admin/partials/d2g-connect-admin-display.php:387
+msgid "The last 50 requests from doctor2go.online to the doctor sync and doctor status URLs, newest first. With \"Activate debug logging\" on, the full request is stored too (hash, keys and passwords shortened)."
+msgstr "Ultimele 50 de cereri de la doctor2go.online către URL-urile de sincronizare și de stare a doctorilor, cele mai noi primele. Cu „Activați jurnalizarea pentru depanare” pornită se salvează și cererea completă (hash-ul, cheile și parolele scurtate)."
+
+#: admin/partials/d2g-connect-admin-display.php:392
+msgid "No requests yet."
+msgstr "Nicio cerere deocamdată."
+
+#: admin/partials/d2g-connect-admin-display.php:398
+msgid "Time"
+msgstr "Ora"
+
+#: admin/partials/d2g-connect-admin-display.php:399
+msgid "Status"
+msgstr "Stare"
+
+#: admin/partials/d2g-connect-admin-display.php:400
+msgid "Result"
+msgstr "Rezultat"
+
+#: admin/partials/d2g-connect-admin-display.php:401
+#: includes/class-d2g-connect-activator.php:108
+#: public/template-functions.php:1007
+msgid "Doctor"
+msgstr "Doctor"
+
+#: admin/partials/d2g-connect-admin-display.php:402
+msgid "Request"
+msgstr "Cerere"
+
+#: admin/partials/d2g-connect-admin-display.php:417
+msgid "Request and response"
+msgstr "Cerere și răspuns"
+
+#: admin/partials/d2g-connect-admin-display.php:443
 msgid "Translations of doctor profiles"
 msgstr "Traducerile profilurilor medicilor"
 
-#: admin/partials/d2g-connect-admin-display.php:346
+#: admin/partials/d2g-connect-admin-display.php:445
 msgid "Doctor data that is the same in every language (contact details, prices, booking rules, vacation periods, profile picture, specialties, languages and country) is kept the same in all translations when a profile is saved."
 msgstr "Datele medicului care sunt la fel în toate limbile (date de contact, prețuri, reguli de rezervare, perioade de concediu, fotografie de profil, specialități, limbi și țară) sunt păstrate identice în toate traducerile la salvarea unui profil."
 
-#: admin/partials/d2g-connect-admin-display.php:347
+#: admin/partials/d2g-connect-admin-display.php:446
 msgid "Here you can check existing doctors and align their translations. The most recently edited translation of a doctor is used as the source. The publication status is not changed."
 msgstr "Aici puteți verifica medicii existenți și le puteți alinia traducerile. Ca sursă se folosește traducerea editată cel mai recent a medicului. Starea de publicare nu se modifică."
 
-#: admin/partials/d2g-connect-admin-display.php:352
+#: admin/partials/d2g-connect-admin-display.php:451
 msgid "Check translations"
 msgstr "Verificați traducerile"
 
-#: admin/partials/d2g-connect-admin-display.php:353
+#: admin/partials/d2g-connect-admin-display.php:452
 msgid "Align all"
 msgstr "Aliniază tot"
 
@@ -780,15 +1021,22 @@ msgstr "Utilizați acest scurtcod pentru a afișa o listă de medici pe o pagin�
 msgid "Following parameters can be used to change the view from the listing"
 msgstr "Următorii parametri pot fi utilizați pentru a schimba vizualizarea din listă"
 
-#: admin/partials/d2g-connect-shortcode-help.php:37 admin/partials/d2g-connect-shortcode-help.php:119 admin/partials/d2g-connect-shortcode-help.php:139 admin/partials/d2g-connect-shortcode-help.php:168
+#: admin/partials/d2g-connect-shortcode-help.php:37
+#: admin/partials/d2g-connect-shortcode-help.php:119
+#: admin/partials/d2g-connect-shortcode-help.php:139
+#: admin/partials/d2g-connect-shortcode-help.php:168
 msgid "Parameter"
 msgstr "Parametru"
 
-#: admin/partials/d2g-connect-shortcode-help.php:40 admin/partials/d2g-connect-shortcode-help.php:122 admin/partials/d2g-connect-shortcode-help.php:142 admin/partials/d2g-connect-shortcode-help.php:171
+#: admin/partials/d2g-connect-shortcode-help.php:40
+#: admin/partials/d2g-connect-shortcode-help.php:122
+#: admin/partials/d2g-connect-shortcode-help.php:142
+#: admin/partials/d2g-connect-shortcode-help.php:171
 msgid "Possible values"
 msgstr "Valori posibile"
 
-#: admin/partials/d2g-connect-shortcode-help.php:48 admin/partials/d2g-connect-shortcode-help.php:57
+#: admin/partials/d2g-connect-shortcode-help.php:48
+#: admin/partials/d2g-connect-shortcode-help.php:57
 msgid "default"
 msgstr "implicit"
 
@@ -808,11 +1056,15 @@ msgstr "Orice număr mai mare decât 0 (6 = implicit)"
 msgid "All doctors will be shown."
 msgstr "Toți medicii vor fi afișați."
 
-#: admin/partials/d2g-connect-shortcode-help.php:73 admin/partials/d2g-connect-shortcode-help.php:156 admin/partials/d2g-connect-shortcode-help.php:185
+#: admin/partials/d2g-connect-shortcode-help.php:73
+#: admin/partials/d2g-connect-shortcode-help.php:156
+#: admin/partials/d2g-connect-shortcode-help.php:185
 msgid "css class used for the outer wrapper (optional)"
 msgstr "clasa css utilizată pentru învelișul exterior (opțional)"
 
-#: admin/partials/d2g-connect-shortcode-help.php:76 admin/partials/d2g-connect-shortcode-help.php:159 admin/partials/d2g-connect-shortcode-help.php:188
+#: admin/partials/d2g-connect-shortcode-help.php:76
+#: admin/partials/d2g-connect-shortcode-help.php:159
+#: admin/partials/d2g-connect-shortcode-help.php:188
 msgid "Any string"
 msgstr "Orice șir"
 
@@ -836,7 +1088,22 @@ msgstr "ASC (crescător) sau DESC (descrescător)"
 msgid "Use this shortcode to display the form doctors use to create or update their profiles. No parameters are required."
 msgstr "Utilizați acest scurtcod pentru a afișa formularul pe care medicii îl folosesc pentru a-și crea sau actualiza profilurile. Nu sunt necesari parametri."
 
-#: admin/partials/d2g-connect-shortcode-help.php:104 admin/partials/d2g-connect-shortcode-help.php:109 admin/partials/d2g-connect-shortcode-help.php:114 admin/partials/d2g-connect-shortcode-help.php:134 admin/partials/d2g-connect-shortcode-help.php:163 admin/partials/d2g-connect-shortcode-help.php:193 admin/partials/d2g-connect-shortcode-help.php:196 admin/partials/d2g-connect-shortcode-help.php:199 admin/partials/d2g-connect-shortcode-help.php:202 admin/partials/d2g-connect-shortcode-help.php:205 admin/partials/d2g-connect-shortcode-help.php:208 admin/partials/d2g-connect-shortcode-help.php:211 admin/partials/d2g-connect-shortcode-help.php:214 admin/partials/d2g-connect-shortcode-help.php:217 admin/partials/d2g-connect-shortcode-help.php:220 admin/partials/d2g-connect-shortcode-help.php:223
+#: admin/partials/d2g-connect-shortcode-help.php:104
+#: admin/partials/d2g-connect-shortcode-help.php:109
+#: admin/partials/d2g-connect-shortcode-help.php:114
+#: admin/partials/d2g-connect-shortcode-help.php:134
+#: admin/partials/d2g-connect-shortcode-help.php:163
+#: admin/partials/d2g-connect-shortcode-help.php:193
+#: admin/partials/d2g-connect-shortcode-help.php:196
+#: admin/partials/d2g-connect-shortcode-help.php:199
+#: admin/partials/d2g-connect-shortcode-help.php:202
+#: admin/partials/d2g-connect-shortcode-help.php:205
+#: admin/partials/d2g-connect-shortcode-help.php:208
+#: admin/partials/d2g-connect-shortcode-help.php:211
+#: admin/partials/d2g-connect-shortcode-help.php:214
+#: admin/partials/d2g-connect-shortcode-help.php:217
+#: admin/partials/d2g-connect-shortcode-help.php:220
+#: admin/partials/d2g-connect-shortcode-help.php:223
 msgid "(PRO version only*)"
 msgstr "(Doar versiunea PRO*)"
 
@@ -852,7 +1119,8 @@ msgstr "aici"
 msgid "to get your paid license now."
 msgstr "pentru a obține licența plătită acum."
 
-#: admin/partials/d2g-connect-shortcode-help.php:110 admin/partials/d2g-connect-shortcode-help.php:212
+#: admin/partials/d2g-connect-shortcode-help.php:110
+#: admin/partials/d2g-connect-shortcode-help.php:212
 msgid "Use this shortcode to display the search form on the doctor overview page. It must be used with the listing shortcode. No parameters are required."
 msgstr "Utilizați acest scurtcod pentru a afișa formularul de căutare pe pagina de prezentare a medicilor. Trebuie utilizat împreună cu scurtcodul de listare. Nu sunt necesari parametri."
 
@@ -860,7 +1128,9 @@ msgstr "Utilizați acest scurtcod pentru a afișa formularul de căutare pe pagi
 msgid "Use this shortcode to display a single doctor in a compact format, similar to the grid overview on the front end. It can be placed anywhere on your website, such as the sidebar."
 msgstr "Utilizați acest scurtcod pentru a afișa un singur medic într-un format compact, similar cu prezentarea generală în grilă de pe partea frontală. Poate fi plasat oriunde pe site-ul dvs., cum ar fi bara laterală."
 
-#: admin/partials/d2g-connect-shortcode-help.php:130 admin/partials/d2g-connect-shortcode-help.php:150 admin/partials/d2g-connect-shortcode-help.php:179
+#: admin/partials/d2g-connect-shortcode-help.php:130
+#: admin/partials/d2g-connect-shortcode-help.php:150
+#: admin/partials/d2g-connect-shortcode-help.php:179
 msgid "ID from doctor post, can be found in the backend overview from the doctors"
 msgstr "ID-ul de la postarea medicului, poate fi găsit în prezentarea generală din backend a medicilor"
 
@@ -916,15 +1186,22 @@ msgstr "Utilizați acest scurtcod pentru a afișa portalul pacientului unde paci
 msgid "Walk-in consultation"
 msgstr "Consultație fără programare"
 
-#: admin/partials/metaboxes.php:63 public/template-functions.php:665 public/template-functions.php:1447 public/template-functions.php:1546 public/template-functions.php:1826 public/templates/email-advice/generic-medofenic-email-form.php:153 public/templates/email-advice/generic-short-email-form.php:125 public/templates/email-advice/standard-derma-email-adv-form.php:204
+#: admin/partials/metaboxes.php:63 public/template-functions.php:665
+#: public/template-functions.php:1447 public/template-functions.php:1546
+#: public/template-functions.php:1826
+#: public/templates/email-advice/generic-medofenic-email-form.php:153
+#: public/templates/email-advice/generic-short-email-form.php:125
+#: public/templates/email-advice/standard-derma-email-adv-form.php:204
 msgid "E-mail advice"
 msgstr "Sfaturi prin e-mail"
 
-#: admin/partials/metaboxes.php:71 admin/partials/metaboxes.php:84 public/d2g-connect-shortcodes.php:1180
+#: admin/partials/metaboxes.php:71 admin/partials/metaboxes.php:84
+#: public/d2g-connect-shortcodes.php:1180
 msgid "Price"
 msgstr "Preț"
 
-#: admin/partials/metaboxes.php:72 admin/partials/metaboxes.php:85 public/d2g-connect-shortcodes.php:1186
+#: admin/partials/metaboxes.php:72 admin/partials/metaboxes.php:85
+#: public/d2g-connect-shortcodes.php:1186
 msgid "Currency"
 msgstr "Monedă"
 
@@ -968,7 +1245,9 @@ msgstr "Deschideți editorul de profil"
 msgid "The availabilities (booking rules, incl. the video consultation prices) and the vacation periods of a doctor are set in the doctor2go.online software (see Doctor2Go Connect settings, Doctors tab)."
 msgstr "Disponibilitățile (regulile de rezervare, inclusiv prețurile consultațiilor video) și perioadele de concediu ale unui medic se setează în software-ul doctor2go.online (vedeți setările Doctor2Go Connect, fila Medici)."
 
-#: admin/partials/metaboxes.php:161 includes/class-d2g-connect-doctor-sync.php:183 public/d2g-connect-shortcodes.php:899
+#: admin/partials/metaboxes.php:161
+#: includes/class-d2g-connect-doctor-sync.php:183
+#: public/d2g-connect-shortcodes.php:899
 msgid "Vacation periods"
 msgstr "Perioade de concediu"
 
@@ -988,15 +1267,20 @@ msgstr "activ acum"
 msgid "upcoming"
 msgstr "urmează"
 
-#: admin/partials/metaboxes.php:215 admin/partials/metaboxes.php:241 admin/partials/metaboxes.php:265 public/d2g-connect-shortcodes.php:600 public/d2g-connect-shortcodes.php:635 public/d2g-connect-shortcodes.php:662
+#: admin/partials/metaboxes.php:215 admin/partials/metaboxes.php:241
+#: admin/partials/metaboxes.php:265 public/d2g-connect-shortcodes.php:600
+#: public/d2g-connect-shortcodes.php:635 public/d2g-connect-shortcodes.php:662
 msgid "company"
 msgstr "companie"
 
-#: admin/partials/metaboxes.php:235 admin/partials/metaboxes.php:259 public/d2g-connect-shortcodes.php:627 public/d2g-connect-shortcodes.php:654
+#: admin/partials/metaboxes.php:235 admin/partials/metaboxes.php:259
+#: public/d2g-connect-shortcodes.php:627 public/d2g-connect-shortcodes.php:654
 msgid "exptertise"
 msgstr "expertiză"
 
-#: admin/partials/metaboxes.php:392 admin/partials/metaboxes.php:440 public/d2g-connect-shortcodes.php:700 public/d2g-connect-shortcodes.php:762 public/template-functions.php:912
+#: admin/partials/metaboxes.php:392 admin/partials/metaboxes.php:440
+#: public/d2g-connect-shortcodes.php:700 public/d2g-connect-shortcodes.php:762
+#: public/template-functions.php:912
 msgid "publication Date"
 msgstr "Data publicării"
 
@@ -1008,7 +1292,8 @@ msgstr "adăugați o publicație suplimentară"
 msgid "All pages used by the D2G connect plugin need a page type! Otherwise links in the front end might be broken!"
 msgstr "Toate paginile utilizate de pluginul D2G connect au nevoie de un tip de pagină! Altfel, linkurile din frontend ar putea fi întrerupte!"
 
-#: admin/partials/metaboxes.php:481 admin/partials/metaboxes.php:508 public/d2g-connect-shortcodes.php:2959
+#: admin/partials/metaboxes.php:481 admin/partials/metaboxes.php:508
+#: public/d2g-connect-shortcodes.php:2959
 msgid "make a selection"
 msgstr "face o selecție"
 
@@ -1028,23 +1313,17 @@ msgstr "Confirmare pentru înregistrarea pacientului"
 msgid "Define which email this template is for."
 msgstr "Definiți pentru ce email este acest șablon."
 
-#: endpoints/doctor.php:52
-msgid "an unknown error has occurred"
-msgstr "a apărut o eroare necunoscută"
-
-#: endpoints/doctor.php:65
-msgid "The user + public profile have been created. User ID: "
-msgstr "Profilul utilizatorului + public a fost creat. ID utilizator:"
-
-#: includes/class-d2g-connect-activator.php:108 public/template-functions.php:1007
-msgid "Doctor"
-msgstr "Doctor"
-
 #: includes/class-d2g-connect-activator.php:123
 msgid "Patient"
 msgstr "Pacient"
 
-#: includes/class-d2g-connect-doctor-sync.php:173 public/d2g-connect-shortcodes.php:283
+#: includes/class-d2g-connect-cron.php:121
+#: includes/class-d2g-connect-doctor-sync.php:195
+msgid "You are not allowed to do this."
+msgstr "Nu aveți permisiunea să faceți acest lucru."
+
+#: includes/class-d2g-connect-doctor-sync.php:173
+#: public/d2g-connect-shortcodes.php:283
 msgid "City"
 msgstr "Oraș"
 
@@ -1056,7 +1335,8 @@ msgstr "Preț consultație fără programare"
 msgid "E-mail advice price"
 msgstr "Preț consultanță prin e-mail"
 
-#: includes/class-d2g-connect-doctor-sync.php:181 public/d2g-connect-shortcodes.php:842
+#: includes/class-d2g-connect-doctor-sync.php:181
+#: public/d2g-connect-shortcodes.php:842
 msgid "Video consultation price"
 msgstr "Preț consultație video"
 
@@ -1068,11 +1348,8 @@ msgstr "Reguli de rezervare"
 msgid "Profile picture"
 msgstr "Fotografie de profil"
 
-#: includes/class-d2g-connect-doctor-sync.php:195
-msgid "You are not allowed to do this."
-msgstr "Nu aveți permisiunea să faceți acest lucru."
-
-#: public/class-d2g-connect-public.php:167 public/d2g-connect-shortcodes.php:1028
+#: public/class-d2g-connect-public.php:167
+#: public/d2g-connect-shortcodes.php:1028
 msgid "Unavailable"
 msgstr "Indisponibil"
 
@@ -1108,31 +1385,38 @@ msgstr "Adaugă regula în listă"
 msgid "Update Rule"
 msgstr "Actualizează regula"
 
-#: public/class-d2g-connect-public.php:176 public/d2g-connect-shortcodes.php:973
+#: public/class-d2g-connect-public.php:176
+#: public/d2g-connect-shortcodes.php:973
 msgid "Sunday"
 msgstr "Duminică"
 
-#: public/class-d2g-connect-public.php:177 public/d2g-connect-shortcodes.php:967
+#: public/class-d2g-connect-public.php:177
+#: public/d2g-connect-shortcodes.php:967
 msgid "Monday"
 msgstr "Luni"
 
-#: public/class-d2g-connect-public.php:178 public/d2g-connect-shortcodes.php:968
+#: public/class-d2g-connect-public.php:178
+#: public/d2g-connect-shortcodes.php:968
 msgid "Tuesday"
 msgstr "Marți"
 
-#: public/class-d2g-connect-public.php:179 public/d2g-connect-shortcodes.php:969
+#: public/class-d2g-connect-public.php:179
+#: public/d2g-connect-shortcodes.php:969
 msgid "Wednesday"
 msgstr "Miercuri"
 
-#: public/class-d2g-connect-public.php:180 public/d2g-connect-shortcodes.php:970
+#: public/class-d2g-connect-public.php:180
+#: public/d2g-connect-shortcodes.php:970
 msgid "Thursday"
 msgstr "Joi"
 
-#: public/class-d2g-connect-public.php:181 public/d2g-connect-shortcodes.php:971
+#: public/class-d2g-connect-public.php:181
+#: public/d2g-connect-shortcodes.php:971
 msgid "Friday"
 msgstr "Vineri"
 
-#: public/class-d2g-connect-public.php:182 public/d2g-connect-shortcodes.php:972
+#: public/class-d2g-connect-public.php:182
+#: public/d2g-connect-shortcodes.php:972
 msgid "Saturday"
 msgstr "Sâmbătă"
 
@@ -1156,11 +1440,13 @@ msgstr "A patra"
 msgid "Last"
 msgstr "Ultima"
 
-#: public/class-d2g-connect-public.php:188 public/d2g-connect-shortcodes.php:1213
+#: public/class-d2g-connect-public.php:188
+#: public/d2g-connect-shortcodes.php:1213
 msgid "between"
 msgstr "între"
 
-#: public/class-d2g-connect-public.php:189 public/d2g-connect-shortcodes.php:1213
+#: public/class-d2g-connect-public.php:189
+#: public/d2g-connect-shortcodes.php:1213
 msgid "and"
 msgstr "și"
 
@@ -1212,11 +1498,13 @@ msgstr "Vă rugăm să alegeți o dată de început și o dată de sfârșit."
 msgid "The end date cannot be before the start date."
 msgstr "Data de sfârșit nu poate fi înaintea datei de început."
 
-#: public/class-d2g-connect-public.php:203 public/d2g-connect-shortcodes.php:895
+#: public/class-d2g-connect-public.php:203
+#: public/d2g-connect-shortcodes.php:895
 msgid "Add"
 msgstr "Adaugă"
 
-#: public/class-d2g-connect-public.php:204 public/class-d2g-connect-public.php:1143
+#: public/class-d2g-connect-public.php:204
+#: public/class-d2g-connect-public.php:1143
 msgid "Please enter a valid video consultation price and currency first."
 msgstr "Vă rugăm să introduceți mai întâi un preț și o monedă valide pentru consultația video."
 
@@ -1248,7 +1536,8 @@ msgstr "Confirmarea consultației video"
 msgid "Your appointment"
 msgstr "Programarea dumneavoastră"
 
-#: public/class-d2g-connect-public.php:244 public/d2g-connect-shortcodes.php:2582
+#: public/class-d2g-connect-public.php:244
+#: public/d2g-connect-shortcodes.php:2582
 msgid "Please fill in all marked fields. "
 msgstr "Vă rugăm să completați toate câmpurile marcate."
 
@@ -1284,7 +1573,10 @@ msgstr "A apărut o eroare, vă rugăm să încercați o altă zi/oră sau să �
 msgid "available"
 msgstr "disponibil"
 
-#: public/class-d2g-connect-public.php:253 public/class-d2g-connect-public.php:320 public/class-d2g-connect-public.php:321 public/class-d2g-connect-public.php:322
+#: public/class-d2g-connect-public.php:253
+#: public/class-d2g-connect-public.php:320
+#: public/class-d2g-connect-public.php:321
+#: public/class-d2g-connect-public.php:322
 msgid "You must accept the privacy rules, disclaimer and the terms and conditions."
 msgstr "Trebuie să acceptați regulile de confidențialitate, declinarea răspunderii și termenii și condițiile."
 
@@ -1304,7 +1596,9 @@ msgstr "Vă rugăm să vă asigurați că ați completat toate câmpurile obliga
 msgid "Please verify that you are not a robot."
 msgstr "Vă rugăm să confirmați că nu sunteți un robot."
 
-#: public/class-d2g-connect-public.php:325 public/class-d2g-connect-public.php:760 public/class-d2g-connect-public.php:767
+#: public/class-d2g-connect-public.php:325
+#: public/class-d2g-connect-public.php:760
+#: public/class-d2g-connect-public.php:767
 msgid "Cancellation request for appointment."
 msgstr "Cerere de anulare a programării."
 
@@ -1376,7 +1670,8 @@ msgstr "Pentru a vă reseta parola, vizitați următoarea adresă:"
 msgid "Security check failed."
 msgstr "Verificarea de securitate a eșuat."
 
-#: public/class-d2g-connect-public.php:751 public/class-d2g-profile-data.php:191 public/template-functions.php:1673
+#: public/class-d2g-connect-public.php:751
+#: public/class-d2g-profile-data.php:192 public/template-functions.php:1673
 msgid " at "
 msgstr "la"
 
@@ -1404,7 +1699,8 @@ msgstr "Autentificare eșuată"
 msgid "Invalid security token."
 msgstr "Token de securitate invalid."
 
-#: public/class-d2g-connect-public.php:1084 public/class-d2g-connect-public.php:1357
+#: public/class-d2g-connect-public.php:1084
+#: public/class-d2g-connect-public.php:1357
 msgid "Booking rules are managed in doctor2go.online."
 msgstr "Regulile de rezervare sunt gestionate în doctor2go.online."
 
@@ -1412,7 +1708,9 @@ msgstr "Regulile de rezervare sunt gestionate în doctor2go.online."
 msgid "Remote request failed."
 msgstr "Cererea către server a eșuat."
 
-#: public/class-d2g-connect-public.php:1230 public/class-d2g-connect-public.php:1250 public/class-d2g-connect-public.php:1337
+#: public/class-d2g-connect-public.php:1230
+#: public/class-d2g-connect-public.php:1250
+#: public/class-d2g-connect-public.php:1337
 msgid "API returned an unexpected status code."
 msgstr "API-ul a returnat un cod de stare neașteptat."
 
@@ -1444,7 +1742,7 @@ msgstr "Perioadele de concediu au fost salvate, dar nu au putut fi trimise cătr
 msgid "Your vacation periods have been saved."
 msgstr "Perioadele dumneavoastră de concediu au fost salvate."
 
-#: public/class-d2g-profile-data.php:191
+#: public/class-d2g-profile-data.php:192
 msgid "First availibility"
 msgstr "Prima disponibilitate"
 
@@ -1680,15 +1978,18 @@ msgstr "Setări simple de disponibilitate"
 msgid "Timezone"
 msgstr "Fus orar"
 
-#: public/d2g-connect-shortcodes.php:1037 public/d2g-connect-shortcodes.php:1228
+#: public/d2g-connect-shortcodes.php:1037
+#: public/d2g-connect-shortcodes.php:1228
 msgid "Updates are processed overnight and active the next day."
 msgstr "Actualizările sunt procesate peste noapte și devin active a doua zi."
 
-#: public/d2g-connect-shortcodes.php:1039 public/d2g-connect-shortcodes.php:1231
+#: public/d2g-connect-shortcodes.php:1039
+#: public/d2g-connect-shortcodes.php:1231
 msgid "Update availabilites"
 msgstr "Actualizați disponibilitățile"
 
-#: public/d2g-connect-shortcodes.php:1041 public/d2g-connect-shortcodes.php:1233
+#: public/d2g-connect-shortcodes.php:1041
+#: public/d2g-connect-shortcodes.php:1233
 msgid "Loading..."
 msgstr "Se încarcă..."
 
@@ -1756,7 +2057,10 @@ msgstr "Medici găsiți:"
 msgid "We are sorry, but we could not find any doctors for your search criteria, please refine your search."
 msgstr "Ne pare rău, dar nu am găsit niciun medic pentru criteriile dumneavoastră de căutare, vă rugăm să rafinați căutarea."
 
-#: public/d2g-connect-shortcodes.php:1895 public/d2g-connect-shortcodes.php:1933 public/d2g-connect-shortcodes.php:1972 public/d2g-connect-shortcodes.php:2011
+#: public/d2g-connect-shortcodes.php:1895
+#: public/d2g-connect-shortcodes.php:1933
+#: public/d2g-connect-shortcodes.php:1972
+#: public/d2g-connect-shortcodes.php:2011
 msgid "You must pass a doctor profile ID"
 msgstr "Trebuie să transmiteți un ID de profil de medic"
 
@@ -1776,11 +2080,14 @@ msgstr "Ați introdus un nume de utilizator sau o parolă greșită, vă rugăm 
 msgid "You have logged out from this website."
 msgstr "V-ați deconectat de pe acest site."
 
-#: public/d2g-connect-shortcodes.php:2061 public/d2g-connect-shortcodes.php:2168 public/d2g-connect-shortcodes.php:2237
+#: public/d2g-connect-shortcodes.php:2061
+#: public/d2g-connect-shortcodes.php:2168
+#: public/d2g-connect-shortcodes.php:2237
 msgid "Security check failed. Please reload the page and try again."
 msgstr "Verificarea de securitate a eșuat. Vă rugăm să reîncărcați pagina și să încercați din nou."
 
-#: public/d2g-connect-shortcodes.php:2077 public/templates/email-advice/standard-derma-email-adv-form.php:53
+#: public/d2g-connect-shortcodes.php:2077
+#: public/templates/email-advice/standard-derma-email-adv-form.php:53
 msgid "Enter your email address"
 msgstr "Introduceți adresa de e-mail"
 
@@ -1792,7 +2099,8 @@ msgstr "Introduceți parola"
 msgid "Remember Me"
 msgstr "Ține-mă minte"
 
-#: public/d2g-connect-shortcodes.php:2115 public/d2g-connect-shortcodes.php:2268
+#: public/d2g-connect-shortcodes.php:2115
+#: public/d2g-connect-shortcodes.php:2268
 msgid "Login"
 msgstr "Autentificare"
 
@@ -1804,7 +2112,8 @@ msgstr "Ați uitat parola?"
 msgid "Register as patient"
 msgstr "Înregistrare ca pacient"
 
-#: public/d2g-connect-shortcodes.php:2145 public/d2g-connect-shortcodes.php:2220
+#: public/d2g-connect-shortcodes.php:2145
+#: public/d2g-connect-shortcodes.php:2220
 msgid "You are already logged in."
 msgstr "Sunteți deja autentificat."
 
@@ -1852,15 +2161,18 @@ msgstr "Resetează parola"
 msgid "Security check failed. Please refresh the page."
 msgstr "Verificarea de securitate a eșuat. Vă rugăm să reîmprospătați pagina."
 
-#: public/d2g-connect-shortcodes.php:2374 public/d2g-connect-shortcodes.php:2866
+#: public/d2g-connect-shortcodes.php:2374
+#: public/d2g-connect-shortcodes.php:2866
 msgid "All fields are required."
 msgstr "Toate câmpurile sunt obligatorii."
 
-#: public/d2g-connect-shortcodes.php:2378 public/d2g-connect-shortcodes.php:2868
+#: public/d2g-connect-shortcodes.php:2378
+#: public/d2g-connect-shortcodes.php:2868
 msgid "Please provide a valid email address."
 msgstr "Vă rugăm să introduceți o adresă de e-mail validă."
 
-#: public/d2g-connect-shortcodes.php:2382 public/d2g-connect-shortcodes.php:2875
+#: public/d2g-connect-shortcodes.php:2382
+#: public/d2g-connect-shortcodes.php:2875
 msgid "Passwords do not match."
 msgstr "Parolele nu se potrivesc."
 
@@ -1872,27 +2184,53 @@ msgstr "Numele de utilizator sau adresa de e-mail este deja înregistrată."
 msgid "Email"
 msgstr "E-mail"
 
-#: public/d2g-connect-shortcodes.php:2497 public/d2g-connect-shortcodes.php:2942
+#: public/d2g-connect-shortcodes.php:2497
+#: public/d2g-connect-shortcodes.php:2942
 msgid "Date of Birth"
 msgstr "Data nașterii"
 
-#: public/d2g-connect-shortcodes.php:2502 public/d2g-connect-shortcodes.php:2947 public/template-functions.php:1072 public/template-functions.php:1293 public/templates/email-advice/generic-medofenic-email-form.php:122 public/templates/email-advice/generic-short-email-form.php:94 public/templates/email-advice/standard-derma-email-adv-form.php:66
+#: public/d2g-connect-shortcodes.php:2502
+#: public/d2g-connect-shortcodes.php:2947 public/template-functions.php:1072
+#: public/template-functions.php:1293
+#: public/templates/email-advice/generic-medofenic-email-form.php:122
+#: public/templates/email-advice/generic-short-email-form.php:94
+#: public/templates/email-advice/standard-derma-email-adv-form.php:66
 msgid "Gender"
 msgstr "Gen"
 
-#: public/d2g-connect-shortcodes.php:2504 public/d2g-connect-shortcodes.php:2949 public/template-functions.php:1074 public/template-functions.php:1295 public/templates/email-advice/generic-medofenic-email-form.php:124 public/templates/email-advice/generic-short-email-form.php:96 public/templates/email-advice/standard-derma-email-adv-form.php:68
+#: public/d2g-connect-shortcodes.php:2504
+#: public/d2g-connect-shortcodes.php:2949 public/template-functions.php:1074
+#: public/template-functions.php:1295
+#: public/templates/email-advice/generic-medofenic-email-form.php:124
+#: public/templates/email-advice/generic-short-email-form.php:96
+#: public/templates/email-advice/standard-derma-email-adv-form.php:68
 msgid "make a choice"
 msgstr "fă o alegere"
 
-#: public/d2g-connect-shortcodes.php:2505 public/d2g-connect-shortcodes.php:2950 public/template-functions.php:1075 public/template-functions.php:1296 public/templates/email-advice/generic-medofenic-email-form.php:125 public/templates/email-advice/generic-short-email-form.php:97 public/templates/email-advice/standard-derma-email-adv-form.php:69
+#: public/d2g-connect-shortcodes.php:2505
+#: public/d2g-connect-shortcodes.php:2950 public/template-functions.php:1075
+#: public/template-functions.php:1296
+#: public/templates/email-advice/generic-medofenic-email-form.php:125
+#: public/templates/email-advice/generic-short-email-form.php:97
+#: public/templates/email-advice/standard-derma-email-adv-form.php:69
 msgid "male"
 msgstr "masculin"
 
-#: public/d2g-connect-shortcodes.php:2506 public/d2g-connect-shortcodes.php:2951 public/template-functions.php:1076 public/template-functions.php:1297 public/templates/email-advice/generic-medofenic-email-form.php:126 public/templates/email-advice/generic-short-email-form.php:98 public/templates/email-advice/standard-derma-email-adv-form.php:70
+#: public/d2g-connect-shortcodes.php:2506
+#: public/d2g-connect-shortcodes.php:2951 public/template-functions.php:1076
+#: public/template-functions.php:1297
+#: public/templates/email-advice/generic-medofenic-email-form.php:126
+#: public/templates/email-advice/generic-short-email-form.php:98
+#: public/templates/email-advice/standard-derma-email-adv-form.php:70
 msgid "female"
 msgstr "femeie"
 
-#: public/d2g-connect-shortcodes.php:2507 public/d2g-connect-shortcodes.php:2952 public/template-functions.php:1077 public/template-functions.php:1298 public/templates/email-advice/generic-medofenic-email-form.php:127 public/templates/email-advice/generic-short-email-form.php:99 public/templates/email-advice/standard-derma-email-adv-form.php:71
+#: public/d2g-connect-shortcodes.php:2507
+#: public/d2g-connect-shortcodes.php:2952 public/template-functions.php:1077
+#: public/template-functions.php:1298
+#: public/templates/email-advice/generic-medofenic-email-form.php:127
+#: public/templates/email-advice/generic-short-email-form.php:99
+#: public/templates/email-advice/standard-derma-email-adv-form.php:71
 msgid "other"
 msgstr "altele"
 
@@ -1908,11 +2246,13 @@ msgstr "Faceți o selecție"
 msgid "Your password must be at least 12 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character."
 msgstr "Parola trebuie să aibă cel puțin 12 caractere și să conțină cel puțin o literă mare, o literă mică, o cifră și un caracter special."
 
-#: public/d2g-connect-shortcodes.php:2533 public/d2g-connect-shortcodes.php:2975
+#: public/d2g-connect-shortcodes.php:2533
+#: public/d2g-connect-shortcodes.php:2975
 msgid "Password"
 msgstr "Parolă"
 
-#: public/d2g-connect-shortcodes.php:2547 public/d2g-connect-shortcodes.php:2987
+#: public/d2g-connect-shortcodes.php:2547
+#: public/d2g-connect-shortcodes.php:2987
 msgid "Confirm Password"
 msgstr "Confirmați parola"
 
@@ -1948,11 +2288,13 @@ msgstr "Trebuie să acceptați declinarea răspunderii. "
 msgid "Your registration was successful! You are now logged in."
 msgstr "Înregistrarea a reușit! Acum sunteți autentificat."
 
-#: public/d2g-connect-shortcodes.php:2652 public/d2g-connect-shortcodes.php:3006
+#: public/d2g-connect-shortcodes.php:2652
+#: public/d2g-connect-shortcodes.php:3006
 msgid "For your security, we recommend that you enable two-factor authentication (2FA) for your account."
 msgstr "Pentru siguranța dumneavoastră, vă recomandăm să activați autentificarea în doi pași (2FA) pentru contul dumneavoastră."
 
-#: public/d2g-connect-shortcodes.php:2653 public/d2g-connect-shortcodes.php:3007
+#: public/d2g-connect-shortcodes.php:2653
+#: public/d2g-connect-shortcodes.php:3007
 msgid "configure 2FA"
 msgstr "configurați 2FA"
 
@@ -1960,11 +2302,15 @@ msgstr "configurați 2FA"
 msgid "You haven't booked any consultations yet. When you do, the details will appear in this section."
 msgstr "Nu ați rezervat încă nicio consultație. Când o veți face, detaliile vor apărea în această secțiune."
 
-#: public/d2g-connect-shortcodes.php:2737 public/d2g-connect-shortcodes.php:2770 public/d2g-connect-shortcodes.php:2808 public/d2g-connect-shortcodes.php:2834
+#: public/d2g-connect-shortcodes.php:2737
+#: public/d2g-connect-shortcodes.php:2770
+#: public/d2g-connect-shortcodes.php:2808
+#: public/d2g-connect-shortcodes.php:2834
 msgid "Something went wrong while retrieving your appointments. Please try again later, or refresh the page."
 msgstr "A apărut o eroare la preluarea programărilor. Vă rugăm să încercați din nou mai târziu sau să reîmprospătați pagina."
 
-#: public/d2g-connect-shortcodes.php:2745 public/d2g-connect-shortcodes.php:2816
+#: public/d2g-connect-shortcodes.php:2745
+#: public/d2g-connect-shortcodes.php:2816
 msgid "You don\\’t have any upcoming consultations. Book a new appointment when you're ready."
 msgstr "Nu aveți nicio consultație programată. Rezervați o programare nouă când sunteți pregătit."
 
@@ -1996,7 +2342,8 @@ msgstr "Completați câmpurile pentru parolă doar dacă doriți să vă schimba
 msgid "save"
 msgstr "salvează"
 
-#: public/d2g-connect-shortcodes.php:3022 public/d2g-connect-shortcodes.php:3047
+#: public/d2g-connect-shortcodes.php:3022
+#: public/d2g-connect-shortcodes.php:3047
 msgid "No liked doctors yet."
 msgstr "Încă nu aveți medici favoriți."
 
@@ -2076,7 +2423,8 @@ msgstr "Țară de înreg."
 msgid " - "
 msgstr "-"
 
-#: public/template-functions.php:614 public/templates/single-content/content-single-d2g_doctor-v3.php:89
+#: public/template-functions.php:614
+#: public/templates/single-content/content-single-d2g_doctor-v3.php:89
 msgid "Consultation offers"
 msgstr "Oferte de consultanță"
 
@@ -2087,6 +2435,11 @@ msgstr "Consultare video la programare"
 #: public/template-functions.php:639
 msgid "first availability: "
 msgstr "prima disponibilitate:"
+
+#: public/template-functions.php:646 public/template-functions.php:675
+#: public/template-functions.php:704
+msgid "n/a"
+msgstr "n/a"
 
 #: public/template-functions.php:669
 msgid "available at any time"
@@ -2104,7 +2457,8 @@ msgstr "disponibil acum"
 msgid "Short info"
 msgstr "Informații scurte"
 
-#: public/template-functions.php:739 public/templates/single-content/content-single-d2g_doctor.php:85
+#: public/template-functions.php:739
+#: public/templates/single-content/content-single-d2g_doctor.php:85
 msgid "About"
 msgstr "Despre"
 
@@ -2252,19 +2606,29 @@ msgstr "Tel  "
 msgid "Tel"
 msgstr "Tel"
 
-#: public/template-functions.php:1068 public/templates/email-advice/generic-medofenic-email-form.php:115 public/templates/email-advice/generic-short-email-form.php:87 public/templates/email-advice/standard-derma-email-adv-form.php:60
+#: public/template-functions.php:1068
+#: public/templates/email-advice/generic-medofenic-email-form.php:115
+#: public/templates/email-advice/generic-short-email-form.php:87
+#: public/templates/email-advice/standard-derma-email-adv-form.php:60
 msgid "Date of Birth: month/year  "
 msgstr "Data nașterii: luna/anul  "
 
-#: public/template-functions.php:1069 public/templates/email-advice/generic-medofenic-email-form.php:116 public/templates/email-advice/generic-short-email-form.php:88 public/templates/email-advice/standard-derma-email-adv-form.php:61
+#: public/template-functions.php:1069
+#: public/templates/email-advice/generic-medofenic-email-form.php:116
+#: public/templates/email-advice/generic-short-email-form.php:88
+#: public/templates/email-advice/standard-derma-email-adv-form.php:61
 msgid "Select your date of birth"
 msgstr "Selectați data nașterii"
 
-#: public/template-functions.php:1073 public/templates/email-advice/standard-derma-email-adv-form.php:67
+#: public/template-functions.php:1073
+#: public/templates/email-advice/standard-derma-email-adv-form.php:67
 msgid "Select your gender"
 msgstr "Selectați sexul"
 
-#: public/template-functions.php:1098 public/template-functions.php:1344 public/templates/email-advice/generic-medofenic-email-form.php:139 public/templates/email-advice/generic-short-email-form.php:111 public/templates/email-advice/standard-derma-email-adv-form.php:190
+#: public/template-functions.php:1098 public/template-functions.php:1344
+#: public/templates/email-advice/generic-medofenic-email-form.php:139
+#: public/templates/email-advice/generic-short-email-form.php:111
+#: public/templates/email-advice/standard-derma-email-adv-form.php:190
 msgid "Your consultation"
 msgstr "Consultația dumneavoastră"
 
@@ -2276,7 +2640,10 @@ msgstr "Veți primi un e-mail de confirmare cu detalii suplimentare."
 msgid "Video consult"
 msgstr "Consultare video"
 
-#: public/template-functions.php:1115 public/template-functions.php:1361 public/templates/email-advice/generic-medofenic-email-form.php:156 public/templates/email-advice/generic-short-email-form.php:128 public/templates/email-advice/standard-derma-email-adv-form.php:207
+#: public/template-functions.php:1115 public/template-functions.php:1361
+#: public/templates/email-advice/generic-medofenic-email-form.php:156
+#: public/templates/email-advice/generic-short-email-form.php:128
+#: public/templates/email-advice/standard-derma-email-adv-form.php:207
 msgid "(excl. VAT)"
 msgstr "(fără TVA)"
 
@@ -2344,7 +2711,10 @@ msgstr "Consultație fără programare"
 msgid "pay and continue"
 msgstr "plătește și continuă"
 
-#: public/template-functions.php:1376 public/templates/email-advice/generic-medofenic-email-form.php:179 public/templates/email-advice/generic-short-email-form.php:151 public/templates/email-advice/standard-derma-email-adv-form.php:230
+#: public/template-functions.php:1376
+#: public/templates/email-advice/generic-medofenic-email-form.php:179
+#: public/templates/email-advice/generic-short-email-form.php:151
+#: public/templates/email-advice/standard-derma-email-adv-form.php:230
 msgid "* required fields."
 msgstr "* câmpuri obligatorii."
 
@@ -2372,7 +2742,8 @@ msgstr "Consulta Fizică"
 msgid "Video Consult"
 msgstr "Consultare Video"
 
-#: public/template-functions.php:1614 public/templates/single-content/content-single-d2g_doctor-v3.php:90
+#: public/template-functions.php:1614
+#: public/templates/single-content/content-single-d2g_doctor-v3.php:90
 msgid "More info about the consultation types"
 msgstr "Mai multe informații despre tipurile de consultații"
 
@@ -2429,12 +2800,12 @@ msgstr ""
 "Dacă anularea este dezactivată, puteți contacta medicul folosind butonul Contactați Medicul pentru a solicita o anulare și o rambursare."
 
 #: public/template-functions.php:1699
-msgid "A payment is required for this appointment."
-msgstr "Este necesară o plată pentru această programare."
-
-#: public/template-functions.php:1699
 msgid "Payment may be made in advance or upon arrival at your appointment. Please note that appointments paid upfront cannot be cancelled."
 msgstr "Plata se poate efectua în avans sau la sosirea la programare. Vă rugăm să rețineți că programările plătite în avans nu pot fi anulate."
+
+#: public/template-functions.php:1699
+msgid "A payment is required for this appointment."
+msgstr "Este necesară o plată pentru această programare."
 
 #: public/template-functions.php:1709
 msgid "Physical consultation"
@@ -2528,11 +2899,13 @@ msgstr "Verificarea reCAPTCHA a eșuat. Vă rugăm să încercați din nou."
 msgid "About your complaint (optional)"
 msgstr "Despre problema dumneavoastră (opțional)"
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:17 public/templates/email-advice/standard-derma-email-adv-form.php:89
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:17
+#: public/templates/email-advice/standard-derma-email-adv-form.php:89
 msgid "Edit your information"
 msgstr "Editați informațiile"
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:17 public/templates/email-advice/standard-derma-email-adv-form.php:90
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:17
+#: public/templates/email-advice/standard-derma-email-adv-form.php:90
 msgid "Pre-filled from your AI check."
 msgstr "Precompletat din verificarea AI."
 
@@ -2540,11 +2913,15 @@ msgstr "Precompletat din verificarea AI."
 msgid "Click here to provide / update your complaint information"
 msgstr "Faceți clic aici pentru a furniza / actualiza informațiile despre problema dumneavoastră"
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:26 public/templates/bookingform-extensions/standard-derma-form-extension.php:28 public/templates/email-advice/standard-derma-email-adv-form.php:99 public/templates/email-advice/standard-derma-email-adv-form.php:101
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:26
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:28
+#: public/templates/email-advice/standard-derma-email-adv-form.php:99
+#: public/templates/email-advice/standard-derma-email-adv-form.php:101
 msgid "Photo of the skin condition (above)"
 msgstr "Fotografie a afecțiunii pielii (de sus)"
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:28 public/templates/email-advice/standard-derma-email-adv-form.php:101
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:28
+#: public/templates/email-advice/standard-derma-email-adv-form.php:101
 msgid "Photo of the condition (above)"
 msgstr "Fotografie a afecțiunii (de sus)"
 
@@ -2552,15 +2929,20 @@ msgstr "Fotografie a afecțiunii (de sus)"
 msgid "Choose image 1"
 msgstr "Alegeți imaginea 1"
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:37 public/templates/email-advice/standard-derma-email-adv-form.php:110
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:37
+#: public/templates/email-advice/standard-derma-email-adv-form.php:110
 msgid "Upload / make more photos"
 msgstr "Încărcați / faceți mai multe fotografii"
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:43 public/templates/bookingform-extensions/standard-derma-form-extension.php:45 public/templates/email-advice/standard-derma-email-adv-form.php:116 public/templates/email-advice/standard-derma-email-adv-form.php:118
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:43
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:45
+#: public/templates/email-advice/standard-derma-email-adv-form.php:116
+#: public/templates/email-advice/standard-derma-email-adv-form.php:118
 msgid "Photo of the skin condition (side)"
 msgstr "Fotografie a afecțiunii pielii (din lateral)"
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:45 public/templates/email-advice/standard-derma-email-adv-form.php:118
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:45
+#: public/templates/email-advice/standard-derma-email-adv-form.php:118
 msgid "Photo of the condition (side)"
 msgstr "Fotografie a afecțiunii (din lateral)"
 
@@ -2568,11 +2950,15 @@ msgstr "Fotografie a afecțiunii (din lateral)"
 msgid "Choose image 2"
 msgstr "Alegeți imaginea 2"
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:53 public/templates/bookingform-extensions/standard-derma-form-extension.php:55 public/templates/email-advice/standard-derma-email-adv-form.php:126 public/templates/email-advice/standard-derma-email-adv-form.php:128
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:53
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:55
+#: public/templates/email-advice/standard-derma-email-adv-form.php:126
+#: public/templates/email-advice/standard-derma-email-adv-form.php:128
 msgid "Photo of the skin condition (extra)"
 msgstr "Fotografie a afecțiunii pielii (suplimentară)"
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:55 public/templates/email-advice/standard-derma-email-adv-form.php:128
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:55
+#: public/templates/email-advice/standard-derma-email-adv-form.php:128
 msgid "Photo of the condition (extra)"
 msgstr "Fotografie a afecțiunii (suplimentară)"
 
@@ -2581,84 +2967,106 @@ msgid "Choose image 3"
 msgstr "Alegeți imaginea 3"
 
 #: public/templates/bookingform-extensions/standard-derma-form-extension.php:71
-msgid "When did you first notice your complaint?"
-msgstr "Când ați observat prima dată problema?"
-
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:71
 msgid "When did you first notice your skin problem?"
 msgstr "Când ați observat prima dată problema de piele?"
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:73 public/templates/email-advice/standard-derma-email-adv-form.php:146
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:71
+msgid "When did you first notice your complaint?"
+msgstr "Când ați observat prima dată problema?"
+
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:73
+#: public/templates/email-advice/standard-derma-email-adv-form.php:146
 msgid "since...days,weeks,months, years"
 msgstr "de...zile, săptămâni, luni, ani"
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:77 public/templates/email-advice/standard-derma-email-adv-form.php:150
-msgid "Location(s) of your complaint"
-msgstr "Localizarea problemei"
-
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:77 public/templates/email-advice/standard-derma-email-adv-form.php:150
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:77
+#: public/templates/email-advice/standard-derma-email-adv-form.php:150
 msgid "Location(s) on the body"
 msgstr "Localizarea pe corp"
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:79 public/templates/email-advice/standard-derma-email-adv-form.php:152
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:77
+#: public/templates/email-advice/standard-derma-email-adv-form.php:150
+msgid "Location(s) of your complaint"
+msgstr "Localizarea problemei"
+
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:79
+#: public/templates/email-advice/standard-derma-email-adv-form.php:152
 msgid "For example: left forearm"
 msgstr "De exemplu: antebrațul stâng"
+
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:87
+#: public/templates/email-advice/standard-derma-email-adv-form.php:161
+msgid "Describe your skin problem (color, size, growing, bleeding, itching, occasional or continuous) "
+msgstr "Descrieți problema de piele (culoare, dimensiune, creștere, sângerare, mâncărime, ocazională sau continuă) "
 
 #: public/templates/bookingform-extensions/standard-derma-form-extension.php:87
 msgid "Describe your complaint (how it looks like, what you feel, level of pain, occasional or continuous) "
 msgstr "Descrieți problema (cum arată, ce simțiți, nivelul durerii, ocazională sau continuă) "
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:87 public/templates/email-advice/standard-derma-email-adv-form.php:161
-msgid "Describe your skin problem (color, size, growing, bleeding, itching, occasional or continuous) "
-msgstr "Descrieți problema de piele (culoare, dimensiune, creștere, sângerare, mâncărime, ocazională sau continuă) "
-
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:89 public/templates/email-advice/generic-medofenic-email-form.php:32 public/templates/email-advice/generic-short-email-form.php:34 public/templates/email-advice/standard-derma-email-adv-form.php:163
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:89
+#: public/templates/email-advice/generic-medofenic-email-form.php:32
+#: public/templates/email-advice/generic-short-email-form.php:34
+#: public/templates/email-advice/standard-derma-email-adv-form.php:163
 msgid "For example: itchy red spots or bumps..."
 msgstr "De exemplu: pete sau umflături roșii care provoacă mâncărime..."
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:94 public/templates/email-advice/standard-derma-email-adv-form.php:170
-msgid "Treatment history (what medications did you use for your complaint and what was the result)"
-msgstr "Istoric de tratament (ce medicamente ați folosit pentru problemă și care a fost rezultatul)"
-
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:94 public/templates/email-advice/standard-derma-email-adv-form.php:170
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:94
+#: public/templates/email-advice/standard-derma-email-adv-form.php:170
 msgid "Treatment history (what medications did you use for your skin problem and what was the result)"
 msgstr "Istoric de tratament (ce medicamente ați folosit pentru problema de piele și care a fost rezultatul)"
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:96 public/templates/bookingform-extensions/standard-derma-form-extension.php:104 public/templates/email-advice/standard-derma-email-adv-form.php:172 public/templates/email-advice/standard-derma-email-adv-form.php:179
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:94
+#: public/templates/email-advice/standard-derma-email-adv-form.php:170
+msgid "Treatment history (what medications did you use for your complaint and what was the result)"
+msgstr "Istoric de tratament (ce medicamente ați folosit pentru problemă și care a fost rezultatul)"
+
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:96
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:104
+#: public/templates/email-advice/standard-derma-email-adv-form.php:172
+#: public/templates/email-advice/standard-derma-email-adv-form.php:179
 msgid "If applicable..."
 msgstr "Dacă este cazul..."
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:102 public/templates/email-advice/standard-derma-email-adv-form.php:177
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:102
+#: public/templates/email-advice/standard-derma-email-adv-form.php:177
 msgid "Medical history (other relevant medical conditions and medications)"
 msgstr "Istoric medical (alte afecțiuni medicale și medicamente relevante)"
 
-#: public/templates/email-advice/generic-medofenic-email-form.php:14 public/templates/email-advice/generic-short-email-form.php:16
+#: public/templates/email-advice/generic-medofenic-email-form.php:14
+#: public/templates/email-advice/generic-short-email-form.php:16
 msgid ""
 "E-mail consultations are intended for non-urgent situations and may be used for medical guidance, interpretation of medical tests or documents, \n"
 "        and obtaining a medical opinion. For medical emergencies, please contact emergency services or seek direct medical care."
 msgstr "Consultațiile prin e-mail sunt destinate situațiilor non-urgente și pot fi utilizate pentru îndrumare medicală, interpretarea testelor sau documentelor medicale și obținerea unei opinii medicale. Pentru urgențe medicale, vă rugăm să contactați serviciile de urgență sau să solicitați îngrijiri medicale directe."
 
-#: public/templates/email-advice/generic-medofenic-email-form.php:26 public/templates/email-advice/generic-short-email-form.php:28 public/templates/email-advice/standard-derma-email-adv-form.php:86
+#: public/templates/email-advice/generic-medofenic-email-form.php:26
+#: public/templates/email-advice/generic-short-email-form.php:28
+#: public/templates/email-advice/standard-derma-email-adv-form.php:86
 msgid "About your complaint"
 msgstr "Despre reclamația dumneavoastră"
 
-#: public/templates/email-advice/generic-medofenic-email-form.php:30 public/templates/email-advice/generic-short-email-form.php:32
+#: public/templates/email-advice/generic-medofenic-email-form.php:30
+#: public/templates/email-advice/generic-short-email-form.php:32
 msgid "Describe the complaint"
 msgstr "Descrieți reclamația"
 
-#: public/templates/email-advice/generic-medofenic-email-form.php:37 public/templates/email-advice/generic-short-email-form.php:39
+#: public/templates/email-advice/generic-medofenic-email-form.php:37
+#: public/templates/email-advice/generic-short-email-form.php:39
 msgid "Image uploads (optional), allowed files types: JPG, PNG, GIF "
 msgstr "Încărcări de imagini (opțional), tipuri de fișiere permise: JPG, PNG, GIF"
 
-#: public/templates/email-advice/generic-medofenic-email-form.php:41 public/templates/email-advice/generic-short-email-form.php:43
+#: public/templates/email-advice/generic-medofenic-email-form.php:41
+#: public/templates/email-advice/generic-short-email-form.php:43
 msgid "Upload image 1"
 msgstr "Încarcă imaginea 1"
 
-#: public/templates/email-advice/generic-medofenic-email-form.php:45 public/templates/email-advice/generic-short-email-form.php:47
+#: public/templates/email-advice/generic-medofenic-email-form.php:45
+#: public/templates/email-advice/generic-short-email-form.php:47
 msgid "Upload image 2"
 msgstr "Încarcă imaginea 2"
 
-#: public/templates/email-advice/generic-medofenic-email-form.php:49 public/templates/email-advice/generic-short-email-form.php:51
+#: public/templates/email-advice/generic-medofenic-email-form.php:49
+#: public/templates/email-advice/generic-short-email-form.php:51
 msgid "Upload image 3"
 msgstr "Încarcă imaginea 3"
 
@@ -2690,12 +3098,16 @@ msgstr "Vă rugăm să menționați orice afecțiuni medicale cunoscute importan
 msgid "For example: diabetes, high blood pressure, thyroid disorders, anticoagulant treatment, or any other important ongoing treatments."
 msgstr "De exemplu: diabet, hipertensiune arterială, afecțiuni tiroidiene, tratament anticoagulant sau orice alte tratamente importante în curs."
 
-#: public/templates/email-advice/generic-medofenic-email-form.php:146 public/templates/email-advice/generic-short-email-form.php:118 public/templates/email-advice/standard-derma-email-adv-form.php:197
+#: public/templates/email-advice/generic-medofenic-email-form.php:146
+#: public/templates/email-advice/generic-short-email-form.php:118
+#: public/templates/email-advice/standard-derma-email-adv-form.php:197
 #, php-format
 msgid "You will receive %s’s written assessment within 2 working days by email."
 msgstr "Veți primi evaluarea scrisă a medicului %s prin e-mail în termen de 2 zile lucrătoare."
 
-#: public/templates/email-advice/generic-medofenic-email-form.php:174 public/templates/email-advice/generic-short-email-form.php:146 public/templates/email-advice/standard-derma-email-adv-form.php:225
+#: public/templates/email-advice/generic-medofenic-email-form.php:174
+#: public/templates/email-advice/generic-short-email-form.php:146
+#: public/templates/email-advice/standard-derma-email-adv-form.php:225
 msgid "continue and pay"
 msgstr "continuă și plătește"
 
@@ -2716,24 +3128,35 @@ msgid "Enter your last name"
 msgstr "Introduceți numele"
 
 #: public/templates/email-advice/standard-derma-email-adv-form.php:144
-msgid "When did you first notice your complaint"
-msgstr "Când ați observat prima dată problema"
-
-#: public/templates/email-advice/standard-derma-email-adv-form.php:144
 msgid "When did you first notice your skin problem"
 msgstr "Când ați observat prima dată problema de piele"
+
+#: public/templates/email-advice/standard-derma-email-adv-form.php:144
+msgid "When did you first notice your complaint"
+msgstr "Când ați observat prima dată problema"
 
 #: public/templates/email-advice/standard-derma-email-adv-form.php:161
 msgid "Describe your complaint (how it looks like, what you feel, level of pain,  occasional or continuous) "
 msgstr "Descrieți problema (cum arată, ce simțiți, nivelul durerii, ocazională sau continuă) "
 
-#: public/templates/overview-content/content-doctor-grid.php:35 public/templates/overview-content/content-doctor-list.php:34 public/templates/overview-content/content-doctor-list.php:38
+#: public/templates/overview-content/content-doctor-grid.php:35
+#: public/templates/overview-content/content-doctor-list.php:34
+#: public/templates/overview-content/content-doctor-list.php:38
 msgid "start a consult"
 msgstr "începe o consultație"
 
 #: public/templates/single-content/content-single-d2g_doctor-v3.php:71
 msgid "About this doctor"
 msgstr "Despre acest medic"
+
+#~ msgid "not_available"
+#~ msgstr "indisponibil"
+
+#~ msgid "an unknown error has occurred"
+#~ msgstr "a apărut o eroare necunoscută"
+
+#~ msgid "The user + public profile have been created. User ID: "
+#~ msgstr "Profilul utilizatorului + public a fost creat. ID utilizator:"
 
 #~ msgid "1. Install the \"Solid Security Basic\" plugin and configure two-factor authentication (2FA) for all individuals with access to the user accounts. This is can be crucial to ensure the highest level of security for sensitive patient data."
 #~ msgstr "1. Instalați pluginul „Solid Security Basic” și configurați autentificarea cu doi factori (2FA) pentru toate persoanele care au acces la conturile de utilizator. Acest lucru poate fi crucial pentru a asigura cel mai înalt nivel de securitate pentru datele sensibile ale pacienților."
@@ -2831,9 +3254,6 @@ msgstr "Despre acest medic"
 #~ msgid "Medical history (skin cancer)"
 #~ msgstr "Istoric medical (cancer de piele)"
 
-#~ msgid "n/a"
-#~ msgstr "n/a"
-
 #~ msgid "Need help? Click here for the booking instructions."
 #~ msgstr "Nevoie de ajutor? Faceți clic aici pentru instrucțiunile de rezervare."
 
@@ -2845,9 +3265,6 @@ msgstr "Despre acest medic"
 
 #~ msgid "No user ID has been sent"
 #~ msgstr "Niciun ID de utilizator nu a fost trimis"
-
-#~ msgid "not_available"
-#~ msgstr "indisponibil"
 
 #~ msgid "Obtain a professional assessment from a certified dermatologist by email within two working days through a straightforward three-step process."
 #~ msgstr "Obține o evaluare profesională de la un dermatolog certificat prin e-mail în termen de două zile lucrătoare printr-un proces simplu în trei pași."

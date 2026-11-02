@@ -1,10 +1,15 @@
 <?php
 /**
- * REST route that doctor2go.online (WCC) calls to create or update a doctor.
+ * REST routes that doctor2go.online (WCC) calls.
  *
  * POST /wp-json/d2gc/v1/doctor-sync
- * Body (JSON): timestamp, user_key, hash = sha256( timestamp . '_' . user_key . '_' . organisation API token ), and the
- * doctor data (user_email, user_id, user_first_name, ...). It replaces the old endpoints/doctor.php, the body is the same.
+ * Creates or updates a doctor. Body (JSON): timestamp, user_key, hash = sha256( timestamp . '_' . user_key . '_' .
+ * organisation API token ), and the doctor data (user_email, user_id, user_first_name, ...). It replaces the old
+ * endpoints/doctor.php, the body is the same.
+ *
+ * GET /wp-json/d2gc/v1/doctor-status/{wcc_user_id}?timestamp=...&user_key=...&hash=...
+ * The status of the doctor post and its translations. Same handshake, in the query string; user_key has to be the
+ * one of that doctor.
  *
  * Response (JSON): { "message": "..." } on success, { "errors": [ "..." ] } on failure, with a matching HTTP status.
  *
@@ -19,7 +24,7 @@ class D2GC_Rest {
 
 	const REST_NAMESPACE = 'd2gc/v1';
 
-	/** Option with the last requests to the doctor sync route (shown on the settings page, Advanced tab). */
+	/** Option with the last requests to the routes of this namespace (shown on the settings page, Advanced tab). */
 	const LOG_OPTION = 'd2gc_doctor_sync_log';
 	const LOG_MAX    = 50;
 
@@ -31,7 +36,7 @@ class D2GC_Rest {
 
 	/**
 	 * The JSON body, also when it is not sent with Content-Type: application/json (the old endpoints/doctor.php read
-	 * php://input as JSON regardless of the header). Form fields as a last resort.
+	 * php://input as JSON regardless of the header). Form fields, then the query string (GET) as a last resort.
 	 *
 	 * @param WP_REST_Request $request
 	 * @return array
@@ -44,11 +49,14 @@ class D2GC_Rest {
 		if ( ! is_array( $data ) || ! $data ) {
 			$data = $request->get_body_params();
 		}
+		if ( ! is_array( $data ) || ! $data ) {
+			$data = $request->get_query_params();
+		}
 		return is_array( $data ) ? $data : array();
 	}
 
 	/**
-	 * Logs every request to the doctor sync route: always a summary (time, IP, Content-Type, status, error), with
+	 * Logs every request to the routes of this namespace: always a summary (time, IP, Content-Type, status, error), with
 	 * "Activate debug logging" (d2g_debug) also the request body (secrets masked) and a line in the PHP error log.
 	 *
 	 * @param WP_HTTP_Response $response
@@ -57,9 +65,11 @@ class D2GC_Rest {
 	 * @return WP_HTTP_Response
 	 */
 	public static function log_request( $response, $server, $request ) {
-		if ( 0 !== strpos( $request->get_route(), '/' . self::REST_NAMESPACE . '/doctor-sync' ) ) {
+		$route = self::get_route_name( $request );
+		if ( ! in_array( $route, array( 'doctor-sync', 'doctor-status' ), true ) ) {
 			return $response;
 		}
+		$wcc_user_id = 'doctor-status' === $route ? $request->get_param( 'wcc_user_id' ) : ( self::get_payload( $request )['user_id'] ?? '' );
 
 		$payload = self::get_payload( $request );
 		$data    = $response->get_data();
@@ -67,6 +77,7 @@ class D2GC_Rest {
 
 		$entry = array(
 			'time'         => current_time( 'mysql' ),
+			'route'        => $route,
 			'method'       => $request->get_method(),
 			'ip'           => isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '',
 			'content_type' => (string) $request->get_header( 'content_type' ),
@@ -75,13 +86,13 @@ class D2GC_Rest {
 			'code'         => is_array( $data ) && isset( $data['code'] ) ? (string) $data['code'] : '',
 			'result'       => is_array( $data ) ? ( isset( $data['errors'] ) ? implode( ' | ', (array) $data['errors'] ) : (string) ( $data['message'] ?? '' ) ) : '',
 			'user_email'   => isset( $payload['user_email'] ) && is_scalar( $payload['user_email'] ) ? (string) $payload['user_email'] : '',
-			'wcc_user_id'  => isset( $payload['user_id'] ) && is_scalar( $payload['user_id'] ) ? (string) $payload['user_id'] : '',
+			'wcc_user_id'  => is_scalar( $wcc_user_id ) ? (string) $wcc_user_id : '',
 			'keys'         => implode( ', ', array_keys( $payload ) ),
 		);
 		if ( $debug ) {
 			$entry['payload']  = self::mask_secrets( $payload );
 			$entry['response'] = $data;
-			error_log( 'D2GC doctor-sync: ' . wp_json_encode( $entry ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- only with "Activate debug logging"
+			error_log( 'D2GC ' . $route . ': ' . wp_json_encode( $entry ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- only with "Activate debug logging"
 		}
 
 		$log = get_option( self::LOG_OPTION, array() );
@@ -90,6 +101,18 @@ class D2GC_Rest {
 		update_option( self::LOG_OPTION, array_slice( $log, 0, self::LOG_MAX ), false );
 
 		return $response;
+	}
+
+	/**
+	 * @param WP_REST_Request $request
+	 * @return string the route below the namespace without parameters (doctor-sync, doctor-status), '' for other routes
+	 */
+	private static function get_route_name( $request ) {
+		$prefix = '/' . self::REST_NAMESPACE . '/';
+		if ( 0 !== strpos( $request->get_route(), $prefix ) ) {
+			return '';
+		}
+		return strtok( substr( $request->get_route(), strlen( $prefix ) ), '/' );
 	}
 
 	/**
@@ -147,7 +170,16 @@ class D2GC_Rest {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( __CLASS__, 'doctor_sync' ),
-				'permission_callback' => array( __CLASS__, 'check_doctor_sync_request' ),
+				'permission_callback' => array( __CLASS__, 'check_wcc_request' ),
+			)
+		);
+		register_rest_route(
+			self::REST_NAMESPACE,
+			'/doctor-status/(?P<wcc_user_id>[A-Za-z0-9_-]+)',
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array( __CLASS__, 'doctor_status' ),
+				'permission_callback' => array( __CLASS__, 'check_doctor_status_request' ),
 			)
 		);
 	}
@@ -162,12 +194,21 @@ class D2GC_Rest {
 	}
 
 	/**
+	 * The status URL for WCC (shown on the settings page), with {wcc_user_id} as placeholder.
+	 *
+	 * @return string
+	 */
+	public static function get_doctor_status_url() {
+		return rest_url( self::REST_NAMESPACE . '/doctor-status/' ) . '{wcc_user_id}';
+	}
+
+	/**
 	 * Only requests signed with the organisation API token and with a recent timestamp.
 	 *
 	 * @param WP_REST_Request $request
 	 * @return true|WP_Error
 	 */
-	public static function check_doctor_sync_request( $request ) {
+	public static function check_wcc_request( $request ) {
 		$data      = self::get_payload( $request );
 		$super_key = (string) get_option( 'd2gc_wcc_token' );
 
@@ -180,12 +221,12 @@ class D2GC_Rest {
 
 		$expected = hash( 'sha256', $data['timestamp'] . '_' . $data['user_key'] . '_' . $super_key );
 		if ( ! hash_equals( $expected, $data['hash'] ) ) {
-			return new WP_Error( 'd2gc_invalid_hash', 'The hash is incorrect for the doctor sync request.', array( 'status' => 403 ) );
+			return new WP_Error( 'd2gc_invalid_hash', 'The hash is incorrect for this request.', array( 'status' => 403 ) );
 		}
 
 		/**
-		 * Filters how old (in seconds, both directions for clock differences) the timestamp of a doctor sync request may
-		 * be. 0 switches the check off.
+		 * Filters how old (in seconds, both directions for clock differences) the timestamp of a request from WCC (doctor
+		 * sync and doctor status) may be. 0 switches the check off.
 		 *
 		 * @param int $max_age
 		 */
@@ -200,6 +241,32 @@ class D2GC_Rest {
 			}
 		}
 
+		return true;
+	}
+
+	/**
+	 * Signed like every WCC request, and the user_key has to belong to the requested doctor: a valid signature of one
+	 * doctor must not read the others. Unknown WCC ids pass here and get a 404 from doctor_status().
+	 *
+	 * @param WP_REST_Request $request
+	 * @return true|WP_Error
+	 */
+	public static function check_doctor_status_request( $request ) {
+		$check = self::check_wcc_request( $request );
+		if ( true !== $check ) {
+			return $check;
+		}
+
+		$user_key = (string) self::get_payload( $request )['user_key'];
+		$docs     = D2G_doc_user_profile::d2gc_get_doctors_by_wcc_id( $request->get_param( 'wcc_user_id' ) );
+		foreach ( $docs as $doc ) {
+			if ( hash_equals( (string) get_post_meta( $doc->ID, 'user_key', true ), $user_key ) ) {
+				return true;
+			}
+		}
+		if ( $docs ) {
+			return new WP_Error( 'd2gc_wrong_user_key', 'The user_key does not belong to this doctor.', array( 'status' => 403 ) );
+		}
 		return true;
 	}
 
@@ -246,5 +313,51 @@ class D2GC_Rest {
 		}
 
 		return new WP_REST_Response( $result, 200 );
+	}
+
+	/**
+	 * The status of the doctor post and its translations (every language and status).
+	 *
+	 * @param WP_REST_Request $request
+	 * @return WP_REST_Response
+	 */
+	public static function doctor_status( $request ) {
+		$wcc_user_id = (string) $request->get_param( 'wcc_user_id' );
+		$docs        = D2G_doc_user_profile::d2gc_get_doctors_by_wcc_id( $wcc_user_id );
+
+		if ( ! $docs ) {
+			$response = new WP_REST_Response(
+				array(
+					'code'   => 'd2gc_not_found',
+					'errors' => array( 'No doctor with this WCC user id on this website.' ),
+				),
+				404
+			);
+		} else {
+			$doctors = array();
+			foreach ( $docs as $doc ) {
+				$doctors[] = array(
+					'post_id'     => $doc->ID,
+					'language'    => D2GC_Translations::get_post_language( $doc->ID ),
+					'post_status' => $doc->post_status,
+					'wcc_status'  => (string) get_post_meta( $doc->ID, 'wcc_status', true ),
+					'title'       => $doc->post_title,
+					// only published profiles have a public address
+					'url'         => 'publish' === $doc->post_status ? get_permalink( $doc ) : null,
+					'modified'    => $doc->post_modified,
+				);
+			}
+			$response = new WP_REST_Response(
+				array(
+					'wcc_user_id' => $wcc_user_id,
+					'doctors'     => $doctors,
+				),
+				200
+			);
+		}
+
+		// the site has a page cache in front, WCC must always get the current status
+		$response->header( 'Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0' );
+		return $response;
 	}
 }

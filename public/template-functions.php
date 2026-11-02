@@ -625,7 +625,7 @@ function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '', $part = '' ) {
 				$video = false;
 			}
 			?>
-			<li class="<?php echo ($video == true)?esc_html('available'):esc_html__('not_available')  ?> list-group-item d-flex justify-content-between <?php echo esc_html( $liClass ); ?>">
+			<li class="<?php echo ($video == true)?'available' : 'not_available'; ?> list-group-item d-flex justify-content-between <?php echo esc_html( $liClass ); ?>">
                 <span class="icon d2cif-video"></span>
 				<div class="ms-2 me-auto">
                     <?php if($video == true){ ?>
@@ -643,7 +643,7 @@ function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '', $part = '' ) {
                     <a class="video_con_trigger<?php echo ( $video !== true ) ? ' d2g-modal-trigger' : ''; ?>" href="<?php echo $video ? esc_url(add_query_arg(['consult' => 'video', 'use_ai_info' => sanitize_text_field(wp_unslash($_GET['use_ai_info'] ?? '0'))], get_permalink())) : '#info_not_available'; ?>">
                 <?php } ?>
                     <span class="badge text-bg-primary rounded-pill">
-                        <?php echo ( $video == true) ? wp_kses_post( $d2g_profile_data->doctor_meta['d2g_tariffs'][0] ):esc_html__('n/a')?>
+                        <?php echo ( $video == true) ? wp_kses_post( $d2g_profile_data->doctor_meta['d2g_tariffs'][0] ):esc_html__('n/a', 'doctor2go-connect')?>
                     </span>
                 <?php if($video == true){ ?>
                     </a>
@@ -656,7 +656,7 @@ function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '', $part = '' ) {
 				$email = false;
 			}
 			?>
-			<li class="<?php echo ($email == true)?esc_html('available'):esc_html__('not_available')  ?> icon-mail-1 list-group-item d-flex justify-content-between <?php echo esc_html( $liClass ); ?>">
+			<li class="<?php echo ($email == true)?'available' : 'not_available'; ?> icon-mail-1 list-group-item d-flex justify-content-between <?php echo esc_html( $liClass ); ?>">
                 <span class="icon d2cif-mail"></span>
 				<div class="ms-2 me-auto">
 					<?php if($email == true){ ?>
@@ -672,7 +672,7 @@ function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '', $part = '' ) {
                     <a class="email_con_trigger<?php echo ( $email !== true ) ? ' d2g-modal-trigger' : ''; ?>" href="<?php echo $email ? esc_url(add_query_arg(['consult' => 'email', 'use_ai_info' => sanitize_text_field(wp_unslash($_GET['use_ai_info'] ?? '0'))], get_permalink())) : '#info_not_available'; ?>">
                 <?php } ?>
                     <span class="badge text-bg-primary rounded-pill">
-                        <?php echo ($email == true) ? esc_html( $d2g_profile_data->doctor_meta['written_con_currency'][0] ).' '. esc_html( $d2g_profile_data->doctor_meta['written_con_price'][0] ):esc_html__('n/a')?>
+                        <?php echo ($email == true) ? esc_html( $d2g_profile_data->doctor_meta['written_con_currency'][0] ).' '. esc_html( $d2g_profile_data->doctor_meta['written_con_price'][0] ):esc_html__('n/a', 'doctor2go-connect')?>
                     </span>
                 <?php if($email == true){ ?>
                     </a>
@@ -685,7 +685,7 @@ function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '', $part = '' ) {
 				$walkin = false;
 			}
 			?>
-			<li class="<?php echo ($walkin == true)?esc_html('available'):esc_html__('not_available')  ?> flaticon-online-meeting flaticon-wcc list-group-item d-flex justify-content-between <?php echo esc_html( $liClass ); ?>">
+			<li class="<?php echo ($walkin == true)?'available' : 'not_available'; ?> flaticon-online-meeting flaticon-wcc list-group-item d-flex justify-content-between <?php echo esc_html( $liClass ); ?>">
                 <span class="icon d2cif-Video-waiting"></span>
 				<div class="ms-2 me-auto">
 					<?php if($walkin == true){ ?>
@@ -701,7 +701,7 @@ function d2gc_cb_d2g_info_box( $temp_file, $version, $post = '', $part = '' ) {
                     <a class="walkin_con_trigger<?php echo ( $walkin !== true ) ? ' d2g-modal-trigger' : ''; ?>" href="<?php echo $walkin ? esc_url(add_query_arg(['consult' => 'walkin', 'use_ai_info' => sanitize_text_field(wp_unslash($_GET['use_ai_info'] ?? '0'))], get_permalink())) : '#info_not_available'; ?>">
                 <?php } ?>
                         <span class="badge text-bg-primary rounded-pill">
-                            <?php echo ($walkin == true) ? esc_html( $d2g_profile_data->doctor_meta['walk_in_currency'][0] ).' '. esc_html( $d2g_profile_data->doctor_meta['walk_in_price'][0] ):esc_html__('n/a')?>
+                            <?php echo ($walkin == true) ? esc_html( $d2g_profile_data->doctor_meta['walk_in_currency'][0] ).' '. esc_html( $d2g_profile_data->doctor_meta['walk_in_price'][0] ):esc_html__('n/a', 'doctor2go-connect')?>
                         </span>
                 <?php if($walkin == true){ ?>
                     </a>

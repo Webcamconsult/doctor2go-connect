@@ -1,6 +1,6 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the Doctor2Go Connect package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
@@ -8,24 +8,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doctor2Go Connect\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-22 16:37+0000\n"
+"POT-Creation-Date: 2026-11-02 11:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: \n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Domain: doctor2go-connect\n"
-"X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.8.5; wp-7.0; php-8.3.21\n"
 
-#: admin/class-d2g-booking-patient.php:70 public/d2g-connect-shortcodes.php:2369
+#: admin/class-d2g-booking-patient.php:70
+#: public/d2g-connect-shortcodes.php:2369
 msgid "CAPTCHA verification failed. Please try again."
 msgstr ""
 
-#: admin/class-d2g-booking-patient.php:384 admin/class-d2g-booking-patient.php:418 admin/class-d2g-booking-patient.php:429
+#: admin/class-d2g-booking-patient.php:384
+#: admin/class-d2g-booking-patient.php:418
+#: admin/class-d2g-booking-patient.php:429
 msgid "Your appointment cloud not be canceled. Please contact your doctor."
 msgstr ""
 
@@ -33,63 +32,116 @@ msgstr ""
 msgid "Your appointment has been canceled."
 msgstr ""
 
-#: admin/class-d2g-booking-patient.php:526 admin/class-d2g-booking-patient.php:562 admin/class-d2g-booking-patient.php:749 admin/class-d2g-booking-patient.php:792
+#: admin/class-d2g-booking-patient.php:526
+#: admin/class-d2g-booking-patient.php:562
+#: admin/class-d2g-booking-patient.php:749
+#: admin/class-d2g-booking-patient.php:792
 msgid "There has been an error."
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:100 admin/partials/metaboxes.php:201 admin/partials/metaboxes.php:227 admin/partials/metaboxes.php:251 admin/partials/metaboxes.php:290 admin/partials/metaboxes.php:316 admin/partials/metaboxes.php:340 public/class-d2g-connect-public.php:338 public/d2g-connect-shortcodes.php:524 public/d2g-connect-shortcodes.php:551 public/d2g-connect-shortcodes.php:618 public/d2g-connect-shortcodes.php:645
+#: admin/class-d2g-connect-admin.php:100 admin/partials/metaboxes.php:201
+#: admin/partials/metaboxes.php:227 admin/partials/metaboxes.php:251
+#: admin/partials/metaboxes.php:290 admin/partials/metaboxes.php:316
+#: admin/partials/metaboxes.php:340 public/class-d2g-connect-public.php:338
+#: public/d2g-connect-shortcodes.php:524 public/d2g-connect-shortcodes.php:551
+#: public/d2g-connect-shortcodes.php:618 public/d2g-connect-shortcodes.php:645
 msgid "start date"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:101 admin/partials/metaboxes.php:204 admin/partials/metaboxes.php:230 admin/partials/metaboxes.php:254 admin/partials/metaboxes.php:293 admin/partials/metaboxes.php:319 admin/partials/metaboxes.php:343 public/class-d2g-connect-public.php:339 public/d2g-connect-shortcodes.php:527 public/d2g-connect-shortcodes.php:554 public/d2g-connect-shortcodes.php:621 public/d2g-connect-shortcodes.php:648
+#: admin/class-d2g-connect-admin.php:101 admin/partials/metaboxes.php:204
+#: admin/partials/metaboxes.php:230 admin/partials/metaboxes.php:254
+#: admin/partials/metaboxes.php:293 admin/partials/metaboxes.php:319
+#: admin/partials/metaboxes.php:343 public/class-d2g-connect-public.php:339
+#: public/d2g-connect-shortcodes.php:527 public/d2g-connect-shortcodes.php:554
+#: public/d2g-connect-shortcodes.php:621 public/d2g-connect-shortcodes.php:648
 msgid "end date"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:102 admin/partials/metaboxes.php:298 admin/partials/metaboxes.php:324 admin/partials/metaboxes.php:348 public/class-d2g-connect-public.php:340 public/d2g-connect-shortcodes.php:500 public/d2g-connect-shortcodes.php:533 public/d2g-connect-shortcodes.php:560
+#: admin/class-d2g-connect-admin.php:102 admin/partials/metaboxes.php:298
+#: admin/partials/metaboxes.php:324 admin/partials/metaboxes.php:348
+#: public/class-d2g-connect-public.php:340
+#: public/d2g-connect-shortcodes.php:500 public/d2g-connect-shortcodes.php:533
+#: public/d2g-connect-shortcodes.php:560
 msgid "study area"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:103 admin/partials/metaboxes.php:301 admin/partials/metaboxes.php:327 admin/partials/metaboxes.php:351 public/class-d2g-connect-public.php:341 public/d2g-connect-shortcodes.php:503 public/d2g-connect-shortcodes.php:537 public/d2g-connect-shortcodes.php:564
+#: admin/class-d2g-connect-admin.php:103 admin/partials/metaboxes.php:301
+#: admin/partials/metaboxes.php:327 admin/partials/metaboxes.php:351
+#: public/class-d2g-connect-public.php:341
+#: public/d2g-connect-shortcodes.php:503 public/d2g-connect-shortcodes.php:537
+#: public/d2g-connect-shortcodes.php:564
 msgid "degree"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:104 admin/partials/metaboxes.php:304 admin/partials/metaboxes.php:330 admin/partials/metaboxes.php:354 public/class-d2g-connect-public.php:342 public/d2g-connect-shortcodes.php:506 public/d2g-connect-shortcodes.php:541 public/d2g-connect-shortcodes.php:568
+#: admin/class-d2g-connect-admin.php:104 admin/partials/metaboxes.php:304
+#: admin/partials/metaboxes.php:330 admin/partials/metaboxes.php:354
+#: public/class-d2g-connect-public.php:342
+#: public/d2g-connect-shortcodes.php:506 public/d2g-connect-shortcodes.php:541
+#: public/d2g-connect-shortcodes.php:568
 msgid "institution"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:105 admin/partials/metaboxes.php:209 public/class-d2g-connect-public.php:343 public/d2g-connect-shortcodes.php:594
+#: admin/class-d2g-connect-admin.php:105 admin/partials/metaboxes.php:209
+#: public/class-d2g-connect-public.php:343
+#: public/d2g-connect-shortcodes.php:594
 msgid "expertise"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:106 admin/partials/metaboxes.php:212 admin/partials/metaboxes.php:238 public/class-d2g-connect-public.php:344 public/d2g-connect-shortcodes.php:597 public/d2g-connect-shortcodes.php:631
+#: admin/class-d2g-connect-admin.php:106 admin/partials/metaboxes.php:212
+#: admin/partials/metaboxes.php:238 public/class-d2g-connect-public.php:344
+#: public/d2g-connect-shortcodes.php:597 public/d2g-connect-shortcodes.php:631
 msgid "position"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:107 public/class-d2g-connect-public.php:345
+#: admin/class-d2g-connect-admin.php:107
+#: public/class-d2g-connect-public.php:345
 msgid "organisation / company"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:108 admin/partials/metaboxes.php:262 admin/partials/metaboxes.php:377 admin/partials/metaboxes.php:402 admin/partials/metaboxes.php:425 public/class-d2g-connect-public.php:346 public/d2g-connect-shortcodes.php:658 public/d2g-connect-shortcodes.php:685 public/d2g-connect-shortcodes.php:714 public/d2g-connect-shortcodes.php:742 public/template-functions.php:903
+#: admin/class-d2g-connect-admin.php:108 admin/partials/metaboxes.php:262
+#: admin/partials/metaboxes.php:377 admin/partials/metaboxes.php:402
+#: admin/partials/metaboxes.php:425 public/class-d2g-connect-public.php:346
+#: public/d2g-connect-shortcodes.php:658 public/d2g-connect-shortcodes.php:685
+#: public/d2g-connect-shortcodes.php:714 public/d2g-connect-shortcodes.php:742
+#: public/template-functions.php:903
 msgid "title"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:109 admin/partials/metaboxes.php:380 admin/partials/metaboxes.php:405 admin/partials/metaboxes.php:428 public/class-d2g-connect-public.php:347 public/d2g-connect-shortcodes.php:688 public/d2g-connect-shortcodes.php:718 public/d2g-connect-shortcodes.php:746
+#: admin/class-d2g-connect-admin.php:109 admin/partials/metaboxes.php:380
+#: admin/partials/metaboxes.php:405 admin/partials/metaboxes.php:428
+#: public/class-d2g-connect-public.php:347
+#: public/d2g-connect-shortcodes.php:688 public/d2g-connect-shortcodes.php:718
+#: public/d2g-connect-shortcodes.php:746
 msgid "web link"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:110 admin/partials/metaboxes.php:383 admin/partials/metaboxes.php:408 admin/partials/metaboxes.php:431 public/class-d2g-connect-public.php:348 public/d2g-connect-shortcodes.php:691 public/d2g-connect-shortcodes.php:722 public/d2g-connect-shortcodes.php:750
+#: admin/class-d2g-connect-admin.php:110 admin/partials/metaboxes.php:383
+#: admin/partials/metaboxes.php:408 admin/partials/metaboxes.php:431
+#: public/class-d2g-connect-public.php:348
+#: public/d2g-connect-shortcodes.php:691 public/d2g-connect-shortcodes.php:722
+#: public/d2g-connect-shortcodes.php:750
 msgid "journal"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:111 admin/partials/metaboxes.php:386 admin/partials/metaboxes.php:411 admin/partials/metaboxes.php:434 public/class-d2g-connect-public.php:349 public/d2g-connect-shortcodes.php:694 public/d2g-connect-shortcodes.php:726 public/d2g-connect-shortcodes.php:754 public/template-functions.php:909
+#: admin/class-d2g-connect-admin.php:111 admin/partials/metaboxes.php:386
+#: admin/partials/metaboxes.php:411 admin/partials/metaboxes.php:434
+#: public/class-d2g-connect-public.php:349
+#: public/d2g-connect-shortcodes.php:694 public/d2g-connect-shortcodes.php:726
+#: public/d2g-connect-shortcodes.php:754 public/template-functions.php:909
 msgid "type of publication"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:112 admin/partials/metaboxes.php:389 admin/partials/metaboxes.php:414 admin/partials/metaboxes.php:437 public/class-d2g-connect-public.php:350 public/d2g-connect-shortcodes.php:697 public/d2g-connect-shortcodes.php:730 public/d2g-connect-shortcodes.php:758
+#: admin/class-d2g-connect-admin.php:112 admin/partials/metaboxes.php:389
+#: admin/partials/metaboxes.php:414 admin/partials/metaboxes.php:437
+#: public/class-d2g-connect-public.php:350
+#: public/d2g-connect-shortcodes.php:697 public/d2g-connect-shortcodes.php:730
+#: public/d2g-connect-shortcodes.php:758
 msgid "author"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:113 admin/partials/metaboxes.php:417 public/class-d2g-connect-public.php:351 public/d2g-connect-shortcodes.php:734
+#: admin/class-d2g-connect-admin.php:113 admin/partials/metaboxes.php:417
+#: public/class-d2g-connect-public.php:351
+#: public/d2g-connect-shortcodes.php:734
 msgid "publication date"
 msgstr ""
 
@@ -127,297 +179,387 @@ msgstr ""
 msgid "Something went wrong, please try again."
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:192 admin/partials/d2g-connect-admin-display.php:68
+#: admin/class-d2g-connect-admin.php:127
+#, php-format
+msgid "Syncing… %1$d of %2$d doctors"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:128
+#, php-format
+msgid "%d doctors synced."
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:129
+msgid "Not synced (no answer from doctor2go.online or no doctor key):"
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:130
+msgid "No doctors linked to doctor2go.online found."
+msgstr ""
+
+#: admin/class-d2g-connect-admin.php:197
+#: admin/partials/d2g-connect-admin-display.php:68
 msgid "Doctors"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:216
+#: admin/class-d2g-connect-admin.php:221
 msgid "D2GC E-mail"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:288
+#: admin/class-d2g-connect-admin.php:293
 msgctxt "taxonomy general name"
 msgid "Counytries of operations"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:289
+#: admin/class-d2g-connect-admin.php:294
 msgctxt "taxonomy singular name"
 msgid "Counytry of operations"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:290 admin/class-d2g-connect-admin.php:304 admin/class-d2g-connect-admin.php:318 admin/class-d2g-connect-admin.php:332 admin/class-d2g-connect-admin.php:346 admin/class-d2g-connect-admin.php:360 admin/class-d2g-connect-admin.php:374 public/d2g-connect-shortcodes.php:1814
+#: admin/class-d2g-connect-admin.php:295 admin/class-d2g-connect-admin.php:309
+#: admin/class-d2g-connect-admin.php:323 admin/class-d2g-connect-admin.php:337
+#: admin/class-d2g-connect-admin.php:351 admin/class-d2g-connect-admin.php:365
+#: admin/class-d2g-connect-admin.php:379 public/d2g-connect-shortcodes.php:1814
 msgid "Search"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:291 admin/class-d2g-connect-admin.php:305 admin/class-d2g-connect-admin.php:319 admin/class-d2g-connect-admin.php:333 admin/class-d2g-connect-admin.php:347 admin/class-d2g-connect-admin.php:361 admin/class-d2g-connect-admin.php:375
+#: admin/class-d2g-connect-admin.php:296 admin/class-d2g-connect-admin.php:310
+#: admin/class-d2g-connect-admin.php:324 admin/class-d2g-connect-admin.php:338
+#: admin/class-d2g-connect-admin.php:352 admin/class-d2g-connect-admin.php:366
+#: admin/class-d2g-connect-admin.php:380
 msgid "All"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:292 admin/class-d2g-connect-admin.php:306 admin/class-d2g-connect-admin.php:320 admin/class-d2g-connect-admin.php:334 admin/class-d2g-connect-admin.php:348 admin/class-d2g-connect-admin.php:362 admin/class-d2g-connect-admin.php:376
+#: admin/class-d2g-connect-admin.php:297 admin/class-d2g-connect-admin.php:311
+#: admin/class-d2g-connect-admin.php:325 admin/class-d2g-connect-admin.php:339
+#: admin/class-d2g-connect-admin.php:353 admin/class-d2g-connect-admin.php:367
+#: admin/class-d2g-connect-admin.php:381
 msgid "Parent"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:293 admin/class-d2g-connect-admin.php:307 admin/class-d2g-connect-admin.php:321 admin/class-d2g-connect-admin.php:335 admin/class-d2g-connect-admin.php:349 admin/class-d2g-connect-admin.php:363 admin/class-d2g-connect-admin.php:377
+#: admin/class-d2g-connect-admin.php:298 admin/class-d2g-connect-admin.php:312
+#: admin/class-d2g-connect-admin.php:326 admin/class-d2g-connect-admin.php:340
+#: admin/class-d2g-connect-admin.php:354 admin/class-d2g-connect-admin.php:368
+#: admin/class-d2g-connect-admin.php:382
 msgid "Parent:"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:294 admin/class-d2g-connect-admin.php:308 admin/class-d2g-connect-admin.php:322 admin/class-d2g-connect-admin.php:336 admin/class-d2g-connect-admin.php:350 admin/class-d2g-connect-admin.php:364 admin/class-d2g-connect-admin.php:378 public/d2g-connect-shortcodes.php:915
+#: admin/class-d2g-connect-admin.php:299 admin/class-d2g-connect-admin.php:313
+#: admin/class-d2g-connect-admin.php:327 admin/class-d2g-connect-admin.php:341
+#: admin/class-d2g-connect-admin.php:355 admin/class-d2g-connect-admin.php:369
+#: admin/class-d2g-connect-admin.php:383 public/d2g-connect-shortcodes.php:915
 msgid "Edit"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:295 admin/class-d2g-connect-admin.php:309 admin/class-d2g-connect-admin.php:323 admin/class-d2g-connect-admin.php:337 admin/class-d2g-connect-admin.php:351 admin/class-d2g-connect-admin.php:365 admin/class-d2g-connect-admin.php:379 public/class-d2g-connect-public.php:202
+#: admin/class-d2g-connect-admin.php:300 admin/class-d2g-connect-admin.php:314
+#: admin/class-d2g-connect-admin.php:328 admin/class-d2g-connect-admin.php:342
+#: admin/class-d2g-connect-admin.php:356 admin/class-d2g-connect-admin.php:370
+#: admin/class-d2g-connect-admin.php:384
+#: public/class-d2g-connect-public.php:202
 msgid "Update"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:296 admin/class-d2g-connect-admin.php:310 admin/class-d2g-connect-admin.php:324 admin/class-d2g-connect-admin.php:338 admin/class-d2g-connect-admin.php:352 admin/class-d2g-connect-admin.php:366 admin/class-d2g-connect-admin.php:380
+#: admin/class-d2g-connect-admin.php:301 admin/class-d2g-connect-admin.php:315
+#: admin/class-d2g-connect-admin.php:329 admin/class-d2g-connect-admin.php:343
+#: admin/class-d2g-connect-admin.php:357 admin/class-d2g-connect-admin.php:371
+#: admin/class-d2g-connect-admin.php:385
 msgid "Add New"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:297 admin/class-d2g-connect-admin.php:311 admin/class-d2g-connect-admin.php:325 admin/class-d2g-connect-admin.php:339 admin/class-d2g-connect-admin.php:353 admin/class-d2g-connect-admin.php:367 admin/class-d2g-connect-admin.php:381
+#: admin/class-d2g-connect-admin.php:302 admin/class-d2g-connect-admin.php:316
+#: admin/class-d2g-connect-admin.php:330 admin/class-d2g-connect-admin.php:344
+#: admin/class-d2g-connect-admin.php:358 admin/class-d2g-connect-admin.php:372
+#: admin/class-d2g-connect-admin.php:386
 msgid "New"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:298
+#: admin/class-d2g-connect-admin.php:303
 msgid "Counytry of operations"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:302
+#: admin/class-d2g-connect-admin.php:307
 msgctxt "taxonomy general name"
 msgid "Country of origin"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:303
+#: admin/class-d2g-connect-admin.php:308
 msgctxt "taxonomy singular name"
 msgid "Country of origin"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:312
+#: admin/class-d2g-connect-admin.php:317
 msgid "Country of origin"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:316
+#: admin/class-d2g-connect-admin.php:321
 msgctxt "taxonomy general name"
 msgid "Languages"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:317
+#: admin/class-d2g-connect-admin.php:322
 msgctxt "taxonomy singular name"
 msgid "Language"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:326 public/d2g-connect-shortcodes.php:335
+#: admin/class-d2g-connect-admin.php:331 public/d2g-connect-shortcodes.php:335
 msgid "Languages"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:330
+#: admin/class-d2g-connect-admin.php:335
 msgctxt "taxonomy general name"
 msgid "Diseases"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:331
+#: admin/class-d2g-connect-admin.php:336
 msgctxt "taxonomy singular name"
 msgid "Disease"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:340
+#: admin/class-d2g-connect-admin.php:345
 msgid "Diseases"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:344
+#: admin/class-d2g-connect-admin.php:349
 msgctxt "taxonomy general name"
 msgid "Degrees"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:345
+#: admin/class-d2g-connect-admin.php:350
 msgctxt "taxonomy singular name"
 msgid "Degree"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:354
+#: admin/class-d2g-connect-admin.php:359
 msgid "Degrees"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:358
+#: admin/class-d2g-connect-admin.php:363
 msgctxt "taxonomy general name"
 msgid "Specialties"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:359
+#: admin/class-d2g-connect-admin.php:364
 msgctxt "taxonomy singular name"
 msgid "Specialty"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:368
+#: admin/class-d2g-connect-admin.php:373
 msgid "Specialties"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:372
+#: admin/class-d2g-connect-admin.php:377
 msgctxt "taxonomy general name"
 msgid "Body parts"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:373
+#: admin/class-d2g-connect-admin.php:378
 msgctxt "taxonomy singular name"
 msgid "Body part"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:382
+#: admin/class-d2g-connect-admin.php:387
 msgid "Body parts"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:404
+#: admin/class-d2g-connect-admin.php:409
 msgid "Profile ID"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:405
+#: admin/class-d2g-connect-admin.php:410
 msgid "WP user ID"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:406
+#: admin/class-d2g-connect-admin.php:411
 msgid "Image"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:407 admin/class-d2g-connect-admin.php:519 admin/class-d2g-connect-admin.php:550 admin/class-d2g-connect-admin.php:797 admin/partials/metaboxes.php:20 includes/class-d2g-connect-doctor-sync.php:169
+#: admin/class-d2g-connect-admin.php:412 admin/class-d2g-connect-admin.php:524
+#: admin/class-d2g-connect-admin.php:555 admin/class-d2g-connect-admin.php:801
+#: admin/partials/metaboxes.php:20
+#: includes/class-d2g-connect-doctor-sync.php:169
 msgid "Title"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:408
+#: admin/class-d2g-connect-admin.php:413
 msgid "Fist name"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:409 admin/class-d2g-connect-admin.php:796 admin/partials/metaboxes.php:19 includes/class-d2g-connect-doctor-sync.php:168 public/d2g-connect-shortcodes.php:2482 public/d2g-connect-shortcodes.php:2927 public/template-functions.php:1057 public/templates/email-advice/generic-medofenic-email-form.php:101 public/templates/email-advice/generic-short-email-form.php:73 public/templates/email-advice/standard-derma-email-adv-form.php:46
+#: admin/class-d2g-connect-admin.php:414 admin/class-d2g-connect-admin.php:800
+#: admin/partials/metaboxes.php:19
+#: includes/class-d2g-connect-doctor-sync.php:168
+#: public/d2g-connect-shortcodes.php:2482
+#: public/d2g-connect-shortcodes.php:2927 public/template-functions.php:1057
+#: public/templates/email-advice/generic-medofenic-email-form.php:101
+#: public/templates/email-advice/generic-short-email-form.php:73
+#: public/templates/email-advice/standard-derma-email-adv-form.php:46
 msgid "Last name"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:410 admin/class-d2g-connect-admin.php:551 admin/class-d2g-connect-admin.php:803 admin/partials/d2g-connect-admin-display.php:70 admin/partials/metaboxes.php:26 includes/class-d2g-connect-doctor-sync.php:176 public/d2g-connect-shortcodes.php:2196 public/template-functions.php:1061 public/templates/email-advice/generic-medofenic-email-form.php:107 public/templates/email-advice/generic-short-email-form.php:79 public/templates/email-advice/standard-derma-email-adv-form.php:52
+#: admin/class-d2g-connect-admin.php:415 admin/class-d2g-connect-admin.php:556
+#: admin/class-d2g-connect-admin.php:807
+#: admin/partials/d2g-connect-admin-display.php:70
+#: admin/partials/metaboxes.php:26
+#: includes/class-d2g-connect-doctor-sync.php:176
+#: public/d2g-connect-shortcodes.php:2196 public/template-functions.php:1061
+#: public/templates/email-advice/generic-medofenic-email-form.php:107
+#: public/templates/email-advice/generic-short-email-form.php:79
+#: public/templates/email-advice/standard-derma-email-adv-form.php:52
 msgid "E-mail"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:411 public/d2g-connect-shortcodes.php:292 public/template-functions.php:1304 public/template-functions.php:1306
+#: admin/class-d2g-connect-admin.php:416 public/d2g-connect-shortcodes.php:292
+#: public/template-functions.php:1304 public/template-functions.php:1306
 msgid "Country"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:412
+#: admin/class-d2g-connect-admin.php:417
 msgid "Language"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:413
+#: admin/class-d2g-connect-admin.php:418
 msgid "Specialisation"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:414
+#: admin/class-d2g-connect-admin.php:419
 msgid "D2G domain"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:415
+#: admin/class-d2g-connect-admin.php:420
 msgid "D2G org. key"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:416
+#: admin/class-d2g-connect-admin.php:421
 msgid "D2G user ID"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:417
+#: admin/class-d2g-connect-admin.php:422
 msgid "D2G user key"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:418 admin/class-d2g-connect-admin.php:522
+#: admin/class-d2g-connect-admin.php:423 admin/class-d2g-connect-admin.php:527
 msgid "Author"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:419
+#: admin/class-d2g-connect-admin.php:424
 msgid "Action"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:518
+#: admin/class-d2g-connect-admin.php:523
 msgid "Page ID"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:520
+#: admin/class-d2g-connect-admin.php:525
 msgid "Access"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:521
+#: admin/class-d2g-connect-admin.php:526
 msgid "Identifier"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:645
+#: admin/class-d2g-connect-admin.php:650
 msgid "API token cannot be empty."
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:657
+#: admin/class-d2g-connect-admin.php:662
 msgid "This field cannot be empty."
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:706 admin/class-d2g-connect-admin.php:749
+#: admin/class-d2g-connect-admin.php:711 admin/class-d2g-connect-admin.php:754
 msgid "Prices"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:707 admin/class-d2g-connect-admin.php:750 public/d2g-connect-shortcodes.php:458
+#: admin/class-d2g-connect-admin.php:712 admin/class-d2g-connect-admin.php:755
+#: public/d2g-connect-shortcodes.php:458
 msgid "Questionnaires"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:711 admin/class-d2g-connect-admin.php:751
+#: admin/class-d2g-connect-admin.php:716 admin/class-d2g-connect-admin.php:756
 msgid "Availability & holiday"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:746 public/d2g-connect-shortcodes.php:245 public/templates/email-advice/generic-medofenic-email-form.php:90 public/templates/email-advice/generic-short-email-form.php:62 public/templates/email-advice/standard-derma-email-adv-form.php:35
+#: admin/class-d2g-connect-admin.php:751 public/d2g-connect-shortcodes.php:245
+#: public/templates/email-advice/generic-medofenic-email-form.php:90
+#: public/templates/email-advice/generic-short-email-form.php:62
+#: public/templates/email-advice/standard-derma-email-adv-form.php:35
 msgid "Personal information"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:747
+#: admin/class-d2g-connect-admin.php:752
 msgid "Bio"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:748
+#: admin/class-d2g-connect-admin.php:753
 msgid "Education & experience"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:795 admin/partials/metaboxes.php:18 includes/class-d2g-connect-doctor-sync.php:167 public/d2g-connect-shortcodes.php:2477 public/d2g-connect-shortcodes.php:2922 public/template-functions.php:1053 public/templates/email-advice/generic-medofenic-email-form.php:95 public/templates/email-advice/generic-short-email-form.php:67 public/templates/email-advice/standard-derma-email-adv-form.php:40
+#: admin/class-d2g-connect-admin.php:799 admin/partials/metaboxes.php:18
+#: includes/class-d2g-connect-doctor-sync.php:167
+#: public/d2g-connect-shortcodes.php:2477
+#: public/d2g-connect-shortcodes.php:2922 public/template-functions.php:1053
+#: public/templates/email-advice/generic-medofenic-email-form.php:95
+#: public/templates/email-advice/generic-short-email-form.php:67
+#: public/templates/email-advice/standard-derma-email-adv-form.php:40
 msgid "First name"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:798 admin/partials/metaboxes.php:21 includes/class-d2g-connect-doctor-sync.php:171 public/d2g-connect-shortcodes.php:273 public/d2g-connect-shortcodes.php:275 public/template-functions.php:800
+#: admin/class-d2g-connect-admin.php:802 admin/partials/metaboxes.php:21
+#: includes/class-d2g-connect-doctor-sync.php:171
+#: public/d2g-connect-shortcodes.php:273 public/d2g-connect-shortcodes.php:275
+#: public/template-functions.php:800
 msgid "Address"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:799 admin/partials/metaboxes.php:22 includes/class-d2g-connect-doctor-sync.php:172 public/d2g-connect-shortcodes.php:280
+#: admin/class-d2g-connect-admin.php:803 admin/partials/metaboxes.php:22
+#: includes/class-d2g-connect-doctor-sync.php:172
+#: public/d2g-connect-shortcodes.php:280
 msgid "Zip code"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:800 admin/partials/metaboxes.php:23
+#: admin/class-d2g-connect-admin.php:804 admin/partials/metaboxes.php:23
 msgid "city"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:801 admin/partials/metaboxes.php:24 includes/class-d2g-connect-doctor-sync.php:174 public/d2g-connect-shortcodes.php:2492 public/d2g-connect-shortcodes.php:2937
+#: admin/class-d2g-connect-admin.php:805 admin/partials/metaboxes.php:24
+#: includes/class-d2g-connect-doctor-sync.php:174
+#: public/d2g-connect-shortcodes.php:2492
+#: public/d2g-connect-shortcodes.php:2937
 msgid "Phone"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:802 admin/partials/metaboxes.php:25 includes/class-d2g-connect-doctor-sync.php:175
+#: admin/class-d2g-connect-admin.php:806 admin/partials/metaboxes.php:25
+#: includes/class-d2g-connect-doctor-sync.php:175
 msgid "Mobile"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:804 admin/partials/metaboxes.php:27 includes/class-d2g-connect-doctor-sync.php:170 public/d2g-connect-shortcodes.php:248 public/d2g-connect-shortcodes.php:250
+#: admin/class-d2g-connect-admin.php:808 admin/partials/metaboxes.php:27
+#: includes/class-d2g-connect-doctor-sync.php:170
+#: public/d2g-connect-shortcodes.php:248 public/d2g-connect-shortcodes.php:250
 msgid "Organisation"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:805 admin/partials/metaboxes.php:28 includes/class-d2g-connect-doctor-sync.php:177 public/d2g-connect-shortcodes.php:430
+#: admin/class-d2g-connect-admin.php:809 admin/partials/metaboxes.php:28
+#: includes/class-d2g-connect-doctor-sync.php:177
+#: public/d2g-connect-shortcodes.php:430
 msgid "Registration number"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:806 admin/partials/metaboxes.php:29 includes/class-d2g-connect-doctor-sync.php:178 public/d2g-connect-shortcodes.php:435 public/d2g-connect-shortcodes.php:437
+#: admin/class-d2g-connect-admin.php:810 admin/partials/metaboxes.php:29
+#: includes/class-d2g-connect-doctor-sync.php:178
+#: public/d2g-connect-shortcodes.php:435 public/d2g-connect-shortcodes.php:437
 msgid "Country of registration"
 msgstr ""
 
-#: admin/class-d2g-connect-admin.php:807
+#: admin/class-d2g-connect-admin.php:811
 msgid "Average price"
 msgstr ""
 
-#: admin/class-d2g-doc-user-profile.php:275 public/class-d2g-connect-public.php:1106 public/class-d2g-connect-public.php:1362
+#: admin/class-d2g-doc-user-profile.php:556
+#: public/class-d2g-connect-public.php:1106
+#: public/class-d2g-connect-public.php:1362
 msgid "You are not allowed to edit this profile."
 msgstr ""
 
-#: admin/class-d2g-doc-user-profile.php:353
+#: admin/class-d2g-doc-user-profile.php:634
 msgid "edit"
 msgstr ""
 
@@ -477,299 +619,394 @@ msgstr ""
 msgid "Base URL from the Doctor2go software"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:119
+#: admin/partials/d2g-connect-admin-display.php:110
+msgid "Doctor sync URL"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:112
+msgid "doctor2go.online sends new and changed doctors to this address."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:115
+msgid "Doctor status URL"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:117
+msgid "doctor2go.online reads the status of a doctor profile and its translations from this address."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:129
 msgid "CSS & JS"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:120
+#: admin/partials/d2g-connect-admin-display.php:130
 msgid "You can Choose to load the custom doctor styling or not, it is an extension to the bootstarp 5 styles."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:124
+#: admin/partials/d2g-connect-admin-display.php:134
 msgid "Doctor styling"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:126
+#: admin/partials/d2g-connect-admin-display.php:136
 msgid "load extra custom styles (light)"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:127
+#: admin/partials/d2g-connect-admin-display.php:137
 msgid "no extra styling"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:131
+#: admin/partials/d2g-connect-admin-display.php:141
 msgid "Deactivate bootstrap css"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:131
+#: admin/partials/d2g-connect-admin-display.php:141
 msgid "You can deactivate the following css file if your theme already contains a bootstrap css."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:132
+#: admin/partials/d2g-connect-admin-display.php:142
 msgid "Deactivate bootstrap JS"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:132
+#: admin/partials/d2g-connect-admin-display.php:142
 msgid "You can deactivate the following JS file if your theme already contains a bootstrap5 JS file."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:139
+#: admin/partials/d2g-connect-admin-display.php:149
 msgid "Detail page settings"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:140
+#: admin/partials/d2g-connect-admin-display.php:150
 msgid "Layout of the doctor profile pages."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:144
+#: admin/partials/d2g-connect-admin-display.php:154
 msgid "Layout"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:147
+#: admin/partials/d2g-connect-admin-display.php:157
 msgid "Full width (no sidebar, hidden forms in a popup)"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:148
+#: admin/partials/d2g-connect-admin-display.php:158
 msgid "Full width (no sidebar, consultation tabs)"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:151
+#: admin/partials/d2g-connect-admin-display.php:161
 msgid "Deactivate header and footer in single-d2g_doctor.php"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:151
+#: admin/partials/d2g-connect-admin-display.php:161
 msgid "If you are using a base file in your theme, where you load the footer and header, than you can deactivate loading those in youre single-d2g_doctor.php file."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:162
+#: admin/partials/d2g-connect-admin-display.php:172
 msgid "Doctor accounts"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:163
+#: admin/partials/d2g-connect-admin-display.php:173
 msgid "How doctor users and their public profiles are created and how doctors log in."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:167
+#: admin/partials/d2g-connect-admin-display.php:177
 msgid "Create doctor user and profile locally"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:167
+#: admin/partials/d2g-connect-admin-display.php:177
 msgid "If you create the user account and profile locally you will not need to set the API connection"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:168
+#: admin/partials/d2g-connect-admin-display.php:178
 msgid "Give doctor access to wp-admin"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:169
+#: admin/partials/d2g-connect-admin-display.php:179
 msgid "Activate Single Sign On Login for doctors"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:169
+#: admin/partials/d2g-connect-admin-display.php:179
 msgid "Doctors can log in to your site directly from doctor2go.online."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:176
+#: admin/partials/d2g-connect-admin-display.php:186
 msgid "Profile editor"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:177
+#: admin/partials/d2g-connect-admin-display.php:187
 msgid "What doctors can edit in the profile editor on the website."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:183
+#: admin/partials/d2g-connect-admin-display.php:193
 msgid "Deactivate the \"Booking rules (availabilities & prices)\" tab"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:184
+#: admin/partials/d2g-connect-admin-display.php:194
 msgid "Doctors can also set their availabilities, prices and vacation periods in the doctor2go.online software. Turn this on if they should do that there: the tab is hidden in the profile editor and nothing is sent from the website. The questionnaires are on the first tab of the profile editor and stay editable."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:191
+#: admin/partials/d2g-connect-admin-display.php:201
 msgid "Placeholder image for doctors"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:192
+#: admin/partials/d2g-connect-admin-display.php:202
 msgid "Shown for doctors without a profile picture."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:200 admin/partials/d2g-connect-admin-display.php:245
+#: admin/partials/d2g-connect-admin-display.php:210
+#: admin/partials/d2g-connect-admin-display.php:297
 msgid "Upload"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:212
-msgid "Patient accounts"
-msgstr ""
-
-#: admin/partials/d2g-connect-admin-display.php:213
-msgid "Registration and login for patients."
-msgstr ""
-
 #: admin/partials/d2g-connect-admin-display.php:217
-msgid "Activate custom login and registration for patients"
+#: admin/partials/d2g-connect-admin-display.php:237
+#: admin/partials/d2g-connect-admin-display.php:241
+msgid "never"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:222
+msgid "Availability sync"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:223
+msgid "Every 15 minutes the plugin fetches the free slots and the walk-in status of each doctor from doctor2go.online (via WP-Cron). Here you can see when that last happened and run it right away."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:228
+msgid "Next automatic run"
 msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:229
-msgid "E-mail settings"
+msgid "not scheduled"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:230
-msgid "Sender and layout of the e-mails the plugin sends."
-msgstr ""
-
-#: admin/partials/d2g-connect-admin-display.php:234
-msgid "sender address"
-msgstr ""
-
-#: admin/partials/d2g-connect-admin-display.php:235
-msgid "sender name"
+#: admin/partials/d2g-connect-admin-display.php:232
+msgid "Last automatic run"
 msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:236
-msgid "recipient address"
-msgstr ""
-
-#: admin/partials/d2g-connect-admin-display.php:237
-msgid "Activate custom password reset email"
+msgid "Most recently synced doctor"
 msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:240
-msgid "logo used in e-mail"
+msgid "Longest not synced doctor"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:257
-msgid "ALTCHA spam protection"
+#. translators: %d: number of doctors
+#: admin/partials/d2g-connect-admin-display.php:248
+#, php-format
+msgid "Sync all doctors now (%d)"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:258
-msgid "This plugin is compatible with ALTCHA, a privacy-friendly alternative to Google reCAPTCHA."
+#: admin/partials/d2g-connect-admin-display.php:264
+msgid "Patient accounts"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:263
-msgid "Status:"
+#: admin/partials/d2g-connect-admin-display.php:265
+msgid "Registration and login for patients."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:266
-msgid "ALTCHA is active."
-msgstr ""
-
-#: admin/partials/d2g-connect-admin-display.php:267
-msgid "ALTCHA is not installed or not active."
-msgstr ""
-
-#: admin/partials/d2g-connect-admin-display.php:271
-msgid "You only need the settings of the ALTCHA plugin itself, nothing has to be set here. The login, registration and password reset forms of this plugin show the ALTCHA widget automatically."
-msgstr ""
-
-#: admin/partials/d2g-connect-admin-display.php:272
-msgid "Depending on your theme, different ALTCHA settings might be needed (for example which forms or pages are protected)."
-msgstr ""
-
-#: admin/partials/d2g-connect-admin-display.php:273
-msgid "Recommended: always protect the doctor detail pages with ALTCHA, they contain many forms (booking, e-mail advice, walk-in)."
+#: admin/partials/d2g-connect-admin-display.php:269
+msgid "Activate custom login and registration for patients"
 msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:281
-msgid "Google reCAPTCHA"
+msgid "E-mail settings"
 msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:282
-msgid "Create a Google reCAPTCHA account specifically for your website and enter the generated keys into the appropriate settings within your site’s configuration."
+msgid "Sender and layout of the e-mails the plugin sends."
 msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:286
-msgid "site key"
+msgid "sender address"
 msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:287
-msgid "secret key"
+msgid "sender name"
 msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:288
-msgid "Deactivate loading google recaptcha script"
+msgid "recipient address"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:288
-msgid "You can deactivate the loading from the Google recaptcha script  if necessary, particularly if it is already being loaded from another source."
+#: admin/partials/d2g-connect-admin-display.php:289
+msgid "Activate custom password reset email"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:295
-msgid "Two-factor authentication"
+#: admin/partials/d2g-connect-admin-display.php:292
+msgid "logo used in e-mail"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:296
-msgid "Install the \"Solid Security Basic\" plugin and configure two-factor authentication (2FA) for all individuals with access to the user accounts. This is can be crucial to ensure the highest level of security for sensitive patient data."
-msgstr ""
-
-#: admin/partials/d2g-connect-admin-display.php:299
-msgid "I have installed \"Solid Security Basic\" and I have activated 2FA"
+#: admin/partials/d2g-connect-admin-display.php:309
+msgid "ALTCHA spam protection"
 msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:310
-msgid "Special settings"
-msgstr ""
-
-#: admin/partials/d2g-connect-admin-display.php:311
-msgid "Site wide options, use with care."
+msgid "This plugin is compatible with ALTCHA, a privacy-friendly alternative to Google reCAPTCHA."
 msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:315
-msgid "Activate under construction"
+msgid "Status:"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:315
-msgid "Block all pages for not logged in users and redirect to the under construction page"
+#: admin/partials/d2g-connect-admin-display.php:318
+msgid "ALTCHA is active."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:316
-msgid "Please find more info's about imigix on their website."
+#: admin/partials/d2g-connect-admin-display.php:319
+msgid "ALTCHA is not installed or not active."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:316
-msgid "Use imgix image processing"
-msgstr ""
-
-#: admin/partials/d2g-connect-admin-display.php:317
-msgid "Doctors will be translated via meta values in the post and in the meta values in the connected taxonomies."
-msgstr ""
-
-#: admin/partials/d2g-connect-admin-display.php:317
-msgid "Use pseudo translations."
+#: admin/partials/d2g-connect-admin-display.php:323
+msgid "You only need the settings of the ALTCHA plugin itself, nothing has to be set here. The login, registration and password reset forms of this plugin show the ALTCHA widget automatically."
 msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:324
-msgid "Troubleshooting"
+msgid "Depending on your theme, different ALTCHA settings might be needed (for example which forms or pages are protected)."
 msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:325
-msgid "Only enable while investigating an issue."
+msgid "Recommended: always protect the doctor detail pages with ALTCHA, they contain many forms (booking, e-mail advice, walk-in)."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:328
-msgid "Activate debug logging"
+#: admin/partials/d2g-connect-admin-display.php:333
+msgid "Google reCAPTCHA"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:328
-msgid "Writes extra details to the PHP error log when a request fails (e.g. the written consultation form). Only enable temporarily while investigating an issue."
+#: admin/partials/d2g-connect-admin-display.php:334
+msgid "Create a Google reCAPTCHA account specifically for your website and enter the generated keys into the appropriate settings within your site’s configuration."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:344
-msgid "Translations of doctor profiles"
+#: admin/partials/d2g-connect-admin-display.php:338
+msgid "site key"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:346
-msgid "Doctor data that is the same in every language (contact details, prices, booking rules, vacation periods, profile picture, specialties, languages and country) is kept the same in all translations when a profile is saved."
+#: admin/partials/d2g-connect-admin-display.php:339
+msgid "secret key"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:340
+msgid "Deactivate loading google recaptcha script"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:340
+msgid "You can deactivate the loading from the Google recaptcha script  if necessary, particularly if it is already being loaded from another source."
 msgstr ""
 
 #: admin/partials/d2g-connect-admin-display.php:347
+msgid "Two-factor authentication"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:348
+msgid "Install the \"Solid Security Basic\" plugin and configure two-factor authentication (2FA) for all individuals with access to the user accounts. This is can be crucial to ensure the highest level of security for sensitive patient data."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:351
+msgid "I have installed \"Solid Security Basic\" and I have activated 2FA"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:362
+msgid "Special settings"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:363
+msgid "Site wide options, use with care."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:367
+msgid "Activate under construction"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:367
+msgid "Block all pages for not logged in users and redirect to the under construction page"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:368
+msgid "Use imgix image processing"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:368
+msgid "Please find more info's about imigix on their website."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:369
+msgid "Use pseudo translations."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:369
+msgid "Doctors will be translated via meta values in the post and in the meta values in the connected taxonomies."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:376
+msgid "Troubleshooting"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:377
+msgid "Only enable while investigating an issue."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:380
+msgid "Activate debug logging"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:380
+msgid "Writes extra details to the PHP error log when a request fails (e.g. the written consultation form). Only enable temporarily while investigating an issue."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:386
+msgid "Doctor sync log"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:387
+msgid "The last 50 requests from doctor2go.online to the doctor sync and doctor status URLs, newest first. With \"Activate debug logging\" on, the full request is stored too (hash, keys and passwords shortened)."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:392
+msgid "No requests yet."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:398
+msgid "Time"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:399
+msgid "Status"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:400
+msgid "Result"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:401
+#: includes/class-d2g-connect-activator.php:108
+#: public/template-functions.php:1007
+msgid "Doctor"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:402
+msgid "Request"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:417
+msgid "Request and response"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:443
+msgid "Translations of doctor profiles"
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:445
+msgid "Doctor data that is the same in every language (contact details, prices, booking rules, vacation periods, profile picture, specialties, languages and country) is kept the same in all translations when a profile is saved."
+msgstr ""
+
+#: admin/partials/d2g-connect-admin-display.php:446
 msgid "Here you can check existing doctors and align their translations. The most recently edited translation of a doctor is used as the source. The publication status is not changed."
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:352
+#: admin/partials/d2g-connect-admin-display.php:451
 msgid "Check translations"
 msgstr ""
 
-#: admin/partials/d2g-connect-admin-display.php:353
+#: admin/partials/d2g-connect-admin-display.php:452
 msgid "Align all"
 msgstr ""
 
@@ -785,15 +1022,22 @@ msgstr ""
 msgid "Following parameters can be used to change the view from the listing"
 msgstr ""
 
-#: admin/partials/d2g-connect-shortcode-help.php:37 admin/partials/d2g-connect-shortcode-help.php:119 admin/partials/d2g-connect-shortcode-help.php:139 admin/partials/d2g-connect-shortcode-help.php:168
+#: admin/partials/d2g-connect-shortcode-help.php:37
+#: admin/partials/d2g-connect-shortcode-help.php:119
+#: admin/partials/d2g-connect-shortcode-help.php:139
+#: admin/partials/d2g-connect-shortcode-help.php:168
 msgid "Parameter"
 msgstr ""
 
-#: admin/partials/d2g-connect-shortcode-help.php:40 admin/partials/d2g-connect-shortcode-help.php:122 admin/partials/d2g-connect-shortcode-help.php:142 admin/partials/d2g-connect-shortcode-help.php:171
+#: admin/partials/d2g-connect-shortcode-help.php:40
+#: admin/partials/d2g-connect-shortcode-help.php:122
+#: admin/partials/d2g-connect-shortcode-help.php:142
+#: admin/partials/d2g-connect-shortcode-help.php:171
 msgid "Possible values"
 msgstr ""
 
-#: admin/partials/d2g-connect-shortcode-help.php:48 admin/partials/d2g-connect-shortcode-help.php:57
+#: admin/partials/d2g-connect-shortcode-help.php:48
+#: admin/partials/d2g-connect-shortcode-help.php:57
 msgid "default"
 msgstr ""
 
@@ -813,11 +1057,15 @@ msgstr ""
 msgid "All doctors will be shown."
 msgstr ""
 
-#: admin/partials/d2g-connect-shortcode-help.php:73 admin/partials/d2g-connect-shortcode-help.php:156 admin/partials/d2g-connect-shortcode-help.php:185
+#: admin/partials/d2g-connect-shortcode-help.php:73
+#: admin/partials/d2g-connect-shortcode-help.php:156
+#: admin/partials/d2g-connect-shortcode-help.php:185
 msgid "css class used for the outer wrapper (optional)"
 msgstr ""
 
-#: admin/partials/d2g-connect-shortcode-help.php:76 admin/partials/d2g-connect-shortcode-help.php:159 admin/partials/d2g-connect-shortcode-help.php:188
+#: admin/partials/d2g-connect-shortcode-help.php:76
+#: admin/partials/d2g-connect-shortcode-help.php:159
+#: admin/partials/d2g-connect-shortcode-help.php:188
 msgid "Any string"
 msgstr ""
 
@@ -841,7 +1089,22 @@ msgstr ""
 msgid "Use this shortcode to display the form doctors use to create or update their profiles. No parameters are required."
 msgstr ""
 
-#: admin/partials/d2g-connect-shortcode-help.php:104 admin/partials/d2g-connect-shortcode-help.php:109 admin/partials/d2g-connect-shortcode-help.php:114 admin/partials/d2g-connect-shortcode-help.php:134 admin/partials/d2g-connect-shortcode-help.php:163 admin/partials/d2g-connect-shortcode-help.php:193 admin/partials/d2g-connect-shortcode-help.php:196 admin/partials/d2g-connect-shortcode-help.php:199 admin/partials/d2g-connect-shortcode-help.php:202 admin/partials/d2g-connect-shortcode-help.php:205 admin/partials/d2g-connect-shortcode-help.php:208 admin/partials/d2g-connect-shortcode-help.php:211 admin/partials/d2g-connect-shortcode-help.php:214 admin/partials/d2g-connect-shortcode-help.php:217 admin/partials/d2g-connect-shortcode-help.php:220 admin/partials/d2g-connect-shortcode-help.php:223
+#: admin/partials/d2g-connect-shortcode-help.php:104
+#: admin/partials/d2g-connect-shortcode-help.php:109
+#: admin/partials/d2g-connect-shortcode-help.php:114
+#: admin/partials/d2g-connect-shortcode-help.php:134
+#: admin/partials/d2g-connect-shortcode-help.php:163
+#: admin/partials/d2g-connect-shortcode-help.php:193
+#: admin/partials/d2g-connect-shortcode-help.php:196
+#: admin/partials/d2g-connect-shortcode-help.php:199
+#: admin/partials/d2g-connect-shortcode-help.php:202
+#: admin/partials/d2g-connect-shortcode-help.php:205
+#: admin/partials/d2g-connect-shortcode-help.php:208
+#: admin/partials/d2g-connect-shortcode-help.php:211
+#: admin/partials/d2g-connect-shortcode-help.php:214
+#: admin/partials/d2g-connect-shortcode-help.php:217
+#: admin/partials/d2g-connect-shortcode-help.php:220
+#: admin/partials/d2g-connect-shortcode-help.php:223
 msgid "(PRO version only*)"
 msgstr ""
 
@@ -857,7 +1120,8 @@ msgstr ""
 msgid "to get your paid license now."
 msgstr ""
 
-#: admin/partials/d2g-connect-shortcode-help.php:110 admin/partials/d2g-connect-shortcode-help.php:212
+#: admin/partials/d2g-connect-shortcode-help.php:110
+#: admin/partials/d2g-connect-shortcode-help.php:212
 msgid "Use this shortcode to display the search form on the doctor overview page. It must be used with the listing shortcode. No parameters are required."
 msgstr ""
 
@@ -865,7 +1129,9 @@ msgstr ""
 msgid "Use this shortcode to display a single doctor in a compact format, similar to the grid overview on the front end. It can be placed anywhere on your website, such as the sidebar."
 msgstr ""
 
-#: admin/partials/d2g-connect-shortcode-help.php:130 admin/partials/d2g-connect-shortcode-help.php:150 admin/partials/d2g-connect-shortcode-help.php:179
+#: admin/partials/d2g-connect-shortcode-help.php:130
+#: admin/partials/d2g-connect-shortcode-help.php:150
+#: admin/partials/d2g-connect-shortcode-help.php:179
 msgid "ID from doctor post, can be found in the backend overview from the doctors"
 msgstr ""
 
@@ -921,15 +1187,22 @@ msgstr ""
 msgid "Walk-in consultation"
 msgstr ""
 
-#: admin/partials/metaboxes.php:63 public/template-functions.php:665 public/template-functions.php:1447 public/template-functions.php:1546 public/template-functions.php:1826 public/templates/email-advice/generic-medofenic-email-form.php:153 public/templates/email-advice/generic-short-email-form.php:125 public/templates/email-advice/standard-derma-email-adv-form.php:204
+#: admin/partials/metaboxes.php:63 public/template-functions.php:665
+#: public/template-functions.php:1447 public/template-functions.php:1546
+#: public/template-functions.php:1826
+#: public/templates/email-advice/generic-medofenic-email-form.php:153
+#: public/templates/email-advice/generic-short-email-form.php:125
+#: public/templates/email-advice/standard-derma-email-adv-form.php:204
 msgid "E-mail advice"
 msgstr ""
 
-#: admin/partials/metaboxes.php:71 admin/partials/metaboxes.php:84 public/d2g-connect-shortcodes.php:1180
+#: admin/partials/metaboxes.php:71 admin/partials/metaboxes.php:84
+#: public/d2g-connect-shortcodes.php:1180
 msgid "Price"
 msgstr ""
 
-#: admin/partials/metaboxes.php:72 admin/partials/metaboxes.php:85 public/d2g-connect-shortcodes.php:1186
+#: admin/partials/metaboxes.php:72 admin/partials/metaboxes.php:85
+#: public/d2g-connect-shortcodes.php:1186
 msgid "Currency"
 msgstr ""
 
@@ -973,7 +1246,9 @@ msgstr ""
 msgid "The availabilities (booking rules, incl. the video consultation prices) and the vacation periods of a doctor are set in the doctor2go.online software (see Doctor2Go Connect settings, Doctors tab)."
 msgstr ""
 
-#: admin/partials/metaboxes.php:161 includes/class-d2g-connect-doctor-sync.php:183 public/d2g-connect-shortcodes.php:899
+#: admin/partials/metaboxes.php:161
+#: includes/class-d2g-connect-doctor-sync.php:183
+#: public/d2g-connect-shortcodes.php:899
 msgid "Vacation periods"
 msgstr ""
 
@@ -993,15 +1268,20 @@ msgstr ""
 msgid "upcoming"
 msgstr ""
 
-#: admin/partials/metaboxes.php:215 admin/partials/metaboxes.php:241 admin/partials/metaboxes.php:265 public/d2g-connect-shortcodes.php:600 public/d2g-connect-shortcodes.php:635 public/d2g-connect-shortcodes.php:662
+#: admin/partials/metaboxes.php:215 admin/partials/metaboxes.php:241
+#: admin/partials/metaboxes.php:265 public/d2g-connect-shortcodes.php:600
+#: public/d2g-connect-shortcodes.php:635 public/d2g-connect-shortcodes.php:662
 msgid "company"
 msgstr ""
 
-#: admin/partials/metaboxes.php:235 admin/partials/metaboxes.php:259 public/d2g-connect-shortcodes.php:627 public/d2g-connect-shortcodes.php:654
+#: admin/partials/metaboxes.php:235 admin/partials/metaboxes.php:259
+#: public/d2g-connect-shortcodes.php:627 public/d2g-connect-shortcodes.php:654
 msgid "exptertise"
 msgstr ""
 
-#: admin/partials/metaboxes.php:392 admin/partials/metaboxes.php:440 public/d2g-connect-shortcodes.php:700 public/d2g-connect-shortcodes.php:762 public/template-functions.php:912
+#: admin/partials/metaboxes.php:392 admin/partials/metaboxes.php:440
+#: public/d2g-connect-shortcodes.php:700 public/d2g-connect-shortcodes.php:762
+#: public/template-functions.php:912
 msgid "publication Date"
 msgstr ""
 
@@ -1013,7 +1293,8 @@ msgstr ""
 msgid "All pages used by the D2G connect plugin need a page type! Otherwise links in the front end might be broken!"
 msgstr ""
 
-#: admin/partials/metaboxes.php:481 admin/partials/metaboxes.php:508 public/d2g-connect-shortcodes.php:2959
+#: admin/partials/metaboxes.php:481 admin/partials/metaboxes.php:508
+#: public/d2g-connect-shortcodes.php:2959
 msgid "make a selection"
 msgstr ""
 
@@ -1033,23 +1314,17 @@ msgstr ""
 msgid "Define which email this template is for."
 msgstr ""
 
-#: endpoints/doctor.php:52
-msgid "an unknown error has occurred"
-msgstr ""
-
-#: endpoints/doctor.php:65
-msgid "The user + public profile have been created. User ID: "
-msgstr ""
-
-#: includes/class-d2g-connect-activator.php:108 public/template-functions.php:1007
-msgid "Doctor"
-msgstr ""
-
 #: includes/class-d2g-connect-activator.php:123
 msgid "Patient"
 msgstr ""
 
-#: includes/class-d2g-connect-doctor-sync.php:173 public/d2g-connect-shortcodes.php:283
+#: includes/class-d2g-connect-cron.php:121
+#: includes/class-d2g-connect-doctor-sync.php:195
+msgid "You are not allowed to do this."
+msgstr ""
+
+#: includes/class-d2g-connect-doctor-sync.php:173
+#: public/d2g-connect-shortcodes.php:283
 msgid "City"
 msgstr ""
 
@@ -1061,7 +1336,8 @@ msgstr ""
 msgid "E-mail advice price"
 msgstr ""
 
-#: includes/class-d2g-connect-doctor-sync.php:181 public/d2g-connect-shortcodes.php:842
+#: includes/class-d2g-connect-doctor-sync.php:181
+#: public/d2g-connect-shortcodes.php:842
 msgid "Video consultation price"
 msgstr ""
 
@@ -1073,11 +1349,8 @@ msgstr ""
 msgid "Profile picture"
 msgstr ""
 
-#: includes/class-d2g-connect-doctor-sync.php:195
-msgid "You are not allowed to do this."
-msgstr ""
-
-#: public/class-d2g-connect-public.php:167 public/d2g-connect-shortcodes.php:1028
+#: public/class-d2g-connect-public.php:167
+#: public/d2g-connect-shortcodes.php:1028
 msgid "Unavailable"
 msgstr ""
 
@@ -1113,31 +1386,38 @@ msgstr ""
 msgid "Update Rule"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:176 public/d2g-connect-shortcodes.php:973
+#: public/class-d2g-connect-public.php:176
+#: public/d2g-connect-shortcodes.php:973
 msgid "Sunday"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:177 public/d2g-connect-shortcodes.php:967
+#: public/class-d2g-connect-public.php:177
+#: public/d2g-connect-shortcodes.php:967
 msgid "Monday"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:178 public/d2g-connect-shortcodes.php:968
+#: public/class-d2g-connect-public.php:178
+#: public/d2g-connect-shortcodes.php:968
 msgid "Tuesday"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:179 public/d2g-connect-shortcodes.php:969
+#: public/class-d2g-connect-public.php:179
+#: public/d2g-connect-shortcodes.php:969
 msgid "Wednesday"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:180 public/d2g-connect-shortcodes.php:970
+#: public/class-d2g-connect-public.php:180
+#: public/d2g-connect-shortcodes.php:970
 msgid "Thursday"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:181 public/d2g-connect-shortcodes.php:971
+#: public/class-d2g-connect-public.php:181
+#: public/d2g-connect-shortcodes.php:971
 msgid "Friday"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:182 public/d2g-connect-shortcodes.php:972
+#: public/class-d2g-connect-public.php:182
+#: public/d2g-connect-shortcodes.php:972
 msgid "Saturday"
 msgstr ""
 
@@ -1161,11 +1441,13 @@ msgstr ""
 msgid "Last"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:188 public/d2g-connect-shortcodes.php:1213
+#: public/class-d2g-connect-public.php:188
+#: public/d2g-connect-shortcodes.php:1213
 msgid "between"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:189 public/d2g-connect-shortcodes.php:1213
+#: public/class-d2g-connect-public.php:189
+#: public/d2g-connect-shortcodes.php:1213
 msgid "and"
 msgstr ""
 
@@ -1217,11 +1499,13 @@ msgstr ""
 msgid "The end date cannot be before the start date."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:203 public/d2g-connect-shortcodes.php:895
+#: public/class-d2g-connect-public.php:203
+#: public/d2g-connect-shortcodes.php:895
 msgid "Add"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:204 public/class-d2g-connect-public.php:1143
+#: public/class-d2g-connect-public.php:204
+#: public/class-d2g-connect-public.php:1143
 msgid "Please enter a valid video consultation price and currency first."
 msgstr ""
 
@@ -1253,7 +1537,8 @@ msgstr ""
 msgid "Your appointment"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:244 public/d2g-connect-shortcodes.php:2582
+#: public/class-d2g-connect-public.php:244
+#: public/d2g-connect-shortcodes.php:2582
 msgid "Please fill in all marked fields. "
 msgstr ""
 
@@ -1289,7 +1574,10 @@ msgstr ""
 msgid "available"
 msgstr ""
 
-#: public/class-d2g-connect-public.php:253 public/class-d2g-connect-public.php:320 public/class-d2g-connect-public.php:321 public/class-d2g-connect-public.php:322
+#: public/class-d2g-connect-public.php:253
+#: public/class-d2g-connect-public.php:320
+#: public/class-d2g-connect-public.php:321
+#: public/class-d2g-connect-public.php:322
 msgid "You must accept the privacy rules, disclaimer and the terms and conditions."
 msgstr ""
 
@@ -1309,7 +1597,9 @@ msgstr ""
 msgid "Please verify that you are not a robot."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:325 public/class-d2g-connect-public.php:760 public/class-d2g-connect-public.php:767
+#: public/class-d2g-connect-public.php:325
+#: public/class-d2g-connect-public.php:760
+#: public/class-d2g-connect-public.php:767
 msgid "Cancellation request for appointment."
 msgstr ""
 
@@ -1381,7 +1671,8 @@ msgstr ""
 msgid "Security check failed."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:751 public/class-d2g-profile-data.php:191 public/template-functions.php:1673
+#: public/class-d2g-connect-public.php:751
+#: public/class-d2g-profile-data.php:192 public/template-functions.php:1673
 msgid " at "
 msgstr ""
 
@@ -1409,7 +1700,8 @@ msgstr ""
 msgid "Invalid security token."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:1084 public/class-d2g-connect-public.php:1357
+#: public/class-d2g-connect-public.php:1084
+#: public/class-d2g-connect-public.php:1357
 msgid "Booking rules are managed in doctor2go.online."
 msgstr ""
 
@@ -1417,7 +1709,9 @@ msgstr ""
 msgid "Remote request failed."
 msgstr ""
 
-#: public/class-d2g-connect-public.php:1230 public/class-d2g-connect-public.php:1250 public/class-d2g-connect-public.php:1337
+#: public/class-d2g-connect-public.php:1230
+#: public/class-d2g-connect-public.php:1250
+#: public/class-d2g-connect-public.php:1337
 msgid "API returned an unexpected status code."
 msgstr ""
 
@@ -1449,7 +1743,7 @@ msgstr ""
 msgid "Your vacation periods have been saved."
 msgstr ""
 
-#: public/class-d2g-profile-data.php:191
+#: public/class-d2g-profile-data.php:192
 msgid "First availibility"
 msgstr ""
 
@@ -1685,15 +1979,18 @@ msgstr ""
 msgid "Timezone"
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:1037 public/d2g-connect-shortcodes.php:1228
+#: public/d2g-connect-shortcodes.php:1037
+#: public/d2g-connect-shortcodes.php:1228
 msgid "Updates are processed overnight and active the next day."
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:1039 public/d2g-connect-shortcodes.php:1231
+#: public/d2g-connect-shortcodes.php:1039
+#: public/d2g-connect-shortcodes.php:1231
 msgid "Update availabilites"
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:1041 public/d2g-connect-shortcodes.php:1233
+#: public/d2g-connect-shortcodes.php:1041
+#: public/d2g-connect-shortcodes.php:1233
 msgid "Loading..."
 msgstr ""
 
@@ -1761,7 +2058,10 @@ msgstr ""
 msgid "We are sorry, but we could not find any doctors for your search criteria, please refine your search."
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:1895 public/d2g-connect-shortcodes.php:1933 public/d2g-connect-shortcodes.php:1972 public/d2g-connect-shortcodes.php:2011
+#: public/d2g-connect-shortcodes.php:1895
+#: public/d2g-connect-shortcodes.php:1933
+#: public/d2g-connect-shortcodes.php:1972
+#: public/d2g-connect-shortcodes.php:2011
 msgid "You must pass a doctor profile ID"
 msgstr ""
 
@@ -1781,11 +2081,14 @@ msgstr ""
 msgid "You have logged out from this website."
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2061 public/d2g-connect-shortcodes.php:2168 public/d2g-connect-shortcodes.php:2237
+#: public/d2g-connect-shortcodes.php:2061
+#: public/d2g-connect-shortcodes.php:2168
+#: public/d2g-connect-shortcodes.php:2237
 msgid "Security check failed. Please reload the page and try again."
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2077 public/templates/email-advice/standard-derma-email-adv-form.php:53
+#: public/d2g-connect-shortcodes.php:2077
+#: public/templates/email-advice/standard-derma-email-adv-form.php:53
 msgid "Enter your email address"
 msgstr ""
 
@@ -1797,7 +2100,8 @@ msgstr ""
 msgid "Remember Me"
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2115 public/d2g-connect-shortcodes.php:2268
+#: public/d2g-connect-shortcodes.php:2115
+#: public/d2g-connect-shortcodes.php:2268
 msgid "Login"
 msgstr ""
 
@@ -1809,7 +2113,8 @@ msgstr ""
 msgid "Register as patient"
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2145 public/d2g-connect-shortcodes.php:2220
+#: public/d2g-connect-shortcodes.php:2145
+#: public/d2g-connect-shortcodes.php:2220
 msgid "You are already logged in."
 msgstr ""
 
@@ -1857,15 +2162,18 @@ msgstr ""
 msgid "Security check failed. Please refresh the page."
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2374 public/d2g-connect-shortcodes.php:2866
+#: public/d2g-connect-shortcodes.php:2374
+#: public/d2g-connect-shortcodes.php:2866
 msgid "All fields are required."
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2378 public/d2g-connect-shortcodes.php:2868
+#: public/d2g-connect-shortcodes.php:2378
+#: public/d2g-connect-shortcodes.php:2868
 msgid "Please provide a valid email address."
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2382 public/d2g-connect-shortcodes.php:2875
+#: public/d2g-connect-shortcodes.php:2382
+#: public/d2g-connect-shortcodes.php:2875
 msgid "Passwords do not match."
 msgstr ""
 
@@ -1877,27 +2185,53 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2497 public/d2g-connect-shortcodes.php:2942
+#: public/d2g-connect-shortcodes.php:2497
+#: public/d2g-connect-shortcodes.php:2942
 msgid "Date of Birth"
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2502 public/d2g-connect-shortcodes.php:2947 public/template-functions.php:1072 public/template-functions.php:1293 public/templates/email-advice/generic-medofenic-email-form.php:122 public/templates/email-advice/generic-short-email-form.php:94 public/templates/email-advice/standard-derma-email-adv-form.php:66
+#: public/d2g-connect-shortcodes.php:2502
+#: public/d2g-connect-shortcodes.php:2947 public/template-functions.php:1072
+#: public/template-functions.php:1293
+#: public/templates/email-advice/generic-medofenic-email-form.php:122
+#: public/templates/email-advice/generic-short-email-form.php:94
+#: public/templates/email-advice/standard-derma-email-adv-form.php:66
 msgid "Gender"
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2504 public/d2g-connect-shortcodes.php:2949 public/template-functions.php:1074 public/template-functions.php:1295 public/templates/email-advice/generic-medofenic-email-form.php:124 public/templates/email-advice/generic-short-email-form.php:96 public/templates/email-advice/standard-derma-email-adv-form.php:68
+#: public/d2g-connect-shortcodes.php:2504
+#: public/d2g-connect-shortcodes.php:2949 public/template-functions.php:1074
+#: public/template-functions.php:1295
+#: public/templates/email-advice/generic-medofenic-email-form.php:124
+#: public/templates/email-advice/generic-short-email-form.php:96
+#: public/templates/email-advice/standard-derma-email-adv-form.php:68
 msgid "make a choice"
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2505 public/d2g-connect-shortcodes.php:2950 public/template-functions.php:1075 public/template-functions.php:1296 public/templates/email-advice/generic-medofenic-email-form.php:125 public/templates/email-advice/generic-short-email-form.php:97 public/templates/email-advice/standard-derma-email-adv-form.php:69
+#: public/d2g-connect-shortcodes.php:2505
+#: public/d2g-connect-shortcodes.php:2950 public/template-functions.php:1075
+#: public/template-functions.php:1296
+#: public/templates/email-advice/generic-medofenic-email-form.php:125
+#: public/templates/email-advice/generic-short-email-form.php:97
+#: public/templates/email-advice/standard-derma-email-adv-form.php:69
 msgid "male"
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2506 public/d2g-connect-shortcodes.php:2951 public/template-functions.php:1076 public/template-functions.php:1297 public/templates/email-advice/generic-medofenic-email-form.php:126 public/templates/email-advice/generic-short-email-form.php:98 public/templates/email-advice/standard-derma-email-adv-form.php:70
+#: public/d2g-connect-shortcodes.php:2506
+#: public/d2g-connect-shortcodes.php:2951 public/template-functions.php:1076
+#: public/template-functions.php:1297
+#: public/templates/email-advice/generic-medofenic-email-form.php:126
+#: public/templates/email-advice/generic-short-email-form.php:98
+#: public/templates/email-advice/standard-derma-email-adv-form.php:70
 msgid "female"
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2507 public/d2g-connect-shortcodes.php:2952 public/template-functions.php:1077 public/template-functions.php:1298 public/templates/email-advice/generic-medofenic-email-form.php:127 public/templates/email-advice/generic-short-email-form.php:99 public/templates/email-advice/standard-derma-email-adv-form.php:71
+#: public/d2g-connect-shortcodes.php:2507
+#: public/d2g-connect-shortcodes.php:2952 public/template-functions.php:1077
+#: public/template-functions.php:1298
+#: public/templates/email-advice/generic-medofenic-email-form.php:127
+#: public/templates/email-advice/generic-short-email-form.php:99
+#: public/templates/email-advice/standard-derma-email-adv-form.php:71
 msgid "other"
 msgstr ""
 
@@ -1913,11 +2247,13 @@ msgstr ""
 msgid "Your password must be at least 12 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character."
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2533 public/d2g-connect-shortcodes.php:2975
+#: public/d2g-connect-shortcodes.php:2533
+#: public/d2g-connect-shortcodes.php:2975
 msgid "Password"
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2547 public/d2g-connect-shortcodes.php:2987
+#: public/d2g-connect-shortcodes.php:2547
+#: public/d2g-connect-shortcodes.php:2987
 msgid "Confirm Password"
 msgstr ""
 
@@ -1953,11 +2289,13 @@ msgstr ""
 msgid "Your registration was successful! You are now logged in."
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2652 public/d2g-connect-shortcodes.php:3006
+#: public/d2g-connect-shortcodes.php:2652
+#: public/d2g-connect-shortcodes.php:3006
 msgid "For your security, we recommend that you enable two-factor authentication (2FA) for your account."
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2653 public/d2g-connect-shortcodes.php:3007
+#: public/d2g-connect-shortcodes.php:2653
+#: public/d2g-connect-shortcodes.php:3007
 msgid "configure 2FA"
 msgstr ""
 
@@ -1965,11 +2303,15 @@ msgstr ""
 msgid "You haven't booked any consultations yet. When you do, the details will appear in this section."
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2737 public/d2g-connect-shortcodes.php:2770 public/d2g-connect-shortcodes.php:2808 public/d2g-connect-shortcodes.php:2834
+#: public/d2g-connect-shortcodes.php:2737
+#: public/d2g-connect-shortcodes.php:2770
+#: public/d2g-connect-shortcodes.php:2808
+#: public/d2g-connect-shortcodes.php:2834
 msgid "Something went wrong while retrieving your appointments. Please try again later, or refresh the page."
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:2745 public/d2g-connect-shortcodes.php:2816
+#: public/d2g-connect-shortcodes.php:2745
+#: public/d2g-connect-shortcodes.php:2816
 msgid "You don\\’t have any upcoming consultations. Book a new appointment when you're ready."
 msgstr ""
 
@@ -2001,7 +2343,8 @@ msgstr ""
 msgid "save"
 msgstr ""
 
-#: public/d2g-connect-shortcodes.php:3022 public/d2g-connect-shortcodes.php:3047
+#: public/d2g-connect-shortcodes.php:3022
+#: public/d2g-connect-shortcodes.php:3047
 msgid "No liked doctors yet."
 msgstr ""
 
@@ -2081,7 +2424,8 @@ msgstr ""
 msgid " - "
 msgstr ""
 
-#: public/template-functions.php:614 public/templates/single-content/content-single-d2g_doctor-v3.php:89
+#: public/template-functions.php:614
+#: public/templates/single-content/content-single-d2g_doctor-v3.php:89
 msgid "Consultation offers"
 msgstr ""
 
@@ -2091,6 +2435,11 @@ msgstr ""
 
 #: public/template-functions.php:639
 msgid "first availability: "
+msgstr ""
+
+#: public/template-functions.php:646 public/template-functions.php:675
+#: public/template-functions.php:704
+msgid "n/a"
 msgstr ""
 
 #: public/template-functions.php:669
@@ -2109,7 +2458,8 @@ msgstr ""
 msgid "Short info"
 msgstr ""
 
-#: public/template-functions.php:739 public/templates/single-content/content-single-d2g_doctor.php:85
+#: public/template-functions.php:739
+#: public/templates/single-content/content-single-d2g_doctor.php:85
 msgid "About"
 msgstr ""
 
@@ -2257,19 +2607,29 @@ msgstr ""
 msgid "Tel"
 msgstr ""
 
-#: public/template-functions.php:1068 public/templates/email-advice/generic-medofenic-email-form.php:115 public/templates/email-advice/generic-short-email-form.php:87 public/templates/email-advice/standard-derma-email-adv-form.php:60
+#: public/template-functions.php:1068
+#: public/templates/email-advice/generic-medofenic-email-form.php:115
+#: public/templates/email-advice/generic-short-email-form.php:87
+#: public/templates/email-advice/standard-derma-email-adv-form.php:60
 msgid "Date of Birth: month/year  "
 msgstr ""
 
-#: public/template-functions.php:1069 public/templates/email-advice/generic-medofenic-email-form.php:116 public/templates/email-advice/generic-short-email-form.php:88 public/templates/email-advice/standard-derma-email-adv-form.php:61
+#: public/template-functions.php:1069
+#: public/templates/email-advice/generic-medofenic-email-form.php:116
+#: public/templates/email-advice/generic-short-email-form.php:88
+#: public/templates/email-advice/standard-derma-email-adv-form.php:61
 msgid "Select your date of birth"
 msgstr ""
 
-#: public/template-functions.php:1073 public/templates/email-advice/standard-derma-email-adv-form.php:67
+#: public/template-functions.php:1073
+#: public/templates/email-advice/standard-derma-email-adv-form.php:67
 msgid "Select your gender"
 msgstr ""
 
-#: public/template-functions.php:1098 public/template-functions.php:1344 public/templates/email-advice/generic-medofenic-email-form.php:139 public/templates/email-advice/generic-short-email-form.php:111 public/templates/email-advice/standard-derma-email-adv-form.php:190
+#: public/template-functions.php:1098 public/template-functions.php:1344
+#: public/templates/email-advice/generic-medofenic-email-form.php:139
+#: public/templates/email-advice/generic-short-email-form.php:111
+#: public/templates/email-advice/standard-derma-email-adv-form.php:190
 msgid "Your consultation"
 msgstr ""
 
@@ -2281,7 +2641,10 @@ msgstr ""
 msgid "Video consult"
 msgstr ""
 
-#: public/template-functions.php:1115 public/template-functions.php:1361 public/templates/email-advice/generic-medofenic-email-form.php:156 public/templates/email-advice/generic-short-email-form.php:128 public/templates/email-advice/standard-derma-email-adv-form.php:207
+#: public/template-functions.php:1115 public/template-functions.php:1361
+#: public/templates/email-advice/generic-medofenic-email-form.php:156
+#: public/templates/email-advice/generic-short-email-form.php:128
+#: public/templates/email-advice/standard-derma-email-adv-form.php:207
 msgid "(excl. VAT)"
 msgstr ""
 
@@ -2349,7 +2712,10 @@ msgstr ""
 msgid "pay and continue"
 msgstr ""
 
-#: public/template-functions.php:1376 public/templates/email-advice/generic-medofenic-email-form.php:179 public/templates/email-advice/generic-short-email-form.php:151 public/templates/email-advice/standard-derma-email-adv-form.php:230
+#: public/template-functions.php:1376
+#: public/templates/email-advice/generic-medofenic-email-form.php:179
+#: public/templates/email-advice/generic-short-email-form.php:151
+#: public/templates/email-advice/standard-derma-email-adv-form.php:230
 msgid "* required fields."
 msgstr ""
 
@@ -2377,7 +2743,8 @@ msgstr ""
 msgid "Video Consult"
 msgstr ""
 
-#: public/template-functions.php:1614 public/templates/single-content/content-single-d2g_doctor-v3.php:90
+#: public/template-functions.php:1614
+#: public/templates/single-content/content-single-d2g_doctor-v3.php:90
 msgid "More info about the consultation types"
 msgstr ""
 
@@ -2430,11 +2797,11 @@ msgid ""
 msgstr ""
 
 #: public/template-functions.php:1699
-msgid "A payment is required for this appointment."
+msgid "Payment may be made in advance or upon arrival at your appointment. Please note that appointments paid upfront cannot be cancelled."
 msgstr ""
 
 #: public/template-functions.php:1699
-msgid "Payment may be made in advance or upon arrival at your appointment. Please note that appointments paid upfront cannot be cancelled."
+msgid "A payment is required for this appointment."
 msgstr ""
 
 #: public/template-functions.php:1709
@@ -2527,11 +2894,13 @@ msgstr ""
 msgid "About your complaint (optional)"
 msgstr ""
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:17 public/templates/email-advice/standard-derma-email-adv-form.php:89
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:17
+#: public/templates/email-advice/standard-derma-email-adv-form.php:89
 msgid "Edit your information"
 msgstr ""
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:17 public/templates/email-advice/standard-derma-email-adv-form.php:90
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:17
+#: public/templates/email-advice/standard-derma-email-adv-form.php:90
 msgid "Pre-filled from your AI check."
 msgstr ""
 
@@ -2539,11 +2908,15 @@ msgstr ""
 msgid "Click here to provide / update your complaint information"
 msgstr ""
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:26 public/templates/bookingform-extensions/standard-derma-form-extension.php:28 public/templates/email-advice/standard-derma-email-adv-form.php:99 public/templates/email-advice/standard-derma-email-adv-form.php:101
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:26
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:28
+#: public/templates/email-advice/standard-derma-email-adv-form.php:99
+#: public/templates/email-advice/standard-derma-email-adv-form.php:101
 msgid "Photo of the skin condition (above)"
 msgstr ""
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:28 public/templates/email-advice/standard-derma-email-adv-form.php:101
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:28
+#: public/templates/email-advice/standard-derma-email-adv-form.php:101
 msgid "Photo of the condition (above)"
 msgstr ""
 
@@ -2551,15 +2924,20 @@ msgstr ""
 msgid "Choose image 1"
 msgstr ""
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:37 public/templates/email-advice/standard-derma-email-adv-form.php:110
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:37
+#: public/templates/email-advice/standard-derma-email-adv-form.php:110
 msgid "Upload / make more photos"
 msgstr ""
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:43 public/templates/bookingform-extensions/standard-derma-form-extension.php:45 public/templates/email-advice/standard-derma-email-adv-form.php:116 public/templates/email-advice/standard-derma-email-adv-form.php:118
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:43
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:45
+#: public/templates/email-advice/standard-derma-email-adv-form.php:116
+#: public/templates/email-advice/standard-derma-email-adv-form.php:118
 msgid "Photo of the skin condition (side)"
 msgstr ""
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:45 public/templates/email-advice/standard-derma-email-adv-form.php:118
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:45
+#: public/templates/email-advice/standard-derma-email-adv-form.php:118
 msgid "Photo of the condition (side)"
 msgstr ""
 
@@ -2567,11 +2945,15 @@ msgstr ""
 msgid "Choose image 2"
 msgstr ""
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:53 public/templates/bookingform-extensions/standard-derma-form-extension.php:55 public/templates/email-advice/standard-derma-email-adv-form.php:126 public/templates/email-advice/standard-derma-email-adv-form.php:128
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:53
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:55
+#: public/templates/email-advice/standard-derma-email-adv-form.php:126
+#: public/templates/email-advice/standard-derma-email-adv-form.php:128
 msgid "Photo of the skin condition (extra)"
 msgstr ""
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:55 public/templates/email-advice/standard-derma-email-adv-form.php:128
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:55
+#: public/templates/email-advice/standard-derma-email-adv-form.php:128
 msgid "Photo of the condition (extra)"
 msgstr ""
 
@@ -2580,84 +2962,106 @@ msgid "Choose image 3"
 msgstr ""
 
 #: public/templates/bookingform-extensions/standard-derma-form-extension.php:71
-msgid "When did you first notice your complaint?"
-msgstr ""
-
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:71
 msgid "When did you first notice your skin problem?"
 msgstr ""
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:73 public/templates/email-advice/standard-derma-email-adv-form.php:146
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:71
+msgid "When did you first notice your complaint?"
+msgstr ""
+
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:73
+#: public/templates/email-advice/standard-derma-email-adv-form.php:146
 msgid "since...days,weeks,months, years"
 msgstr ""
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:77 public/templates/email-advice/standard-derma-email-adv-form.php:150
-msgid "Location(s) of your complaint"
-msgstr ""
-
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:77 public/templates/email-advice/standard-derma-email-adv-form.php:150
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:77
+#: public/templates/email-advice/standard-derma-email-adv-form.php:150
 msgid "Location(s) on the body"
 msgstr ""
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:79 public/templates/email-advice/standard-derma-email-adv-form.php:152
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:77
+#: public/templates/email-advice/standard-derma-email-adv-form.php:150
+msgid "Location(s) of your complaint"
+msgstr ""
+
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:79
+#: public/templates/email-advice/standard-derma-email-adv-form.php:152
 msgid "For example: left forearm"
+msgstr ""
+
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:87
+#: public/templates/email-advice/standard-derma-email-adv-form.php:161
+msgid "Describe your skin problem (color, size, growing, bleeding, itching, occasional or continuous) "
 msgstr ""
 
 #: public/templates/bookingform-extensions/standard-derma-form-extension.php:87
 msgid "Describe your complaint (how it looks like, what you feel, level of pain, occasional or continuous) "
 msgstr ""
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:87 public/templates/email-advice/standard-derma-email-adv-form.php:161
-msgid "Describe your skin problem (color, size, growing, bleeding, itching, occasional or continuous) "
-msgstr ""
-
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:89 public/templates/email-advice/generic-medofenic-email-form.php:32 public/templates/email-advice/generic-short-email-form.php:34 public/templates/email-advice/standard-derma-email-adv-form.php:163
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:89
+#: public/templates/email-advice/generic-medofenic-email-form.php:32
+#: public/templates/email-advice/generic-short-email-form.php:34
+#: public/templates/email-advice/standard-derma-email-adv-form.php:163
 msgid "For example: itchy red spots or bumps..."
 msgstr ""
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:94 public/templates/email-advice/standard-derma-email-adv-form.php:170
-msgid "Treatment history (what medications did you use for your complaint and what was the result)"
-msgstr ""
-
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:94 public/templates/email-advice/standard-derma-email-adv-form.php:170
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:94
+#: public/templates/email-advice/standard-derma-email-adv-form.php:170
 msgid "Treatment history (what medications did you use for your skin problem and what was the result)"
 msgstr ""
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:96 public/templates/bookingform-extensions/standard-derma-form-extension.php:104 public/templates/email-advice/standard-derma-email-adv-form.php:172 public/templates/email-advice/standard-derma-email-adv-form.php:179
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:94
+#: public/templates/email-advice/standard-derma-email-adv-form.php:170
+msgid "Treatment history (what medications did you use for your complaint and what was the result)"
+msgstr ""
+
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:96
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:104
+#: public/templates/email-advice/standard-derma-email-adv-form.php:172
+#: public/templates/email-advice/standard-derma-email-adv-form.php:179
 msgid "If applicable..."
 msgstr ""
 
-#: public/templates/bookingform-extensions/standard-derma-form-extension.php:102 public/templates/email-advice/standard-derma-email-adv-form.php:177
+#: public/templates/bookingform-extensions/standard-derma-form-extension.php:102
+#: public/templates/email-advice/standard-derma-email-adv-form.php:177
 msgid "Medical history (other relevant medical conditions and medications)"
 msgstr ""
 
-#: public/templates/email-advice/generic-medofenic-email-form.php:14 public/templates/email-advice/generic-short-email-form.php:16
+#: public/templates/email-advice/generic-medofenic-email-form.php:14
+#: public/templates/email-advice/generic-short-email-form.php:16
 msgid ""
 "E-mail consultations are intended for non-urgent situations and may be used for medical guidance, interpretation of medical tests or documents, \n"
 "        and obtaining a medical opinion. For medical emergencies, please contact emergency services or seek direct medical care."
 msgstr ""
 
-#: public/templates/email-advice/generic-medofenic-email-form.php:26 public/templates/email-advice/generic-short-email-form.php:28 public/templates/email-advice/standard-derma-email-adv-form.php:86
+#: public/templates/email-advice/generic-medofenic-email-form.php:26
+#: public/templates/email-advice/generic-short-email-form.php:28
+#: public/templates/email-advice/standard-derma-email-adv-form.php:86
 msgid "About your complaint"
 msgstr ""
 
-#: public/templates/email-advice/generic-medofenic-email-form.php:30 public/templates/email-advice/generic-short-email-form.php:32
+#: public/templates/email-advice/generic-medofenic-email-form.php:30
+#: public/templates/email-advice/generic-short-email-form.php:32
 msgid "Describe the complaint"
 msgstr ""
 
-#: public/templates/email-advice/generic-medofenic-email-form.php:37 public/templates/email-advice/generic-short-email-form.php:39
+#: public/templates/email-advice/generic-medofenic-email-form.php:37
+#: public/templates/email-advice/generic-short-email-form.php:39
 msgid "Image uploads (optional), allowed files types: JPG, PNG, GIF "
 msgstr ""
 
-#: public/templates/email-advice/generic-medofenic-email-form.php:41 public/templates/email-advice/generic-short-email-form.php:43
+#: public/templates/email-advice/generic-medofenic-email-form.php:41
+#: public/templates/email-advice/generic-short-email-form.php:43
 msgid "Upload image 1"
 msgstr ""
 
-#: public/templates/email-advice/generic-medofenic-email-form.php:45 public/templates/email-advice/generic-short-email-form.php:47
+#: public/templates/email-advice/generic-medofenic-email-form.php:45
+#: public/templates/email-advice/generic-short-email-form.php:47
 msgid "Upload image 2"
 msgstr ""
 
-#: public/templates/email-advice/generic-medofenic-email-form.php:49 public/templates/email-advice/generic-short-email-form.php:51
+#: public/templates/email-advice/generic-medofenic-email-form.php:49
+#: public/templates/email-advice/generic-short-email-form.php:51
 msgid "Upload image 3"
 msgstr ""
 
@@ -2689,12 +3093,16 @@ msgstr ""
 msgid "For example: diabetes, high blood pressure, thyroid disorders, anticoagulant treatment, or any other important ongoing treatments."
 msgstr ""
 
-#: public/templates/email-advice/generic-medofenic-email-form.php:146 public/templates/email-advice/generic-short-email-form.php:118 public/templates/email-advice/standard-derma-email-adv-form.php:197
+#: public/templates/email-advice/generic-medofenic-email-form.php:146
+#: public/templates/email-advice/generic-short-email-form.php:118
+#: public/templates/email-advice/standard-derma-email-adv-form.php:197
 #, php-format
 msgid "You will receive %s’s written assessment within 2 working days by email."
 msgstr ""
 
-#: public/templates/email-advice/generic-medofenic-email-form.php:174 public/templates/email-advice/generic-short-email-form.php:146 public/templates/email-advice/standard-derma-email-adv-form.php:225
+#: public/templates/email-advice/generic-medofenic-email-form.php:174
+#: public/templates/email-advice/generic-short-email-form.php:146
+#: public/templates/email-advice/standard-derma-email-adv-form.php:225
 msgid "continue and pay"
 msgstr ""
 
@@ -2715,18 +3123,20 @@ msgid "Enter your last name"
 msgstr ""
 
 #: public/templates/email-advice/standard-derma-email-adv-form.php:144
-msgid "When did you first notice your complaint"
+msgid "When did you first notice your skin problem"
 msgstr ""
 
 #: public/templates/email-advice/standard-derma-email-adv-form.php:144
-msgid "When did you first notice your skin problem"
+msgid "When did you first notice your complaint"
 msgstr ""
 
 #: public/templates/email-advice/standard-derma-email-adv-form.php:161
 msgid "Describe your complaint (how it looks like, what you feel, level of pain,  occasional or continuous) "
 msgstr ""
 
-#: public/templates/overview-content/content-doctor-grid.php:35 public/templates/overview-content/content-doctor-list.php:34 public/templates/overview-content/content-doctor-list.php:38
+#: public/templates/overview-content/content-doctor-grid.php:35
+#: public/templates/overview-content/content-doctor-list.php:34
+#: public/templates/overview-content/content-doctor-list.php:38
 msgid "start a consult"
 msgstr ""
 

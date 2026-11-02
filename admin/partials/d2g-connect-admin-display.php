@@ -111,6 +111,11 @@ if ( $d2gc_has_translations ) {
 							<input class="regular-text d2gc-input" type="text" id="d2gc_doctor_sync_url" value="<?php echo esc_attr( D2GC_Rest::get_doctor_sync_url() ); ?>" readonly onclick="this.select();">
 							<p class="d2gc-setting__description"><?php echo esc_html__( 'doctor2go.online sends new and changed doctors to this address.', 'doctor2go-connect' ); ?></p>
 						</div>
+						<div class="d2gc-setting">
+							<label for="d2gc_doctor_status_url" class="d2gc-setting__title"><?php echo esc_html__( 'Doctor status URL', 'doctor2go-connect' ); ?></label>
+							<input class="regular-text d2gc-input" type="text" id="d2gc_doctor_status_url" value="<?php echo esc_attr( D2GC_Rest::get_doctor_status_url() ); ?>" readonly onclick="this.select();">
+							<p class="d2gc-setting__description"><?php echo esc_html__( 'doctor2go.online reads the status of a doctor profile and its translations from this address.', 'doctor2go-connect' ); ?></p>
+						</div>
 					</div>
 				</section>
 			</div>
@@ -379,7 +384,7 @@ if ( $d2gc_has_translations ) {
 				<section class="d2gc-card d2gc-card--wide">
 					<header class="d2gc-card__header">
 						<h2><?php echo esc_html__( 'Doctor sync log', 'doctor2go-connect' ); ?></h2>
-						<p><?php echo esc_html__( 'The last 50 requests from doctor2go.online to the doctor sync URL, newest first. With "Activate debug logging" on, the full request is stored too (hash, keys and passwords shortened).', 'doctor2go-connect' ); ?></p>
+						<p><?php echo esc_html__( 'The last 50 requests from doctor2go.online to the doctor sync and doctor status URLs, newest first. With "Activate debug logging" on, the full request is stored too (hash, keys and passwords shortened).', 'doctor2go-connect' ); ?></p>
 					</header>
 					<div class="d2gc-card__body">
 						<?php $d2gc_sync_log = D2GC_Rest::get_log(); ?>
@@ -405,7 +410,7 @@ if ( $d2gc_has_translations ) {
 												<td><?php echo esc_html( $d2gc_entry['result'] ?? '' ); ?></td>
 												<td><?php echo esc_html( $d2gc_entry['user_email'] ?? '' ); ?><br><code><?php echo esc_html( $d2gc_entry['wcc_user_id'] ?? '' ); ?></code></td>
 												<td>
-													<?php echo esc_html( ( $d2gc_entry['method'] ?? '' ) . ' · ' . ( $d2gc_entry['content_type'] ?: '-' ) . ' · ' . ( $d2gc_entry['body_bytes'] ?? 0 ) . ' bytes · IP ' . ( $d2gc_entry['ip'] ?? '' ) ); ?><br>
+													<?php echo esc_html( ( $d2gc_entry['route'] ?? 'doctor-sync' ) . ' · ' . ( $d2gc_entry['method'] ?? '' ) . ' · ' . ( $d2gc_entry['content_type'] ?: '-' ) . ' · ' . ( $d2gc_entry['body_bytes'] ?? 0 ) . ' bytes · IP ' . ( $d2gc_entry['ip'] ?? '' ) ); ?><br>
 													<span class="description"><?php echo esc_html( $d2gc_entry['keys'] ?? '' ); ?></span>
 													<?php if ( isset( $d2gc_entry['payload'] ) ) { ?>
 														<details>
