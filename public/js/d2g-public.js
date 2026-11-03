@@ -416,7 +416,7 @@ jQuery(document).ready(function ($) {
 
     // Doctor form busy state: block all actions and show a Bootstrap spinner in the clicked button.
     // Stays active until the page reloads, so slow saves (e.g. image uploads) can not be triggered twice.
-    var docFormActions = '.save_doctor, .publish_doctor, .unpublish_doctor, .del_img_link, #docTab .nav-link';
+    var docFormActions = '.save_doctor, .publish_doctor, .unpublish_doctor, .del_img_link, #docTab .nav-link:not(.d2gc-dashboard-link)';
 
     function setDoctorFormBusy(busy, $clicked) {
         var $form = $(".d2g_doctor-form");
@@ -466,7 +466,8 @@ jQuery(document).ready(function ($) {
     });
 
     // Tab click inside doctor form (autosave then reload content)
-    $('#docTab').find('.nav-link').click(function (event) {
+    // the dashboard link is a normal link to doctor2go.online, not a tab
+    $('#docTab').find('.nav-link').not('.d2gc-dashboard-link').click(function (event) {
         if (!d || !d.ajax) return;
 
         event.preventDefault();

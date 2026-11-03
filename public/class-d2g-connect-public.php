@@ -942,11 +942,6 @@ class D2gConnect_Public {
 			wp_safe_redirect( $pageData['url'] );
 			exit;
 		}
-
-		if ( isset( $post_meta['d2g_page_accessebility'][0] ) && 'protected_uc' === $post_meta['d2g_page_accessebility'][0] && ! is_user_logged_in() && 1 == get_option( 'd2gc_under_construction' ) ) {
-			wp_safe_redirect( home_url( '/under-construction' ) );
-			exit;
-		}
 	}
 
 	// redirects are defined for when wp-login.php is triggered

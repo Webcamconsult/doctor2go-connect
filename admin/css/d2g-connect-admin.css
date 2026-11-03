@@ -204,6 +204,11 @@ input[type="date"] {
 	padding-left: 18px;
 	list-style: disc;
 }
+.d2gc-settings .d2gc-list {
+	margin: 0 0 12px;
+	padding-left: 18px;
+	list-style: disc;
+}
 .d2gc-settings .d2gc-card {
 	background: #fff;
 	border: 1px solid var(--d2gc-border);

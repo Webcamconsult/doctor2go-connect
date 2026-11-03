@@ -1164,10 +1164,59 @@ function d2gc_confirmation_checkboxes( $form = '', $disclaimer = true ) {
             <?php if ( $disclaimer === true ) {?>
 			and <a target="_blank" href="<?php echo esc_html( $pageDataDiscl['url'] ); ?>"><?php echo esc_html__( 'disclaimer', 'doctor2go-connect' ); ?></a>
 		    <?php } ?>
-            
+
 		</p>
+		<?php // newsletter sign up only on the consult forms (video, walk-in, e-mail advice), not on the registration form ?>
+		<?php if ( '' !== $form && d2gc_newsletter_enabled() ) { ?>
+		<p class="d2gc-newsletter-signup">
+			<label for="newsletter<?php echo esc_attr( $form ); ?>"><input id="newsletter<?php echo esc_attr( $form ); ?>" name="newsletter" type="checkbox" value="1"> <?php echo esc_html__( 'I want to sign up for the newsletter', 'doctor2go-connect' ); ?></label>
+		</p>
+		<?php } ?>
 	</div>
 	<?php
+}
+
+/**
+ * Whether the consult forms show the newsletter sign up: the setting is on and the Newsletter plugin is active.
+ *
+ * @return bool
+ */
+function d2gc_newsletter_enabled() {
+	return get_option( 'd2gc_newsletter_signup' ) == 1 && class_exists( 'TNP' );
+}
+
+/**
+ * Signs a visitor up for the newsletter (Newsletter plugin) when the newsletter checkbox of a consult form was ticked.
+ * A failed sign up never stops the consult request, it is only logged with debug logging on.
+ * The Newsletter plugin's own settings decide about double opt-in and the welcome / confirmation e-mail.
+ *
+ * @param string $email
+ * @param string $first_name
+ * @param string $last_name
+ * @return bool true when the visitor was signed up
+ */
+function d2gc_newsletter_subscribe( $email, $first_name = '', $last_name = '' ) {
+	// phpcs:ignore WordPress.Security.NonceVerification.Missing -- the calling form handler verified the request
+	if ( empty( $_POST['newsletter'] ) || ! d2gc_newsletter_enabled() || ! is_email( $email ) ) {
+		return false;
+	}
+
+	$result = TNP::subscribe(
+		array(
+			'email'       => $email,
+			'name'        => $first_name,
+			'surname'     => $last_name,
+			'send_emails' => true,
+		)
+	);
+
+	if ( is_wp_error( $result ) ) {
+		if ( get_option( 'd2g_debug' ) == 1 ) {
+			error_log( 'D2GC newsletter sign up failed: ' . $result->get_error_message() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Debug logging.
+		}
+		return false;
+	}
+	return true;
 }
 
 // this creates the back to overview button for on the doctor detail pages
@@ -1213,16 +1262,6 @@ function d2gc_show_walkin_form( $context = '' ) {
 		'order'      => 'ASC',
 		'hide_empty' => false,
 	);
-	if ( get_option( 'd2gc_pseudo_translations' ) == 1 && $currLang != 'en' ) {
-		$argsCountry = array(
-			'taxonomy'   => 'country-origin',
-			'hide_empty' => true,
-			'meta_key'   => 'rudr_text_' . $currLang,
-			'orderby'    => 'meta_value',
-			'order'      => 'ASC',
-			'hide_empty' => false,
-		);
-	}
 	$allCountries = get_terms( $argsCountry );
 	$allCountriesArray = ( $allCountries !== false ) ? d2gc_prepMyArray( $allCountries ) : '';
 
@@ -1305,26 +1344,14 @@ function d2gc_show_walkin_form( $context = '' ) {
                             <select name="optie_land">
                                 <option value="0"><?php echo esc_html__( 'Country', 'doctor2go-connect' ); ?></option>
                                 <?php
-                                if ( get_option( 'd2gc_pseudo_translations' ) == 1 ) {
-                                    foreach ( $allCountries as $country ) {
-                                        $selected = '';
-                                        if ( isset( $countriesArray[ $country->slug ] ) ) {
-                                            $selected = 'selected';
-                                        }
-                                        ?>
-                                        <option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $country->slug ); ?>"><?php echo ( pll_current_language() == 'en' ) ? esc_html( $country->name ) : esc_html( get_term_meta( $country->term_id, 'rudr_text_' . pll_current_language(), true ) ); ?></option>
-                                        <?php
+                                foreach ( $allCountriesArray as $slug => $name ) {
+                                    $selected = '';
+                                    if ( isset( $countriesArray[ $slug ] ) ) {
+                                        $selected = 'selected';
                                     }
-                                } else {
-                                    foreach ( $allCountriesArray as $slug => $name ) {
-                                        $selected = '';
-                                        if ( isset( $countriesArray[ $slug ] ) ) {
-                                            $selected = 'selected';
-                                        }
-                                        ?>
-                                        <option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $slug ); ?>"><?php echo esc_html( $name ); ?></option>
-                                        <?php
-                                    }
+                                    ?>
+                                    <option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $slug ); ?>"><?php echo esc_html( $name ); ?></option>
+                                    <?php
                                 }
                                 ?>
                             </select>

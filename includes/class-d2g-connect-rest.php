@@ -396,23 +396,60 @@ class D2GC_Rest {
 				404
 			);
 		} else {
-			$doctors = array();
+			$doctors        = array();
+			$post_languages = array();
+			$all_complete   = true;
 			foreach ( $docs as $doc ) {
+				$language         = D2GC_Translations::get_post_language( $doc->ID );
+				$post_languages[] = $language;
+
+				$missing_taxonomies = array();
+				foreach ( D2gConnect_Admin::d2gc_get_required_taxonomies() as $taxonomy ) {
+					if ( taxonomy_exists( $taxonomy ) && ! wp_get_object_terms( $doc->ID, $taxonomy, array( 'fields' => 'ids' ) ) ) {
+						$missing_taxonomies[] = $taxonomy;
+					}
+				}
+
+				$missing_fields = array();
+				foreach ( D2gConnect_Admin::d2gc_get_required_fields() as $field ) {
+					// a price of 0 is valid, so only empty counts as missing
+					if ( '' === trim( (string) get_post_meta( $doc->ID, $field, true ) ) ) {
+						$missing_fields[] = $field;
+					}
+				}
+
+				$complete     = ! $missing_taxonomies && ! $missing_fields;
+				$all_complete = $all_complete && $complete;
+
 				$doctors[] = array(
-					'post_id'     => $doc->ID,
-					'language'    => D2GC_Translations::get_post_language( $doc->ID ),
-					'post_status' => $doc->post_status,
-					'wcc_status'  => (string) get_post_meta( $doc->ID, 'wcc_status', true ),
-					'title'       => $doc->post_title,
+					'post_id'            => $doc->ID,
+					'language'           => $language,
+					'post_status'        => $doc->post_status,
+					'wcc_status'         => (string) get_post_meta( $doc->ID, 'wcc_status', true ),
+					'title'              => $doc->post_title,
 					// only published profiles have a public address
-					'url'         => 'publish' === $doc->post_status ? get_permalink( $doc ) : null,
-					'modified'    => $doc->post_modified,
+					'url'                => 'publish' === $doc->post_status ? get_permalink( $doc ) : null,
+					'modified'           => $doc->post_modified,
+					'complete'           => $complete,
+					'missing_taxonomies' => $missing_taxonomies,
+					'missing_fields'     => $missing_fields,
 				);
 			}
+
+			$languages         = D2GC_Translations::get_languages();
+			$missing_languages = array_values( array_diff( $languages, $post_languages ) );
+
 			$response = new WP_REST_Response(
 				array(
-					'wcc_user_id' => $wcc_user_id,
-					'doctors'     => $doctors,
+					'wcc_user_id'  => $wcc_user_id,
+					// all translations exist and every translation has its required data
+					'complete'     => $all_complete && ! $missing_languages,
+					'translations' => array(
+						'complete'  => ! $missing_languages,
+						'languages' => $languages,
+						'missing'   => $missing_languages,
+					),
+					'doctors'      => $doctors,
 				),
 				200
 			);

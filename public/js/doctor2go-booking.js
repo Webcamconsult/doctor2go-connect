@@ -597,6 +597,7 @@
                         treatment_history: $('#booking_treatment_history').val() || '',
                         complaint_location: $('#booking_locatie').val() || '',
                         booking_ai_info: $('#booking_ai_info').val() || '',
+                        newsletter: $('#newsletter_vc').is(':checked') ? 1 : '',
                         derma_pic_1: $('#bookingdermapic1').val(),
                         derma_pic_2: $('#bookingdermapic2').val(),
                         derma_pic_3: $('#bookingdermapic3').val(),

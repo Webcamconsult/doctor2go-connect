@@ -118,6 +118,47 @@ if ( $d2gc_has_translations ) {
 						</div>
 					</div>
 				</section>
+
+				<?php
+				// newest first, so the first doctor-sync entry is the last push
+				$d2gc_last_push = null;
+				foreach ( D2GC_Rest::get_log() as $d2gc_entry ) {
+					if ( 'doctor-sync' === ( $d2gc_entry['route'] ?? 'doctor-sync' ) ) {
+						$d2gc_last_push = $d2gc_entry;
+						break;
+					}
+				}
+				?>
+				<section class="d2gc-card">
+					<header class="d2gc-card__header">
+						<h2><?php echo esc_html__( 'How doctor data is synced', 'doctor2go-connect' ); ?></h2>
+						<p><?php echo esc_html__( 'doctor2go.online is the source for doctor accounts, booking rules, vacation periods and prices.', 'doctor2go-connect' ); ?></p>
+					</header>
+					<div class="d2gc-card__body">
+						<ul class="d2gc-list">
+							<li><?php echo esc_html__( 'doctor2go.online sends a doctor to the doctor sync URL whenever the doctor is created or changed there: profile data, booking rules, vacation periods and prices. The website stores it in the doctor profile and in all its translations.', 'doctor2go-connect' ); ?></li>
+							<li><?php echo esc_html__( 'doctor2go.online uses the doctor status URL to check whether a profile is online, whether all translations exist and whether the required fields are filled in, and to take a profile online or offline.', 'doctor2go-connect' ); ?></li>
+							<li><?php echo esc_html__( 'Every 15 minutes the website fetches the free slots and the walk-in status of each doctor (see "Availability sync" on the Doctors tab).', 'doctor2go-connect' ); ?></li>
+							<li><?php echo esc_html__( 'Data received from doctor2go.online is never sent back.', 'doctor2go-connect' ); ?></li>
+						</ul>
+						<p><strong><?php echo esc_html__( 'Profile editor (Doctors tab):', 'doctor2go-connect' ); ?></strong></p>
+						<ul class="d2gc-list">
+							<li><?php echo esc_html__( '"Booking rules" tab deactivated: booking rules, vacation periods and prices are only edited in doctor2go.online. On the website they are read-only.', 'doctor2go-connect' ); ?></li>
+							<li><?php echo esc_html__( '"Booking rules" tab active: doctors can also edit them on the website. Booking rules and vacation periods are sent to doctor2go.online when they are saved. The next update from doctor2go.online always wins.', 'doctor2go-connect' ); ?></li>
+						</ul>
+						<p>
+							<strong><?php echo esc_html__( 'Last update received:', 'doctor2go-connect' ); ?></strong>
+							<?php
+							if ( $d2gc_last_push ) {
+								echo esc_html( ( $d2gc_last_push['time'] ?? '' ) . ' · ' . ( $d2gc_last_push['status'] ?? '' ) . ( ! empty( $d2gc_last_push['user_email'] ) ? ' · ' . $d2gc_last_push['user_email'] : '' ) );
+							} else {
+								echo esc_html__( 'none yet', 'doctor2go-connect' );
+							}
+							?>
+							<br><span class="description"><?php echo esc_html__( 'All requests are listed in the doctor sync log on the Advanced tab.', 'doctor2go-connect' ); ?></span>
+						</p>
+					</div>
+				</section>
 			</div>
 		</div>
 
@@ -364,10 +405,34 @@ if ( $d2gc_has_translations ) {
 					</header>
 					<div class="d2gc-card__body">
 						<?php
-						$d2gc_toggle( 'd2gc_under_construction', __( 'Activate under construction', 'doctor2go-connect' ), __( 'Block all pages for not logged in users and redirect to the under construction page', 'doctor2go-connect' ) );
 						$d2gc_toggle( 'd2gc_use_imgix', __( 'Use imgix image processing', 'doctor2go-connect' ), __( 'Please find more info\'s about imigix on their website.', 'doctor2go-connect' ) );
-						$d2gc_toggle( 'd2gc_pseudo_translations', __( 'Use pseudo translations.', 'doctor2go-connect' ), __( 'Doctors will be translated via meta values in the post and in the meta values in the connected taxonomies.', 'doctor2go-connect' ) );
 						?>
+					</div>
+				</section>
+
+				<section class="d2gc-card">
+					<header class="d2gc-card__header">
+						<h2><?php echo esc_html__( 'Newsletter', 'doctor2go-connect' ); ?></h2>
+						<p><?php echo esc_html__( 'Works with the Newsletter plugin.', 'doctor2go-connect' ); ?> <a href="https://www.thenewsletterplugin.com/" target="_blank" rel="noopener noreferrer"><?php echo esc_html__( 'Read more', 'doctor2go-connect' ); ?></a></p>
+					</header>
+					<div class="d2gc-card__body">
+						<?php if ( class_exists( 'TNP' ) ) { ?>
+							<?php $d2gc_toggle( 'd2gc_newsletter_signup', __( 'Newsletter sign up in the consult forms', 'doctor2go-connect' ), __( 'Shows a checkbox "I want to sign up for the newsletter" below the terms in the video consult, walk-in and e-mail advice forms. Double opt-in and the confirmation e-mail follow the settings of the Newsletter plugin.', 'doctor2go-connect' ) ); ?>
+							<p><a class="button button-secondary" href="<?php echo esc_url( admin_url( 'admin.php?page=newsletter_subscription_options' ) ); ?>"><?php echo esc_html__( 'Newsletter subscription settings', 'doctor2go-connect' ); ?></a></p>
+						<?php } else { ?>
+							<?php // a disabled checkbox is not submitted, so saving the settings switches the option off ?>
+							<div class="d2gc-setting d2gc-setting--toggle">
+								<label class="d2gc-toggle" for="d2gc_newsletter_signup">
+									<input type="checkbox" id="d2gc_newsletter_signup" value="1" disabled>
+									<span class="d2gc-toggle__slider" aria-hidden="true"></span>
+								</label>
+								<div class="d2gc-setting__text">
+									<label for="d2gc_newsletter_signup" class="d2gc-setting__title"><?php echo esc_html__( 'Newsletter sign up in the consult forms', 'doctor2go-connect' ); ?></label>
+									<p class="d2gc-setting__description"><?php echo esc_html__( 'The Newsletter plugin is not installed or not active. Activate it to use this option.', 'doctor2go-connect' ); ?></p>
+								</div>
+							</div>
+							<p><a class="button button-secondary" href="https://wordpress.org/plugins/newsletter/" target="_blank" rel="noopener noreferrer"><?php echo esc_html__( 'Newsletter plugin on wordpress.org', 'doctor2go-connect' ); ?></a></p>
+						<?php } ?>
 					</div>
 				</section>
 

@@ -92,6 +92,32 @@ class D2GC_Translations {
 	}
 
 	/**
+	 * Language codes of all languages of the site ('en', 'de', ...), empty when no multilingual plugin is active.
+	 *
+	 * @return string[]
+	 */
+	public static function get_languages() {
+		$languages = array();
+
+		switch ( self::provider() ) {
+			case 'polylang':
+				$languages = function_exists( 'pll_languages_list' ) ? (array) pll_languages_list( array( 'fields' => 'slug' ) ) : array();
+				break;
+
+			case 'wpml':
+				$languages = array_keys( (array) apply_filters( 'wpml_active_languages', null, array( 'skip_missing' => 0 ) ) );
+				break;
+		}
+
+		/**
+		 * Filters the languages a doctor profile should be translated into.
+		 *
+		 * @param string[] $languages language codes
+		 */
+		return array_values( array_filter( array_map( 'strval', (array) apply_filters( 'd2gc_languages', $languages ) ) ) );
+	}
+
+	/**
 	 * Whether the terms of a taxonomy are translated (a separate term per language). Not translated = the same terms in all languages.
 	 *
 	 * @param string $taxonomy

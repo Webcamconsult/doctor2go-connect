@@ -262,6 +262,8 @@ class D2G_booking_wcc_user {
 
         if ( isset( $appointment['url'] ) ) {
 
+            d2gc_newsletter_subscribe( $patientEmail, $patient_fname, $patient_lname );
+
             $booking_data = array(
                 'appointment_id'   => $appointment['appointment_id'],
                 'client_token'     => $appointment['client']['authentication_token'],
@@ -555,6 +557,9 @@ class D2G_booking_wcc_user {
 		}
 
 		if ( isset( $response_body->url ) ) {
+			// the walk-in form has one name field
+			d2gc_newsletter_subscribe( $client_email, $client_name );
+
 			$waiting_room_full_url = 'https://' . $orgSlug . $baseUrl . $response_body->url;
 			wp_send_json_success( [ 'redirect_url' => $waiting_room_full_url ] );
 		}
@@ -776,6 +781,8 @@ class D2G_booking_wcc_user {
 		}
 
 		if ( isset( $response_body->url ) ) {
+			d2gc_newsletter_subscribe( $client_email, $first_name, $last_name );
+
 			$questionnaire_url = 'https://' . $orgSlug . $baseUrl . $response_body->url;
 			$redirect_url      = $questionnaire_url . '?redirect_url=' . urlencode( $confirmation_url ) . '&booked_consult=email&skip_cookie_wall=true&locale=' . $currLang;
 

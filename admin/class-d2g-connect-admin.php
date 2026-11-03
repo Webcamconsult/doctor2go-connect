@@ -323,6 +323,37 @@ class D2gConnect_Admin {
 	}
 
 	/**
+	 * The doctor meta fields marked as required (*) in the front-end profile editor.
+	 *
+	 * @return string[] meta keys
+	 */
+	public static function d2gc_get_required_fields() {
+		$fields = array(
+			'd2g_first_name',
+			'd2g_last_name',
+			'd2g_emp_title',
+			'd2g_main_email',
+			'walk_in_price',
+			'walk_in_currency',
+			'written_con_price',
+			'written_con_currency',
+			'video_con_price',
+			'video_con_currency',
+		);
+		// the questionnaire is only shown in the editor when the doctors are WCC users
+		if ( get_option( 'd2gc_local_user' ) != 1 ) {
+			$fields[] = 'written_con_type';
+		}
+
+		/**
+		 * Filters the doctor meta fields that need a value (reported by the doctor-status REST route).
+		 *
+		 * @param string[] $fields meta keys
+		 */
+		return (array) apply_filters( 'd2gc_required_doctor_fields', $fields );
+	}
+
+	/**
 	 * (wp_insert_post_data) Second line of defence behind the check in d2g-connect-admin.js: a doctor saved from the
 	 * wp-admin form without the required filters is not published (stays / becomes draft), a notice says why.
 	 * Profiles that are already online stay online.
@@ -711,12 +742,10 @@ class D2gConnect_Admin {
 			'd2gc_single_header_footer' => 'absint',
 			'd2gc_deactivate_recapctha_script' => 'absint',
 			'd2gc_activate_2fa_link' => 'absint',
-			'd2gc_under_construction' => 'absint',
 			'd2gc_logo' => 'absint',
 			'd2gc_sender_address' => 'sanitize_email',
 			'd2gc_recipient_address' => 'sanitize_email',
 			'd2gc_sender_name' => 'sanitize_text_field',
-			'd2gc_pseudo_translations' => 'absint',
 			'd2gc_use_imgix' => 'absint',
 			'd2gc_load_availability_info' => 'absint',
 			'd2gc_bootstrap_js' => 'absint',
@@ -725,6 +754,7 @@ class D2gConnect_Admin {
 			'd2gc_activate_custom_login_registration' => 'absint',
 			'd2gc_disable_booking_rules_editor' => 'absint',
 			'd2g_debug' => 'absint',
+			'd2gc_newsletter_signup' => 'absint',
 		);
 
 		foreach ( $settings_with_callbacks as $setting => $callback ) {

@@ -107,17 +107,6 @@ class D2gConnect_Shortcodes {
 			'order'      => 'ASC',
 			'hide_empty' => false,
 		);
-		if ( get_option( 'd2gc_pseudo_translations' ) == 1 && $currLang != 'en' ) {
-			$argsSpecialty = array(
-				'taxonomy'   => 'doctor-specialty',
-				'hide_empty' => true,
-				'meta_key'   => 'rudr_text_' . $currLang,
-				'orderby'    => 'meta_value',
-				'order'      => 'ASC',
-				'hide_empty' => false,
-				'parent'     => 0, // can be 0, '0', '' too
-			);
-		}
 		$allSpecialities = get_terms( $argsSpecialty );
 
 		// languages
@@ -129,16 +118,6 @@ class D2gConnect_Shortcodes {
 			'order'      => 'ASC',
 			'hide_empty' => false,
 		);
-		if ( get_option( 'd2gc_pseudo_translations' ) == 1 && $currLang != 'en' ) {
-			$argsLanguage = array(
-				'taxonomy'   => 'doctor-language',
-				'hide_empty' => true,
-				'meta_key'   => 'rudr_text_' . $currLang,
-				'orderby'    => 'meta_value',
-				'order'      => 'ASC',
-				'hide_empty' => false,
-			);
-		}
 		$allLanguages = get_terms( $argsLanguage );
 
 		// countries
@@ -150,16 +129,6 @@ class D2gConnect_Shortcodes {
 			'order'      => 'ASC',
 			'hide_empty' => false,
 		);
-		if ( get_option( 'd2gc_pseudo_translations' ) == 1 && $currLang != 'en' ) {
-			$argsCountry = array(
-				'taxonomy'   => 'country-origin',
-				'hide_empty' => true,
-				'meta_key'   => 'rudr_text_' . $currLang,
-				'orderby'    => 'meta_value',
-				'order'      => 'ASC',
-				'hide_empty' => false,
-			);
-		}
 		$allCountries = get_terms( $argsCountry );
 
 		// featured image
@@ -226,11 +195,14 @@ class D2gConnect_Shortcodes {
 								</button>
 							</li>
                             <?php } ?>
+                            <?php // a real link, not a tab: excluded from the tab autosave in d2g-public.js ?>
+                            <?php if ( get_option( 'd2gc_waiting_room_url' ) ) { ?>
                             <li class="nav-item" role="presentation">
-								<a href="https://app.derm2check.com?locale=<?php echo $currLang; ?>" target="_blank" class="nav-link">
-                                    <strong><?php echo esc_html( __( 'Dashbaord', 'doctor2go-connect' ) ); ?></strong>    
+								<a href="<?php echo esc_url( add_query_arg( 'locale', $currLang, get_option( 'd2gc_waiting_room_url' ) ) ); ?>" target="_blank" rel="noopener" class="nav-link d2gc-dashboard-link">
+                                    <strong><?php echo esc_html__( 'Back to the dashboard', 'doctor2go-connect' ); ?></strong>
                                 </a>
 							</li>
+                            <?php } ?>
 						</ul>
 
 						<div class="alert alert-danger mt-3 mb-3 simple_hide"></div>
@@ -300,11 +272,7 @@ class D2gConnect_Shortcodes {
                                                             ?>
                                                             <option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $country->slug ); ?>">
                                                                 <?php
-                                                                if ( get_option( 'd2gc_pseudo_translations' ) == 1 ) {
-                                                                    echo ( $currLang == 'en' ) ? esc_html( $country->name ) : esc_html( get_term_meta( $country->term_id, 'rudr_text_' . $currLang, true ) );
-                                                                } else {
-                                                                    echo esc_html( $country->name );
-                                                                }
+                                                                echo esc_html( $country->name );
                                                                 ?>
                                                             </option>
                                                             <?php
@@ -345,11 +313,7 @@ class D2gConnect_Shortcodes {
                                                             ?>
                                                             <option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $language->slug ); ?>">
                                                                 <?php
-                                                                if ( get_option( 'd2gc_pseudo_translations' ) == 1 ) {
-                                                                    echo ( $currLang == 'en' ) ? esc_html( $language->name ) : esc_html( get_term_meta( $language->term_id, 'rudr_text_' . $currLang, true ) );
-                                                                } else {
-                                                                    echo esc_html( $language->name );
-                                                                }
+                                                                echo esc_html( $language->name );
                                                                 ?>
                                                             </option>
                                                             <?php
@@ -381,11 +345,7 @@ class D2gConnect_Shortcodes {
                                                             ?>
                                                             <option <?php echo esc_html( $selected ); ?> value="<?php echo esc_html( $speciality->slug ); ?>">
                                                                 <?php
-                                                                if ( get_option( 'd2gc_pseudo_translations' ) == 1 ) {
-                                                                    echo ( $currLang == 'en' ) ? esc_html( $speciality->name ) : esc_html( get_term_meta( $speciality->term_id, 'rudr_text_' . $currLang, true ) );
-                                                                } else {
-                                                                    echo esc_html( $speciality->name );
-                                                                }
+                                                                echo esc_html( $speciality->name );
                                                                 ?>
                                                             </option>
                                                             <?php
@@ -1534,16 +1494,6 @@ class D2gConnect_Shortcodes {
 			'order'    => 'ASC',
 		);
 
-		if ( get_option( 'd2gc_pseudo_translations' ) == 1 && 'en' !== $currLang ) {
-			$argsSpecialty = array(
-				'taxonomy'   => 'doctor-specialty',
-				'hide_empty' => true,
-				'meta_key'   => 'rudr_text_' . $currLang,
-				'orderby'    => 'meta_value',
-				'order'      => 'ASC',
-			);
-		}
-
 		$specialties = get_terms( $argsSpecialty );
 
 		$specialties_by_parent = array();
@@ -1558,16 +1508,6 @@ class D2gConnect_Shortcodes {
 			'order'    => 'ASC',
 		);
 
-		if ( get_option( 'd2gc_pseudo_translations' ) == 1 && 'en' !== $currLang ) {
-			$argsLanguage = array(
-				'taxonomy'   => 'doctor-language',
-				'hide_empty' => true,
-				'meta_key'   => 'rudr_text_' . $currLang,
-				'orderby'    => 'meta_value',
-				'order'      => 'ASC',
-			);
-		}
-
 		$languages = get_terms( $argsLanguage );
 
 		// Countries.
@@ -1576,16 +1516,6 @@ class D2gConnect_Shortcodes {
 			'orderby'  => 'name',
 			'order'    => 'ASC',
 		);
-
-		if ( get_option( 'd2gc_pseudo_translations' ) == 1 && 'en' !== $currLang ) {
-			$argsCountry = array(
-				'taxonomy'   => 'country-origin',
-				'hide_empty' => true,
-				'meta_key'   => 'rudr_text_' . $currLang,
-				'orderby'    => 'meta_value',
-				'order'      => 'ASC',
-			);
-		}
 
 		$countries = get_terms( $argsCountry );
 
@@ -1716,13 +1646,7 @@ class D2gConnect_Shortcodes {
 							<?php foreach ( $specialties as $specialty ) { ?>
 								<option <?php selected( $doctor_specialty, $specialty->term_id ); ?> value="<?php echo esc_attr( $specialty->term_id ); ?>">
 									<?php
-									if ( get_option( 'd2gc_pseudo_translations' ) == 1 ) {
-										echo ( 'en' === $currLang )
-											? esc_html( $specialty->name )
-											: esc_html( get_term_meta( $specialty->term_id, 'rudr_text_' . $currLang, true ) );
-									} else {
-										echo esc_html( $specialty->name );
-									}
+									echo esc_html( $specialty->name );
 									?>
 								</option>
 							<?php } ?>
@@ -1735,13 +1659,7 @@ class D2gConnect_Shortcodes {
 							<?php foreach ( $countries as $country ) { ?>
 								<option <?php selected( $country_origin, $country->term_id ); ?> value="<?php echo esc_attr( $country->term_id ); ?>">
 									<?php
-									if ( get_option( 'd2gc_pseudo_translations' ) == 1 ) {
-										echo ( 'en' === $currLang )
-											? esc_html( $country->name )
-											: esc_html( get_term_meta( $country->term_id, 'rudr_text_' . $currLang, true ) );
-									} else {
-										echo esc_html( $country->name );
-									}
+									echo esc_html( $country->name );
 									?>
 								</option>
 							<?php } ?>
@@ -1754,13 +1672,7 @@ class D2gConnect_Shortcodes {
 							<?php foreach ( $languages as $language ) { ?>
 								<option <?php selected( $doctor_language, $language->term_id ); ?> value="<?php echo esc_attr( $language->term_id ); ?>">
 									<?php
-									if ( get_option( 'd2gc_pseudo_translations' ) == 1 ) {
-										echo ( 'en' === $currLang )
-											? esc_html( $language->name )
-											: esc_html( get_term_meta( $language->term_id, 'rudr_text_' . $currLang, true ) );
-									} else {
-										echo esc_html( $language->name );
-									}
+									echo esc_html( $language->name );
 									?>
 								</option>
 							<?php } ?>
