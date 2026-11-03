@@ -264,6 +264,8 @@ class D2G_booking_wcc_user {
 
             d2gc_newsletter_subscribe( $patientEmail, $patient_fname, $patient_lname );
 
+            self::d2gc_consult_created( 'video', $wpDocID, $patientEmail, $patient_fname, $patient_lname, $patientTel, $docPrice, $currency );
+
             $booking_data = array(
                 'appointment_id'   => $appointment['appointment_id'],
                 'client_token'     => $appointment['client']['authentication_token'],
@@ -559,6 +561,7 @@ class D2G_booking_wcc_user {
 		if ( isset( $response_body->url ) ) {
 			// the walk-in form has one name field
 			d2gc_newsletter_subscribe( $client_email, $client_name );
+			self::d2gc_consult_created( 'walk_in', $wpDocID, $client_email, $client_name, '', $client_tel, $price, $currency );
 
 			$waiting_room_full_url = 'https://' . $orgSlug . $baseUrl . $response_body->url;
 			wp_send_json_success( [ 'redirect_url' => $waiting_room_full_url ] );
@@ -568,7 +571,42 @@ class D2G_booking_wcc_user {
 	}
 
 
-    //email advice 
+	/**
+	 * Fires the d2gc_consult_created action after doctor2go.online accepted a consult request,
+	 * so themes and other plugins can react (e.g. conversion tracking).
+	 *
+	 * @param string $type       video|walk_in|email_advice
+	 * @param int    $doctor_id  doctor post id
+	 * @param string $email
+	 * @param string $first_name the walk-in form has one name field, it is passed here
+	 * @param string $last_name
+	 * @param string $phone
+	 * @param mixed  $price
+	 * @param string $currency
+	 */
+	protected static function d2gc_consult_created( $type, $doctor_id, $email, $first_name, $last_name, $phone, $price, $currency ) {
+		/**
+		 * A consult request was accepted by doctor2go.online.
+		 *
+		 * @param string $type    video|walk_in|email_advice
+		 * @param array  $details doctor_id, email, first_name, last_name, phone, price (float), currency
+		 */
+		do_action(
+			'd2gc_consult_created',
+			$type,
+			array(
+				'doctor_id'  => (int) $doctor_id,
+				'email'      => (string) $email,
+				'first_name' => (string) $first_name,
+				'last_name'  => (string) $last_name,
+				'phone'      => (string) $phone,
+				'price'      => (float) $price,
+				'currency'   => (string) $currency,
+			)
+		);
+	}
+
+    //email advice
 	public static function d2gc_create_wcc_written_cosnsult() {
 
 		// Verify nonce early and bail on failure.
@@ -782,6 +820,7 @@ class D2G_booking_wcc_user {
 
 		if ( isset( $response_body->url ) ) {
 			d2gc_newsletter_subscribe( $client_email, $first_name, $last_name );
+			self::d2gc_consult_created( 'email_advice', $wpDocID, $client_email, $first_name, $last_name, '', $price, $currency );
 
 			$questionnaire_url = 'https://' . $orgSlug . $baseUrl . $response_body->url;
 			$redirect_url      = $questionnaire_url . '?redirect_url=' . urlencode( $confirmation_url ) . '&booked_consult=email&skip_cookie_wall=true&locale=' . $currLang;
