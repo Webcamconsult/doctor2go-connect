@@ -18,6 +18,16 @@ class D2G_doc_user_profile {
 
 		add_action( 'wp_ajax_d2gc_delete_profile_pic', array( __CLASS__, 'd2gc_delete_profile_pic' ) );
 
+		// the doctor edit form in wp-admin has to accept the PDF of the registration check
+		add_action(
+			'post_edit_form_tag',
+			function ( $post ) {
+				if ( 'd2g_doctor' === $post->post_type ) {
+					echo ' enctype="multipart/form-data"';
+				}
+			}
+		);
+
 		// adds a doctor profile post when creating a user with a doctor role if the option is checked
 		if ( get_option( 'd2gc_local_user' ) == 1 ) {
 			add_action( 'user_register', array( __CLASS__, 'd2gc_create_doc_profile_locally' ), 10, 2 );
@@ -58,7 +68,62 @@ class D2G_doc_user_profile {
 		'simple_booking_rules',
 		'd2g_vacation_periods',
 		'd2g_edit_url',
+		'reg_check_pdf', // an attachment ID, only set by d2gc_save_reg_check_pdf()
 	);
+
+	/**
+	 * A date from a form field as Y-m-d, empty when it is not a valid date.
+	 *
+	 * @param mixed $value
+	 * @return string
+	 */
+	public static function d2gc_sanitize_date( $value ) {
+		$value = is_string( $value ) ? sanitize_text_field( $value ) : '';
+		$date  = DateTimeImmutable::createFromFormat( '!Y-m-d', $value );
+		return ( $date && $date->format( 'Y-m-d' ) === $value ) ? $value : '';
+	}
+
+	/**
+	 * Saves or removes the PDF of the registration check (fields reg_check_pdf_file and reg_check_pdf_remove).
+	 * Used by both doctor editors, the caller has checked the nonce and the permission. A replaced or removed
+	 * PDF is deleted, otherwise it would stay publicly available on its old URL.
+	 *
+	 * @param int $post_id doctor post
+	 */
+	public static function d2gc_save_reg_check_pdf( $post_id ) {
+		$old  = (int) get_post_meta( $post_id, 'reg_check_pdf', true );
+		$new  = empty( $_POST['reg_check_pdf_remove'] ) ? $old : 0; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- checked by the caller
+		$file = $_FILES['reg_check_pdf_file'] ?? null; // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput -- checked by the caller, validated below
+
+		if ( is_array( $file ) && UPLOAD_ERR_OK === (int) ( $file['error'] ?? UPLOAD_ERR_NO_FILE )
+			&& '%PDF-' === (string) file_get_contents( $file['tmp_name'], false, null, 0, 5 ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+			require_once ABSPATH . 'wp-admin/includes/media.php';
+			require_once ABSPATH . 'wp-admin/includes/image.php';
+
+			$uploaded = media_handle_upload(
+				'reg_check_pdf_file',
+				$post_id,
+				array(),
+				array(
+					'test_form' => false,
+					'mimes'     => array( 'pdf' => 'application/pdf' ),
+				)
+			);
+			if ( ! is_wp_error( $uploaded ) ) {
+				$new = (int) $uploaded;
+			}
+		}
+		unset( $_FILES['reg_check_pdf_file'] ); // not for the image upload of the profile editor
+
+		if ( $new !== $old ) {
+			// saved empty rather than deleted: the translation sync only copies fields that exist
+			update_post_meta( $post_id, 'reg_check_pdf', $new ?: '' );
+			if ( $old ) {
+				wp_delete_attachment( $old, true );
+			}
+		}
+	}
 
 	/**
 	 * Whether the current user may edit the given doctor profile.
@@ -593,6 +658,8 @@ class D2G_doc_user_profile {
 						'd2g_pub_date'    => sanitize_text_field($item['d2g_pub_date'] ?? ''),
 					];
 					$doc_data_meta[$meta_key] = $clean_items;
+				} elseif ('reg_check_date' === $meta_key) {
+					$doc_data_meta[$meta_key] = self::d2gc_sanitize_date($meta_value);
 				} elseif ('reg_link' === $meta_key && is_string($meta_value)) {
 					// a URL: sanitize_text_field() would remove the %xx parts and break the link
 					$doc_data_meta[$meta_key] = esc_url_raw($meta_value);
@@ -639,7 +706,8 @@ class D2G_doc_user_profile {
 		// Update Taxonomies
 		if (!empty($doc_tax)) self::d2gc_updateDocTerms($doc_tax, $update_id);
 
-		// Handle File Uploads
+		// Handle File Uploads (the PDF first, it takes its file out of $_FILES)
+		self::d2gc_save_reg_check_pdf($update_id);
 		if (!empty($_FILES)) self::d2gc_set_doc_images($update_id, $nonce);
 
 		// copy the language independent fields, the profile picture and the status to the other languages
