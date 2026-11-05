@@ -567,6 +567,12 @@ msgstr ""
 msgid "Country of registration"
 msgstr ""
 
+#: admin/class-d2g-connect-admin.php:957 admin/partials/metaboxes.php:30
+#: includes/class-d2g-connect-doctor-sync.php:179
+#: public/d2g-connect-shortcodes.php:400
+msgid "Registration link"
+msgstr ""
+
 #: admin/class-d2g-connect-admin.php:957
 msgid "Average price"
 msgstr ""

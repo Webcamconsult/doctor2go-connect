@@ -954,6 +954,7 @@ class D2gConnect_Admin {
 				'd2g_organisation' => esc_html__( 'Organisation', 'doctor2go-connect' ),
 				'reg_nr'           => esc_html__( 'Registration number', 'doctor2go-connect' ),
 				'reg_country'      => esc_html__( 'Country of registration', 'doctor2go-connect' ),
+				'reg_link'         => esc_html__( 'Registration link', 'doctor2go-connect' ),
 				'avg_price'        => esc_html__( 'Average price', 'doctor2go-connect' ),
 
 			);
@@ -962,7 +963,11 @@ class D2gConnect_Admin {
 			// cleared in wp-admin. Not submitted (pages, e-mail templates use the same save) = left untouched.
 			foreach ( $personalFields as $key => $name ) {
 				if ( isset( $_POST[ $key ] ) ) {
-					update_post_meta( $post_id, $key, d2gc_get_post_text( $key ) );
+					// a URL: sanitize_text_field() would remove the %xx parts and break the link
+					$value = 'reg_link' === $key
+						? esc_url_raw( wp_unslash( $_POST[ $key ] ) )
+						: d2gc_get_post_text( $key );
+					update_post_meta( $post_id, $key, $value );
 				}
 			}
 

@@ -593,6 +593,9 @@ class D2G_doc_user_profile {
 						'd2g_pub_date'    => sanitize_text_field($item['d2g_pub_date'] ?? ''),
 					];
 					$doc_data_meta[$meta_key] = $clean_items;
+				} elseif ('reg_link' === $meta_key && is_string($meta_value)) {
+					// a URL: sanitize_text_field() would remove the %xx parts and break the link
+					$doc_data_meta[$meta_key] = esc_url_raw($meta_value);
 				} else {
 					$doc_data_meta[$meta_key] = is_array($meta_value) ? array_map('sanitize_text_field', $meta_value) : sanitize_text_field($meta_value);
 				}

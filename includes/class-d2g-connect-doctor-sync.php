@@ -176,6 +176,7 @@ class D2GC_Doctor_Sync {
 			'd2g_main_email'    => __( 'E-mail', 'doctor2go-connect' ),
 			'reg_nr'            => __( 'Registration number', 'doctor2go-connect' ),
 			'reg_country'       => __( 'Country of registration', 'doctor2go-connect' ),
+			'reg_link'          => __( 'Registration link', 'doctor2go-connect' ),
 			'walk_in_price'     => __( 'Walk-in price', 'doctor2go-connect' ),
 			'written_con_price' => __( 'E-mail advice price', 'doctor2go-connect' ),
 			'video_con_price'   => __( 'Video consultation price', 'doctor2go-connect' ),
@@ -341,6 +342,7 @@ class D2GC_Doctor_Sync {
 			'd2g_mobile',
 			'reg_nr',
 			'reg_country',
+			'reg_link',
 			'd2g_cal_code',
 			// prices and consultation settings
 			'written_con_price',

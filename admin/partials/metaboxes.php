@@ -26,7 +26,8 @@ function d2gc_meta_box_personal_cb( $post ) {
 		'd2g_main_email'   => esc_html__( 'E-mail', 'doctor2go-connect' ),
 		'd2g_organisation' => esc_html__( 'Organisation', 'doctor2go-connect' ),
 		'reg_nr'           => esc_html__( 'Registration number', 'doctor2go-connect' ),
-		'reg_country'      => esc_html__( 'Country of registration', 'doctor2go-connect' )
+		'reg_country'      => esc_html__( 'Country of registration', 'doctor2go-connect' ),
+		'reg_link'         => esc_html__( 'Registration link', 'doctor2go-connect' ),
 
 	);
 

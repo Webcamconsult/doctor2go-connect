@@ -395,6 +395,11 @@ class D2gConnect_Shortcodes {
                                                     <?php echo esc_html__( 'Country of registration', 'doctor2go-connect' ); ?>
                                                 </label>
                                                 <input type="text" class="form-control" id="reg_country" value="<?php echo esc_html( $doctor_meta['reg_country'][0] ); ?>" tabindex="1" name="meta[reg_country]" placeholder="<?php echo esc_html__( 'Country of registration', 'doctor2go-connect' ); ?>"/>
+
+                                                <label class="form-label small mt-2" for="reg_link">
+                                                    <?php echo esc_html__( 'Registration link', 'doctor2go-connect' ); ?>
+                                                </label>
+                                                <input type="text" inputmode="url" class="form-control" id="reg_link" value="<?php echo esc_url( $doctor_meta['reg_link'][0] ?? '' ); ?>" tabindex="1" name="meta[reg_link]" placeholder="https://"/>
                                             </div>
 										</div>
                                         <div class="card">
