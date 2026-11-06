@@ -3493,15 +3493,3 @@ msgstr ""
 #: public/templates/single-content/content-single-d2g_doctor-v3.php:71
 msgid "About this doctor"
 msgstr ""
-
-msgid "Registration check date"
-msgstr ""
-
-msgid "PDF of the registration check"
-msgstr ""
-
-msgid "Current PDF"
-msgstr ""
-
-msgid "Remove PDF"
-msgstr ""

@@ -400,23 +400,6 @@ class D2gConnect_Shortcodes {
                                                     <?php echo esc_html__( 'Registration link', 'doctor2go-connect' ); ?>
                                                 </label>
                                                 <input type="text" inputmode="url" class="form-control" id="reg_link" value="<?php echo esc_url( $doctor_meta['reg_link'][0] ?? '' ); ?>" tabindex="1" name="meta[reg_link]" placeholder="https://"/>
-
-                                                <label class="form-label small mt-2" for="reg_check_date">
-                                                    <?php echo esc_html__( 'Registration check date', 'doctor2go-connect' ); ?>
-                                                </label>
-                                                <input type="date" class="form-control" id="reg_check_date" value="<?php echo esc_attr( $doctor_meta['reg_check_date'][0] ?? '' ); ?>" tabindex="1" name="meta[reg_check_date]"/>
-
-                                                <label class="form-label small mt-2" for="reg_check_pdf_file">
-                                                    <?php echo esc_html__( 'PDF of the registration check', 'doctor2go-connect' ); ?>
-                                                </label>
-                                                <input type="file" class="form-control" id="reg_check_pdf_file" name="reg_check_pdf_file" accept="application/pdf"/>
-                                                <?php $reg_check_pdf = wp_get_attachment_url( (int) ( $doctor_meta['reg_check_pdf'][0] ?? 0 ) ); ?>
-                                                <?php if ( $reg_check_pdf ) { ?>
-                                                    <p class="small mt-1 mb-0">
-                                                        <a href="<?php echo esc_url( $reg_check_pdf ); ?>" target="_blank" rel="noopener"><?php echo esc_html__( 'Current PDF', 'doctor2go-connect' ); ?></a>
-                                                        <label class="ms-2"><input type="checkbox" name="reg_check_pdf_remove" value="1"/> <?php echo esc_html__( 'Remove PDF', 'doctor2go-connect' ); ?></label>
-                                                    </p>
-                                                <?php } ?>
                                             </div>
 										</div>
                                         <div class="card">

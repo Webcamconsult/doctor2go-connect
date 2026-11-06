@@ -3245,15 +3245,3 @@ msgstr "Beratung starten"
 #: public/templates/single-content/content-single-d2g_doctor-v3.php:71
 msgid "About this doctor"
 msgstr "Über diesen Arzt"
-
-msgid "Registration check date"
-msgstr "Datum der Registrierungsprüfung"
-
-msgid "PDF of the registration check"
-msgstr "PDF der Registrierungsprüfung"
-
-msgid "Current PDF"
-msgstr "Aktuelle PDF"
-
-msgid "Remove PDF"
-msgstr "PDF entfernen"

@@ -46,24 +46,7 @@ function d2gc_meta_box_personal_cb( $post ) {
 			</div>
 			<?php
 		}
-		$reg_check_pdf = wp_get_attachment_url( (int) ( $values['reg_check_pdf'][0] ?? 0 ) );
 		?>
-		<div class="col-sm-4">
-			<div>
-				<label for="reg_check_date"><?php echo esc_html__( 'Registration check date', 'doctor2go-connect' ); ?></label><br>
-				<input type="date" name="reg_check_date" id="reg_check_date" value="<?php echo esc_attr( $values['reg_check_date'][0] ?? '' ); ?>"/>
-			</div>
-		</div>
-		<div class="col-sm-4">
-			<div>
-				<label for="reg_check_pdf_file"><?php echo esc_html__( 'PDF of the registration check', 'doctor2go-connect' ); ?></label><br>
-				<input type="file" name="reg_check_pdf_file" id="reg_check_pdf_file" accept="application/pdf"/>
-				<?php if ( $reg_check_pdf ) { ?>
-					<br><a href="<?php echo esc_url( $reg_check_pdf ); ?>" target="_blank" rel="noopener"><?php echo esc_html__( 'Current PDF', 'doctor2go-connect' ); ?></a>
-					<label><input type="checkbox" name="reg_check_pdf_remove" value="1"/> <?php echo esc_html__( 'Remove PDF', 'doctor2go-connect' ); ?></label>
-				<?php } ?>
-			</div>
-		</div>
 	</div>
 	<?php
 }

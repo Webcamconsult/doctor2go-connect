@@ -971,12 +971,6 @@ class D2gConnect_Admin {
 				}
 			}
 
-			// registration check (date and PDF), same rules as the front-end profile editor
-			if ( 'd2g_doctor' === get_post_type( $post_id ) && isset( $_POST['reg_check_date'] ) ) {
-				update_post_meta( $post_id, 'reg_check_date', D2G_doc_user_profile::d2gc_sanitize_date( wp_unslash( $_POST['reg_check_date'] ) ) );
-				D2G_doc_user_profile::d2gc_save_reg_check_pdf( $post_id );
-			}
-
 			$postMetaArr = isset( $_POST['meta'] ) ? map_deep( wp_unslash( $_POST['meta'] ), 'sanitize_text_field' ) : array();
 
 			// Only the plugin's own fields from the meta boxes (admin/partials/metaboxes.php).
