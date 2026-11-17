@@ -213,6 +213,8 @@ class D2G_booking_wcc_user {
 
 
 
+        $postfields = self::d2gc_booking_payload( $postfields, 'video', $wpDocID );
+
         $response = wp_remote_post(
             get_option( 'd2gc_api_url_short' ) . 'doclisting/video_consult_complete/',
             array(
@@ -515,6 +517,8 @@ class D2G_booking_wcc_user {
 			],
 		];
 
+		$payload = self::d2gc_booking_payload( $payload, 'walk_in', $wpDocID );
+
 		$response = wp_remote_post(
 			get_option( 'd2gc_api_url_short' ) . 'doclisting/inloopspreekuur',
 			[
@@ -584,6 +588,28 @@ class D2G_booking_wcc_user {
 	 * @param mixed  $price
 	 * @param string $currency
 	 */
+	/**
+	 * Runs the d2gc_booking_payload filter on a booking request for doctor2go.online.
+	 * The filter's own fields can not replace the ones the plugin sets (handshake, prices, ...).
+	 *
+	 * @param array  $payload   the request body
+	 * @param string $type      video|walk_in|email_advice
+	 * @param int    $doctor_id doctor post id
+	 * @return array
+	 */
+	protected static function d2gc_booking_payload( $payload, $type, $doctor_id ) {
+		/**
+		 * Lets themes and plugins add fields to a booking request for doctor2go.online, e.g. campaign or consent data.
+		 *
+		 * @param array  $extra     fields to add (empty)
+		 * @param string $type      video|walk_in|email_advice
+		 * @param int    $doctor_id doctor post id
+		 * @param array  $payload   the request body as the plugin built it (read only)
+		 */
+		$extra = apply_filters( 'd2gc_booking_payload', array(), $type, (int) $doctor_id, $payload );
+		return is_array( $extra ) ? $payload + $extra : $payload;
+	}
+
 	protected static function d2gc_consult_created( $type, $doctor_id, $email, $first_name, $last_name, $phone, $price, $currency ) {
 		/**
 		 * A consult request was accepted by doctor2go.online.
@@ -773,6 +799,8 @@ class D2G_booking_wcc_user {
 			),
 		);
 
+
+		$payload = self::d2gc_booking_payload( $payload, 'email_advice', $wpDocID );
 
 		$response = wp_remote_post(
 			get_option( 'd2gc_api_url_short' ) . 'doclisting/written_consult_complete',
