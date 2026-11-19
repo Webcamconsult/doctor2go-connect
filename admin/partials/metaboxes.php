@@ -579,6 +579,7 @@ function d2gc_meta_box_email_type_cb( $post ) {
 		'cancellation_doctor'  => __( 'Cancellation for doctor', 'doctor2go-connect' ),
 		'cancellation_patient' => __( 'Cancellation for patient', 'doctor2go-connect' ),
 		'registration'         => __( 'Confirmation for patient registration', 'doctor2go-connect' ),
+		'lead_confirmation'    => __( 'Confirmation for a lead (e-mail link form)', 'doctor2go-connect' ),
 	);
 	?>
 	<h4 style="color: red"><?php esc_html_e( 'Define which email this template is for.', 'doctor2go-connect' ); ?></h4>

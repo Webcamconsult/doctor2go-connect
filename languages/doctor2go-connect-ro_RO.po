@@ -3245,3 +3245,133 @@ msgstr "începe o consultație"
 #: public/templates/single-content/content-single-d2g_doctor-v3.php:71
 msgid "About this doctor"
 msgstr "Despre acest medic"
+
+msgid "Please enter a valid e-mail address."
+msgstr "Vă rugăm să introduceți o adresă de e-mail validă."
+
+msgid "For later"
+msgstr "Pentru mai târziu"
+
+msgid "Not ready yet?"
+msgstr "Nu sunteți încă pregătit?"
+
+msgid "Save this for later."
+msgstr "Salvați pentru mai târziu."
+
+msgid "We will send you a secure link by e-mail, so you can come back to it later."
+msgstr "Vă vom trimite un link securizat prin e-mail, ca să puteți reveni mai târziu."
+
+msgid "Send me the link"
+msgstr "Trimiteți-mi linkul"
+
+msgid "We only use your e-mail address for this. No newsletter."
+msgstr "Folosim adresa dumneavoastră de e-mail doar pentru aceasta. Fără newsletter."
+
+msgid "Something went wrong. Please try again."
+msgstr "Ceva nu a funcționat. Vă rugăm să încercați din nou."
+
+msgid "Sending…"
+msgstr "Se trimite…"
+
+msgid "Your e-mail address"
+msgstr "Adresa dumneavoastră de e-mail"
+
+msgid "name@example.com"
+msgstr "nume@exemplu.ro"
+
+msgid "I agree that my e-mail address is used to send me this link."
+msgstr "Sunt de acord ca adresa mea de e-mail să fie folosită pentru a-mi trimite acest link."
+
+msgid "Privacy statement"
+msgstr "Declarația de confidențialitate"
+
+msgid "Also send me one reminder to come back to it."
+msgstr "Trimiteți-mi și un memento pentru a reveni."
+
+msgid "No thanks, I will look at it now"
+msgstr "Nu, mulțumesc, mă uit acum"
+
+msgid "Please agree that we may use your e-mail address for this."
+msgstr "Vă rugăm să fiți de acord să folosim adresa dumneavoastră de e-mail pentru aceasta."
+
+msgid "Too many requests. Please try again later."
+msgstr "Prea multe solicitări. Vă rugăm să încercați mai târziu."
+
+msgid "Thank you! You will receive the link by e-mail shortly."
+msgstr "Mulțumim! Veți primi linkul prin e-mail în curând."
+
+msgid "Leads"
+msgstr "Leads"
+
+msgid "Sent"
+msgstr "Trimis"
+
+msgid "Waiting for retry"
+msgstr "În așteptarea unei noi încercări"
+
+msgid "Failed"
+msgstr "Eșuat"
+
+#, php-format
+msgid "E-mail addresses that visitors left to receive a link from doctor2go.online. Leads are deleted automatically after %d days."
+msgstr "Adrese de e-mail lăsate de vizitatori pentru a primi un link de la doctor2go.online. Leadurile sunt șterse automat după %d zile."
+
+msgid "Deleting a lead here does not delete it at doctor2go.online; for a deletion request, also ask doctor2go.online."
+msgstr "Ștergerea unui lead aici nu îl șterge și la doctor2go.online; pentru o cerere de ștergere, contactați și doctor2go.online."
+
+msgid "The lead has been sent."
+msgstr "Leadul a fost trimis."
+
+msgid "Sending failed again, see the error in the list."
+msgstr "Trimiterea a eșuat din nou, vedeți eroarea din listă."
+
+msgid "Search by e-mail address"
+msgstr "Căutare după adresa de e-mail"
+
+msgid "E-mail address"
+msgstr "Adresă de e-mail"
+
+msgid "Delete all leads of this e-mail address?"
+msgstr "Ștergeți toate leadurile acestei adrese de e-mail?"
+
+msgid "Source"
+msgstr "Sursă"
+
+msgid "Attempts"
+msgstr "Încercări"
+
+msgid "Last error"
+msgstr "Ultima eroare"
+
+msgid "No leads found."
+msgstr "Nu s-au găsit leaduri."
+
+#, php-format
+msgid "next: %s"
+msgstr "următoarea: %s"
+
+msgid "Send again"
+msgstr "Trimiteți din nou"
+
+msgid "Delete this lead?"
+msgstr "Ștergeți acest lead?"
+
+msgid "Delete"
+msgstr "Ștergeți"
+
+#, php-format
+msgid "%d lead deleted."
+msgid_plural "%d leads deleted."
+msgstr[0] "%d lead șters."
+msgstr[1] "%d leaduri șterse."
+msgstr[2] "%d de leaduri șterse."
+
+#, php-format
+msgid "Delete the %d lead of this e-mail address"
+msgid_plural "Delete all %d leads of this e-mail address"
+msgstr[0] "Ștergeți %d lead al acestei adrese de e-mail"
+msgstr[1] "Ștergeți toate cele %d leaduri ale acestei adrese de e-mail"
+msgstr[2] "Ștergeți toate cele %d de leaduri ale acestei adrese de e-mail"
+
+msgid "We only use your e-mail address for this, unless you sign up for the newsletter."
+msgstr "Folosim adresa dumneavoastră de e-mail doar pentru aceasta, cu excepția cazului în care vă abonați la newsletter."

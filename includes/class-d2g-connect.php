@@ -131,6 +131,14 @@ class D2gConnect {
 		require_once D2GC_PLUGIN_DIR . 'includes/class-d2g-connect-doctor-sync.php';
 		D2GC_Doctor_Sync::init();
 
+		// leads for doctor2go.online (e-mail sign-ups that doctor2go.online follows up)
+		require_once D2GC_PLUGIN_DIR . 'includes/class-d2g-connect-leads.php';
+		D2GC_Leads::init();
+		require_once D2GC_PLUGIN_DIR . 'includes/class-d2g-connect-lead-form.php';
+		D2GC_Lead_Form::init();
+		require_once D2GC_PLUGIN_DIR . 'admin/class-d2g-connect-leads-admin.php';
+		D2GC_Leads_Admin::init();
+
 		// REST route doctor2go.online calls to create/update doctors (replaces endpoints/doctor.php)
 		require_once D2GC_PLUGIN_DIR . 'includes/class-d2g-connect-rest.php';
 		D2GC_Rest::init();

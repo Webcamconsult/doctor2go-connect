@@ -786,7 +786,7 @@ msgstr "Wenn Sie das Benutzerkonto und das Profil lokal erstellen, müssen Sie d
 
 #: admin/partials/d2g-connect-admin-display.php:219
 msgid "Give doctor access to wp-admin"
-msgstr "Gib dem Arzt Zugriff auf wp-admin"
+msgstr "Geben Sie dem Arzt Zugriff auf wp-admin"
 
 #: admin/partials/d2g-connect-admin-display.php:220
 msgid "Activate Single Sign On Login for doctors"
@@ -3245,3 +3245,131 @@ msgstr "Beratung starten"
 #: public/templates/single-content/content-single-d2g_doctor-v3.php:71
 msgid "About this doctor"
 msgstr "Über diesen Arzt"
+
+msgid "Please enter a valid e-mail address."
+msgstr "Bitte geben Sie eine gültige E-Mail-Adresse ein."
+
+msgid "For later"
+msgstr "Für später"
+
+msgid "Not ready yet?"
+msgstr "Noch nicht so weit?"
+
+msgid "Save this for later."
+msgstr "Für später speichern."
+
+msgid "We will send you a secure link by e-mail, so you can come back to it later."
+msgstr "Wir senden Ihnen einen sicheren Link per E-Mail, damit Sie später darauf zurückkommen können."
+
+msgid "Send me the link"
+msgstr "Link senden"
+
+msgid "We only use your e-mail address for this. No newsletter."
+msgstr "Wir verwenden Ihre E-Mail-Adresse nur hierfür. Kein Newsletter."
+
+msgid "Something went wrong. Please try again."
+msgstr "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
+
+msgid "Sending…"
+msgstr "Wird gesendet…"
+
+msgid "Your e-mail address"
+msgstr "Ihre E-Mail-Adresse"
+
+msgid "name@example.com"
+msgstr "name@beispiel.de"
+
+msgid "I agree that my e-mail address is used to send me this link."
+msgstr "Ich bin damit einverstanden, dass meine E-Mail-Adresse verwendet wird, um mir diesen Link zu senden."
+
+msgid "Privacy statement"
+msgstr "Datenschutzerklärung"
+
+msgid "Also send me one reminder to come back to it."
+msgstr "Senden Sie mir auch eine Erinnerung, darauf zurückzukommen."
+
+msgid "No thanks, I will look at it now"
+msgstr "Nein danke, ich sehe es mir jetzt an"
+
+msgid "Please agree that we may use your e-mail address for this."
+msgstr "Bitte stimmen Sie zu, dass wir Ihre E-Mail-Adresse hierfür verwenden dürfen."
+
+msgid "Too many requests. Please try again later."
+msgstr "Zu viele Anfragen. Bitte versuchen Sie es später erneut."
+
+msgid "Thank you! You will receive the link by e-mail shortly."
+msgstr "Vielen Dank! Sie erhalten den Link in Kürze per E-Mail."
+
+msgid "Leads"
+msgstr "Leads"
+
+msgid "Sent"
+msgstr "Gesendet"
+
+msgid "Waiting for retry"
+msgstr "Wartet auf erneuten Versuch"
+
+msgid "Failed"
+msgstr "Fehlgeschlagen"
+
+#, php-format
+msgid "E-mail addresses that visitors left to receive a link from doctor2go.online. Leads are deleted automatically after %d days."
+msgstr "E-Mail-Adressen, die Besucher hinterlassen haben, um einen Link von doctor2go.online zu erhalten. Leads werden nach %d Tagen automatisch gelöscht."
+
+msgid "Deleting a lead here does not delete it at doctor2go.online; for a deletion request, also ask doctor2go.online."
+msgstr "Wenn Sie hier einen Lead löschen, wird er bei doctor2go.online nicht gelöscht; bitten Sie bei einer Löschanfrage auch doctor2go.online darum."
+
+msgid "The lead has been sent."
+msgstr "Der Lead wurde gesendet."
+
+msgid "Sending failed again, see the error in the list."
+msgstr "Das Senden ist erneut fehlgeschlagen, siehe Fehler in der Liste."
+
+msgid "Search by e-mail address"
+msgstr "Nach E-Mail-Adresse suchen"
+
+msgid "E-mail address"
+msgstr "E-Mail-Adresse"
+
+msgid "Delete all leads of this e-mail address?"
+msgstr "Alle Leads dieser E-Mail-Adresse löschen?"
+
+msgid "Source"
+msgstr "Quelle"
+
+msgid "Attempts"
+msgstr "Versuche"
+
+msgid "Last error"
+msgstr "Letzter Fehler"
+
+msgid "No leads found."
+msgstr "Keine Leads gefunden."
+
+#, php-format
+msgid "next: %s"
+msgstr "nächster: %s"
+
+msgid "Send again"
+msgstr "Erneut senden"
+
+msgid "Delete this lead?"
+msgstr "Diesen Lead löschen?"
+
+msgid "Delete"
+msgstr "Löschen"
+
+#, php-format
+msgid "%d lead deleted."
+msgid_plural "%d leads deleted."
+msgstr[0] "%d Lead gelöscht."
+msgstr[1] "%d Leads gelöscht."
+
+#, php-format
+msgid "Delete the %d lead of this e-mail address"
+msgid_plural "Delete all %d leads of this e-mail address"
+msgstr[0] "Den %d Lead dieser E-Mail-Adresse löschen"
+msgstr[1] "Alle %d Leads dieser E-Mail-Adresse löschen"
+
+msgid "We only use your e-mail address for this, unless you sign up for the newsletter."
+msgstr "Wir verwenden Ihre E-Mail-Adresse nur hierfür, es sei denn, Sie melden sich für den Newsletter an."

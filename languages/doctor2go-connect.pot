@@ -3493,3 +3493,131 @@ msgstr ""
 #: public/templates/single-content/content-single-d2g_doctor-v3.php:71
 msgid "About this doctor"
 msgstr ""
+
+msgid "Please enter a valid e-mail address."
+msgstr ""
+
+msgid "For later"
+msgstr ""
+
+msgid "Not ready yet?"
+msgstr ""
+
+msgid "Save this for later."
+msgstr ""
+
+msgid "We will send you a secure link by e-mail, so you can come back to it later."
+msgstr ""
+
+msgid "Send me the link"
+msgstr ""
+
+msgid "We only use your e-mail address for this. No newsletter."
+msgstr ""
+
+msgid "Something went wrong. Please try again."
+msgstr ""
+
+msgid "Sending…"
+msgstr ""
+
+msgid "Your e-mail address"
+msgstr ""
+
+msgid "name@example.com"
+msgstr ""
+
+msgid "I agree that my e-mail address is used to send me this link."
+msgstr ""
+
+msgid "Privacy statement"
+msgstr ""
+
+msgid "Also send me one reminder to come back to it."
+msgstr ""
+
+msgid "No thanks, I will look at it now"
+msgstr ""
+
+msgid "Please agree that we may use your e-mail address for this."
+msgstr ""
+
+msgid "Too many requests. Please try again later."
+msgstr ""
+
+msgid "Thank you! You will receive the link by e-mail shortly."
+msgstr ""
+
+msgid "Leads"
+msgstr ""
+
+msgid "Sent"
+msgstr ""
+
+msgid "Waiting for retry"
+msgstr ""
+
+msgid "Failed"
+msgstr ""
+
+#, php-format
+msgid "E-mail addresses that visitors left to receive a link from doctor2go.online. Leads are deleted automatically after %d days."
+msgstr ""
+
+msgid "Deleting a lead here does not delete it at doctor2go.online; for a deletion request, also ask doctor2go.online."
+msgstr ""
+
+msgid "The lead has been sent."
+msgstr ""
+
+msgid "Sending failed again, see the error in the list."
+msgstr ""
+
+msgid "Search by e-mail address"
+msgstr ""
+
+msgid "E-mail address"
+msgstr ""
+
+msgid "Delete all leads of this e-mail address?"
+msgstr ""
+
+msgid "Source"
+msgstr ""
+
+msgid "Attempts"
+msgstr ""
+
+msgid "Last error"
+msgstr ""
+
+msgid "No leads found."
+msgstr ""
+
+#, php-format
+msgid "next: %s"
+msgstr ""
+
+msgid "Send again"
+msgstr ""
+
+msgid "Delete this lead?"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+#, php-format
+msgid "%d lead deleted."
+msgid_plural "%d leads deleted."
+msgstr[0] ""
+msgstr[1] ""
+
+#, php-format
+msgid "Delete the %d lead of this e-mail address"
+msgid_plural "Delete all %d leads of this e-mail address"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "We only use your e-mail address for this, unless you sign up for the newsletter."
+msgstr ""

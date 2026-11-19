@@ -3245,3 +3245,131 @@ msgstr "iniciar una consulta"
 #: public/templates/single-content/content-single-d2g_doctor-v3.php:71
 msgid "About this doctor"
 msgstr "Sobre este médico"
+
+msgid "Please enter a valid e-mail address."
+msgstr "Introduce una dirección de correo electrónico válida."
+
+msgid "For later"
+msgstr "Para más tarde"
+
+msgid "Not ready yet?"
+msgstr "¿Todavía no es el momento?"
+
+msgid "Save this for later."
+msgstr "Guárdalo para más tarde."
+
+msgid "We will send you a secure link by e-mail, so you can come back to it later."
+msgstr "Te enviaremos un enlace seguro por correo electrónico para que puedas volver más tarde."
+
+msgid "Send me the link"
+msgstr "Envíame el enlace"
+
+msgid "We only use your e-mail address for this. No newsletter."
+msgstr "Solo usamos tu correo electrónico para esto. Sin boletín."
+
+msgid "Something went wrong. Please try again."
+msgstr "Algo ha ido mal. Inténtalo de nuevo."
+
+msgid "Sending…"
+msgstr "Enviando…"
+
+msgid "Your e-mail address"
+msgstr "Tu correo electrónico"
+
+msgid "name@example.com"
+msgstr "nombre@ejemplo.com"
+
+msgid "I agree that my e-mail address is used to send me this link."
+msgstr "Acepto que se use mi correo electrónico para enviarme este enlace."
+
+msgid "Privacy statement"
+msgstr "Declaración de privacidad"
+
+msgid "Also send me one reminder to come back to it."
+msgstr "Envíame también un recordatorio para volver."
+
+msgid "No thanks, I will look at it now"
+msgstr "No, gracias, prefiero verlo ahora"
+
+msgid "Please agree that we may use your e-mail address for this."
+msgstr "Acepta que usemos tu correo electrónico para esto."
+
+msgid "Too many requests. Please try again later."
+msgstr "Demasiadas solicitudes. Inténtalo más tarde."
+
+msgid "Thank you! You will receive the link by e-mail shortly."
+msgstr "¡Gracias! Recibirás el enlace por correo electrónico en breve."
+
+msgid "Leads"
+msgstr "Leads"
+
+msgid "Sent"
+msgstr "Enviado"
+
+msgid "Waiting for retry"
+msgstr "Esperando reintento"
+
+msgid "Failed"
+msgstr "Fallido"
+
+#, php-format
+msgid "E-mail addresses that visitors left to receive a link from doctor2go.online. Leads are deleted automatically after %d days."
+msgstr "Direcciones de correo electrónico que los visitantes dejaron para recibir un enlace de doctor2go.online. Los leads se eliminan automáticamente después de %d días."
+
+msgid "Deleting a lead here does not delete it at doctor2go.online; for a deletion request, also ask doctor2go.online."
+msgstr "Eliminar un lead aquí no lo elimina en doctor2go.online; ante una solicitud de eliminación, pídelo también a doctor2go.online."
+
+msgid "The lead has been sent."
+msgstr "El lead se ha enviado."
+
+msgid "Sending failed again, see the error in the list."
+msgstr "El envío ha vuelto a fallar, consulta el error en la lista."
+
+msgid "Search by e-mail address"
+msgstr "Buscar por correo electrónico"
+
+msgid "E-mail address"
+msgstr "Correo electrónico"
+
+msgid "Delete all leads of this e-mail address?"
+msgstr "¿Eliminar todos los leads de este correo electrónico?"
+
+msgid "Source"
+msgstr "Origen"
+
+msgid "Attempts"
+msgstr "Intentos"
+
+msgid "Last error"
+msgstr "Último error"
+
+msgid "No leads found."
+msgstr "No se han encontrado leads."
+
+#, php-format
+msgid "next: %s"
+msgstr "siguiente: %s"
+
+msgid "Send again"
+msgstr "Volver a enviar"
+
+msgid "Delete this lead?"
+msgstr "¿Eliminar este lead?"
+
+msgid "Delete"
+msgstr "Eliminar"
+
+#, php-format
+msgid "%d lead deleted."
+msgid_plural "%d leads deleted."
+msgstr[0] "%d lead eliminado."
+msgstr[1] "%d leads eliminados."
+
+#, php-format
+msgid "Delete the %d lead of this e-mail address"
+msgid_plural "Delete all %d leads of this e-mail address"
+msgstr[0] "Eliminar el %d lead de este correo electrónico"
+msgstr[1] "Eliminar los %d leads de este correo electrónico"
+
+msgid "We only use your e-mail address for this, unless you sign up for the newsletter."
+msgstr "Solo usamos tu correo electrónico para esto, salvo que te suscribas al boletín."

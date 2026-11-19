@@ -3245,3 +3245,131 @@ msgstr "start een consult"
 #: public/templates/single-content/content-single-d2g_doctor-v3.php:71
 msgid "About this doctor"
 msgstr "Over deze arts"
+
+msgid "Please enter a valid e-mail address."
+msgstr "Vul een geldig e-mailadres in."
+
+msgid "For later"
+msgstr "Voor later"
+
+msgid "Not ready yet?"
+msgstr "Nog niet klaar?"
+
+msgid "Save this for later."
+msgstr "Bewaar dit voor later."
+
+msgid "We will send you a secure link by e-mail, so you can come back to it later."
+msgstr "We sturen u een beveiligde link per e-mail, zodat u er later op kunt terugkomen."
+
+msgid "Send me the link"
+msgstr "Stuur mij de link"
+
+msgid "We only use your e-mail address for this. No newsletter."
+msgstr "We gebruiken uw e-mailadres alleen hiervoor. Geen nieuwsbrief."
+
+msgid "Something went wrong. Please try again."
+msgstr "Er ging iets mis. Probeer het opnieuw."
+
+msgid "Sending…"
+msgstr "Bezig met versturen…"
+
+msgid "Your e-mail address"
+msgstr "Uw e-mailadres"
+
+msgid "name@example.com"
+msgstr "naam@voorbeeld.nl"
+
+msgid "I agree that my e-mail address is used to send me this link."
+msgstr "Ik ga ermee akkoord dat mijn e-mailadres wordt gebruikt om mij deze link te sturen."
+
+msgid "Privacy statement"
+msgstr "Privacyverklaring"
+
+msgid "Also send me one reminder to come back to it."
+msgstr "Stuur mij ook één herinnering om er later op terug te komen."
+
+msgid "No thanks, I will look at it now"
+msgstr "Nee bedankt, ik bekijk het liever nu"
+
+msgid "Please agree that we may use your e-mail address for this."
+msgstr "Ga ermee akkoord dat we uw e-mailadres hiervoor mogen gebruiken."
+
+msgid "Too many requests. Please try again later."
+msgstr "Te veel aanvragen. Probeer het later opnieuw."
+
+msgid "Thank you! You will receive the link by e-mail shortly."
+msgstr "Bedankt! U ontvangt de link binnenkort per e-mail."
+
+msgid "Leads"
+msgstr "Leads"
+
+msgid "Sent"
+msgstr "Verstuurd"
+
+msgid "Waiting for retry"
+msgstr "Wacht op nieuwe poging"
+
+msgid "Failed"
+msgstr "Mislukt"
+
+#, php-format
+msgid "E-mail addresses that visitors left to receive a link from doctor2go.online. Leads are deleted automatically after %d days."
+msgstr "E-mailadressen die bezoekers hebben achtergelaten om een link van doctor2go.online te ontvangen. Leads worden na %d dagen automatisch verwijderd."
+
+msgid "Deleting a lead here does not delete it at doctor2go.online; for a deletion request, also ask doctor2go.online."
+msgstr "Een lead hier verwijderen verwijdert hem niet bij doctor2go.online; vraag bij een verwijderverzoek ook doctor2go.online om de lead te verwijderen."
+
+msgid "The lead has been sent."
+msgstr "De lead is verstuurd."
+
+msgid "Sending failed again, see the error in the list."
+msgstr "Versturen is opnieuw mislukt, zie de foutmelding in de lijst."
+
+msgid "Search by e-mail address"
+msgstr "Zoeken op e-mailadres"
+
+msgid "E-mail address"
+msgstr "E-mailadres"
+
+msgid "Delete all leads of this e-mail address?"
+msgstr "Alle leads van dit e-mailadres verwijderen?"
+
+msgid "Source"
+msgstr "Bron"
+
+msgid "Attempts"
+msgstr "Pogingen"
+
+msgid "Last error"
+msgstr "Laatste fout"
+
+msgid "No leads found."
+msgstr "Geen leads gevonden."
+
+#, php-format
+msgid "next: %s"
+msgstr "volgende: %s"
+
+msgid "Send again"
+msgstr "Opnieuw versturen"
+
+msgid "Delete this lead?"
+msgstr "Deze lead verwijderen?"
+
+msgid "Delete"
+msgstr "Verwijderen"
+
+#, php-format
+msgid "%d lead deleted."
+msgid_plural "%d leads deleted."
+msgstr[0] "%d lead verwijderd."
+msgstr[1] "%d leads verwijderd."
+
+#, php-format
+msgid "Delete the %d lead of this e-mail address"
+msgid_plural "Delete all %d leads of this e-mail address"
+msgstr[0] "De %d lead van dit e-mailadres verwijderen"
+msgstr[1] "Alle %d leads van dit e-mailadres verwijderen"
+
+msgid "We only use your e-mail address for this, unless you sign up for the newsletter."
+msgstr "We gebruiken uw e-mailadres alleen hiervoor, tenzij u zich aanmeldt voor de nieuwsbrief."
