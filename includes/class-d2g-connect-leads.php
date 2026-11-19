@@ -86,6 +86,49 @@ class D2GC_Leads {
 	}
 
 	/**
+	 * Lead type for doctor2go.online, which chooses the e-mails by it: ai_result (saved AI check), doctor_link
+	 * (doctor page), otherwise the source_type.
+	 *
+	 * @param string $source_type
+	 * @param string $intent
+	 * @return string
+	 */
+	public static function lead_type( $source_type, $intent ) {
+		$types = array(
+			'quick_ai'       => 'ai_result',
+			'doctor_profile' => 'doctor_link',
+		);
+		$type = $types[ $source_type ] ?? $source_type;
+		/**
+		 * Lead type sent to doctor2go.online (field lead_type).
+		 *
+		 * @param string $type        ai_result, doctor_link or the source_type
+		 * @param string $source_type
+		 * @param string $intent
+		 */
+		return sanitize_key( (string) apply_filters( 'd2gc_lead_type', $type, $source_type, $intent ) );
+	}
+
+	/**
+	 * Name of the field with the link for the e-mail: doctor_link for a doctor page, otherwise ai_result_link.
+	 *
+	 * @param string $source_type
+	 * @param string $intent
+	 * @return string
+	 */
+	public static function link_key( $source_type, $intent ) {
+		$key = 'doctor_profile' === $source_type ? 'doctor_link' : 'ai_result_link';
+		/**
+		 * Name of the link field in the lead sent to doctor2go.online.
+		 *
+		 * @param string $key         doctor_link or ai_result_link
+		 * @param string $source_type
+		 * @param string $intent
+		 */
+		return sanitize_key( (string) apply_filters( 'd2gc_lead_link_key', $key, $source_type, $intent ) );
+	}
+
+	/**
 	 * Stores a lead and sends it to doctor2go.online.
 	 *
 	 * @param array $args {
@@ -93,7 +136,8 @@ class D2GC_Leads {
 	 *     @type string $source_type    required, e.g. quick_ai, skin_condition, doctor_profile
 	 *     @type string $intent         required, e.g. save_result, send_article, request_contact
 	 *     @type string $source_id      reference of the source, e.g. a check reference or page ID (never a secret token)
-	 *     @type string $ai_result_link the link in the e-mail
+	 *     @type string $ai_result_link the link in the e-mail; sent to doctor2go.online as ai_result_link, or as
+	 *                                  doctor_link for doctor pages (source_type doctor_profile), see link_key()
 	 *     @type int    $doctor_post_id doctor post (optional); its WCC user ID is sent as doctor_id
 	 *     @type string $language       language of the e-mail (default: the site language)
 	 *     @type bool   $reminder       the visitor wants a reminder
@@ -126,7 +170,8 @@ class D2GC_Leads {
 			'source_type' => $source_type,
 			'source_id'   => sanitize_text_field( (string) ( $args['source_id'] ?? '' ) ),
 			'intent'      => $intent,
-			'ai_result_link' => esc_url_raw( (string) ( $args['ai_result_link'] ?? '' ) ),
+			'lead_type'   => self::lead_type( $source_type, $intent ),
+			self::link_key( $source_type, $intent ) => esc_url_raw( (string) ( $args['ai_result_link'] ?? '' ) ),
 			'doctor_id'   => $doctor_post_id ? (string) get_post_meta( $doctor_post_id, 'wcc_user_id', true ) : '',
 			'language'    => '' !== $language ? $language : explode( '_', get_locale() )[0],
 			'reminder'    => ! empty( $args['reminder'] ),
@@ -197,7 +242,7 @@ class D2GC_Leads {
 			return false;
 		}
 
-		$url  = esc_url( (string) ( $payload['ai_result_link'] ?? '' ) );
+		$url  = esc_url( (string) ( $payload[ self::link_key( $payload['source_type'] ?? '', $payload['intent'] ?? '' ) ] ?? '' ) );
 		$link = '' !== $url ? '<a href="' . $url . '">' . $url . '</a>' : '';
 		$site = (string) ( get_option( 'd2gc_sender_name' ) ?: get_bloginfo( 'name' ) );
 		$map  = array(
