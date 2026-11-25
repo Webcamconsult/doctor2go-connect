@@ -33,5 +33,6 @@ class D2gConnect_Deactivator {
 		unregister_post_type( 'd2g_doctor' );
 		wp_clear_scheduled_hook( 'd2g_sync_doctors' );
 		wp_clear_scheduled_hook( 'd2gc_retry_leads' );
+		wp_clear_scheduled_hook( 'd2gc_delete_expired_client_refs' );
 	}
 }

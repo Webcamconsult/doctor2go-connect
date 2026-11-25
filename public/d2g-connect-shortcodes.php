@@ -1961,6 +1961,8 @@ class D2gConnect_Shortcodes {
 		} elseif ( 1 === $logout_flag ) {
 			echo '<p class="mt-3 login_form_wrapper alert alert-success alert-dismissible fade show center" role="alert">' . esc_html__( 'You have logged out from this website.', 'doctor2go-connect' ) . '</p>';
 		}
+		// after the confirmation link in the registration mail
+		echo D2GC_Email_Verification::messages_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in the method
 
 		// Determine the default redirect URL after login.
 		$locale_parts    = explode( '_', get_locale() );
@@ -2318,18 +2320,17 @@ class D2gConnect_Shortcodes {
 
 					if ( ! is_wp_error( $user_id ) ) {
 
-						$meta = isset( $_POST['meta'] ) ? wp_unslash( $_POST['meta'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-						if ( is_array( $meta ) ) {
-							foreach ( $meta as $key => $value ) {
-								update_user_meta( $user_id, sanitize_key( $key ), sanitize_text_field( $value ) );
-							}
-						}
+						$this->save_patient_meta( $user_id );
+
+						// unverified until the link in the registration mail is clicked (see D2GC_Email_Verification)
+						$verify_link = D2GC_Email_Verification::start( $user_id );
 
 						d2gc_user_email(
 							'registration',
 							$email,
 							( isset( $_POST['meta']['first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['meta']['first_name'] ) ) : '' ) . ' ' . ( isset( $_POST['meta']['last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['meta']['last_name'] ) ) : '' ),
-							get_option( 'd2gc_sender_address' )
+							get_option( 'd2gc_sender_address' ),
+							$verify_link
 						);
 
 						$currLang = explode( '_', get_locale() )[0];
@@ -2411,8 +2412,8 @@ class D2gConnect_Shortcodes {
 				</div>
 
 				<div class="mb-3">
-					<label class="form-label" for="p_bday"><?php echo esc_html__( 'Date of Birth', 'doctor2go-connect' ); ?></label>
-					<input class="form-control" type="date" name="p_bday" id="p_bday">
+					<label class="form-label" for="p_bday"><?php echo esc_html__( 'Date of Birth: month/year  ', 'doctor2go-connect' ); ?></label>
+					<input class="form-control" type="month" name="meta[p_bday]" id="p_bday" placeholder="<?php echo esc_attr__( 'Select your date of birth', 'doctor2go-connect' ); ?>">
 				</div>
 
 				<div class="mb-3">
@@ -2528,6 +2529,7 @@ class D2gConnect_Shortcodes {
 		$currUser  = wp_get_current_user();
 		$user_meta = get_user_meta( $currUser->data->ID );
 		$tokensAssArray  = unserialize( $user_meta['tokens'][0] );
+        
 		$tokensSimpleArr = array();
 		foreach ( $tokensAssArray as $token ) {
 			$tokensSimpleArr[] = $token;
@@ -2546,6 +2548,11 @@ class D2gConnect_Shortcodes {
             </div>
             <?php
         endif;
+        // e-mail verification: messages after the link / "send again", and the notice while unverified
+        echo D2GC_Email_Verification::messages_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in the method
+        if ( ! D2GC_Email_Verification::is_verified( $currUser->ID ) ) {
+            echo D2GC_Email_Verification::notice_html( __( 'Please confirm your e-mail address. We have sent you an e-mail with a confirmation link. Until then your appointments and medical records are not shown.', 'doctor2go-connect' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in the method
+        }
         ?>
 		<div class="alignwide p_dashboard mt-5">
 			<div class="row">
@@ -2621,13 +2628,18 @@ class D2gConnect_Shortcodes {
 	//
 	// shortcode patient appointments
 	public function d2gc_patient_appointments() {
+		// data from doctor2go.online only for a confirmed e-mail address
+		if ( is_user_logged_in() && ! D2GC_Email_Verification::is_verified( get_current_user_id() ) ) {
+			return D2GC_Email_Verification::messages_html() . D2GC_Email_Verification::notice_html();
+		}
 		// initialize class to get dynamic links
 		$d2gAdmin = new D2G_doc_user_profile();
 		$currLang = explode( '_', get_locale() )[0];
 		// get client info from WP DB
 		$currUser        = wp_get_current_user();
 		$user_meta       = get_user_meta( $currUser->data->ID );
-		$timezone        = $user_meta['p_timezone'][0] ?: d2gc_get_user_timezone();
+		// same fallback as the confirmation page: an empty time zone would crash the date display
+		$timezone        = ( $user_meta['p_timezone'][0] ?? '' ) ?: ( d2gc_get_user_timezone() ?: 'Europe/Amsterdam' );
 		$tokensCheck     = $user_meta['tokens'][0];
 		$tokensAssArray  = unserialize( $user_meta['tokens'][0] );
 		$tokensSimpleArr = array();
@@ -2637,6 +2649,17 @@ class D2gConnect_Shortcodes {
 
 		// get clinet appointments from WCC
 		$appointments           = json_decode( $this->get_patient_appointments_simple( $tokensSimpleArr ) );
+		// WCC also creates an appointment for an email advice (is_written_consult): not a consultation to join or cancel
+		if ( is_array( $appointments ) ) {
+			$appointments = array_values(
+				array_filter(
+					$appointments,
+					function ( $appointment ) {
+						return empty( $appointment->is_written_consult );
+					}
+				)
+			);
+		}
         //nice_dump($tokensAssArray);
 		$structuredAppointments = array();
 
@@ -2702,19 +2725,33 @@ class D2gConnect_Shortcodes {
 		// initialize class to get dynamic links
 		$d2gAdmin = new D2G_doc_user_profile();
 		$currLang = explode( '_', get_locale() )[0];
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-		$client_token      = isset( $_GET['client_token'] ) ? sanitize_text_field( wp_unslash( $_GET['client_token'] ) ) : '';
+		// two ways in: the reference from the confirmation box after a booking (the token stays on the server),
+		// or the link in the WCC booking mail with the client_token (only the owner of the e-mail address has it)
+		$client_ref = '';
+		$ref_row    = D2GC_Client_Refs::request_has_ref() ? D2GC_Client_Refs::find_from_request() : null;
+		if ( $ref_row ) {
+			$client_ref   = $ref_row['ref'];
+			$client_token = $ref_row['token'];
+			$app_id       = (string) $ref_row['appointment_id'];
+		} else {
+			// phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only query params, the token is the access check
+			$client_token = isset( $_GET['client_token'] ) ? sanitize_text_field( wp_unslash( $_GET['client_token'] ) ) : '';
+			$app_id       = isset( $_GET['app'] ) ? sanitize_text_field( wp_unslash( $_GET['app'] ) ) : '';
+			// phpcs:enable
+		}
 		$tokensSimpleArr[] = $client_token;
 		$timezone          = d2gc_get_user_timezone() ?: 'Europe/Amsterdam';
 
 		// get clinet appointments from WCC
-		$appointments           = json_decode( $this->get_patient_appointments_simple( $tokensSimpleArr ) );
+		$appointments           = $client_token ? json_decode( $this->get_patient_appointments_simple( $tokensSimpleArr ) ) : null;
 		$structuredAppointments = array();
 
 		ob_start();
 		?>
-		
-		<?php if ( !$client_token ) { ?>
+
+		<?php if ( ! $client_token && D2GC_Client_Refs::request_has_ref() ) { ?>
+			<p class="alert alert-info mb-5 mt-5"><?php echo esc_html__( 'This link is no longer valid. Please use the link in your booking confirmation e-mail, or log in to see your appointments.', 'doctor2go-connect' ); ?></p>
+		<?php } elseif ( ! $client_token ) { ?>
 			<p class="alert alert-danger mb-5 mt-5"><?php echo esc_html__( 'Something went wrong, as it seems you do nbot have a valid client, therefor we can not show you your appointment. Please contact the website administrator.', 'doctor2go-connect' ); ?></p>
 		<?php } else { ?>
 			
@@ -2735,12 +2772,10 @@ class D2gConnect_Shortcodes {
 							<?php foreach ( $appointments as $appointment ) {
 								$docObj                     = $this->d2gc_get_doctor_by_wcc_id( $appointment->user_id )[0];
 								$doc_email                  = get_post_meta( $docObj->ID, 'd2g_main_email', true );
-								$d2gc_single_appointment    = d2gc_single_appointment($appointment, $docObj, $client_token, $timezone, $currLang, $d2gAdmin, false, $doc_email);
+								// with a reference the buttons carry the reference, never the token
+								$d2gc_single_appointment    = d2gc_single_appointment($appointment, $docObj, $client_ref ? '' : $client_token, $timezone, $currLang, $d2gAdmin, false, $doc_email, $client_ref);
 								$structuredAppointments     += $d2gc_single_appointment;
 
-
-								$app_id = isset( $_GET['app'] ) ? sanitize_text_field( wp_unslash( $_GET['app'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query param, no state change.
-								
 								if ( $appointment->_id == $app_id ) { ?>									
 									<?php echo wp_kses_post( $structuredAppointments[ $appointment->date ] ); ?>
 								<?php } ?>
@@ -2757,6 +2792,34 @@ class D2gConnect_Shortcodes {
 		$sc = ob_get_contents();
 		ob_end_clean();
 		return $sc;
+	}
+
+	/**
+	 * Saves the posted meta[...] fields of the registration and account settings forms, only the allowed ones: the
+	 * forms must not be able to set other user meta (WCC tokens, the e-mail verification, roles).
+	 *
+	 * @param int $user_id
+	 */
+	private function save_patient_meta( $user_id ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- nonce checked by the calling form, values sanitized below
+		$meta = isset( $_POST['meta'] ) && is_array( $_POST['meta'] ) ? wp_unslash( $_POST['meta'] ) : array();
+		/**
+		 * User meta keys the patient forms (registration, account settings) may save.
+		 *
+		 * @param string[] $fields
+		 */
+		$allowed = (array) apply_filters( 'd2gc_patient_meta_fields', array( 'first_name', 'last_name', 'p_tel', 'p_gender', 'p_timezone', 'p_bday', 'conf_terms' ) );
+		foreach ( $meta as $key => $value ) {
+			$key = sanitize_key( $key );
+			if ( in_array( $key, $allowed, true ) && is_scalar( $value ) ) {
+				$value = sanitize_text_field( $value );
+				// birthday as year-month (YYYY-MM), the format of the month fields in the booking forms
+				if ( 'p_bday' === $key ) {
+					$value = preg_match( '/^\d{4}-\d{2}/', $value ) ? substr( $value, 0, 7 ) : '';
+				}
+				update_user_meta( $user_id, $key, $value );
+			}
+		}
 	}
 
 	//
@@ -2793,17 +2856,8 @@ class D2gConnect_Shortcodes {
 				}
 			}
 
-			if ( empty( $errors ) && isset( $_POST['meta'] ) && is_array( $_POST['meta'] ) ) {
-				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-				$meta = wp_unslash( $_POST['meta'] );
-
-				foreach ( $meta as $key => $value ) {
-					update_user_meta(
-						$user_id,
-						sanitize_key( $key ),
-						sanitize_text_field( $value )
-					);
-				}
+			if ( empty( $errors ) ) {
+				$this->save_patient_meta( $user_id );
 			}
 
 			if ( empty( $errors ) && ! empty( $password ) ) {
@@ -2856,8 +2910,9 @@ class D2gConnect_Shortcodes {
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label" for="p_bday"><?php echo esc_html__( 'Date of Birth', 'doctor2go-connect' ); ?></label>
-                        <input class="form-control" type="date" name="meta[p_bday]" id="p_bday" value="<?php echo isset( $user_meta['p_bday'][0] ) ? esc_attr( $user_meta['p_bday'][0] ) : ''; ?>">
+                        <label class="form-label" for="p_bday"><?php echo esc_html__( 'Date of Birth: month/year  ', 'doctor2go-connect' ); ?></label>
+                        <?php // month/year like the booking forms; older accounts may still have a full date stored ?>
+                        <input class="form-control" type="month" name="meta[p_bday]" id="p_bday" value="<?php echo isset( $user_meta['p_bday'][0] ) ? esc_attr( substr( $user_meta['p_bday'][0], 0, 7 ) ) : ''; ?>" placeholder="<?php echo esc_attr__( 'Select your date of birth', 'doctor2go-connect' ); ?>">
                     </div>
 
                     <div class="mb-3">
@@ -2981,6 +3036,10 @@ class D2gConnect_Shortcodes {
 
 
 	public function d2gc_patient_portal() {
+		// data from doctor2go.online only for a confirmed e-mail address
+		if ( is_user_logged_in() && ! D2GC_Email_Verification::is_verified( get_current_user_id() ) ) {
+			return D2GC_Email_Verification::messages_html() . D2GC_Email_Verification::notice_html();
+		}
 		// initialize class to get dynamic links
 		$d2gAdmin = new D2G_doc_user_profile();
 		$currLang = explode( '_', get_locale() )[0];
@@ -2989,7 +3048,6 @@ class D2gConnect_Shortcodes {
 		$user_meta      = get_user_meta( $currUser->data->ID );
 		$tokensCheck    = $user_meta['tokens'][0];
 		$tokensAssArray = unserialize( $user_meta['tokens'][0] );
-
 		foreach ( $tokensAssArray as $org => $token ) {
 			$orgsArray[] = $org;
 		}

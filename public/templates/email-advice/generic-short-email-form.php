@@ -85,7 +85,7 @@ if (is_user_logged_in()) {
                         <div class="col-sm-4">
                             <div>
                                 <label class="form-label" for="option_bday"><?php echo esc_html__( 'Date of Birth: month/year  ', 'doctor2go-connect' ); ?></label>
-                                <input class="form-control" max="2012-12-31" type="month" name="option_bday" id="option_bday" value="<?php echo esc_html( $userMeta['p_bday'][0] ); ?>" placeholder="<?php echo esc_attr__( 'Select your date of birth', 'doctor2go-connect' ); ?>">
+                                <input class="form-control" type="month" name="option_bday" id="option_bday" value="<?php echo esc_html( $userMeta['p_bday'][0] ); ?>" placeholder="<?php echo esc_attr__( 'Select your date of birth', 'doctor2go-connect' ); ?>">
                                 
                             </div>
                         </div>
@@ -124,8 +124,7 @@ if (is_user_logged_in()) {
                     <p class="mb-3 border-top border-bottom py-3 d-flex h4 align-items-center justify-content-between">
                         <span class="me-3"><strong><?php echo esc_html__('E-mail advice', 'doctor2go-connect'); ?></strong></span>
                         <span class="price_wrapper">
-                            <strong><?php echo esc_html($d2g_profile_data->doctor_meta['written_con_currency'][0] . ' ' . $d2g_profile_data->doctor_meta['written_con_price'][0]); ?></strong><br>
-                            <small class="text-muted"><?php echo esc_html__('(excl. VAT)', 'doctor2go-connect'); ?></small>
+                            <strong><?php echo esc_html($d2g_profile_data->doctor_meta['written_con_currency'][0] . ' ' . $d2g_profile_data->doctor_meta['written_con_price'][0]); ?></strong>
                         </span>
                     </p>
                     <?php if (get_option('d2gc_recaptcha_site_key')) { ?>

@@ -209,7 +209,7 @@ class D2gConnect_Public {
 		}
 
 		//booking via calendar
-		wp_enqueue_script( $this->plugin_name . '-booking', plugin_dir_url( __FILE__ ) . 'js/doctor2go-booking.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( $this->plugin_name . '-booking', plugin_dir_url( __FILE__ ) . 'js/doctor2go-booking.js', array( 'jquery' ), $this->version . '.' . filemtime( plugin_dir_path( __FILE__ ) . 'js/doctor2go-booking.js' ), true );
 
 		$site_key     = get_option( 'd2gc_recaptcha_site_key' );
 		$d2gAdmin     = new D2G_doc_user_profile();
@@ -273,7 +273,7 @@ class D2gConnect_Public {
 		// custom js needs to come last
         ////////////////////////////////////
 		$current_user = wp_get_current_user();
-		wp_enqueue_script( 'd2g-public', plugin_dir_url( __FILE__ ) . 'js/d2g-public.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'd2g-public', plugin_dir_url( __FILE__ ) . 'js/d2g-public.js', array( 'jquery' ), $this->version . '.' . filemtime( plugin_dir_path( __FILE__ ) . 'js/d2g-public.js' ), true );
 		wp_localize_script(
 			'd2g-public',
 			'd2gPublicData',

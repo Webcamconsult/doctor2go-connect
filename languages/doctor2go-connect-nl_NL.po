@@ -3373,3 +3373,268 @@ msgstr[1] "Alle %d leads van dit e-mailadres verwijderen"
 
 msgid "We only use your e-mail address for this, unless you sign up for the newsletter."
 msgstr "We gebruiken uw e-mailadres alleen hiervoor, tenzij u zich aanmeldt voor de nieuwsbrief."
+
+# client references, e-mail verification, privacy (2026-11-25)
+msgid "Client references"
+msgstr "Klantreferenties"
+
+msgid "Client reference log"
+msgstr "Logboek klantreferenties"
+
+msgid "Email advice"
+msgstr "E-mailadvies"
+
+msgid "Walk-in"
+msgstr "Inloopspreekuur"
+
+msgid "Guest"
+msgstr "Gast"
+
+msgid "Logged in"
+msgstr "Ingelogd"
+
+msgid "Logged in, other e-mail"
+msgstr "Ingelogd, ander e-mailadres"
+
+msgid "Booked"
+msgstr "Geboekt"
+
+msgid "Linked to account"
+msgstr "Gekoppeld aan account"
+
+msgid "Expired without account"
+msgstr "Verlopen zonder account"
+
+msgid "Deleted with account"
+msgstr "Verwijderd met account"
+
+msgid "Deleted by admin"
+msgstr "Verwijderd door beheerder"
+
+msgid "Deleted on request"
+msgstr "Verwijderd op verzoek"
+
+msgid "Bookings whose doctor2go.online client is kept here: guest bookings waiting until the owner of the e-mail address has a confirmed account (deleted automatically after %d days), and confirmation links that are still active. The access tokens are stored encrypted and are never shown."
+msgstr "Boekingen waarvan de doctor2go.online-klant hier wordt bewaard: gastboekingen die wachten tot de eigenaar van het e-mailadres een bevestigd account heeft (na %d dagen automatisch verwijderd), en bevestigingslinks die nog actief zijn. De toegangstokens worden versleuteld opgeslagen en nooit getoond."
+
+msgid "To delete everything about a person (deletion request), use Tools → Erase Personal Data."
+msgstr "Om alles over een persoon te verwijderen (verwijderverzoek), gebruikt u Extra → Persoonlijke gegevens wissen."
+
+msgid "Waiting for linking"
+msgstr "Wacht op koppeling"
+
+msgid "Appointment link active"
+msgstr "Afsprakenlink actief"
+
+msgid "Log"
+msgstr "Logboek"
+
+msgid "Delete all entries of this e-mail address?"
+msgstr "Alle items van dit e-mailadres verwijderen?"
+
+msgid "Booked on"
+msgstr "Geboekt op"
+
+msgid "Booking"
+msgstr "Boeking"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Booked by"
+msgstr "Geboekt door"
+
+msgid "Deleted on"
+msgstr "Verwijderd op"
+
+msgid "No entries found."
+msgstr "Geen items gevonden."
+
+msgid "Already in the account"
+msgstr "Al in het account"
+
+msgid "kept only for the appointment link in the confirmation box, deleted on %s"
+msgstr "alleen bewaard voor de afsprakenlink in het bevestigingsvenster, verwijderd op %s"
+
+msgid "appointment link in the confirmation box active until %s"
+msgstr "afsprakenlink in het bevestigingsvenster actief tot %s"
+
+msgid "Delete this entry? A guest can then no longer link this booking to an account."
+msgstr "Dit item verwijderen? Een gast kan deze boeking dan niet meer aan een account koppelen."
+
+msgid "Confirmed registration"
+msgstr "Bevestigde registratie"
+
+msgid "What happened with the bookings, without personal data (no e-mail address, name or account). Entries are deleted automatically after %d days."
+msgstr "Wat er met de boekingen is gebeurd, zonder persoonsgegevens (geen e-mailadres, naam of account). Items worden na %d dagen automatisch verwijderd."
+
+msgid "This month"
+msgstr "Deze maand"
+
+msgid "Last 12 months"
+msgstr "Laatste 12 maanden"
+
+msgid "Guests who later created an account:"
+msgstr "Gasten die later een account aanmaakten:"
+
+msgid "%1$d of %2$d guest bookings in the last 12 months (%3$s%%)"
+msgstr "%1$d van %2$d gastboekingen in de laatste 12 maanden (%3$s%%)"
+
+msgid "On average linked %s days after booking."
+msgstr "Gemiddeld %s dagen na de boeking gekoppeld."
+
+msgid "Guest bookings waiting for linking now: %d"
+msgstr "Gastboekingen die nu op koppeling wachten: %d"
+
+msgid "All events"
+msgstr "Alle gebeurtenissen"
+
+msgid "All types"
+msgstr "Alle types"
+
+msgid "All months"
+msgstr "Alle maanden"
+
+msgid "Booking, e.g. B-7F3K9Q"
+msgstr "Boeking, bijv. B-7F3K9Q"
+
+msgid "Filter"
+msgstr "Filteren"
+
+msgid "Show all"
+msgstr "Alles tonen"
+
+msgid "Event"
+msgstr "Gebeurtenis"
+
+msgid "User type"
+msgstr "Type gebruiker"
+
+msgid "Days until linked"
+msgstr "Dagen tot koppeling"
+
+msgid "E-mail confirmation"
+msgstr "Bevestiging e-mailadres"
+
+msgid "Not confirmed yet: this person has not clicked the link in the registration mail. Until then appointments and medical records are not shown and guest bookings are not linked."
+msgstr "Nog niet bevestigd: deze persoon heeft nog niet op de link in de registratiemail geklikt. Tot dan worden afspraken en medische dossiers niet getoond en gastboekingen niet gekoppeld."
+
+msgid "Guest bookings before the account"
+msgstr "Gastboekingen vóór het account"
+
+msgid "Bookings this person made as a guest, with the same e-mail address, that were linked to this account."
+msgstr "Boekingen die deze persoon als gast deed, met hetzelfde e-mailadres, en die aan dit account zijn gekoppeld."
+
+msgid "Linked on"
+msgstr "Gekoppeld op"
+
+msgid "Linked by"
+msgstr "Gekoppeld via"
+
+msgid "E-mail confirmed"
+msgstr "E-mail bevestigd"
+
+msgid "Guest before"
+msgstr "Eerder gast"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nee"
+
+msgid "Hello %s,"
+msgstr "Beste %s,"
+
+msgid "Please confirm your e-mail address with the link below. After that you can see your appointments and medical records in your account."
+msgstr "Bevestig uw e-mailadres via de onderstaande link. Daarna ziet u uw afspraken en medische dossiers in uw account."
+
+msgid "Confirm my e-mail address"
+msgstr "Mijn e-mailadres bevestigen"
+
+msgid "The link works once and for %d days."
+msgstr "De link werkt één keer en %d dagen lang."
+
+msgid "Please confirm your e-mail address"
+msgstr "Bevestig uw e-mailadres"
+
+msgid "Please confirm your e-mail address first. We have sent you an e-mail with a confirmation link. After that you will see your appointments and medical records here."
+msgstr "Bevestig eerst uw e-mailadres. We hebben u een e-mail met een bevestigingslink gestuurd. Daarna ziet u hier uw afspraken en medische dossiers."
+
+msgid "Send the confirmation e-mail again"
+msgstr "Bevestigingsmail opnieuw versturen"
+
+msgid "Thank you, your e-mail address is confirmed."
+msgstr "Bedankt, uw e-mailadres is bevestigd."
+
+msgid "This confirmation link is no longer valid. Please log in and request a new one."
+msgstr "Deze bevestigingslink is niet meer geldig. Log in en vraag een nieuwe aan."
+
+msgid "We have sent you a new confirmation e-mail."
+msgstr "We hebben u een nieuwe bevestigingsmail gestuurd."
+
+msgid "The confirmation e-mail could not be sent. Please try again later."
+msgstr "De bevestigingsmail kon niet worden verstuurd. Probeer het later opnieuw."
+
+msgid "Doctor2Go bookings"
+msgstr "Doctor2Go-boekingen"
+
+msgid "Doctor2Go leads"
+msgstr "Doctor2Go-leads"
+
+msgid "Doctor2Go patient account"
+msgstr "Doctor2Go-patiëntaccount"
+
+msgid "Bookings kept by Doctor2Go"
+msgstr "Door Doctor2Go bewaarde boekingen"
+
+msgid "E-mail sign-ups (leads)"
+msgstr "E-mailaanmeldingen (leads)"
+
+msgid "Leads already sent to doctor2go.online are not deleted there; ask doctor2go.online for that."
+msgstr "Leads die al naar doctor2go.online zijn verstuurd, worden daar niet verwijderd; vraag dat aan doctor2go.online."
+
+msgid "E-mail address confirmed"
+msgstr "E-mailadres bevestigd"
+
+msgid "Connected doctor organisations"
+msgstr "Gekoppelde artsenorganisaties"
+
+msgid "Guest booking before the account"
+msgstr "Gastboeking vóór het account"
+
+msgid "The account was kept because it is not a patient account (role: %s). Delete it under Users if needed."
+msgstr "Het account is behouden omdat het geen patiëntaccount is (rol: %s). Verwijder het zo nodig onder Gebruikers."
+
+msgid "The patient account has been deleted."
+msgstr "Het patiëntaccount is verwijderd."
+
+msgid "The patient account could not be deleted."
+msgstr "Het patiëntaccount kon niet worden verwijderd."
+
+msgid "Please confirm your e-mail address. We have sent you an e-mail with a confirmation link. Until then your appointments and medical records are not shown."
+msgstr "Bevestig uw e-mailadres. We hebben u een e-mail met een bevestigingslink gestuurd. Tot dan worden uw afspraken en medische dossiers niet getoond."
+
+msgid "This link is no longer valid. Please use the link in your booking confirmation e-mail, or log in to see your appointments."
+msgstr "Deze link is niet meer geldig. Gebruik de link in uw bevestigingsmail van de boeking, of log in om uw afspraken te zien."
+
+msgid "Please confirm your e-mail address:"
+msgstr "Bevestig uw e-mailadres:"
+
+msgid "%d entry deleted."
+msgid_plural "%d entries deleted."
+msgstr[0] "%d item verwijderd."
+msgstr[1] "%d items verwijderd."
+
+msgid "Delete the %d entry of this e-mail address"
+msgid_plural "Delete all %d entries of this e-mail address"
+msgstr[0] "Het %d item van dit e-mailadres verwijderen"
+msgstr[1] "Alle %d items van dit e-mailadres verwijderen"
+
+msgid "%1$d booking, since %2$s"
+msgid_plural "%1$d bookings, since %2$s"
+msgstr[0] "%1$d boeking, sinds %2$s"
+msgstr[1] "%1$d boekingen, sinds %2$s"
+
+msgid "Event Log"
+msgstr "Gebeurtenissenlog"

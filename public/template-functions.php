@@ -1010,8 +1010,7 @@ function d2gc_show_booking_calendar( $post = '', $only_cal = false, $in_tabs = f
                             <div class="col-12">
                                 <label class="form-label fw-bold"><span class="icon d2cif-card-payment"></span> <?php echo esc_html__( 'Costs', 'doctor2go-connect' ); ?></label>
                                 <div class="form-control-plaintext  d-flex align-items-center">
-                                    <span id="pay_price"></span> <span id="pay_cur"></span> / <?php echo esc_html__( 'consultation', 'doctor2go-connect' ); ?><br>
-                                    <small class="text-muted"><?php echo esc_html__( 'Prices are excl. VAT', 'doctor2go-connect' ); ?></small>
+                                    <span id="pay_price"></span> <span id="pay_cur"></span> / <?php echo esc_html__( 'consultation', 'doctor2go-connect' ); ?>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -1111,8 +1110,7 @@ function d2gc_show_booking_calendar( $post = '', $only_cal = false, $in_tabs = f
                         <p class="mb-3 border-top border-bottom py-3 d-flex h4 align-items-center justify-content-between">
                             <span class="me-3"><strong><?php echo esc_html__( 'Video consult', 'doctor2go-connect' ); ?></strong></span>
                             <span class="price_wrapper">
-                                <span id="pay_cur2"></span> <span id="pay_price2"></span> <br>
-                                <small class="text-muted"><?php echo esc_html__( '(excl. VAT)', 'doctor2go-connect' ); ?></small>
+                                <span id="pay_cur2"></span> <span id="pay_price2"></span>
                             </span>
                         </p>
                         <p class="text-muted mt-3"><?php echo esc_html__( '* These are mandatory fields', 'doctor2go-connect' ); ?></p>
@@ -1324,7 +1322,7 @@ function d2gc_show_walkin_form( $context = '' ) {
                     <div class="col-sm-4">
                         <div>
                             <label class="form-label" for="optie_geboortedatum"><?php echo esc_html__( 'Date of Birth: day/month/year  ', 'doctor2go-connect' ); ?> *</label>
-                            <input class="required_walk form-control" type="date"  name="optie_geboortedatum" id="optie_geboortedatum"  value="<?php echo esc_html( $userMeta['p_bday'][0] ); ?>">
+                            <input class="required_walk form-control" type="date"  name="optie_geboortedatum" id="optie_geboortedatum"  value="<?php echo esc_html( preg_match( '/^\d{4}-\d{2}-\d{2}$/', (string) ( $userMeta['p_bday'][0] ?? '' ) ) ? $userMeta['p_bday'][0] : '' ); // a full date only: accounts store month/year ?>">
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -1384,8 +1382,7 @@ function d2gc_show_walkin_form( $context = '' ) {
                 <p class="mb-3 border-top border-bottom py-3 d-flex h4 align-items-center justify-content-between">
                     <span class="me-3"><strong><?php echo esc_html__( 'Walk-in consult', 'doctor2go-connect' ); ?></strong></span>
                     <span class="price_wrapper">
-                        <strong><?php echo esc_html( $d2g_profile_data->doctor_meta['walk_in_currency'][0] . ' ' . $d2g_profile_data->doctor_meta['walk_in_price'][0] ); ?></strong><br>
-                        <small class="text-muted"><?php echo esc_html__( '(excl. VAT)', 'doctor2go-connect' ); ?></small>
+                        <strong><?php echo esc_html( $d2g_profile_data->doctor_meta['walk_in_currency'][0] . ' ' . $d2g_profile_data->doctor_meta['walk_in_price'][0] ); ?></strong>                    
                     </span>
                 </p>
 
@@ -1656,7 +1653,17 @@ function d2gc_show_consult_buttons( $template = '', $size = '' ) {
 }
 
 
-function d2gc_single_appointment($appointment, $docObj, $client_token, $timezone, $currLang, $d2gAdmin, $show_intake, $doc_email = ''){
+/**
+ * @param string $client_ref reference from the confirmation box after a booking: the buttons and the payment return link
+ *                           then carry the reference instead of the token (the token stays on the server)
+ */
+function d2gc_single_appointment($appointment, $docObj, $client_token, $timezone, $currLang, $d2gAdmin, $show_intake, $doc_email = '', $client_ref = ''){
+	// how the buttons prove whose appointment it is (see D2G_booking_wcc_user::d2gc_get_request_client_tokens())
+	$credentialAttr = '' !== $client_ref
+		? ' data-client-ref="' . esc_attr( $client_ref ) . '"'
+		: ' data-client-token="' . esc_attr( $client_token ) . '"';
+	$credentialArg  = '' !== $client_ref ? '&ref=' . rawurlencode( $client_ref ) : '&client_token=' . $client_token;
+
 	// doctor image
 	if(get_option('d2gc_use_imgix') == 1){
 		$feat_pic = wp_get_attachment_image_src( get_post_thumbnail_id( $docObj->ID ), 'full' )[0].'&w=200&h=200&fit=crop&crop=faces';
@@ -1697,10 +1704,10 @@ function d2gc_single_appointment($appointment, $docObj, $client_token, $timezone
 	$termsPageURL 		= $d2gAdmin::d2gc_page_url( $currLang, 'd2g_policies', false );
 	$termsLink			= '<a href=\"'.$termsPageURL.'\">'. esc_html__( 'View terms & conditions.', 'doctor2go-connect' ) . '</a>';
 	$consultLink 		= '<a class="button btn-primary btn invert mb-2 w-100" target="_blank" href="' . get_option( 'd2gc_waiting_room_url' ) . 'wachtkamer/' . $appointment->token . '?locale=' . explode( '_', get_locale() )[0] . '">' . esc_html__( 'go to consultation', 'doctor2go-connect' ) . '</a>';
-	$contactBtn      	= '<a class="prep_cancellation_email contact_link w-100 d2g-modal-trigger" href="#cancellation_form_wrapper" data-app-id="'.esc_attr( $appointment->_id ).'" data-client-token="'.esc_attr( $client_token ).'" data-app-date="'.$date->format("d/m/Y").' '. esc_html__(' at ', 'doctor2go-connect').' ' .$date->format("H:i").'  ('.$timezone.')" data-app-link="'.get_option('d2gc_waiting_room_url').'admin/appointments/'.$appointment->_id.'" data-doc-email="'.$doc_email.'" data-doc-name="'.$docObj->post_title.'"><span class="d2cif-mail icon"></span> '. esc_html__('contact doctor', 'doctor2go-connect').'</a>';
+	$contactBtn      	= '<a class="prep_cancellation_email contact_link w-100 d2g-modal-trigger" href="#cancellation_form_wrapper" data-app-id="'.esc_attr( $appointment->_id ).'"' . $credentialAttr . ' data-app-date="'.$date->format("d/m/Y").' '. esc_html__(' at ', 'doctor2go-connect').' ' .$date->format("H:i").'  ('.$timezone.')" data-app-link="'.get_option('d2gc_waiting_room_url').'admin/appointments/'.$appointment->_id.'" data-doc-email="'.$doc_email.'" data-doc-name="'.$docObj->post_title.'"><span class="d2cif-mail icon"></span> '. esc_html__('contact doctor', 'doctor2go-connect').'</a>';
 	
 	if ( $diffInSeconds <= 0 || $diffInSeconds > 86400 ) {
-		$delBtn 		= '<a class="del_app button btn-danger btn w-100 mb-2" href="#" data-app-id="' . esc_attr( $appointment->_id ) . '" data-client-token="' . esc_attr( $client_token ) . '"><span class=" icon-cancel-circled"></span> ' . esc_html__( 'cancel appointment', 'doctor2go-connect' ) . '<span class="btn-spinner spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span></a>';
+		$delBtn 		= '<a class="del_app button btn-danger btn w-100 mb-2" href="#" data-app-id="' . esc_attr( $appointment->_id ) . '"' . $credentialAttr . '><span class=" icon-cancel-circled"></span> ' . esc_html__( 'cancel appointment', 'doctor2go-connect' ) . '<span class="btn-spinner spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span></a>';
 	} else {
 		$delBtn 		= '<div class="icon-info-outline alert alert-danger w-100 mb-2 p-btn text-center" 
 		data-bs-toggle="tooltip" 
@@ -1722,7 +1729,7 @@ function d2gc_single_appointment($appointment, $docObj, $client_token, $timezone
 		' . esc_html__( 'cancellation deactivated', 'doctor2go-connect' ) . '<br>' . $termsLink . '</div>';
 	} else {
 		
-		$redirectURL 	= '&redirect_url=' . urlencode( $pageAppConf . '?app=' . $appointment->_id . '&client_token=' . $client_token ) ;
+		$redirectURL 	= '&redirect_url=' . urlencode( $pageAppConf . '?app=' . $appointment->_id . $credentialArg ) ;
 		$payment_info 	= '<p class="payment_needed alert alert-info m-3 mb-0 icon-info-outline" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-placement="top" data-bs-title="' . esc_attr__( 'Payment may be made in advance or upon arrival at your appointment. Please note that appointments paid upfront cannot be cancelled.', 'doctor2go-connect' ) . '"><strong>' . esc_html__( 'A payment is required for this appointment.', 'doctor2go-connect' ) . '</strong></p>';
 		$payment_link 	= '<a class="icon-cc-mastercard btn btn-secondary payment_btn w-100 mb-2" target="_blank" href="' . get_option( 'd2gc_waiting_room_url' ) . 'payment/' . $appointment->_id . '?locale=' . explode( '_', get_locale() )[0] . $redirectURL . '"> ' . esc_html__( 'pay now', 'doctor2go-connect' ) . '</a>';
 	}
@@ -1892,7 +1899,7 @@ add_action( 'wp_footer', 'd2gc_footer_html' );
  * @param array  $extraData
  * @return string
  */
-function d2gc_user_email( $type, $user_email, $user_name ) {
+function d2gc_user_email( $type, $user_email, $user_name, $admin_email = '', $link = '' ) {
 	$args      = array(
 		'post_type'  => 'd2g_emails',
 		'meta_query' => array(
@@ -1909,6 +1916,17 @@ function d2gc_user_email( $type, $user_email, $user_name ) {
 	$content = str_replace( '%to_name%', $user_name, $emailData[0]->post_content );
 	$content = str_replace( '%email%', $user_email, $content );
 
+	// %link% = e.g. the e-mail confirmation link of the registration; added at the end when the mail text has no
+	// placeholder, so the mail never goes out without it. The admin copy gets no working link.
+	$admin_content = str_replace( '%link%', '', $content );
+	if ( '' !== $link ) {
+		if ( false !== strpos( $content, '%link%' ) ) {
+			$content = str_replace( '%link%', esc_url( $link ), $content );
+		} else {
+			$content .= '<p>' . esc_html__( 'Please confirm your e-mail address:', 'doctor2go-connect' ) . '<br><a href="' . esc_url( $link ) . '">' . esc_html__( 'Confirm my e-mail address', 'doctor2go-connect' ) . '</a></p>';
+		}
+	}
+
 	$msg = d2gc_html_email( $content );
 
 	// set header for confirmation mail (visitor / patient) and send mail
@@ -1917,7 +1935,7 @@ function d2gc_user_email( $type, $user_email, $user_name ) {
 
 	// set headers for admin notification mail and send mail
 	$headers = 'From: ' . $user_name . ' <' . $user_email . '>' . "\r\n";
-	wp_mail( get_option( 'd2gc_recipient_address' ), $title, $msg, $headers );
+	wp_mail( get_option( 'd2gc_recipient_address' ), $title, d2gc_html_email( $admin_content ), $headers );
 
 	return 'mail send';
 }

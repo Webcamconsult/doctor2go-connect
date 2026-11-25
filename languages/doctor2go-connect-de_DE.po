@@ -3373,3 +3373,268 @@ msgstr[1] "Alle %d Leads dieser E-Mail-Adresse löschen"
 
 msgid "We only use your e-mail address for this, unless you sign up for the newsletter."
 msgstr "Wir verwenden Ihre E-Mail-Adresse nur hierfür, es sei denn, Sie melden sich für den Newsletter an."
+
+# client references, e-mail verification, privacy (2026-11-25)
+msgid "Client references"
+msgstr "Kundenreferenzen"
+
+msgid "Client reference log"
+msgstr "Protokoll Kundenreferenzen"
+
+msgid "Email advice"
+msgstr "E-Mail-Beratung"
+
+msgid "Walk-in"
+msgstr "Offene Sprechstunde"
+
+msgid "Guest"
+msgstr "Gast"
+
+msgid "Logged in"
+msgstr "Angemeldet"
+
+msgid "Logged in, other e-mail"
+msgstr "Angemeldet, andere E-Mail-Adresse"
+
+msgid "Booked"
+msgstr "Gebucht"
+
+msgid "Linked to account"
+msgstr "Mit Konto verknüpft"
+
+msgid "Expired without account"
+msgstr "Ohne Konto abgelaufen"
+
+msgid "Deleted with account"
+msgstr "Mit dem Konto gelöscht"
+
+msgid "Deleted by admin"
+msgstr "Vom Admin gelöscht"
+
+msgid "Deleted on request"
+msgstr "Auf Anfrage gelöscht"
+
+msgid "Bookings whose doctor2go.online client is kept here: guest bookings waiting until the owner of the e-mail address has a confirmed account (deleted automatically after %d days), and confirmation links that are still active. The access tokens are stored encrypted and are never shown."
+msgstr "Buchungen, deren doctor2go.online-Kunde hier aufbewahrt wird: Gastbuchungen, die warten, bis der Inhaber der E-Mail-Adresse ein bestätigtes Konto hat (nach %d Tagen automatisch gelöscht), und Bestätigungslinks, die noch aktiv sind. Die Zugangstokens werden verschlüsselt gespeichert und nie angezeigt."
+
+msgid "To delete everything about a person (deletion request), use Tools → Erase Personal Data."
+msgstr "Um alles über eine Person zu löschen (Löschanfrage), verwenden Sie Werkzeuge → Personenbezogene Daten löschen."
+
+msgid "Waiting for linking"
+msgstr "Wartet auf Verknüpfung"
+
+msgid "Appointment link active"
+msgstr "Terminlink aktiv"
+
+msgid "Log"
+msgstr "Protokoll"
+
+msgid "Delete all entries of this e-mail address?"
+msgstr "Alle Einträge dieser E-Mail-Adresse löschen?"
+
+msgid "Booked on"
+msgstr "Gebucht am"
+
+msgid "Booking"
+msgstr "Buchung"
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "Booked by"
+msgstr "Gebucht von"
+
+msgid "Deleted on"
+msgstr "Gelöscht am"
+
+msgid "No entries found."
+msgstr "Keine Einträge gefunden."
+
+msgid "Already in the account"
+msgstr "Bereits im Konto"
+
+msgid "kept only for the appointment link in the confirmation box, deleted on %s"
+msgstr "nur für den Terminlink im Bestätigungsfenster aufbewahrt, gelöscht am %s"
+
+msgid "appointment link in the confirmation box active until %s"
+msgstr "Terminlink im Bestätigungsfenster aktiv bis %s"
+
+msgid "Delete this entry? A guest can then no longer link this booking to an account."
+msgstr "Diesen Eintrag löschen? Ein Gast kann diese Buchung dann nicht mehr mit einem Konto verknüpfen."
+
+msgid "Confirmed registration"
+msgstr "Bestätigte Registrierung"
+
+msgid "What happened with the bookings, without personal data (no e-mail address, name or account). Entries are deleted automatically after %d days."
+msgstr "Was mit den Buchungen passiert ist, ohne personenbezogene Daten (keine E-Mail-Adresse, kein Name, kein Konto). Einträge werden nach %d Tagen automatisch gelöscht."
+
+msgid "This month"
+msgstr "Dieser Monat"
+
+msgid "Last 12 months"
+msgstr "Letzte 12 Monate"
+
+msgid "Guests who later created an account:"
+msgstr "Gäste, die später ein Konto erstellt haben:"
+
+msgid "%1$d of %2$d guest bookings in the last 12 months (%3$s%%)"
+msgstr "%1$d von %2$d Gastbuchungen in den letzten 12 Monaten (%3$s%%)"
+
+msgid "On average linked %s days after booking."
+msgstr "Im Durchschnitt %s Tage nach der Buchung verknüpft."
+
+msgid "Guest bookings waiting for linking now: %d"
+msgstr "Gastbuchungen, die jetzt auf Verknüpfung warten: %d"
+
+msgid "All events"
+msgstr "Alle Ereignisse"
+
+msgid "All types"
+msgstr "Alle Typen"
+
+msgid "All months"
+msgstr "Alle Monate"
+
+msgid "Booking, e.g. B-7F3K9Q"
+msgstr "Buchung, z. B. B-7F3K9Q"
+
+msgid "Filter"
+msgstr "Filtern"
+
+msgid "Show all"
+msgstr "Alle anzeigen"
+
+msgid "Event"
+msgstr "Ereignis"
+
+msgid "User type"
+msgstr "Benutzertyp"
+
+msgid "Days until linked"
+msgstr "Tage bis zur Verknüpfung"
+
+msgid "E-mail confirmation"
+msgstr "E-Mail-Bestätigung"
+
+msgid "Not confirmed yet: this person has not clicked the link in the registration mail. Until then appointments and medical records are not shown and guest bookings are not linked."
+msgstr "Noch nicht bestätigt: Diese Person hat den Link in der Registrierungsmail noch nicht angeklickt. Bis dahin werden Termine und Patientenakten nicht angezeigt und Gastbuchungen nicht verknüpft."
+
+msgid "Guest bookings before the account"
+msgstr "Gastbuchungen vor dem Konto"
+
+msgid "Bookings this person made as a guest, with the same e-mail address, that were linked to this account."
+msgstr "Buchungen, die diese Person als Gast mit derselben E-Mail-Adresse gemacht hat und die mit diesem Konto verknüpft wurden."
+
+msgid "Linked on"
+msgstr "Verknüpft am"
+
+msgid "Linked by"
+msgstr "Verknüpft durch"
+
+msgid "E-mail confirmed"
+msgstr "E-Mail bestätigt"
+
+msgid "Guest before"
+msgstr "Vorher Gast"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nein"
+
+msgid "Hello %s,"
+msgstr "Hallo %s,"
+
+msgid "Please confirm your e-mail address with the link below. After that you can see your appointments and medical records in your account."
+msgstr "Bitte bestätigen Sie Ihre E-Mail-Adresse über den folgenden Link. Danach sehen Sie Ihre Termine und Patientenakten in Ihrem Konto."
+
+msgid "Confirm my e-mail address"
+msgstr "Meine E-Mail-Adresse bestätigen"
+
+msgid "The link works once and for %d days."
+msgstr "Der Link funktioniert einmal und %d Tage lang."
+
+msgid "Please confirm your e-mail address"
+msgstr "Bitte bestätigen Sie Ihre E-Mail-Adresse"
+
+msgid "Please confirm your e-mail address first. We have sent you an e-mail with a confirmation link. After that you will see your appointments and medical records here."
+msgstr "Bitte bestätigen Sie zuerst Ihre E-Mail-Adresse. Wir haben Ihnen eine E-Mail mit einem Bestätigungslink geschickt. Danach sehen Sie hier Ihre Termine und Patientenakten."
+
+msgid "Send the confirmation e-mail again"
+msgstr "Bestätigungs-E-Mail erneut senden"
+
+msgid "Thank you, your e-mail address is confirmed."
+msgstr "Vielen Dank, Ihre E-Mail-Adresse ist bestätigt."
+
+msgid "This confirmation link is no longer valid. Please log in and request a new one."
+msgstr "Dieser Bestätigungslink ist nicht mehr gültig. Bitte melden Sie sich an und fordern Sie einen neuen an."
+
+msgid "We have sent you a new confirmation e-mail."
+msgstr "Wir haben Ihnen eine neue Bestätigungs-E-Mail geschickt."
+
+msgid "The confirmation e-mail could not be sent. Please try again later."
+msgstr "Die Bestätigungs-E-Mail konnte nicht gesendet werden. Bitte versuchen Sie es später erneut."
+
+msgid "Doctor2Go bookings"
+msgstr "Doctor2Go-Buchungen"
+
+msgid "Doctor2Go leads"
+msgstr "Doctor2Go-Leads"
+
+msgid "Doctor2Go patient account"
+msgstr "Doctor2Go-Patientenkonto"
+
+msgid "Bookings kept by Doctor2Go"
+msgstr "Von Doctor2Go aufbewahrte Buchungen"
+
+msgid "E-mail sign-ups (leads)"
+msgstr "E-Mail-Anmeldungen (Leads)"
+
+msgid "Leads already sent to doctor2go.online are not deleted there; ask doctor2go.online for that."
+msgstr "Bereits an doctor2go.online gesendete Leads werden dort nicht gelöscht; fragen Sie dafür doctor2go.online."
+
+msgid "E-mail address confirmed"
+msgstr "E-Mail-Adresse bestätigt"
+
+msgid "Connected doctor organisations"
+msgstr "Verbundene Arztorganisationen"
+
+msgid "Guest booking before the account"
+msgstr "Gastbuchung vor dem Konto"
+
+msgid "The account was kept because it is not a patient account (role: %s). Delete it under Users if needed."
+msgstr "Das Konto wurde behalten, weil es kein Patientenkonto ist (Rolle: %s). Löschen Sie es bei Bedarf unter Benutzer."
+
+msgid "The patient account has been deleted."
+msgstr "Das Patientenkonto wurde gelöscht."
+
+msgid "The patient account could not be deleted."
+msgstr "Das Patientenkonto konnte nicht gelöscht werden."
+
+msgid "Please confirm your e-mail address. We have sent you an e-mail with a confirmation link. Until then your appointments and medical records are not shown."
+msgstr "Bitte bestätigen Sie Ihre E-Mail-Adresse. Wir haben Ihnen eine E-Mail mit einem Bestätigungslink geschickt. Bis dahin werden Ihre Termine und Patientenakten nicht angezeigt."
+
+msgid "This link is no longer valid. Please use the link in your booking confirmation e-mail, or log in to see your appointments."
+msgstr "Dieser Link ist nicht mehr gültig. Bitte verwenden Sie den Link in Ihrer Buchungsbestätigung per E-Mail oder melden Sie sich an, um Ihre Termine zu sehen."
+
+msgid "Please confirm your e-mail address:"
+msgstr "Bitte bestätigen Sie Ihre E-Mail-Adresse:"
+
+msgid "%d entry deleted."
+msgid_plural "%d entries deleted."
+msgstr[0] "%d Eintrag gelöscht."
+msgstr[1] "%d Einträge gelöscht."
+
+msgid "Delete the %d entry of this e-mail address"
+msgid_plural "Delete all %d entries of this e-mail address"
+msgstr[0] "Den %d Eintrag dieser E-Mail-Adresse löschen"
+msgstr[1] "Alle %d Einträge dieser E-Mail-Adresse löschen"
+
+msgid "%1$d booking, since %2$s"
+msgid_plural "%1$d bookings, since %2$s"
+msgstr[0] "%1$d Buchung, seit %2$s"
+msgstr[1] "%1$d Buchungen, seit %2$s"
+
+msgid "Event Log"
+msgstr "Ereignisprotokoll"

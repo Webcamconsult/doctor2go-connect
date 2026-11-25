@@ -3373,3 +3373,268 @@ msgstr[1] "Eliminar los %d leads de este correo electrónico"
 
 msgid "We only use your e-mail address for this, unless you sign up for the newsletter."
 msgstr "Solo usamos tu correo electrónico para esto, salvo que te suscribas al boletín."
+
+# client references, e-mail verification, privacy (2026-11-25)
+msgid "Client references"
+msgstr "Referencias de clientes"
+
+msgid "Client reference log"
+msgstr "Registro de referencias de clientes"
+
+msgid "Email advice"
+msgstr "Consejo por correo electrónico"
+
+msgid "Walk-in"
+msgstr "Consulta sin cita"
+
+msgid "Guest"
+msgstr "Invitado"
+
+msgid "Logged in"
+msgstr "Con sesión iniciada"
+
+msgid "Logged in, other e-mail"
+msgstr "Con sesión iniciada, otro correo"
+
+msgid "Booked"
+msgstr "Reservado"
+
+msgid "Linked to account"
+msgstr "Vinculado a la cuenta"
+
+msgid "Expired without account"
+msgstr "Caducado sin cuenta"
+
+msgid "Deleted with account"
+msgstr "Eliminado con la cuenta"
+
+msgid "Deleted by admin"
+msgstr "Eliminado por el administrador"
+
+msgid "Deleted on request"
+msgstr "Eliminado a petición"
+
+msgid "Bookings whose doctor2go.online client is kept here: guest bookings waiting until the owner of the e-mail address has a confirmed account (deleted automatically after %d days), and confirmation links that are still active. The access tokens are stored encrypted and are never shown."
+msgstr "Reservas cuyo cliente de doctor2go.online se guarda aquí: reservas de invitados que esperan a que el titular del correo tenga una cuenta confirmada (se eliminan automáticamente después de %d días) y enlaces de confirmación que siguen activos. Los tokens de acceso se guardan cifrados y nunca se muestran."
+
+msgid "To delete everything about a person (deletion request), use Tools → Erase Personal Data."
+msgstr "Para eliminar todo sobre una persona (solicitud de eliminación), use Herramientas → Borrar datos personales."
+
+msgid "Waiting for linking"
+msgstr "Pendiente de vincular"
+
+msgid "Appointment link active"
+msgstr "Enlace de cita activo"
+
+msgid "Log"
+msgstr "Registro"
+
+msgid "Delete all entries of this e-mail address?"
+msgstr "¿Eliminar todas las entradas de este correo electrónico?"
+
+msgid "Booked on"
+msgstr "Reservado el"
+
+msgid "Booking"
+msgstr "Reserva"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Booked by"
+msgstr "Reservado por"
+
+msgid "Deleted on"
+msgstr "Eliminado el"
+
+msgid "No entries found."
+msgstr "No se encontraron entradas."
+
+msgid "Already in the account"
+msgstr "Ya en la cuenta"
+
+msgid "kept only for the appointment link in the confirmation box, deleted on %s"
+msgstr "guardado solo para el enlace de la cita en la ventana de confirmación, se elimina el %s"
+
+msgid "appointment link in the confirmation box active until %s"
+msgstr "enlace de la cita en la ventana de confirmación activo hasta el %s"
+
+msgid "Delete this entry? A guest can then no longer link this booking to an account."
+msgstr "¿Eliminar esta entrada? Un invitado ya no podrá vincular esta reserva a una cuenta."
+
+msgid "Confirmed registration"
+msgstr "Registro confirmado"
+
+msgid "What happened with the bookings, without personal data (no e-mail address, name or account). Entries are deleted automatically after %d days."
+msgstr "Lo que pasó con las reservas, sin datos personales (sin correo, nombre ni cuenta). Las entradas se eliminan automáticamente después de %d días."
+
+msgid "This month"
+msgstr "Este mes"
+
+msgid "Last 12 months"
+msgstr "Últimos 12 meses"
+
+msgid "Guests who later created an account:"
+msgstr "Invitados que después crearon una cuenta:"
+
+msgid "%1$d of %2$d guest bookings in the last 12 months (%3$s%%)"
+msgstr "%1$d de %2$d reservas de invitados en los últimos 12 meses (%3$s%%)"
+
+msgid "On average linked %s days after booking."
+msgstr "Vinculado de media %s días después de la reserva."
+
+msgid "Guest bookings waiting for linking now: %d"
+msgstr "Reservas de invitados pendientes de vincular ahora: %d"
+
+msgid "All events"
+msgstr "Todos los eventos"
+
+msgid "All types"
+msgstr "Todos los tipos"
+
+msgid "All months"
+msgstr "Todos los meses"
+
+msgid "Booking, e.g. B-7F3K9Q"
+msgstr "Reserva, p. ej. B-7F3K9Q"
+
+msgid "Filter"
+msgstr "Filtrar"
+
+msgid "Show all"
+msgstr "Mostrar todo"
+
+msgid "Event"
+msgstr "Evento"
+
+msgid "User type"
+msgstr "Tipo de usuario"
+
+msgid "Days until linked"
+msgstr "Días hasta vincular"
+
+msgid "E-mail confirmation"
+msgstr "Confirmación del correo"
+
+msgid "Not confirmed yet: this person has not clicked the link in the registration mail. Until then appointments and medical records are not shown and guest bookings are not linked."
+msgstr "Aún sin confirmar: esta persona no ha hecho clic en el enlace del correo de registro. Hasta entonces no se muestran las citas ni los historiales médicos y no se vinculan las reservas de invitado."
+
+msgid "Guest bookings before the account"
+msgstr "Reservas de invitado antes de la cuenta"
+
+msgid "Bookings this person made as a guest, with the same e-mail address, that were linked to this account."
+msgstr "Reservas que esta persona hizo como invitado, con el mismo correo, y que se vincularon a esta cuenta."
+
+msgid "Linked on"
+msgstr "Vinculado el"
+
+msgid "Linked by"
+msgstr "Vinculado mediante"
+
+msgid "E-mail confirmed"
+msgstr "Correo confirmado"
+
+msgid "Guest before"
+msgstr "Antes invitado"
+
+msgid "Yes"
+msgstr "Sí"
+
+msgid "No"
+msgstr "No"
+
+msgid "Hello %s,"
+msgstr "Hola %s:"
+
+msgid "Please confirm your e-mail address with the link below. After that you can see your appointments and medical records in your account."
+msgstr "Confirme su dirección de correo electrónico con el siguiente enlace. Después podrá ver sus citas e historiales médicos en su cuenta."
+
+msgid "Confirm my e-mail address"
+msgstr "Confirmar mi correo electrónico"
+
+msgid "The link works once and for %d days."
+msgstr "El enlace funciona una sola vez y durante %d días."
+
+msgid "Please confirm your e-mail address"
+msgstr "Confirme su correo electrónico"
+
+msgid "Please confirm your e-mail address first. We have sent you an e-mail with a confirmation link. After that you will see your appointments and medical records here."
+msgstr "Primero confirme su correo electrónico. Le hemos enviado un correo con un enlace de confirmación. Después verá aquí sus citas e historiales médicos."
+
+msgid "Send the confirmation e-mail again"
+msgstr "Volver a enviar el correo de confirmación"
+
+msgid "Thank you, your e-mail address is confirmed."
+msgstr "Gracias, su correo electrónico está confirmado."
+
+msgid "This confirmation link is no longer valid. Please log in and request a new one."
+msgstr "Este enlace de confirmación ya no es válido. Inicie sesión y solicite uno nuevo."
+
+msgid "We have sent you a new confirmation e-mail."
+msgstr "Le hemos enviado un nuevo correo de confirmación."
+
+msgid "The confirmation e-mail could not be sent. Please try again later."
+msgstr "No se pudo enviar el correo de confirmación. Inténtelo de nuevo más tarde."
+
+msgid "Doctor2Go bookings"
+msgstr "Reservas de Doctor2Go"
+
+msgid "Doctor2Go leads"
+msgstr "Leads de Doctor2Go"
+
+msgid "Doctor2Go patient account"
+msgstr "Cuenta de paciente de Doctor2Go"
+
+msgid "Bookings kept by Doctor2Go"
+msgstr "Reservas guardadas por Doctor2Go"
+
+msgid "E-mail sign-ups (leads)"
+msgstr "Registros por correo (leads)"
+
+msgid "Leads already sent to doctor2go.online are not deleted there; ask doctor2go.online for that."
+msgstr "Los leads ya enviados a doctor2go.online no se eliminan allí; solicítelo a doctor2go.online."
+
+msgid "E-mail address confirmed"
+msgstr "Correo electrónico confirmado"
+
+msgid "Connected doctor organisations"
+msgstr "Organizaciones médicas vinculadas"
+
+msgid "Guest booking before the account"
+msgstr "Reserva de invitado antes de la cuenta"
+
+msgid "The account was kept because it is not a patient account (role: %s). Delete it under Users if needed."
+msgstr "La cuenta se ha conservado porque no es una cuenta de paciente (rol: %s). Elimínela en Usuarios si es necesario."
+
+msgid "The patient account has been deleted."
+msgstr "Se ha eliminado la cuenta de paciente."
+
+msgid "The patient account could not be deleted."
+msgstr "No se pudo eliminar la cuenta de paciente."
+
+msgid "Please confirm your e-mail address. We have sent you an e-mail with a confirmation link. Until then your appointments and medical records are not shown."
+msgstr "Confirme su correo electrónico. Le hemos enviado un correo con un enlace de confirmación. Hasta entonces no se muestran sus citas ni sus historiales médicos."
+
+msgid "This link is no longer valid. Please use the link in your booking confirmation e-mail, or log in to see your appointments."
+msgstr "Este enlace ya no es válido. Use el enlace del correo de confirmación de su reserva o inicie sesión para ver sus citas."
+
+msgid "Please confirm your e-mail address:"
+msgstr "Confirme su correo electrónico:"
+
+msgid "%d entry deleted."
+msgid_plural "%d entries deleted."
+msgstr[0] "%d entrada eliminada."
+msgstr[1] "%d entradas eliminadas."
+
+msgid "Delete the %d entry of this e-mail address"
+msgid_plural "Delete all %d entries of this e-mail address"
+msgstr[0] "Eliminar la %d entrada de este correo"
+msgstr[1] "Eliminar las %d entradas de este correo"
+
+msgid "%1$d booking, since %2$s"
+msgid_plural "%1$d bookings, since %2$s"
+msgstr[0] "%1$d reserva, desde el %2$s"
+msgstr[1] "%1$d reservas, desde el %2$s"
+
+msgid "Event Log"
+msgstr "Registro de eventos"

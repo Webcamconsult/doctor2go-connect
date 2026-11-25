@@ -139,6 +139,21 @@ class D2gConnect {
 		require_once D2GC_PLUGIN_DIR . 'admin/class-d2g-connect-leads-admin.php';
 		D2GC_Leads_Admin::init();
 
+		// WCC clients from bookings, kept on the server (references for the confirmation page, guest bookings),
+		// with the admin pages Client references and Client reference log
+		require_once D2GC_PLUGIN_DIR . 'includes/class-d2g-connect-client-refs.php';
+		D2GC_Client_Refs::init();
+		require_once D2GC_PLUGIN_DIR . 'admin/class-d2g-connect-client-refs-admin.php';
+		D2GC_Client_Refs_Admin::init();
+
+		// e-mail verification of patient accounts (guest bookings are linked only to a confirmed address)
+		require_once D2GC_PLUGIN_DIR . 'includes/class-d2g-connect-email-verification.php';
+		D2GC_Email_Verification::init();
+
+		// Tools → Export / Erase Personal Data: bookings, leads and the patient account, by e-mail address
+		require_once D2GC_PLUGIN_DIR . 'includes/class-d2g-connect-privacy.php';
+		D2GC_Privacy::init();
+
 		// REST route doctor2go.online calls to create/update doctors (replaces endpoints/doctor.php)
 		require_once D2GC_PLUGIN_DIR . 'includes/class-d2g-connect-rest.php';
 		D2GC_Rest::init();

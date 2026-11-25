@@ -755,10 +755,12 @@ jQuery(document).ready(function ($) {
             // Turn on loader in this button
             $btn.addClass('btn-loading').addClass('disabled').attr('aria-disabled', 'true');
 
-            // the server checks that the appointment belongs to this patient (logged in, or client_token from the e-mail link)
+            // the server checks that the appointment belongs to this patient (logged in, the reference from the
+            // confirmation box, or the client_token from the e-mail link)
             $.post(d.ajax.url, {
                 action: 'd2gc_delete_wcc_appointment',
                 app_id: app_id,
+                client_ref: $(this).data('client-ref') || '',
                 client_token: $(this).data('client-token') || '',
                 security: d.ajax.delete_nonce
             }, function (res) {
@@ -782,7 +784,7 @@ jQuery(document).ready(function ($) {
 
         // the form itself is opened in the popup via the .d2g-modal-trigger class
         // the appointment id is what the server uses to find doctor, recipients and date (see d2gc_send_ajax_d2g_email)
-        $('#cancellation_form_wrapper').data('app-id', $(this).data('app-id')).data('client-token', $(this).data('client-token') || '');
+        $('#cancellation_form_wrapper').data('app-id', $(this).data('app-id')).data('client-ref', $(this).data('client-ref') || '').data('client-token', $(this).data('client-token') || '');
         $('#app_date').val($(this).data('app-date'));
         $('#doc_name').val($(this).data('doc-name'));
         $('#doc_name_visible').html($(this).data('doc-name'));
@@ -806,6 +808,7 @@ jQuery(document).ready(function ($) {
         var baseData = {
             action: 'd2gc_send_ajax_d2g_email',
             app_id: $('#cancellation_form_wrapper').data('app-id'),
+            client_ref: $('#cancellation_form_wrapper').data('client-ref') || '',
             client_token: $('#cancellation_form_wrapper').data('client-token') || '',
             client_name: $('#client_name').val(),
             comment: $('#comment').val(),

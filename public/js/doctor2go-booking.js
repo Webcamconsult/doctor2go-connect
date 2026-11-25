@@ -21,13 +21,13 @@
 
     function d2gGetAppointmentManagerUrl(response){
         var redirectURLBase = d2gBookingVars.appointment_conf_url;
-        return redirectURLBase + '?app=' + response.appointment_id + '&client_token=' + response.client_token;
+        // the server keeps the token; the page finds the appointment by the reference
+        return redirectURLBase + '?ref=' + encodeURIComponent(response.ref || '');
     }
 
     function d2gStoreBookingConfirmation(response){
         var confirmationData = {
             appointment_id: response.appointment_id || '',
-            client_token: response.client_token || '',
             doctor_name: $('#doctor').text().trim() || localStorage.getItem('booking_doctor_name') || '',
             booking_date: localStorage.getItem('booking_date') || '',
             booking_time: localStorage.getItem('booking_time') || '',

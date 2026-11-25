@@ -238,27 +238,22 @@ class D2G_booking_wcc_user {
         $appointment = json_decode( $body, true );
 
 
-        if ( isset( $appointment['client']['id'] ) && is_user_logged_in() ) {
-            $client = $appointment['client'];
-
-            $ids    = get_user_meta( $currUser->ID, 'ids', true );
-            $tokens = get_user_meta( $currUser->ID, 'tokens', true );
-
-            if ( ! is_array( $ids ) ) {
-                $ids = array();
-            }
-
-            if ( ! is_array( $tokens ) ) {
-                $tokens = array();
-            }
-
-            if ( ! empty( $docOrgKey ) && ! isset( $tokens[ $docOrgKey ] ) ) {
-                $ids[ $docOrgKey ]    = $client['id'];
-                $tokens[ $docOrgKey ] = $client['authentication_token'];
-
-                update_user_meta( $currUser->ID, 'ids', $ids );
-                update_user_meta( $currUser->ID, 'tokens', $tokens );
-            }
+        // the token stays on the server; the appointment link in the confirmation box gets a reference instead. The box
+        // is shown only once, right after booking (later the patient uses the link in the WCC mail): 24 hours is enough.
+        $client_ref = '';
+        if ( isset( $appointment['client']['id'] ) ) {
+            $client_ref = D2GC_Client_Refs::store(
+                array(
+                    'email'          => $patientEmail,
+                    'org_key'        => $docOrgKey,
+                    'client_id'      => $appointment['client']['id'],
+                    'token'          => $appointment['client']['authentication_token'] ?? '',
+                    'type'           => 'video',
+                    'doctor_post_id' => $wpDocID,
+                    'appointment_id' => $appointment['appointment_id'] ?? '',
+                    'ref_until'      => time() + DAY_IN_SECONDS,
+                )
+            );
         }
 
 
@@ -269,8 +264,8 @@ class D2G_booking_wcc_user {
             self::d2gc_consult_created( 'video', $wpDocID, $patientEmail, $patient_fname, $patient_lname, $patientTel, $docPrice, $currency );
 
             $booking_data = array(
-                'appointment_id'   => $appointment['appointment_id'],
-                'client_token'     => $appointment['client']['authentication_token'],
+                'appointment_id' => $appointment['appointment_id'],
+                'ref'            => $client_ref,
             );
 
             wp_send_json( $booking_data );
@@ -284,12 +279,18 @@ class D2G_booking_wcc_user {
 
 	/**
 	 * WCC client tokens of the patient making the request:
-	 * logged in -> the tokens stored with the user, not logged in -> the client_token from the link in the
+	 * a reference (confirmation page after a booking) -> the token of that booking, looked up on the server;
+	 * logged in -> the tokens stored with the user; not logged in -> the client_token from the link in the
 	 * appointment e-mail (appointment confirmation page). That token is the patient's proof of identity.
 	 *
 	 * @return string[]
 	 */
 	public static function d2gc_get_request_client_tokens() {
+		if ( D2GC_Client_Refs::request_has_ref() ) {
+			$ref_row = D2GC_Client_Refs::find_from_request();
+			return $ref_row ? array( $ref_row['token'] ) : array();
+		}
+
 		if ( is_user_logged_in() ) {
 			$tokens = maybe_unserialize( get_user_meta( get_current_user_id(), 'tokens', true ) );
 			return ( is_array( $tokens ) ) ? array_values( array_filter( $tokens ) ) : array();
@@ -361,6 +362,14 @@ class D2G_booking_wcc_user {
 	public static function d2gc_get_own_appointment( $app_id ) {
 		if ( '' === (string) $app_id ) {
 			return null;
+		}
+
+		// a reference opens only the appointment it was made for
+		if ( D2GC_Client_Refs::request_has_ref() ) {
+			$ref_row = D2GC_Client_Refs::find_from_request();
+			if ( ! $ref_row || (string) $ref_row['appointment_id'] !== (string) $app_id ) {
+				return null;
+			}
 		}
 
 		$appointments = self::d2gc_wcc_client_request( 'doclisting/appointments/client', self::d2gc_get_request_client_tokens() );
@@ -536,30 +545,18 @@ class D2G_booking_wcc_user {
 
 		$response_body = json_decode( wp_remote_retrieve_body( $response ) );
 
-		// get current user
-		$currUser = wp_get_current_user();
-
-		if ( isset( $response_body->client->id ) && $currUser->ID !== 0 ) {
-			$client = $response_body->client;
-
-			$ids    = get_user_meta( $currUser->ID, 'ids', true );
-            $tokens = get_user_meta( $currUser->ID, 'tokens', true );
-
-            if ( ! is_array( $ids ) ) {
-                $ids = array();
-            }
-
-            if ( ! is_array( $tokens ) ) {
-                $tokens = array();
-            }
-
-            if ( ! empty( $docOrgKey ) && ! isset( $tokens[ $docOrgKey ] ) ) {
-                $ids[ $docOrgKey ]    = $client->id;
-                $tokens[ $docOrgKey ] = $client->authentication_token;
-
-                update_user_meta( $currUser->ID, 'ids', $ids );
-                update_user_meta( $currUser->ID, 'tokens', $tokens );
-            }
+		// walk-in goes straight to the waiting room: no reference, the row only waits for linking (guests)
+		if ( isset( $response_body->client->id ) ) {
+			D2GC_Client_Refs::store(
+				array(
+					'email'     => $client_email,
+					'org_key'   => $docOrgKey,
+					'client_id' => $response_body->client->id,
+					'token'     => $response_body->client->authentication_token ?? '',
+					'type'      => 'walk_in',
+					'doctor_post_id' => $wpDocID,
+				)
+			);
 		}
 
 		if ( isset( $response_body->url ) ) {
@@ -823,35 +820,27 @@ class D2G_booking_wcc_user {
 		$response_body = json_decode( wp_remote_retrieve_body( $response ) );
 
 
-		if ( isset( $response_body->client->id ) && is_user_logged_in() ) {
-			$client = $response_body->client;
-
-			$ids    = get_user_meta( $currUser->ID, 'ids', true );
-            $tokens = get_user_meta( $currUser->ID, 'tokens', true );
-
-            if ( ! is_array( $ids ) ) {
-                $ids = array();
-            }
-
-            if ( ! is_array( $tokens ) ) {
-                $tokens = array();
-            }
-
-            if ( ! empty( $docOrgKey ) && ! isset( $tokens[ $docOrgKey ] ) ) {
-                $ids[ $docOrgKey ]    = $client->id;
-                $tokens[ $docOrgKey ] = $client->authentication_token;
-
-                update_user_meta( $currUser->ID, 'ids', $ids );
-                update_user_meta( $currUser->ID, 'tokens', $tokens );
-            }
+		// the email advice confirmation page shows no client data: no reference, the row only waits for linking (guests)
+		if ( isset( $response_body->client->id ) ) {
+			D2GC_Client_Refs::store(
+				array(
+					'email'     => $client_email,
+					'org_key'   => $docOrgKey,
+					'client_id' => $response_body->client->id,
+					'token'     => $response_body->client->authentication_token ?? '',
+					'type'      => 'email_advice',
+					'doctor_post_id' => $wpDocID,
+				)
+			);
 		}
 
 		if ( isset( $response_body->url ) ) {
 			d2gc_newsletter_subscribe( $client_email, $first_name, $last_name );
 			self::d2gc_consult_created( 'email_advice', $wpDocID, $client_email, $first_name, $last_name, '', $price, $currency );
 
-			$questionnaire_url = 'https://' . $orgSlug . $baseUrl . $response_body->url;
-			$redirect_url      = $questionnaire_url . '?redirect_url=' . urlencode( $confirmation_url ) . '&booked_consult=email&skip_cookie_wall=true&locale=' . $currLang;
+			// WCC's payment page for this email advice (the questionnaire was already sent with the form)
+			$payment_url  = 'https://' . $orgSlug . $baseUrl . $response_body->url;
+			$redirect_url = $payment_url . '?redirect_url=' . urlencode( $confirmation_url ) . '&booked_consult=email&skip_cookie_wall=true&locale=' . $currLang;
 
 			wp_send_json_success(
 				array(
