@@ -171,4 +171,50 @@ class D2GC_Translations {
 		 */
 		return (int) apply_filters( 'd2gc_term_translation', $translated, $term_id, $taxonomy, $language );
 	}
+
+	/**
+	 * Makes a text from a setting translatable (Polylang: Languages → Translations, WPML: String Translation).
+	 * Polylang only lists strings registered on that admin page load, so call this on every admin load.
+	 *
+	 * @param string $name      unique name, e.g. the option name
+	 * @param string $value     the text as entered
+	 * @param bool   $multiline
+	 */
+	public static function register_string( $name, $value, $multiline = false ) {
+		if ( '' === (string) $value ) {
+			return;
+		}
+		switch ( self::provider() ) {
+			case 'polylang':
+				if ( function_exists( 'pll_register_string' ) ) {
+					pll_register_string( $name, $value, 'doctor2go-connect', $multiline );
+				}
+				break;
+
+			case 'wpml':
+				do_action( 'wpml_register_single_string', 'doctor2go-connect', $name, $value );
+				break;
+		}
+	}
+
+	/**
+	 * A text from a setting in the current language (see register_string), or as entered when there is no translation.
+	 *
+	 * @param string $name
+	 * @param string $value
+	 * @return string
+	 */
+	public static function translate_string( $name, $value ) {
+		if ( '' === (string) $value ) {
+			return '';
+		}
+		switch ( self::provider() ) {
+			case 'polylang':
+				return function_exists( 'pll__' ) ? pll__( $value ) : $value;
+
+			case 'wpml':
+				return (string) apply_filters( 'wpml_translate_single_string', $value, 'doctor2go-connect', $name );
+		}
+		return $value;
+	}
 }

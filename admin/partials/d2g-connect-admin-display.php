@@ -438,6 +438,58 @@ if ( $d2gc_has_translations ) {
 
 				<section class="d2gc-card">
 					<header class="d2gc-card__header">
+						<h2><?php echo esc_html__( 'Lead boxes', 'doctor2go-connect' ); ?></h2>
+						<p><?php echo esc_html__( 'Boxes where visitors leave their e-mail address to receive a link by e-mail (see Leads). Each box only appears when it is switched on.', 'doctor2go-connect' ); ?></p>
+					</header>
+					<div class="d2gc-card__body">
+						<?php
+						$d2gc_toggle( D2GC_Lead_Form::OPT_DOCTOR, __( 'Lead box on doctor pages', 'doctor2go-connect' ), __( 'A small box in the corner of the doctor pages, after the visitor did nothing for a while. The visitor receives a link to this doctor by e-mail.', 'doctor2go-connect' ) );
+
+						$d2gc_timing   = D2GC_Lead_Form::doctor_popup_timing();
+						$d2gc_defaults = D2GC_Lead_Form::doctor_default_texts();
+						$d2gc_lead_fields = array(
+							array( D2GC_Lead_Form::OPT_DOCTOR_DELAY, __( 'Seconds without activity before the box appears', 'doctor2go-connect' ), 'number', (string) $d2gc_timing['delay'] ),
+							array( D2GC_Lead_Form::OPT_DOCTOR_DAYS, __( 'Days the box stays away after it was closed or sent', 'doctor2go-connect' ), 'number', (string) $d2gc_timing['popup_days'] ),
+							array( D2GC_Lead_Form::DOCTOR_TEXTS['title'], __( 'Title', 'doctor2go-connect' ), 'text', $d2gc_defaults['title'] ),
+							array( D2GC_Lead_Form::DOCTOR_TEXTS['text'], __( 'Text', 'doctor2go-connect' ), 'textarea', $d2gc_defaults['text'] ),
+							array( D2GC_Lead_Form::DOCTOR_TEXTS['button'], __( 'Button', 'doctor2go-connect' ), 'text', $d2gc_defaults['button'] ),
+							array( D2GC_Lead_Form::DOCTOR_TEXTS['consent'], __( 'Consent checkbox', 'doctor2go-connect' ), 'textarea', $d2gc_defaults['consent'] ),
+						);
+						foreach ( $d2gc_lead_fields as $d2gc_lead_field ) {
+							list( $d2gc_name, $d2gc_title, $d2gc_type, $d2gc_placeholder ) = $d2gc_lead_field;
+							?>
+							<div class="d2gc-setting">
+								<label for="<?php echo esc_attr( $d2gc_name ); ?>" class="d2gc-setting__title"><?php echo esc_html( $d2gc_title ); ?></label>
+								<?php if ( 'textarea' === $d2gc_type ) { ?>
+									<textarea class="large-text d2gc-input" rows="3" name="<?php echo esc_attr( $d2gc_name ); ?>" id="<?php echo esc_attr( $d2gc_name ); ?>" placeholder="<?php echo esc_attr( $d2gc_placeholder ); ?>"><?php echo esc_textarea( get_option( $d2gc_name, '' ) ); ?></textarea>
+								<?php } else { ?>
+									<input class="<?php echo 'number' === $d2gc_type ? 'small-text' : 'regular-text'; ?> d2gc-input" type="<?php echo esc_attr( $d2gc_type ); ?>" <?php echo 'number' === $d2gc_type ? 'min="0" step="1"' : ''; ?> name="<?php echo esc_attr( $d2gc_name ); ?>" id="<?php echo esc_attr( $d2gc_name ); ?>" value="<?php echo esc_attr( get_option( $d2gc_name, '' ) ); ?>" placeholder="<?php echo esc_attr( $d2gc_placeholder ); ?>" autocomplete="off">
+								<?php } ?>
+							</div>
+							<?php
+						}
+						?>
+						<p class="d2gc-setting__description">
+							<?php
+							echo esc_html__( 'Empty fields use the default text shown in grey.', 'doctor2go-connect' );
+							if ( $d2gc_has_translations ) {
+								echo ' ' . esc_html__( 'Texts you enter can be translated with your multilingual plugin (Polylang: Languages → Translations).', 'doctor2go-connect' );
+							}
+							?>
+						</p>
+						<?php
+						/**
+						 * More lead box settings of other plugins. Register their options in the group "d2gc-option-group".
+						 *
+						 * @param callable $toggle function( $option_name, $title, $description = '' ) for a switch row
+						 */
+						do_action( 'd2gc_settings_lead_boxes', $d2gc_toggle );
+						?>
+					</div>
+				</section>
+
+				<section class="d2gc-card">
+					<header class="d2gc-card__header">
 						<h2><?php echo esc_html__( 'Troubleshooting', 'doctor2go-connect' ); ?></h2>
 						<p><?php echo esc_html__( 'Only enable while investigating an issue.', 'doctor2go-connect' ); ?></p>
 					</header>

@@ -57,6 +57,17 @@ function deactivate_d2gConnect() {
 register_deactivation_hook( __FILE__, 'deactivate_d2gConnect' );
 
 /**
+ * Translations from the plugin's own languages folder. WordPress itself only looks in wp-content/languages/plugins
+ * (translations from wordpress.org or a translation plugin), which still win when they exist.
+ */
+add_action(
+	'init',
+	function () {
+		load_plugin_textdomain( 'doctor2go-connect', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+	}
+);
+
+/**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */

@@ -3638,3 +3638,49 @@ msgstr[1] "%1$d boekingen, sinds %2$s"
 
 msgid "Event Log"
 msgstr "Gebeurtenissenlog"
+
+# lead box settings (2026-11-25)
+msgid "Stay informed"
+msgstr "Blijf op de hoogte"
+
+msgid "We will e-mail you a link to this doctor, so you can easily come back later. Sign up for our newsletter too, to stay informed."
+msgstr "We mailen je een link naar deze arts, zodat je later makkelijk terug kunt komen. Meld je ook aan voor onze nieuwsbrief om op de hoogte te blijven."
+
+msgid "We will e-mail you a link to this doctor, so you can easily come back later."
+msgstr "We mailen je een link naar deze arts, zodat je later makkelijk terug kunt komen."
+
+msgid "I agree that my e-mail address is used to send me the link to this doctor."
+msgstr "Ik ga ermee akkoord dat mijn e-mailadres wordt gebruikt om mij de link naar deze arts te sturen."
+
+msgid "Lead boxes"
+msgstr "Leadboxen"
+
+msgid "Boxes where visitors leave their e-mail address to receive a link by e-mail (see Leads). Each box only appears when it is switched on."
+msgstr "Boxen waarin bezoekers hun e-mailadres achterlaten om een link per e-mail te ontvangen (zie Leads). Elke box verschijnt alleen als hij is ingeschakeld."
+
+msgid "Lead box on doctor pages"
+msgstr "Leadbox op artsenpagina's"
+
+msgid "A small box in the corner of the doctor pages, after the visitor did nothing for a while. The visitor receives a link to this doctor by e-mail."
+msgstr "Een kleine box in de hoek van de artsenpagina's, nadat de bezoeker een tijdje niets heeft gedaan. De bezoeker ontvangt per e-mail een link naar deze arts."
+
+msgid "Seconds without activity before the box appears"
+msgstr "Seconden zonder activiteit voordat de box verschijnt"
+
+msgid "Days the box stays away after it was closed or sent"
+msgstr "Dagen dat de box wegblijft nadat hij is gesloten of verstuurd"
+
+msgid "Text"
+msgstr "Tekst"
+
+msgid "Button"
+msgstr "Knop"
+
+msgid "Consent checkbox"
+msgstr "Toestemmingsvakje"
+
+msgid "Empty fields use the default text shown in grey."
+msgstr "Lege velden gebruiken de standaardtekst die grijs wordt getoond."
+
+msgid "Texts you enter can be translated with your multilingual plugin (Polylang: Languages → Translations)."
+msgstr "Teksten die u invult, kunt u vertalen met uw meertalige plugin (Polylang: Talen → Vertalingen)."

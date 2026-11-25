@@ -3638,3 +3638,49 @@ msgstr[1] "%1$d reservas, desde el %2$s"
 
 msgid "Event Log"
 msgstr "Registro de eventos"
+
+# lead box settings (2026-11-25)
+msgid "Stay informed"
+msgstr "Mantente informado"
+
+msgid "We will e-mail you a link to this doctor, so you can easily come back later. Sign up for our newsletter too, to stay informed."
+msgstr "Te enviaremos por correo un enlace a este médico para que puedas volver fácilmente más tarde. Suscríbete también a nuestro boletín para mantenerte informado."
+
+msgid "We will e-mail you a link to this doctor, so you can easily come back later."
+msgstr "Te enviaremos por correo un enlace a este médico para que puedas volver fácilmente más tarde."
+
+msgid "I agree that my e-mail address is used to send me the link to this doctor."
+msgstr "Acepto que se utilice mi dirección de correo electrónico para enviarme el enlace a este médico."
+
+msgid "Lead boxes"
+msgstr "Cajas de leads"
+
+msgid "Boxes where visitors leave their e-mail address to receive a link by e-mail (see Leads). Each box only appears when it is switched on."
+msgstr "Cajas en las que los visitantes dejan su correo electrónico para recibir un enlace por correo (ver Leads). Cada caja solo aparece cuando está activada."
+
+msgid "Lead box on doctor pages"
+msgstr "Caja de leads en las páginas de médicos"
+
+msgid "A small box in the corner of the doctor pages, after the visitor did nothing for a while. The visitor receives a link to this doctor by e-mail."
+msgstr "Una pequeña caja en la esquina de las páginas de médicos, después de que el visitante no haya hecho nada durante un rato. El visitante recibe por correo un enlace a este médico."
+
+msgid "Seconds without activity before the box appears"
+msgstr "Segundos sin actividad antes de que aparezca la caja"
+
+msgid "Days the box stays away after it was closed or sent"
+msgstr "Días que la caja no vuelve a aparecer después de cerrarla o enviarla"
+
+msgid "Text"
+msgstr "Texto"
+
+msgid "Button"
+msgstr "Botón"
+
+msgid "Consent checkbox"
+msgstr "Casilla de consentimiento"
+
+msgid "Empty fields use the default text shown in grey."
+msgstr "Los campos vacíos usan el texto predeterminado que se muestra en gris."
+
+msgid "Texts you enter can be translated with your multilingual plugin (Polylang: Languages → Translations)."
+msgstr "Los textos que introduzca se pueden traducir con su plugin multilingüe (Polylang: Idiomas → Traducciones)."

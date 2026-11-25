@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * post ID, default: the current doctor page), reminder (1 = show the reminder checkbox), dismiss (1 = show a
  * "No thanks" link), newsletter (1 = show the newsletter checkbox when the newsletter setting is on, as in the consult
  * forms), consent_version (v1), consent (text of the consent checkbox; change consent_version with it),
- * badge, title, subtitle, text, button, note, class.
+ * badge, title, subtitle, text, button, note, reminder_text, dismiss_text, class.
  *
  * As a small box in the corner instead of a block in the page: popup="idle". It appears after the visitor did nothing
  * (no scrolling, clicking or typing) for "delay" seconds (60), never while a popup window or a form field is in use,
@@ -30,10 +30,123 @@ class D2GC_Lead_Form {
 
 	const ACTION = 'd2gc_lead';
 
+	/**
+	 * Settings of the box on doctor pages (Settings → Advanced → Lead boxes). Off until switched on.
+	 * The texts are empty by default (= the translated default text) and can be translated with Polylang / WPML.
+	 */
+	const OPT_DOCTOR       = 'd2gc_lead_box_doctor';
+	const OPT_DOCTOR_DELAY = 'd2gc_lead_box_doctor_delay';
+	const OPT_DOCTOR_DAYS  = 'd2gc_lead_box_doctor_days';
+	const DOCTOR_TEXTS     = array(
+		'title'   => 'd2gc_lead_box_doctor_title',
+		'text'    => 'd2gc_lead_box_doctor_text',
+		'button'  => 'd2gc_lead_box_doctor_button',
+		'consent' => 'd2gc_lead_box_doctor_consent',
+	);
+
 	public static function init() {
 		add_shortcode( 'd2gc_lead_form', array( __CLASS__, 'shortcode' ) );
 		add_action( 'wp_ajax_' . self::ACTION, array( __CLASS__, 'ajax' ) );
 		add_action( 'wp_ajax_nopriv_' . self::ACTION, array( __CLASS__, 'ajax' ) );
+		add_action( 'wp_footer', array( __CLASS__, 'doctor_popup' ), 5 );
+		add_action( 'admin_init', array( __CLASS__, 'register_doctor_texts' ) );
+	}
+
+	/**
+	 * @return bool the box on doctor pages is switched on
+	 */
+	public static function doctor_popup_enabled() {
+		return '1' === (string) get_option( self::OPT_DOCTOR );
+	}
+
+	/**
+	 * Timing of the box on doctor pages, also used by other boxes added there (d2gc_doctor_lead_popup).
+	 *
+	 * @return array delay (seconds without activity before it appears), popup_days (days it stays away after it was
+	 *               closed or sent, 0 = it can appear on every visit)
+	 */
+	public static function doctor_popup_timing() {
+		$days = get_option( self::OPT_DOCTOR_DAYS, '' );
+		return array(
+			'delay'      => max( 5, absint( get_option( self::OPT_DOCTOR_DELAY, '' ) ) ?: 60 ),
+			'popup_days' => '' === (string) $days ? 30 : absint( $days ),
+		);
+	}
+
+	/**
+	 * Default texts of the box on doctor pages, used when the setting is empty.
+	 *
+	 * @return array
+	 */
+	public static function doctor_default_texts() {
+		$newsletter = function_exists( 'd2gc_newsletter_enabled' ) && d2gc_newsletter_enabled();
+		return array(
+			'title'   => __( 'Stay informed', 'doctor2go-connect' ),
+			'text'    => $newsletter
+				? __( 'We will e-mail you a link to this doctor, so you can easily come back later. Sign up for our newsletter too, to stay informed.', 'doctor2go-connect' )
+				: __( 'We will e-mail you a link to this doctor, so you can easily come back later.', 'doctor2go-connect' ),
+			'button'  => __( 'Send me the link', 'doctor2go-connect' ),
+			'consent' => __( 'I agree that my e-mail address is used to send me the link to this doctor.', 'doctor2go-connect' ),
+		);
+	}
+
+	/**
+	 * (admin_init) Texts entered in the settings can be translated with Polylang / WPML.
+	 */
+	public static function register_doctor_texts() {
+		foreach ( self::DOCTOR_TEXTS as $key => $option ) {
+			D2GC_Translations::register_string( $option, (string) get_option( $option, '' ), in_array( $key, array( 'text', 'consent' ), true ) );
+		}
+	}
+
+	/**
+	 * (wp_footer) Doctor pages: a small box in the corner after the visitor did nothing for a while, with a link to this
+	 * doctor by e-mail (doctor2go.online sends it: source_type doctor_profile, intent send_doctor).
+	 * Other plugins can add their own box first with the action d2gc_doctor_lead_popup; the first box that is not
+	 * switched off (data-popup-off) appears, see the popup notes at the top.
+	 */
+	public static function doctor_popup() {
+		if ( ! self::doctor_popup_enabled() || ! is_singular( 'd2g_doctor' ) ) {
+			return;
+		}
+		$doctor = get_queried_object_id();
+		$timing = self::doctor_popup_timing();
+
+		/**
+		 * Before the box on doctor pages, e.g. a box of another plugin with the same timing.
+		 *
+		 * @param int   $doctor doctor post ID
+		 * @param array $timing delay, popup_days
+		 */
+		do_action( 'd2gc_doctor_lead_popup', $doctor, $timing );
+
+		$texts = self::doctor_default_texts();
+		foreach ( self::DOCTOR_TEXTS as $key => $option ) {
+			$value = trim( (string) get_option( $option, '' ) );
+			if ( '' !== $value ) {
+				$texts[ $key ] = D2GC_Translations::translate_string( $option, $value );
+			}
+		}
+
+		echo self::shortcode( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in shortcode()
+			array(
+				'popup'           => 'idle',
+				'delay'           => (string) $timing['delay'],
+				'popup_days'      => (string) $timing['popup_days'],
+				'source_type'     => 'doctor_profile',
+				'intent'          => 'send_doctor',
+				'source_id'       => (string) $doctor,
+				'doctor'          => (string) $doctor,
+				'ai_result_link'  => get_permalink( $doctor ),
+				'consent_version' => 'doctor-v1',
+				'title'           => $texts['title'],
+				'subtitle'        => '',
+				'text'            => $texts['text'],
+				'button'          => $texts['button'],
+				'consent'         => $texts['consent'],
+				'class'           => 'd2gc-lead-popup-doctor',
+			)
+		);
 	}
 
 	/**
@@ -63,6 +176,8 @@ class D2GC_Lead_Form {
 					? __( 'We only use your e-mail address for this, unless you sign up for the newsletter.', 'doctor2go-connect' )
 					: __( 'We only use your e-mail address for this. No newsletter.', 'doctor2go-connect' ),
 				'newsletter'      => '1',
+				'reminder_text'   => __( 'Also send me one reminder to come back to it.', 'doctor2go-connect' ),
+				'dismiss_text'    => __( 'No thanks, I will look at it now', 'doctor2go-connect' ),
 				'popup'           => '',
 				'delay'           => '60',
 				'popup_days'      => '30',
@@ -171,7 +286,7 @@ class D2GC_Lead_Form {
 					<?php if ( '1' === $a['reminder'] ) { ?>
 						<div class="<?php echo esc_attr( $check_class ); ?> <?php echo $show_newsletter ? 'mb-2' : 'mb-3'; ?>">
 							<input class="form-check-input" type="checkbox" name="reminder" value="1" id="<?php echo esc_attr( $id ); ?>-reminder">
-							<label class="form-check-label" for="<?php echo esc_attr( $id ); ?>-reminder"><?php echo esc_html__( 'Also send me one reminder to come back to it.', 'doctor2go-connect' ); ?></label>
+							<label class="form-check-label" for="<?php echo esc_attr( $id ); ?>-reminder"><?php echo esc_html( $a['reminder_text'] ); ?></label>
 						</div>
 					<?php } ?>
 					<?php if ( $show_newsletter ) { ?>
@@ -189,7 +304,7 @@ class D2GC_Lead_Form {
 
 				<?php if ( ! $popup && '1' === $a['dismiss'] ) { ?>
 					<hr class="my-4">
-					<p class="text-center mb-0"><a href="#" class="d2gc-lead-dismiss text-muted"><?php echo esc_html__( 'No thanks, I will look at it now', 'doctor2go-connect' ); ?></a></p>
+					<p class="text-center mb-0"><a href="#" class="d2gc-lead-dismiss text-muted"><?php echo esc_html( $a['dismiss_text'] ); ?></a></p>
 				<?php } ?>
 			</div>
 		</div>

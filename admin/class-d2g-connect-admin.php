@@ -755,11 +755,29 @@ class D2gConnect_Admin {
 			'd2gc_disable_booking_rules_editor' => 'absint',
 			'd2g_debug' => 'absint',
 			'd2gc_newsletter_signup' => 'absint',
+			D2GC_Lead_Form::OPT_DOCTOR => 'absint',
+			D2GC_Lead_Form::OPT_DOCTOR_DELAY => array( $this, 'd2gc_sanitize_number_or_empty' ),
+			D2GC_Lead_Form::OPT_DOCTOR_DAYS => array( $this, 'd2gc_sanitize_number_or_empty' ),
+			D2GC_Lead_Form::DOCTOR_TEXTS['title'] => 'sanitize_text_field',
+			D2GC_Lead_Form::DOCTOR_TEXTS['text'] => 'sanitize_textarea_field',
+			D2GC_Lead_Form::DOCTOR_TEXTS['button'] => 'sanitize_text_field',
+			D2GC_Lead_Form::DOCTOR_TEXTS['consent'] => 'sanitize_textarea_field',
 		);
 
 		foreach ( $settings_with_callbacks as $setting => $callback ) {
 			register_setting( 'd2gc-option-group', $setting, array( 'sanitize_callback' => $callback ) );
 		}
+	}
+
+	/**
+	 * A whole number, or empty (= the default).
+	 *
+	 * @param mixed $value
+	 * @return string
+	 */
+	public function d2gc_sanitize_number_or_empty( $value ) {
+		$value = trim( (string) $value );
+		return '' === $value ? '' : (string) absint( $value );
 	}
 
 	public function d2gc_sanitize_token( $value ) {
